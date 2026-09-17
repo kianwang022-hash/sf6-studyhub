@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { CURRENT_CHARACTERS } from '../lib/characters';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <BaseLayout title="SF6 StudyHub">
   <div class="shell">
@@ -9,7 +10,7 @@ import { CURRENT_CHARACTERS } from '../lib/characters';
       <div class="status">ASTRO MIGRATION · CURRENT GOLD LANE</div>
     </section>
     <div class="home-grid">
-      {CURRENT_CHARACTERS.map((c) => <a class="char-link" href={`${import.meta.env.BASE_URL}character/${c.slug}/`}>
+      {CURRENT_CHARACTERS.map((c) => <a class="char-link" href={`${base}/character/${c.slug}/`}>
         <div><div class="eyebrow">{c.group}</div><h2>{c.nameZh}</h2><p>{c.nameEn}</p></div><div class="state">{c.state}</div>
       </a>)}
     </div>
