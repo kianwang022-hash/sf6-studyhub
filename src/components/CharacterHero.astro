@@ -1,0 +1,42 @@
+---
+import { ROSTER_GROUPS } from '../lib/characters';
+const { character } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const heroBase = `${base}hero/`;
+---
+<section class="v6-hero" id="home-hero" data-character={character.slug}>
+  <div class="hero-bg-word" aria-hidden="true">TURN</div>
+  <div class="hero-bg-six" aria-hidden="true">6</div>
+  <div class="hero-copy">
+    <div class="kicker">STREET FIGHTER 6 · STUDYHUB</div>
+    <h1><span class="hero-white">Train smarter.</span><span class="hero-lime">Learn faster.</span></h1>
+    <p>把 SF6 基础、角色 Playbook、实战速查和完整资料放进一个长期学习中心。先看当前该做什么，需要时再展开机制、证据和高级分支。</p>
+    <div class="hero-actions">
+      <button class="cta primary" type="button" data-open-tab="learn">开始学习 <span>→</span></button>
+      <label class="cta secondary hero-character-select-wrap">
+        <span>角色</span>
+        <select aria-label="选择角色" id="heroCharacterSelect" data-base={base}>
+          {ROSTER_GROUPS.map((group) => (
+            <optgroup label={group.label}>
+              {group.characters.map((c) => <option value={c.slug} selected={c.slug === character.slug}>{c.nameZh} {c.nameEn}</option>)}
+            </optgroup>
+          ))}
+        </select>
+      </label>
+    </div>
+    <div class="hero-keywords" aria-label="核心学习路径">
+      <span>角色模型</span><i>→</i><span>拳脚 / 出招</span><i>→</i><span>立回</span><i>→</i><span>机会入口</span><i>→</i><span>起攻</span><i>→</i><span>实战</span>
+    </div>
+  </div>
+  <div class={`hero-character-wrap ${character.hero ? '' : 'no-art'}`} data-character={character.slug} style={character.hero ? `--hero-position:${character.hero.position};--hero-scale:${character.hero.scale}` : ''}>
+    {character.hero ? (
+      <>
+        <img src={`${heroBase}${character.hero.dark}`} alt={`${character.nameEn} · Street Fighter 6 StudyHub hero visual`} class="hero-character hero-character-dark" />
+        <img src={`${heroBase}${character.hero.light}`} alt="" aria-hidden="true" class="hero-character hero-character-light" />
+        <div class="hero-image-label">{character.nameEn.toUpperCase()} · PLAYBOOK</div>
+      </>
+    ) : (
+      <div class="hero-pending-art"><b>{character.nameEn}</b><span>SOURCE CLOSURE PENDING</span></div>
+    )}
+  </div>
+</section>
