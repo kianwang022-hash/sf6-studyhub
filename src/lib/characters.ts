@@ -4,10 +4,10 @@ import YAML from 'yaml';
 
 export const CURRENT_CHARACTERS = [
   { slug: 'ryu', nameZh: '隆', nameEn: 'Ryu', group: 'base', state: 'GOLD_REFERENCE' },
-  { slug: 'jamie', nameZh: '杰米', nameEn: 'Jamie', group: 'base', state: 'CONTENT_READY' },
-  { slug: 'mai', nameZh: '火舞', nameEn: 'Mai', group: 'year2', state: 'CONTENT_READY' },
-  { slug: 'zangief', nameZh: '桑吉尔夫', nameEn: 'Zangief', group: 'base', state: 'CONTENT_READY' },
-  { slug: 'cammy', nameZh: '嘉米', nameEn: 'Cammy', group: 'base', state: 'CONTENT_READY' }
+  { slug: 'jamie', nameZh: '杰米', nameEn: 'Jamie', group: 'base', state: 'GOLD_PAGE_READY' },
+  { slug: 'mai', nameZh: '火舞', nameEn: 'Mai', group: 'year2', state: 'GOLD_PAGE_READY' },
+  { slug: 'zangief', nameZh: '桑吉尔夫', nameEn: 'Zangief', group: 'base', state: 'GOLD_PAGE_READY' },
+  { slug: 'cammy', nameZh: '嘉米', nameEn: 'Cammy', group: 'base', state: 'GOLD_PAGE_READY' }
 ] as const;
 
 const ROOT = process.cwd();
