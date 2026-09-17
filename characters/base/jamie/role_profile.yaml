@@ -1,0 +1,95 @@
+schema_version: '1.0'
+character: jamie
+status: SOURCE_CLOSURE_DRAFT
+role_profile:
+  identity:
+    one_line: '杰米先用正常地面战拿击倒；真正的特色是每次优势都要决定“现在继续压”还是“喝一杯投资未来”。'
+    preferred_range: '中近距离。先靠 5MP、2MP、2MK 和轻攻击拿接触；等级提高后再增加新的近身/路线问题。'
+    win_pattern: '正常接触 -> 稳定击倒 -> 继续压或安全喝酒 -> 喝酒等级改变下一次可用工具 -> 再回到打/投/资源选择。'
+    lose_pattern: '为了赶 Lv4 乱喝酒、Lv0 基础没建立、把每一级当成新的 Combo 清单、只看伤害不看当前 Oki/位置。'
+  character_model:
+    essence_short: '把每次击倒当成一笔预算：现在继续压，还是牺牲一点当前优势喝一杯，让后面的自己多出新的工具。'
+    essence_detail: '杰米不是“喝满以后才开始玩”的角色。Lv0 就应该先靠正常地面按钮、轻攻击、2MK 取消绿冲和稳定反空去打完整的 Street Fighter；喝酒只是把已经成立的回合继续放大。常见的 623K 箭踢收尾能给你稳定击倒，真正属于杰米的决定发生在击倒之后：这次保持位置、继续打/投更值，还是现在拿一个安全窗口喝一杯，把未来的工具箱做大。喝酒等级升高后，不只是伤害数字变化，而是可用问题变多：Lv1 有新的连段/起攻，Lv2 加入 236K Bakkai 路线工具，Lv3 出现 63214K 近身抓取，Lv4 再进入更完整的优化。对手因此也必须开始管你的喝酒窗口。杰米的核心不是“尽快 Lv4”，而是学会用当前回合换未来回合，并且知道什么时候这个交换根本不划算。'
+    force_opponent_to:
+    - '先尊重 5MP / 轻攻击 / 2MK 的正常地面接触。'
+    - '不敢每次击倒后都无脑抢按，从而给你投、近身抓取或安全喝酒窗口。'
+    payoff_after_respect:
+    - '继续打 / 投 / 骗拆。'
+    - '拿一次安全喝酒，把后续工具变多。'
+    - 'Lv3 后用 63214K 近身抓取惩罚只会站着防。'
+    core_tradeoff: '当前压力与位置 vs 未来喝酒等级。次级取舍是稳定 +39 起攻、+42 更强击倒、角落 +4 压力和资源结果之间怎么选。'
+    successful_round:
+    - '正常地面接触'
+    - '623K 稳定击倒'
+    - '判断继续压还是安全喝酒'
+    - '等级改变下一次可用威胁'
+    - '对手开始针对喝酒/抓取'
+    - '回到打 / 投 / 资源循环'
+    common_misplays:
+    - '见到击倒就喝，明明当前 Oki/位置更值钱。'
+    - '觉得 Lv0 不能打，结果基础地面战完全没建立。'
+    - '把等级当四套 Combo 清单，而不是未来 option space 的变化。'
+    unique_decision: '同一次优势不只决定眼前伤害，还决定要不要把当前回合的一部分价值投资到以后；这是杰米相对标准角色真正多出来的跨回合资源决策。'
+    transfer_in:
+    - '普通地面确认、反空、2MK 取消绿冲。'
+    - '打 / 投 / 骗拆和击倒后起攻。'
+    new_skill:
+    - '喝酒等级经济：当前优势 vs 未来工具。'
+    - '同一 starter 按 end-state 和等级价值分流。'
+    unlearn:
+    - '资源有机会就一定要攒。'
+    - '每次击倒都应该做同一个固定 Oki。'
+  glossary:
+  - {term: '喝酒等级（Drink Level）', meaning: '喝酒后提高的角色等级；等级越高，后续可用招式/路线越多。不是开局必须先做满的任务。'}
+  - {term: '22P｜喝酒动作（The Devil Inside）', meaning: '花时间喝一口来提高喝酒等级；只有窗口足够安全、未来收益值得时才做。'}
+  - {term: '236K｜旋转腿路线工具（Bakkai）', meaning: 'Lv2 后可用的必杀；常用于伤害/收尾分流，L 版本可进入 +42 家族。'}
+  - {term: '63214K｜近身抓取（Tenshin）', meaning: 'Lv3 后可用，用来惩罚已经愿意站着防的对手。'}
+  - {term: 'Oki｜击倒后的起身压制', meaning: '把人打倒后，利用你先恢复的时间安排下一轮打/投/骗拆。'}
+  tools:
+  - {input: '5MP', name: '中拳接触', use: 'Lv0 就很重要的近身接触；Block +2，先建立对手愿意防的基础。'}
+  - {input: '2MP', name: '蹲中拳', use: '6F 可取消的稳定确认按钮，常用于连段和近身转换。'}
+  - {input: '2MK', name: '蹲中脚', use: '7F 可取消低段；常见 Drive Rush 入口，被防时不要自动继续。'}
+  - {input: '623K', name: '箭踢收尾', use: '稳定击倒家族；常见 H 版本进入 +39 一类下一轮。'}
+  - {input: '236K', name: '旋转腿 | Bakkai', use: 'Lv2 后路线工具；L 版本常用于 +42 Oki，具体强度/资源按路线说明。'}
+  - {input: '63214K', name: '近身抓取 | Tenshin', use: 'Lv3 后加入；只在已经建立尊重的近身回合真正有价值。'}
+  - {input: '22P', name: '喝酒动作', use: '把当前安全窗口换成更高喝酒等级；先比较是否会丢掉更值钱的 Oki/位置。'}
+  normal_frame_table:
+    source_id: SRC02
+    scope: '完整 18 个基础 Normal；Drink-gated unique attacks / specials 由核心工具与 Reference 承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-6', recovery: '7', hit: '+5', block: '0', cancel: 'C', damage: '300', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-6', recovery: '11', hit: '+3', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '8', active: '8-11', recovery: '14', hit: '+6', block: '+2', cancel: '-', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '9', active: '9-11', recovery: '17', hit: '+2', block: '-3', cancel: 'C', damage: '600', note: '挥空额外 +1F recovery。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '5', active: '5-14 (multi-window)', recovery: '20', hit: '+1', block: '-3', cancel: 'C', damage: '900', note: '仅首段 active 可取消；空中命中 launch。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '15', active: '15-17', recovery: '21', hit: '+3', block: '-5', cancel: 'C', damage: '800', note: 'PC crumple；空中命中 launch。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '9', hit: '+5', block: '-1', cancel: 'C', damage: '250', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '11', hit: '+3', block: '-3', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-8', recovery: '13', hit: '+5', block: '-1', cancel: 'C', damage: '600', note: '挥空额外 +2F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '7', active: '7-9', recovery: '18', hit: '-1', block: '-6', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '8', active: '8-12', recovery: '23', hit: '0', block: '-8', cancel: 'C', damage: '900', note: '强制站立；前两 active 可取消。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '9', active: '9-15 (multi-window)', recovery: '28', hit: 'KD', block: '-11', cancel: '-', damage: '800', note: 'PC hard knockdown；空中命中 launch。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '7', active: '7-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '700', note: '空中命中 launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '10', active: '10-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中命中 slam knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '8', active: '8-19 (multi-window)', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中命中 launch。'}
+  resource:
+    name: '喝酒等级'
+    input: '22P'
+    gain: '在足够安全的窗口完成喝酒；部分 236P 派生等路线也能提高等级。'
+    changes: '等级越高，解锁的新工具越多，并改变部分路线/伤害/后续。'
+    rule: '先比较当前 Oki/位置和未来等级收益；不是看到安全窗口就自动喝。'
+  key_numbers:
+  - {label: '5MP', value: '8F / Hit +6 / Block +2', decision: 'Lv0 就能建立尊重；被防后仍是你的回合优势。'}
+  - {label: '2MK', value: '7F / Hit -1 / Block -6 / C', decision: '常见取消绿冲入口；不取消时不要当成持续压力。'}
+  - {label: 'H 623K 箭踢', value: '常见 KD +39', decision: '稳定击倒后进入“继续压 vs 喝酒”的核心判断。'}
+  - {label: 'L 623K / L 236K', value: '常见 KD +42', decision: '更强起攻/安全跳家族；需要对应喝酒等级。'}
+  - {label: 'Lv4 Hermit', value: '常见 KD +20', decision: '位置化下一轮，不是假装固定贴脸。'}
+  constraints:
+  - 'Lv0 不是残缺状态；基础地面确认和稳定击倒必须先会。'
+  - '喝酒会花时间；安全不等于值得，当前角落/起攻可能更有价值。'
+  - 'Lv1–Lv4 路线必须带等级条件，不能把高等级工具投影成通用招式。'
+  - '63214K 近身抓取从 Lv3 才可用；前台首次出现必须写输入和功能。'
