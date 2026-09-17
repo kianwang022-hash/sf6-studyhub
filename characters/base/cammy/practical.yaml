@@ -1,0 +1,315 @@
+schema_version: '1.0'
+character: cammy
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-17'
+  primary_source: SRC03
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Cammy S0 is the fast grounded loop. Spacing-dependent Cannon Strike and Hooligan stay later as adaptations to defensive habits.'
+stages:
+  S0: {label: 最小可玩, short: 'Light / Low / 236K Loop'}
+  S1: {label: 基本功成型, short: 'Oki / PC / Corner'}
+  S2: {label: 实战结构化, short: '2MK DRC / DI / Reversal'}
+  S3: {label: 选择成熟, short: 'Carry / Divekick / Hooligan'}
+  S4: {label: 高分上探, short: 'SA / Setplay / Kill'}
+shared_packages:
+  M_ARROW_LOOP:
+    label: 'M 236K 基础回合循环'
+    sequence: '236MK -> KD -> 66'
+    next: 'strike / throw / walk-back shimmy / block'
+    verification: verified
+    sources: [SRC03]
+  SPIKE_CARRY:
+    label: 'H Arrow -> H Spike 运角'
+    sequence: '236HK > 623HK'
+    next: '按实际落点/空中高度决定 66 起攻还是回中距离'
+    verification: conditioned
+    conditions: [airborne_height, screen_position]
+    sources: [SRC03]
+  SWEEP_31:
+    label: '2HK +31 简单起攻'
+    sequence: '2HK hit -> +31 -> 66 -> about +13'
+    next: 'meaty / throw / shimmy'
+    verification: verified
+    sources: [SRC03]
+  CANNON_STRIKE_PLUS:
+    label: 'j.214K 合格落点后的近身判断'
+    sequence: 'j.214K low/good spacing -> block around +1~+2'
+    next: '5LP frame trap / throw / walk-back shimmy'
+    verification: conditioned
+    conditions: [landing_height, spacing, often_corner_or_favorable_contact]
+    sources: [SRC02, SRC03]
+opportunities:
+- id: light
+  title: 'Light｜嘉米最重要的基础入口'
+  stage: S0
+  subtitle: '小命中 -> 236K -> 前冲 -> 再来一轮'
+  guide:
+    short: '嘉米先靠低认知负担的地面确认反复制造近身回合。别一开始就靠 divekick/Hooligan 硬闯。'
+    play_target: T01
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: 'light chain block -> stop / throw / shimmy'
+    value: {drive: 0}
+    next_loop: '继续近身观察'
+    why: '先建立确认纪律，不自动播不安全尾段。'
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LP > 2LP > 5LK > 236MK'
+    value: {damage: 'about 1290', drive: 0}
+    next_loop_package: M_ARROW_LOOP
+    why: '最基础、最应该自动化的嘉米回合循环。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S0
+    choice: 低段
+    input: '2LK > 2LP > 5LK > 236MK'
+    value: {drive: 0}
+    next_loop_package: M_ARROW_LOOP
+    why: '低段 starter 也复用同一个 M Arrow 下一轮。'
+    verification: verified
+    sources: [SRC03]
+- id: ground
+  title: '地面接触｜5HP / 2MK 先把普通 SF6 打扎实'
+  stage: S0
+  subtitle: '走速 + 正常按钮才是嘉米最稳定的入口'
+  rows:
+  - result: WHIFF
+    stage: S0
+    choice: 不乱追
+    input: '5HP / 2MK whiff -> stop'
+    value: {drive: 0}
+    next_loop: '走位重置'
+    why: 'rushdown 不等于每次都向前。'
+  - result: BLOCK
+    stage: S0
+    choice: 重读
+    input: '5HP block (-3) -> stop / block | 2MK block (-5) -> stop unless already DRC'
+    value: {state: 'turn ends unless DRC'}
+    next_loop: '回防 / 距离 / 观察'
+    why: '先学什么时候不是你的回合。'
+    verification: verified
+    sources: [SRC01, SRC02]
+- id: oki
+  title: '2HK｜不用复杂连段也能学真正起攻'
+  stage: S1
+  subtitle: '+31 -> 前冲 +13 是很干净的训练标尺'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: 基础 Oki
+    input: '2HK hit -> 66'
+    value: {kd: '+31', frame: 'after dash about +13'}
+    next_loop_package: SWEEP_31
+    why: '用一个简单击倒先把 meaty / throw / shimmy 练成条件反射。'
+    verification: verified
+    sources: [SRC03]
+  - result: PC
+    stage: S3
+    choice: 更强 Oki
+    input: '2HK (PC) -> 66'
+    value: {kd: '+43'}
+    next_loop: '按当前 spacing 进入 stronger Oki / setup'
+    why: 'PC 带来更大时间预算，但具体 setup 仍按距离验证。'
+    verification: conditioned
+    sources: [SRC03]
+- id: punish
+  title: 'Punish / Shimmy PC｜骗到大破绽就稳定重罚'
+  stage: S1
+  subtitle: '嘉米的高价值惩罚同时买伤害和运角'
+  rows:
+  - result: PC
+    stage: S1
+    choice: Shimmy默认
+    input: '5HP (PC) > 236LK > 623HK'
+    value: {drive: 0, carry: high}
+    next_loop_package: SPIKE_CARRY
+    why: '骗拆投成功后的标准高价值答案；0 Drive 并运角。'
+    verification: conditioned
+    conditions: [spiral_arrow_spacing]
+    sources: [SRC03]
+  - result: PC
+    stage: S2
+    choice: 挡无敌后稳定
+    input: '2HP (PC) > 5HP > 236HK > 623HK'
+    value: {drive: 0, carry: high}
+    next_loop_package: SPIKE_CARRY
+    why: '防住无敌技后用固定路线重罚。'
+    verification: verified
+    sources: [SRC03]
+  - result: PC
+    stage: S2
+    choice: 角落 Drive Reversal punish
+    input: '2MP (PC) > 5HP > 236HK > 623HK'
+    value: {drive: 0, state: corner}
+    next_loop: 'Corner -> meaty / throw / shimmy / block'
+    why: '角落已有位置，优先保墙和下一轮。'
+    verification: verified
+    sources: [SRC03]
+- id: 2mk
+  title: '2MK｜取消绿冲后的 Easy / Damage 两档'
+  stage: S2
+  subtitle: '同一个 starter，只保留真正不同的执行/价值'
+  guide:
+    short: 'Easy 路线复用 M Arrow loop；S3 才加入更重的 carry/damage 路线。'
+    play_target: T03
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回距离'
+    why: 'Drive 只为真实机会付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 分状态
+    input: '未 DRC: 接触结束 | 已 DRC: strike / throw / shimmy / stop'
+    value: {drc_cost: 3}
+    next_loop: '按是否已取消绿冲处理'
+    why: '2MK 被防 -5；不要把本体和 DRC 压力混在一起。'
+    verification: verified
+    sources: [SRC01, SRC02]
+  - result: HIT
+    stage: S2
+    choice: Easy默认
+    input: '2MK > DRC > 5MP > 5HP > 236MK'
+    value: {drive: 3}
+    next_loop_package: M_ARROW_LOOP
+    why: '执行短、稳定，并直接回最熟悉的回合循环。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S3
+    choice: Damage + Carry
+    input: '2MK > DRC > 2HP > 5HP > 236HK > 623HK'
+    value: {drive: 3, carry: high}
+    next_loop_package: SPIKE_CARRY
+    why: '多执行换更高伤害/运角；只有需要这个价值时才偏离 Easy。'
+    verification: verified
+    sources: [SRC03]
+- id: di
+  title: 'DI｜位置比“最长 Combo”更重要'
+  stage: S2
+  subtitle: '角落 / 版中 / 自己背墙分别处理'
+  rows:
+  - result: WALL_SPLAT
+    stage: S2
+    choice: 角落稳定
+    input: 'DI wall splat > 5HP > 236LK > 623HK'
+    value: {state: corner}
+    next_loop: '保墙 -> strike / throw / shimmy'
+    why: '已经拿到墙角，直接保位置。'
+    verification: verified
+    sources: [SRC03]
+  - result: DI_PC
+    stage: S2
+    choice: 版中稳定
+    input: 'DI (PC) > 5HP > 236LK > 623HK'
+    value: {carry: high}
+    next_loop_package: SPIKE_CARRY
+    why: '简单、稳定，顺便把人往角落送。'
+    verification: verified
+    sources: [SRC03]
+  - result: DI_PC_BACK_TO_CORNER
+    stage: S3
+    choice: 位置优先
+    input: 'DI (PC) > 2HP > 5HP > 5HK > 236MK'
+    value: {state: 'about +36 situation', carry: 'position recovery'}
+    next_loop: '66 -> throw / strike / shimmy'
+    why: '自己背墙时，这条存在的理由是修位置，不是单纯多伤害。'
+    verification: conditioned
+    conditions: [back_to_corner]
+    sources: [SRC03]
+- id: cannon_strike
+  title: 'j.214K｜空中俯冲踢只有落点合格才进入优势'
+  stage: S3
+  subtitle: '不要背“Divekick = plus”这种错误规则'
+  guide:
+    short: '当前帧表给普通 Cannon Strike 被防范围 -6～+5；实际值随高度/距离变化。先在 Training Mode 学会什么落点才真的有利。'
+    play_target: T06
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: 合格落点
+    input: 'j.214K low / good spacing -> block around +1~+2'
+    value: {frame: 'conditioned +1~+2'}
+    next_loop_package: CANNON_STRIKE_PLUS
+    why: '只有实际落点给了优势，才进入 frame trap / throw / shimmy。'
+    verification: conditioned
+    conditions: [landing_height, spacing]
+    sources: [SRC02, SRC03]
+  - result: BLOCK
+    stage: S3
+    choice: 落点差
+    input: 'j.214K high / bad spacing -> respect negative frames'
+    value: {frame: 'can be negative; published range -6～+5'}
+    next_loop: '防守 / 拉开，不强抢'
+    why: '同一招不是固定帧差。'
+    verification: verified
+    sources: [SRC02]
+  - result: PC
+    stage: S3
+    choice: 确认
+    input: 'j.214K (PC) > 5LP > 5LK > 236MK'
+    value: {drive: 0}
+    next_loop_package: M_ARROW_LOOP
+    why: 'spacing 合格时 PC 直接转回熟悉主循环。'
+    verification: conditioned
+    conditions: [landing_spacing_connects_5lp]
+    sources: [SRC03]
+- id: hooligan
+  title: '236P｜特殊翻身是针对防守习惯的选择树'
+  stage: S3
+  subtitle: '不是一条万能突进，也不是主 neutral'
+  rows:
+  - result: READ
+    stage: S3
+    choice: 对固定站防/拆投
+    input: '236P -> choose follow-up by opponent habit'
+    value: {state: 'option family'}
+    next_loop: 'Cannon Strike / Fatal Leg Twister / other follow-up -> 再观察反应'
+    why: '先有地面压力让对手形成习惯，Hooligan 才有欺骗价值。'
+    verification: conditioned
+    conditions: [opponent_defensive_habit, followup_specific_timing]
+    sources: [SRC03]
+- id: super
+  title: 'SA｜最后才把已有确认换成收局资源'
+  stage: S4
+  subtitle: '只收当前来源给出完整字符串的 SA1 / SA3；SA2 仍后端等待闭合'
+  guide:
+    short: 'Super 不是新起手。优先从已经会的 light / 2MK DRC / 5HP 确认进入；只有血量与资源值得时才占工作记忆。'
+    play_target: T08
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA1低资源现金化
+    input: '2LP > 2LP > 5LK > SA1'
+    value: {sa: 1}
+    next_loop: '按 SA1 实际落点继续角落推进 / 重读'
+    why: '当前来源有完整字符串；作为低 SA 现金化保留，但不抢基础 Arrow 主循环。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S4
+    choice: SA3斩杀
+    input: '2MK > DRC > 2HP > 5HP > 623HK(1st hit) > SA3'
+    value: {drive: 3, sa: 3}
+    next_loop: 'Kill；未击杀则按 SA3 落点重新进场'
+    why: '完整当前字符串已闭合；只在斩杀线/大幅压血时展开。'
+    verification: verified
+    sources: [SRC03]
+backend_only:
+- {label: 'SA2 practical family', reason: '当前英文来源没有稳定完整字符串；禁止补猜。'}
+- {label: 'Midscreen DI delayed-DR extension', reason: '来源只给 damage extension note，完整字符串尚未闭合。'}
+- {label: 'Advanced Cannon Strike throw-tech traps', reason: '需要 spacing/timing Training Mode closure。'}
+- {label: 'Hooligan detailed follow-up tree', reason: '保留为 option family；每个 follow-up 的 risk/reward/timing 仍需独立闭合。'}
