@@ -1,0 +1,95 @@
+schema_version: '1.0'
+character: zangief
+status: SOURCE_CLOSURE_DRAFT
+role_profile:
+  identity:
+    one_line: '老桑先用走路和大拳脚让对手不敢乱动；对手愿意站着防以后，360P 高伤指令投才真正成立。'
+    preferred_range: '中近距离慢慢压空间。6HP、3MP、5HP/5HK 等建立尊重；进入近身后打击与 360P 互相放大。'
+    win_pattern: '走路压空间 -> 打击/反空让对手老实 -> 正帧或近身 -> strike / 360P 二择 -> 看击倒距离决定保证起攻还是重新追近 -> 对手因怕投开始跳/抢按 -> 再用拳脚抓。'
+    lose_pattern: '没建立尊重就裸 360P、只看抓投伤害不看位置、把所有大 KD 数字当固定贴脸 Oki、不会走路只靠跳/DR/特殊技接近。'
+  character_model:
+    essence_short: '先用拳脚让对手觉得“站着防最安全”，再用 360P 指令投惩罚这份尊重；对手怕投后，拳脚又更容易抓到他的跳、退和抢按。'
+    essence_detail: '桑吉尔夫不是“近身就猜 SPD”的角色。稳定的老桑先靠走路、站位和大按钮一点点压缩对手的动作，让乱按、乱跳、乱后退都要付代价。6HP 被防后你先恢复，3MP 能稳定接收尾，反空和 Lariat 让对手不能随便跳；这些打击不是为了凑长 Combo，而是在制造一种心理状态：对手开始相信“老实防比较安全”。这时 360P 高伤指令投才真正变成核心威胁。对手因为怕抓开始提前跳、后退或抢按，你又回到打击、反空和延迟按钮去抓这些反应。另一个必须学会的区别是：抓投或 Lariat 后的数字很大，不代表一定贴脸继续猜。很多情况下距离被拉开，下一步只是 Drive Rush 或走路重新接近再读人。老桑真正经营的是尊重、恐惧和空间，而不是 Combo 数量。'
+    force_opponent_to:
+    - '不敢随便抢按或乱跳。'
+    - '愿意站着防，接受你靠近和正帧接触。'
+    payoff_after_respect:
+    - '360P 高伤指令投变成真实威胁。'
+    - '对手怕投后开始跳/退/抢按，让你的拳脚更容易命中。'
+    - '正帧接触后形成 strike / command grab / block 的高价值猜拳。'
+    core_tradeoff: '眼前抓投伤害 vs 击倒后的距离/下一次接近成本；以及 strike 建立尊重 vs 360P 吃掉尊重。'
+    successful_round:
+    - '走路压空间'
+    - '拳脚/反空让对手不敢乱动'
+    - '进入正帧或近身'
+    - '打击 / 360P 二择'
+    - '判断保证起攻还是重新追近'
+    - '抓对手为躲投产生的新反应'
+    common_misplays:
+    - '一近身就裸 360P，没有先做出尊重。'
+    - '觉得高伤抓投永远比 strike route 更值。'
+    - '把 +28/+30/+38 等数字直接理解成保证贴脸。'
+    - '不会走路压空间，只靠跳和冲刺接近。'
+    unique_decision: '标准 strike/throw 角色也会猜投，但老桑的 command grab 回报高到足以重塑对手的整个防守；你要主动经营“对手愿不愿意站着防”，并把击倒后的距离成本算进每次选择。'
+    transfer_in:
+    - '走位/距离、反空、确反、DI 反应。'
+    - '普通 strike/throw/shimmy 基础。'
+    new_skill:
+    - 'command-grab respect loop。'
+    - '保证 Oki 与重新追近读人的区分。'
+    - '把位置成本和下一次接近成本加入路线价值。'
+    unlearn:
+    - '近身就应该立刻 360P。'
+    - 'KD 数字越大就越等于贴脸压制。'
+    - 'Combo 少等于角色简单。'
+  glossary:
+  - {term: '360P｜高伤指令投（SPD / Screw Piledriver）', meaning: '对站着防守的对手有效；真正的价值来自你先用拳脚让对手愿意防。'}
+  - {term: 'PP｜双臂旋转攻击（Double Lariat）', meaning: '常见反空/确认/收尾工具；命中高度不同会改变击倒后的距离和帧差。'}
+  - {term: '正帧 / 你先恢复', meaning: '被防或命中后你比对手更早恢复，因此更有资格先出下一招。'}
+  - {term: '重新追近再读人', meaning: '不是保证贴脸 Oki；先靠 DR/走路接近，再判断对手下一步。'}
+  tools:
+  - {input: '6HP', name: '头槌 | Headbutt', use: '14F；Hit +8 / Block +4，是建立尊重和进入 strike/360P 的核心正帧接触。'}
+  - {input: '3MP', name: 'Hellstab', use: '7F 可取消；常见稳定确认/连段桥接。'}
+  - {input: 'PP', name: '双臂旋转攻击 | Double Lariat', use: '15F；反空/收尾核心，但不同命中状态会给不同 KD，不能记一个万能 Oki。'}
+  - {input: 'PPP', name: 'OD 双臂旋转攻击', use: '12F；花 Drive 换更强击倒/起攻，+38 是重要状态桶之一。'}
+  - {input: '360P', name: '高伤指令投 | SPD', use: '5F；只有对手已经愿意站着防时才真正可怕。不同强度影响伤害/距离。'}
+  - {input: '5HK', name: '站重脚', use: 'Block +1；高承诺正帧工具，用来继续建立尊重。'}
+  normal_frame_table:
+    source_id: SRC02
+    scope: '23 个公开 Normal / material variants；rapid-cancel 与 charged 版本单列。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '7', active: '7-9', recovery: '9', hit: '+4', block: '+2', cancel: 'C', damage: '400', note: '可连打取消。'}
+    - {input: '5LP rapid', name: 'Standing Light Punch (Rapid)', startup: '4', active: '4-6', recovery: '9', hit: '+4', block: '+2', cancel: 'C', damage: '400', note: '连打取消版本。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '7', active: '7-8', recovery: '17', hit: '-2', block: '-4', cancel: 'C', damage: '400', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '9', active: '9-12', recovery: '17', hit: '+2', block: '-2', cancel: '-', damage: '700', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '10', active: '10-13', recovery: '19', hit: '+1', block: '-4', cancel: '-', damage: '900', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '16', active: '16-18', recovery: '22', hit: '+3', block: '-3', cancel: '-', damage: '1000', note: 'CH/PC launch；蓄力中有 armor。'}
+    - {input: '5HP charged', name: 'Standing Heavy Punch (Charged)', startup: '32', active: '32-34', recovery: '22', hit: 'KD', block: '+3', cancel: '-', damage: '1400', note: 'Armor 4-34F；高承诺正帧版本。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '13', active: '13-16', recovery: '21', hit: '+3', block: '+1', cancel: '-', damage: '1000', note: '空中命中 launch；PC launch。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '6', active: '6-7', recovery: '8', hit: '+6', block: '+1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LP rapid', name: 'Crouching Light Punch (Rapid)', startup: '3', active: '3-4', recovery: '8', hit: '+6', block: '+1', cancel: 'C', damage: '300', note: '连打取消版本。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '4', active: '4-6', recovery: '12', hit: '0', block: '-3', cancel: '-', damage: '250', note: '可连打取消。'}
+    - {input: '2LK rapid', name: 'Crouching Light Kick (Rapid)', startup: '3', active: '3-5', recovery: '12', hit: '0', block: '-3', cancel: '-', damage: '250', note: '连打取消版本。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '8', active: '8-10', recovery: '16', hit: '+3', block: '-1', cancel: 'C', damage: '700', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '9', active: '9-11', recovery: '18', hit: '+3', block: '-2', cancel: '-', damage: '700', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '11', active: '11-19', recovery: '35', hit: 'KD', block: '-20', cancel: '-', damage: '1000', note: 'PC ground bounce。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '12', active: '12-14', recovery: '27', hit: 'KD', block: '-13', cancel: '-', damage: '1000', note: 'PC 更长 hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: ''}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '8', active: '8-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中命中 slam knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '可蓄力。'}
+    - {input: 'j.HK charged', name: 'Jumping Heavy Kick (Charged)', startup: '32', active: '32-37', recovery: 'Landing 20', hit: '-', block: '-', cancel: '-', damage: '1500', note: '公开 charged Normal variant；落地硬直变化。'}
+  key_numbers:
+  - {label: '6HP', value: '14F / Hit +8 / Block +4', decision: '被防后仍是你的回合优势；直接进入打击 / 360P / block 的核心接口。'}
+  - {label: '5HK', value: '13F / Block +1', decision: '高承诺正帧接触；继续建立尊重。'}
+  - {label: 'H 360P', value: '5F / 3300', decision: '尊重成立后的高收益抓投；不是无条件最优。'}
+  - {label: 'PP Lariat', value: '15F / Block -12 / KD 随命中状态变化', decision: '确认/反空/收尾；不能给一个万能 Oki 数字。'}
+  - {label: 'PPP OD Lariat', value: '12F / 常见 KD +38…57', decision: '+38 桶可进入 DR 6HP active meaty / 低段 / 360P / block。'}
+  constraints:
+  - 'S0 就必须有一条“对手老实防 -> 360P”的读人逻辑，否则不像 Zangief。'
+  - 'SPD 后中场经常拉开距离；下一步常是重新追近读人，不是保证贴脸。'
+  - 'Lariat / OD Lariat 的 KD 受命中高度/状态影响，前台必须带条件桶。'
+  - '高伤抓投不等于永远优于 strike route；位置与下一次接近成本必须一起算。'
