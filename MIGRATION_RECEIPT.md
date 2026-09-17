@@ -1,6 +1,6 @@
 # SF6 Repository Migration Receipt
 
-Status: `CANONICAL_REPO_SWITCHED / CURRENT_GOLD_LANE_MIGRATED / ASTRO_BROWSER_GATE_PASS`
+Status: `CANONICAL_REPO_SWITCHED / CURRENT_GOLD_LANE_MIGRATED / BATCH01_GOLD_PAGE_READY`
 Date: 2026-09-17
 
 Source repository: `kianwang022-hash/StudyHub`
@@ -12,55 +12,67 @@ Destination: `kianwang022-hash/sf6-studyhub`
 
 ## Rule
 
-From this point forward, **new SF6 work is written only in `sf6-studyhub`**. The old `StudyHub/projects/sf6` tree is historical migration evidence and may be read during migration, but it is no longer a writable SF6 source of truth.
+From this point forward, **new SF6 work is written only in `sf6-studyhub`**. The old `StudyHub/projects/sf6` tree is historical migration evidence, not a second writable source of truth.
 
-## Migration completed for the active lane
+## Active-lane migration complete
 
-- authority/contracts are at repo root;
+- authority/contracts live at repository root;
 - 31-character `ROSTER.yaml` and `CHARACTER_SKILL_TRANSFER_MAP.md` are present;
 - Ryu canonical `meta.yaml` + `practical.yaml` are present;
 - Jamie / Mai / Zangief / Cammy canonical `role_profile.yaml` + `practical.yaml` are present;
 - Batch01 current receipt, model-route audit, value closure, backend closure and Pareto v0.3 are present;
-- Astro static frontend is now the active engineering projection for the five-character Gold lane.
+- Astro static frontend is the active engineering projection for the five-character Gold lane;
+- four final per-character Gold receipts are stored under `receipts/`.
 
-Remaining 26 legacy character packages are intentionally not copied wholesale yet. Their roster identity and rollout state are preserved, and their old StudyHub package remains available as migration evidence until each character enters current Source Closure.
+The remaining 26 legacy character packages are intentionally not copied wholesale. Their roster identity and rollout state are preserved, and old StudyHub packages remain migration evidence until each character enters current Source Closure.
 
-## Automated QA receipt
+## Final browser + visual QA receipt
 
-GitHub Actions run `35170904374` completed successfully on 2026-09-17.
+GitHub Actions Astro Gate run **`35171931415`** completed successfully.
 
-It executed, rather than merely scheduling:
+It executed:
 
 1. Node dependency installation;
 2. `astro build`;
 3. Playwright Chromium installation;
 4. local Astro preview server;
 5. real headless-browser desktop/mobile gate;
-6. static `dist` artifact upload.
+6. dark-theme visual screenshots for the five active characters;
+7. representative light-theme Role + Practical screenshots;
+8. static `dist` and `sf6-visual-qa` artifact upload.
 
-The gate passed for the current five-character lane and checks:
+The accepted gate verifies:
 
 - Role + Practical render for all five;
-- complete baseline Normal table counts: Ryu 18 / Jamie 18 / Mai 18 / Zangief 23 / Cammy 18;
+- complete Normal counts: Ryu 18 / Jamie 18 / Mai 18 / Zangief 23 / Cammy 18;
 - S0–S4 + ALL controls;
 - character-specific S0 identity-floor inputs;
 - S4 folded at default S0 and revealed under ALL;
-- no ellipsis/generic-starter leakage in learner route cells;
-- Jamie Drink-investment mental model;
-- Zangief respect -> `360P` model;
+- no ellipsis / generic-starter leakage in learner route cells;
+- Jamie future-Drink semantics;
+- Zangief respect -> `360P` semantics;
 - Cammy spacing/height language for Cannon Strike;
-- no document-level mobile horizontal overflow.
+- no document-level mobile horizontal overflow at 390×844;
+- shared dark/light runtime remains readable under visual inspection.
 
-This is **real automated browser QA**. It does not by itself sign the four Batch01 characters as `GOLD_PAGE_READY`; final visual/human acceptance of hierarchy, density and teaching feel still precedes Gold receipt signoff.
-
-## Accepted semantic state at cutover
+## Accepted state after QA
 
 - Ryu: `GOLD_REFERENCE`.
-- Jamie: `CONTENT_READY / GOLD_QA_PENDING`.
-- Mai: `CONTENT_READY / GOLD_QA_PENDING`.
-- Zangief: `CONTENT_READY / GOLD_QA_PENDING`.
-- Cammy: `CONTENT_READY / GOLD_QA_PENDING`.
+- Jamie: `GOLD_PAGE_READY`.
+- Mai: `GOLD_PAGE_READY`.
+- Zangief: `GOLD_PAGE_READY`.
+- Cammy: `GOLD_PAGE_READY`.
 
-## Frontend transition
+## Public deployment
 
-Astro is now the engineering/build layer for the active Gold lane and produces static HTML pages. The repository keeps YAML/JSON/Markdown as semantic Source of Truth. A standalone single-HTML export remains a planned delivery target, not the canonical authoring/runtime model.
+`.github/workflows/pages.yml` successfully builds and uploads a GitHub Pages artifact. The deploy step currently receives GitHub `404` because repository Pages is not yet enabled.
+
+Required repository setting:
+
+`Settings -> Pages -> Build and deployment -> Source -> GitHub Actions`
+
+Once enabled, the existing workflow can publish the accepted Astro `dist/`. This hosting toggle is separate from semantic/render Gold acceptance.
+
+## Frontend state
+
+Astro is the engineering/build layer and produces static HTML. YAML/JSON/Markdown remain semantic Source of Truth. A standalone single-HTML export remains a delivery target, not the canonical authoring model.
