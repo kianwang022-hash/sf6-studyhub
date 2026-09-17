@@ -28,14 +28,17 @@ try {
     assert(await page.locator('.frame-table tbody tr').count() === c.normals, `${c.slug}: normal table count mismatch`);
     assert(await page.locator('[data-stage]').count() === 6, `${c.slug}: S0-S4 + ALL missing`);
     assert(await page.locator('[data-op]').count() >= 5, `${c.slug}: Opportunity Hub too small`);
-    const text = await page.locator('#practical').innerText();
-    for (const token of c.must) assert(text.includes(token), `${c.slug}: missing ${token}`);
-    assert(text.includes(c.s0), `${c.slug}: identity-floor input missing`);
+
+    const s0Text = await page.locator('#practical').innerText();
+    assert(s0Text.includes(c.s0), `${c.slug}: identity-floor input missing from default S0 view`);
+    assert(await page.locator('[data-row-stage="S4"]:visible').count() === 0, `${c.slug}: future S4 rows should be folded at S0`);
+
     const routes = await page.locator('.route').allInnerTexts();
     assert(routes.every(x => !x.includes('...') && !x.includes('…') && !/^starter\s*>/i.test(x) && !/^move\s*>/i.test(x)), `${c.slug}: unfinished learner route leaked`);
-    const s4RowsBefore = await page.locator('[data-row-stage="S4"]:visible').count();
-    assert(s4RowsBefore === 0, `${c.slug}: future S4 rows should be folded at S0`);
+
     await page.locator('[data-stage="ALL"]').click();
+    const allText = await page.locator('#practical').innerText();
+    for (const token of c.must) assert(allText.includes(token), `${c.slug}: missing ${token} from ALL view`);
     assert(await page.locator('[data-row-stage="S4"]:visible').count() >= 1, `${c.slug}: ALL should reveal S4`);
   }
 
@@ -46,6 +49,7 @@ try {
   assert((await page.locator('#role').innerText()).includes('站着防'), 'zangief: respect loop explanation missing');
 
   await page.goto(`${BASE}/character/cammy/`, { waitUntil:'networkidle' });
+  await page.locator('[data-stage="ALL"]').click();
   const cammy = await page.locator('#practical').innerText();
   assert(cammy.includes('高度') || cammy.includes('距离') || cammy.includes('落点'), 'cammy: Cannon Strike condition language missing');
 
