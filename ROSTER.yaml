@@ -1,0 +1,39 @@
+schema_version: 1
+roster_version: 2026-09-10
+groups:
+  base:
+    - {slug: ryu, name_zh: 隆, name_en: Ryu}
+    - {slug: luke, name_zh: 卢克, name_en: Luke}
+    - {slug: jamie, name_zh: 杰米, name_en: Jamie}
+    - {slug: chunli, name_zh: 春丽, name_en: Chun-Li}
+    - {slug: guile, name_zh: 古烈, name_en: Guile}
+    - {slug: kimberly, name_zh: 金伯利, name_en: Kimberly}
+    - {slug: juri, name_zh: 朱莉, name_en: Juri}
+    - {slug: ken, name_zh: 肯, name_en: Ken}
+    - {slug: blanka, name_zh: 布兰卡, name_en: Blanka}
+    - {slug: dhalsim, name_zh: 达尔西姆, name_en: Dhalsim}
+    - {slug: ehonda, name_zh: E. 本田, name_en: E. Honda}
+    - {slug: deejay, name_zh: 迪杰, name_en: Dee Jay}
+    - {slug: manon, name_zh: 曼侬, name_en: Manon}
+    - {slug: marisa, name_zh: 马丽莎, name_en: Marisa}
+    - {slug: jp, name_zh: JP, name_en: JP}
+    - {slug: zangief, name_zh: 桑吉尔夫, name_en: Zangief}
+    - {slug: lily, name_zh: 莉莉, name_en: Lily}
+    - {slug: cammy, name_zh: 嘉米, name_en: Cammy}
+  year1:
+    - {slug: rashid, name_zh: 拉希德, name_en: Rashid}
+    - {slug: aki, name_zh: A.K.I., name_en: A.K.I.}
+    - {slug: ed, name_zh: 爱德, name_en: Ed}
+    - {slug: akuma, name_zh: 豪鬼, name_en: Akuma}
+  year2:
+    - {slug: vega, name_zh: 维嘉, name_en: M. Bison}
+    - {slug: terry, name_zh: 特瑞, name_en: Terry}
+    - {slug: mai, name_zh: 不知火舞, name_en: Mai}
+    - {slug: elena, name_zh: 艾莲娜, name_en: Elena}
+  year3:
+    - {slug: sagat, name_zh: 沙加特, name_en: Sagat}
+    - {slug: cviper, name_zh: 深红毒蛇, name_en: C. Viper}
+    - {slug: alex, name_zh: 亚历克斯, name_en: Alex}
+    - {slug: ingrid, name_zh: 英格丽德, name_en: Ingrid}
+  year4:
+    - {slug: yasmine, name_zh: 雅思敏, name_en: Yasmine}
