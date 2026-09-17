@@ -1,0 +1,93 @@
+schema_version: '1.1'
+character:
+  slug: ryu
+  name_zh: 隆
+  name_en: Ryu
+  group: base
+  controls: classic
+  archetype_tags: [balanced, fireball, fundamentals, strike_throw]
+content:
+  architecture: LEARN_PLAY_GROW
+  status: CONTENT_PASS
+  built_at: '2026-09-12'
+  language: zh-CN
+  english_aliases: true
+version_scope:
+  baseline_patch: '2026-08-03'
+  checked_through: '2026-09-16'
+  current_source_update: '2026-08-31'
+  note: 'Year 4 数值/路线以当前来源为基准；空中/地面命中、角落、spacing 与 active-frame 变化显式 conditioned。'
+core_loop:
+  start: N02
+  path: [N02, T01, R01, E01, O01, T02, N02]
+  label: '236P / 5MK 控距离；跳就 623P；5MP / 轻攻击命中转稳定击倒；击倒后接固定起攻。'
+role_profile:
+  identity:
+    one_line: '标准型：用 236P 与中距离拳脚控制前进和跳跃，接触后靠稳定击倒反复起攻。'
+    preferred_range: '中距离进入 5MP / 2MK 的确认距离；远处用 236P 管线，跳入用 623P。'
+    win_pattern: '控地面 -> 逼跳/逼防 -> 命中确认 -> Ender -> 固定 Oki -> 再次接触。'
+    lose_pattern: '挥空重拳、错误提交 unsafe 尾段、为了 Denjin 放弃安全局面、把条件 Oki 当成通用数字。'
+  tools:
+  - {input: '236P', name: 'Hadoken', use: '远中距控线；逼对手跳、Parry 或改变走位。'}
+  - {input: '623P', name: 'Shoryuken', use: '主反空；反空命中后按实际高度重读，不套地面 +37。'}
+  - {input: '5MP', name: 'st.MP', use: '近身主确认；Hit +7 可接 2MP，Block -1 默认停手。'}
+  - {input: '2MK', name: 'cr.MK', use: '中距离低段 DRC 入口；Whiff / Block / Hit 必须分开。'}
+  - {input: '5HK', name: 'st.HK', use: 'Shimmy / 大确反 PC 的高价值入口。'}
+  - {input: '6HP', name: 'Solar Plexus Strike', use: '前进重拳；Block +3，可进入投 / Shimmy；Hit 可接运版路线。'}
+  - {input: '22P', name: 'Denjin Charge', use: '安全窗口换未来资源；没有窗口就不硬蓄。'}
+  normal_frame_table:
+    source_id: SRC02
+    scope: '完整 18 个基础 Normal；Unique / TC / Special 继续由核心工具与 Reference 承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '7', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-7', recovery: '11', hit: '+2', block: '-4', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '6', active: '6-9', recovery: '11', hit: '+7', block: '-1', cancel: 'C', damage: '600', note: '挥空额外 +2F recovery。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '9', active: '9-11', recovery: '18', hit: '+4', block: '-4', cancel: '-', damage: '700', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '10', active: '10-14', recovery: '18', hit: '+4', block: '-2', cancel: 'C', damage: '800', note: '强制站立。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '12', active: '12-15', recovery: '20', hit: '+9', block: '+1', cancel: '-', damage: '900', note: '空中命中 launch；PC 膝崩。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '9', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '10', hit: '+3', block: '-1', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-9', recovery: '13', hit: '+5', block: '0', cancel: 'C', damage: '600', note: '挥空额外 +2F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '19', hit: '+1', block: '-6', cancel: 'C', damage: '500', note: '主低段 DRC 入口。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '9', active: '9-14', recovery: '22', hit: '+1', block: '-7', cancel: 'C', damage: '800', note: 'Active 1 命中时强制站立。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '9', active: '9-11', recovery: '23', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: 'PC 延长 KD / Hard Knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '700', note: '空中命中造成 launch KD。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'CH / PC 时 slam KD。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-17', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  resource:
+    name: Denjin
+    input: '22P'
+    gain: '安全窗口完成蓄电。'
+    changes: '强化部分 236P / 214P 路线与近身资源价值。'
+    rule: '只有未来收益高于当前 Oki / 位置时才换。'
+  key_numbers:
+  - {label: '5MP', value: '6F / Hit +7 / Block -1', decision: 'Hit 可确认；Block 默认停。'}
+  - {label: '2MK', value: '8F / Hit +1 / Block -6', decision: 'DRC 是资源型入口，不自动提交。'}
+  - {label: '6HP', value: '20F / Hit +6 / Block +3', decision: 'Block 后有真实近身决策权。'}
+  - {label: '623HP grounded combo', value: 'KD +37', decision: '66 后接固定 Oki；仅普通地面连段。'}
+  - {label: 'Denjin OD214P block', value: '+4', decision: '花 2 Drive 买近身正帧。'}
+  - {label: '+42 state', value: '236LK grounded / 236HK airborne', decision: '前跳 j.HK Safe Jump。'}
+  constraints:
+  - '623HP 反空命中高度会改变落点；不能复用地面连段 +37。'
+  - '2MK 被防但没 DRC 时，接触结束；不要把它当成已经进入压力。'
+  - 'OD236K 换边 / 运版受 starter、距离和高度影响，必须看条件。'
+  - 'Denjin 是路线资源，不是“有机会就一定蓄”的目标。'
+unlock_ladder:
+- {level: Lv0, state: PLAYABLE, goal: '236P / 5MK 控地面；跳就 623P；5MP 与轻攻击各有一条稳定确认；623HP 后固定接 66 -> 6HP。'}
+- {level: Lv1, state: KNOCKDOWN, goal: '加入基础 Oki、Shimmy / PC 惩罚、角落投循环和 OD236K 运版。'}
+- {level: Lv2, state: ADAPT, goal: '加入 2MK DRC、DI 与 Drive Reversal 场景；先认清 Whiff / Block / Hit。'}
+- {level: Lv3, state: SIGNATURE, goal: '同一机会开始按位置、Drive、Oki 与 Denjin 选择不同路线。'}
+- {level: Lv4, state: OPTIMIZE, goal: '加入 +42 Safe Jump、Kill、最大伤害与 spacing / airborne 条件优化。'}
+starter_courses:
+- {id: COURSE01, label: '打通 S0 一整轮', level: Lv0, target: O01, summary: '236P / 5MK 控地面 -> 5MP 命中确认 -> 623HP -> 66 -> 6HP。'}
+- {id: COURSE02, label: '补轻攻击确认', level: Lv0, target: T01, summary: '2LK -> 5LP -> 5LP -> 623HP；与 5MP 路线共用 +37 Oki。'}
+- {id: COURSE03, label: '加入 2MK DRC', level: Lv2, target: T03, summary: '先分 Whiff / Block / Hit，再决定是否花 3 Drive。'}
+- {id: COURSE04, label: '加入 Punish / DI', level: Lv2, target: C01, summary: '挡无敌、Shimmy、DI 成功后使用固定路线，不临场现编。'}
+- {id: COURSE05, label: '开始做价值选择', level: Lv3, target: T06, summary: '默认伤害、运版、位置、Denjin 之间只保留真正不同的答案。'}
+- {id: COURSE06, label: '最后加入条件优化', level: Lv4, target: T08, summary: '+42 Safe Jump、Kill、最大伤害与条件路线。'}
+side_tools: {reference: true, notes_hook: true}
+site: {hero_assets_migrated: false, render_verified: false, gold: false}
