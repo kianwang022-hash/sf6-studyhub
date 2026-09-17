@@ -1,0 +1,101 @@
+schema_version: '1.1'
+character: mai
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+
+progression_policy:
+  principle: 'Whole → Part → Whole；先让grounded接触→L Bachi +27→dash +9→下一轮成立，再由真实条件决定何时加入Musasabi、OD扩展与SA1 stock。'
+  score_rule: 'MR/段位是结果证据，不是单独能力定义；晋级先看行为稳定，再把分数作为Reality evidence。'
+  current_ui: '前台一次只展开一个当前学习焦点；机会入口Hub仍是具体决策中心。'
+
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '不用Musasabi/stock也能打一整轮：地面接触→L Bachi +27→dash +9→固定下一步。'
+    add_now:
+      - 'cr.LP/cr.MP/cr.MK负责正常地面接触。'
+      - '命中稳定转L Shinobi Bachi；被防不自动提交。'
+      - '典型跳跃用Ryuuenjin等稳定反空。'
+      - 'Bachi +27后dash +9先固定一个普通打击答案。'
+    gate:
+      lab: 'L Bachi基础确认与主要反空稳定。'
+      match: '真人里能不用Musasabi/stock完成完整grounded Loop。'
+    defer: ['Musasabi safe jump', 'OD Ryuuenbu扩展', 'SA1 stock', '高资源空中setplay']
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把+27→dash +9起攻、fan后看跳与地面normal分工稳定下来。'
+    add_now:
+      - '+27→dash +9后逐步加入投/shimmy/block reversal。'
+      - 'Kachousen后继续看跳/走位。'
+      - '地面normal按距离分工，不为了fan/stock乱冒险。'
+      - '对空、DI、大确反与基础防守稳定。'
+    gate:
+      match: '主要失误不再来自基础确认掉落、Bachi Oki空白、发扇忘看跳或fan替代grounded判断。'
+    defer: ['Musasabi主线', 'OD Ryuuenbu条件扩展', 'SA1 stock']
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '让Drive、位置和对手逃法改变地面选择，同时正确理解OD Ryuuenbu Year4边界。'
+    add_now:
+      - 'cr.MK/Drive路线按Hit/Block/Whiff与资源分流。'
+      - 'mash/tech/jump/reversal改变strike/throw/shimmy/block。'
+      - 'OD Ryuuenbu block -3按中场/角落/空中真实用途使用，不当自动主动权。'
+      - '按位置/Drive/墙边价值选择稳定/运位/Oki/停手。'
+    gate:
+      match: '能解释为什么花资源、停手或用OD Ryuuenbu；同一反制重复出现会调整。'
+    defer: ['完整Musasabi/+42树', 'SA1 stock/boosted specials', '高资源角落优化']
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '把Musasabi与+41/+42 safe-jump family作为条件化空中分支接进地面Loop。'
+    add_now:
+      - 'Musasabi/+41/+42只在真实击倒/setup条件成立时进入。'
+      - '空中setplay条件不足会回grounded主线。'
+      - '按位置、Drive、血量选择grounded/air branch与稳定/Oki/伤害。'
+      - '复盘解释为什么这里值得进入Musasabi。'
+    gate:
+      behavior: '五域多数MATCH_STABLE；空中setplay不破坏grounded判断。'
+      reality: '1500 MR看跨多个时段持续表现；单次达到或短期掉分不自动定义能力。'
+    defer: ['SA1 stock完整资源层', 'OD角落高资源', '窄条件safe jump']
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: '用SA1 stock、boosted specials、OD角落与高资源路线提高已稳定机会的兑现。'
+    add_now:
+      - 'SA1 stock/boosted specials、角落OD Ryuuenbu、高资源/SA与窄条件safe jump。'
+      - 'Stock是收益放大器，不成为比赛KPI。'
+      - '回放重点转向ground/fan/air比例与资源兑现是否被适应。'
+    gate:
+      behavior: '新增高阶资源/空中路线不让基础grounded Loop、反空与接触判断退化。'
+      reality: '具体高分目标暂不硬编码；由后续明确目标MR再冻结。'
+    defer: []
+
+domains:
+  execution:
+    label: 操作
+    capabilities:
+      - {id: EX01, stage: S0, label: 'L Bachi基础确认', node: R01, upgrade_evidence: '低段/中拳稳定。'}
+      - {id: EX02, stage: S0, label: '反空Ryuuenjin', node: D01, upgrade_evidence: '典型跳跃稳定。'}
+  neutral:
+    label: 立回
+    capabilities:
+      - {id: NE01, stage: S1, label: 'Kachousen不替代grounded判断', node: N01, upgrade_evidence: '发扇后仍反空/走位。'}
+      - {id: NE02, stage: S1, label: '中距离normal有分工', node: N02, upgrade_evidence: '不为stock乱冒险。'}
+  contact:
+    label: 接触判断
+    capabilities:
+      - {id: CO01, stage: S0, label: 'Hit/Block/Whiff分流', node: T01, upgrade_evidence: '被防不自动Bachi。'}
+      - {id: CO02, stage: S2, label: 'OD Ryuuenbu条件明确', node: R08, upgrade_evidence: '中场/角落/空中不混写。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+      - {id: OF01, stage: S0, label: '+27→dash+9闭环', node: O01, upgrade_evidence: '实战打投稳定。'}
+      - {id: OF02, stage: S3, label: 'Musasabi safe jump后置', node: O02, upgrade_evidence: '不抢基础Loop。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+      - {id: DA01, stage: S2, label: 'mash/tech/jump/reversal分流', node: C01, upgrade_evidence: '会调ground/air选择。'}
+      - {id: DA02, stage: S2, label: '读错回Neutral', node: D02, upgrade_evidence: '不硬续。'}
+
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '不用Musasabi/stock也能完成Bachi最小整轮并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '+27→dash+9、fan纪律与基础防守多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'Drive/OD条件与常见逃法已结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；Musasabi不破坏grounded判断；1500仅作持续Reality milestone。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'stock/boost/角落优化围绕真实高分瓶颈；具体目标MR另行冻结。'}
