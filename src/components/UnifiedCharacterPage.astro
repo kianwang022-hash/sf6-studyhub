@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CharacterHero from './CharacterHero.astro';
+import MarkdownPanel from './MarkdownPanel.astro';
+import RolePanel from './RolePanel.astro';
+import PracticalWorkbench from './PracticalWorkbench.astro';
+const { character } = Astro.props;
+---
+<BaseLayout title={`${character.nameZh} · ${character.nameEn} | SF6 StudyHub`}>
+  <CharacterHero character={character} />
+
+  <div class="v6-content-shell" data-character-page={character.slug}>
+    <div class="character-status-strip">
+      <div><span>当前角色</span><b>{character.nameZh} {character.nameEn}</b></div>
+      <div class={`availability ${character.isReady ? 'ready' : 'pending'}`}>{character.state}</div>
+    </div>
+
+    <section class="tab-panel" data-panel="learn" hidden>
+      <MarkdownPanel markdown={character.learnMarkdown} kind="learn" title={`${character.nameZh} 学习内容`} />
+    </section>
+
+    <section class="tab-panel" data-panel="role">
+      {character.isReady ? (
+        <RolePanel role={character.roleProfile} />
+      ) : (
+        <div class="pending-panel"><div class="pending-kicker">SOURCE CLOSURE PENDING</div><h2>{character.nameZh} · 角色资料尚未进入当前 Gold 批次</h2><p>选角与页面壳保留；不会用旧角色页冒充已验收内容。</p></div>
+      )}
+    </section>
+
+    <section class="tab-panel" data-panel="practical" hidden>
+      {character.isReady ? (
+        <PracticalWorkbench practical={character.practical} />
+      ) : (
+        <div class="pending-panel"><div class="pending-kicker">PRACTICAL PENDING</div><h2>{character.nameZh} · 实战 Hub 待 Source Closure</h2><p>后续批量推进时会按同一个 S0–S4 / Opportunity Hub / 四列表格合同接入。</p></div>
+      )}
+    </section>
+
+    <section class="tab-panel" data-panel="reference" hidden>
+      <MarkdownPanel markdown={character.referenceMarkdown} kind="reference" title={`${character.nameZh} 资料库`} />
+    </section>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const page = document.querySelector('[data-character-page]');
+      if (!page) return;
+      const validTabs = ['learn', 'role', 'practical', 'reference'];
+      const buttons = [...document.querySelectorAll('[data-top-tab]')];
+      const panels = [...document.querySelectorAll('[data-panel]')];
+      const select = document.getElementById('heroCharacterSelect');
+      const base = select?.dataset.base || '/';
+
+      function openTab(tab, updateHash = true) {
+        if (!validTabs.includes(tab)) tab = 'role';
+        panels.forEach(panel => panel.hidden = panel.dataset.panel !== tab);
+        buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.topTab === tab));
+        document.body.dataset.currentTab = tab;
+        if (updateHash) history.replaceState(null, '', `#${tab}`);
+        if (tab === 'practical') document.body.classList.add('practical-active');
+        else document.body.classList.remove('practical-active', 'fullscreen');
+      }
+
+      buttons.forEach(btn => btn.addEventListener('click', () => openTab(btn.dataset.topTab)));
+      document.querySelectorAll('[data-open-tab]').forEach(btn => btn.addEventListener('click', () => {
+        openTab(btn.dataset.openTab);
+        page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }));
+      select?.addEventListener('change', () => {
+        const root = base.endsWith('/') ? base : `${base}/`;
+        location.href = `${root}character/${encodeURIComponent(select.value)}/#role`;
+      });
+      addEventListener('hashchange', () => openTab(location.hash.slice(1), false));
+      openTab(validTabs.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'role', false);
+    })();
+  </script>
+</BaseLayout>
