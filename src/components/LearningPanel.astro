@@ -1,0 +1,82 @@
+---
+import MarkdownPanel from './MarkdownPanel.astro';
+const { character } = Astro.props;
+const stages = character.progression?.progression_stages ?? [];
+const policy = character.progression?.progression_policy ?? {};
+const stageCode = (stage) => String(stage?.id ?? '').match(/^(S\d+)/)?.[1] ?? '';
+---
+<section class="learning-workspace" data-learning-workspace={character.slug}>
+  {stages.length > 0 && (
+    <section class="learning-stage-shell">
+      <div class="learning-stage-head">
+        <div>
+          <span class="learning-kicker">LEARNING PATH · WHOLE → PART → WHOLE</span>
+          <h2>当前只推进一个学习阶段</h2>
+          <p>{policy.principle}</p>
+        </div>
+        <div class="learning-stage-rule">{policy.score_rule}</div>
+      </div>
+
+      <div class="learning-stage-rail" role="tablist" aria-label="角色学习阶段">
+        {stages.map((stage, index) => (
+          <button type="button" role="tab" class={index === 0 ? 'active' : ''} data-learning-stage={stage.id} aria-selected={index === 0 ? 'true' : 'false'}>
+            <small>{stageCode(stage)}</small>
+            <b>{stage.label}</b>
+          </button>
+        ))}
+      </div>
+
+      <div class="learning-stage-panels">
+        {stages.map((stage, index) => (
+          <article class="learning-stage-panel" data-learning-panel={stage.id} hidden={index !== 0}>
+            <div class="learning-goal">
+              <span>当前目标</span>
+              <strong>{stage.learner_goal}</strong>
+            </div>
+            <div class="learning-stage-grid">
+              <div>
+                <h3>现在加入</h3>
+                <ul>{(stage.add_now ?? []).map((item) => <li>{item}</li>)}</ul>
+              </div>
+              <div>
+                <h3>通过信号</h3>
+                {Object.entries(stage.gate ?? {}).map(([key, value]) => <p><b>{key}</b><span>{String(value)}</span></p>)}
+              </div>
+              <div>
+                <h3>暂时后置</h3>
+                <ul>{(stage.defer ?? []).map((item) => <li>{item}</li>)}</ul>
+              </div>
+            </div>
+            {(stage.hub_focus ?? []).length > 0 && (
+              <div class="learning-to-practical">
+                <span>这一阶段对应的实战焦点</span>
+                <div>{stage.hub_focus.map((item) => <code>{item}</code>)}</div>
+                <button type="button" data-open-tab="practical">进入实战 Hub →</button>
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <MarkdownPanel markdown={character.learnMarkdown} kind="learn" title={`${character.nameZh} 学习内容`} />
+</section>
+
+<script is:inline>
+  (() => {
+    document.querySelectorAll('[data-learning-workspace]').forEach((workspace) => {
+      const buttons = [...workspace.querySelectorAll('[data-learning-stage]')];
+      const panels = [...workspace.querySelectorAll('[data-learning-panel]')];
+      const open = (id) => {
+        buttons.forEach((button) => {
+          const active = button.dataset.learningStage === id;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        panels.forEach((panel) => panel.hidden = panel.dataset.learningPanel !== id);
+      };
+      buttons.forEach((button) => button.addEventListener('click', () => open(button.dataset.learningStage)));
+    });
+  })();
+</script>
