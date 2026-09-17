@@ -1,0 +1,94 @@
+schema_version: '1.0'
+character: cammy
+status: SOURCE_CLOSURE_DRAFT
+role_profile:
+  identity:
+    one_line: '嘉米先用极快、很干净的地面接触反复制造近身回合；等对手形成固定防守习惯，再用俯冲踢、骗拆投和 Hooligan 去针对。'
+    preferred_range: '中近距离。走速 + 5MP/5HP/2MK 找接触，确认到 236K 后迅速重建近身打投。'
+    win_pattern: '地面快按钮找接触 -> 236K 稳定收尾/运角 -> 前冲打/投/骗拆 -> 观察对手防法 -> 用俯冲踢/Hooligan/PC针对 -> 角落继续循环。'
+    lose_pattern: '把俯冲踢当万能正帧、Hooligan 当主 neutral、只追最大伤害忽略 carry/Oki、一直向前却不观察对手反应。'
+  character_model:
+    essence_short: '先靠非常扎实的地面把对手按进近身打投；等他形成固定防法，再用俯冲踢、骗拆投和特殊翻身去惩罚“已经学会”的防守。'
+    essence_detail: '嘉米看起来有很多花哨的空中/特殊移动，但她最稳定的骨架反而很朴素：快走速、可靠轻攻击、5MP/5HP/2MK 接触，命中后用 236K 向前旋转踢收尾，再前冲回到 strike / throw / shimmy。她先靠这套高速而干净的地面循环让对手开始尊重近身。等对手固定拆投、看到靠近就按 4F、或者习惯只站着防时，嘉米的角色特色才真正打开：j.214K 空中俯冲踢的高度/距离会改变被防后的帧差，236P Hooligan 则是一整组针对固定防守习惯的分支。她的重点不是“永远向前”，而是能很快重复制造同一个近身问题，再根据对手的答案换进入方式。一个小命中只要能换到 carry、Oki 和下一次逼迫，就可能比单纯多几百伤害更值。'
+    force_opponent_to:
+    - '先尊重快地面按钮，不敢随便抢按。'
+    - '开始形成固定防守：拆投、站防、跳、reversal 等。'
+    payoff_after_respect:
+    - '普通 throw / shimmy / PC。'
+    - 'spacing 合格的 j.214K 俯冲踢继续制造近身决策。'
+    - '236P Hooligan 针对固定 defense 的二层变化。'
+    core_tradeoff: '稳定地面进入 vs 更高波动但更难防的特殊进入方式；以及多一点伤害 vs 更好的 carry / Oki / 下一轮速度。'
+    successful_round:
+    - '走速/地面快按钮找接触'
+    - '确认到 236K 收尾'
+    - '前冲进入打/投'
+    - '观察对手是按、拆、跳还是凹'
+    - '用 shimmy / 俯冲踢 / Hooligan 针对'
+    - '运到角落继续循环'
+    common_misplays:
+    - 'j.214K 乱按，把条件正帧当通用正帧。'
+    - '236P Hooligan 当主 neutral，没先建立地面压力。'
+    - '只追最大伤害，忽略 236K / 623K 的 carry 与下一轮。'
+    - '一直冲不观察，错过根据防守反应调整的真正优势。'
+    unique_decision: '她并不是靠一个特殊资源，而是靠“回合循环速度”取胜：很快重新进入近身，并用 spacing-dependent 空中/特殊进入惩罚对手已经形成的防守规则。'
+    transfer_in:
+    - 'light confirm、2MK 取消绿冲、strike/throw/shimmy。'
+    - '反空、PC/DI、击倒后 Oki。'
+    new_skill:
+    - '俯冲踢高度/距离的条件判断。'
+    - '高速 re-entry / carry。'
+    - 'Hooligan option family 和对 defensive response 的快速适应。'
+    unlearn:
+    - 'Divekick 看起来压住了就一定正帧。'
+    - '有 Hooligan 就应该经常 Hooligan。'
+    - 'rushdown = 永远向前。'
+  glossary:
+  - {term: '236K｜向前旋转踢（Spiral Arrow）', meaning: '最常见地面确认收尾；用来运角并接回下一轮，没确认时不要近距离乱交。'}
+  - {term: '623K｜升空踢（Cannon Spike）', meaning: '主要反空/反击工具；被防很危险，不能当普通 pressure 按钮。'}
+  - {term: 'j.214K｜空中俯冲踢（Cannon Strike）', meaning: '高度/距离决定被防后的局面；落得够低/spacing 合格时才可能拿到有利。'}
+  - {term: '236P｜特殊翻身进入（Hooligan）', meaning: '一组 mixup 入口，可接不同 follow-up；用来针对固定防守习惯，不是万能突进。'}
+  - {term: '骗拆投（Shimmy）', meaning: '假装要投，后退让对手投挥空，再用重拳等打击惩罚。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '6F / Hit +6 / Block -1；近身主确认，正常地面骨架核心。'}
+  - {input: '5HP', name: '站重拳', use: '8F 可取消；主确认/PC 惩罚按钮。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F 可取消低段；常见取消绿冲入口。'}
+  - {input: '236K', name: '向前旋转踢 | Spiral Arrow', use: '基础确认收尾与 carry；命中后前冲接回打/投。'}
+  - {input: '623K', name: '升空踢 | Cannon Spike', use: '反空/伤害收尾；被防极危险。'}
+  - {input: 'j.214K', name: '空中俯冲踢 | Cannon Strike', use: 'spacing/高度合格时改变近身节奏；不是固定正帧。'}
+  - {input: '236P', name: '特殊翻身 | Hooligan', use: '针对固定防守习惯的 option family；后置到地面循环稳定后。'}
+  - {input: '214P', name: '旋身拳 | Quick Spin Knuckle', use: '前进/穿飞道读法；L 版本被防约 -3，不当自动续压。'}
+  normal_frame_table:
+    source_id: SRC02
+    scope: '完整 18 个基础 Normal；Unique / specials / charged variants 由核心工具与 Reference 承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '7', hit: '+5', block: '-2', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-7', recovery: '10', hit: '+2', block: '-3', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '6', active: '6-9', recovery: '13', hit: '+6', block: '-1', cancel: '-', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-10', recovery: '18', hit: '+3', block: '-4', cancel: '-', damage: '700', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '8', active: '8-10', recovery: '20', hit: '+2', block: '-3', cancel: 'C', damage: '800', note: ''}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '11', active: '11-13', recovery: '21', hit: '+2', block: '-3', cancel: '-', damage: '900', note: 'PC launch；挥空额外 +2F recovery。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '8', hit: '+5', block: '-2', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '7', hit: '+3', block: '-2', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '7', active: '7-9', recovery: '14', hit: '+5', block: '-2', cancel: 'C', damage: '600', note: '挥空额外 +3F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '18', hit: '+1', block: '-5', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '10', active: '10-13', recovery: '15', hit: '+7', block: '+1', cancel: '-', damage: '700', note: '强制站立。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '9', active: '9-11', recovery: '24', hit: 'KD', block: '-10', cancel: '-', damage: '900', note: 'PC 更长 hard knockdown；空中命中 launch。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '4', active: '4-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '6', active: '6-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '600', note: '空中命中 launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '600', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '8', active: '8-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中命中 slam knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  key_numbers:
+  - {label: '5LP', value: '4F / Hit +5 / Block -2', decision: '基础打断/轻确认；近身循环核心。'}
+  - {label: '5HP', value: '8F / Block -3 / C', decision: '主确认与 PC 惩罚按钮。'}
+  - {label: '2MK', value: '8F / Hit +1 / Block -5 / C', decision: '主要低段 Drive 转换入口。'}
+  - {label: '2HK', value: 'Hit +31 / PC +43', decision: '普通命中 dash 后约 +13；PC 更强起攻。'}
+  - {label: 'j.214K Cannon Strike', value: 'Block 约 -6…+5（高度/距离）', decision: '绝不能记成固定正帧；只在合适落点进入后续。'}
+  - {label: 'H 214P Quick Spin Knuckle', value: 'Block +3', decision: '较慢正帧推进；不是 S0 主 neutral。'}
+  constraints:
+  - 'Cannon Strike 的被防帧差取决于高度/距离，任何正帧说明必须带条件。'
+  - 'Hooligan 是 option family，不是一条万能突进或固定 combo。'
+  - 'Spiral Arrow / Cannon Spike 后的实际 Oki 会受位置和空中命中高度影响。'
+  - '嘉米 S0 先建立地面循环；花哨特殊进入过早会掩盖她真正稳定的骨架。'
