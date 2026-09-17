@@ -1,0 +1,54 @@
+---
+const { role } = Astro.props;
+const model = role?.character_model ?? {};
+const identity = role?.identity ?? {};
+const tools = role?.tools ?? [];
+const glossary = role?.glossary ?? [];
+const frameRows = role?.normal_frame_table?.rows ?? [];
+const keyNumbers = role?.key_numbers ?? [];
+const constraints = role?.constraints ?? [];
+const list = (value) => Array.isArray(value) ? value : value ? [value] : [];
+---
+<section id="role" class="section role-section">
+  <div class="section-head"><div><h2>ROLE · 角色理解</h2><p>先理解这个角色为什么这样打，再看数据。</p></div></div>
+  <div class="section-body">
+    <div class="essence">{model.essence_short ?? identity.one_line}</div>
+    {model.essence_detail && <div class="detail">{model.essence_detail}</div>}
+
+    <div class="model-grid">
+      <article class="mini-card"><h3>你在逼对手</h3><ul>{list(model.force_opponent_to).map((x) => <li>{x}</li>)}</ul></article>
+      <article class="mini-card"><h3>对手一旦尊重</h3><ul>{list(model.payoff_after_respect).map((x) => <li>{x}</li>)}</ul></article>
+      <article class="mini-card"><h3>核心取舍</h3><p>{model.core_tradeoff ?? identity.win_pattern}</p></article>
+      <article class="mini-card"><h3>真正新增的决策</h3><p>{model.unique_decision ?? identity.lose_pattern}</p></article>
+    </div>
+
+    {list(model.successful_round).length > 0 && <div class="mini-card" style="margin-top:10px"><h3>一局通常长这样</h3><p>{list(model.successful_round).join(' → ')}</p></div>}
+
+    {glossary.length > 0 && <>
+      <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>本角色先看懂这几个词</h2></div></div>
+      <div class="glossary">{glossary.map((g) => <div class="glossary-item"><b>{g.term}</b><span>{g.meaning}</span></div>)}</div>
+    </>}
+
+    {tools.length > 0 && <>
+      <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>关键工具</h2><p>输入优先；名字只是别名。</p></div></div>
+      <div class="tool-grid">{tools.map((t) => <div class="tool"><div class="input">{t.input}</div><div><b>{t.name}</b><p>{t.use}</p></div></div>)}</div>
+    </>}
+
+    {keyNumbers.length > 0 && <>
+      <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>会改变选择的数字</h2></div></div>
+      <div class="tool-grid">{keyNumbers.map((n) => <div class="tool"><div class="input">{n.value}</div><div><b>{n.label}</b><p>{n.decision}</p></div></div>)}</div>
+    </>}
+
+    {constraints.length > 0 && <div class="mini-card" style="margin-top:12px"><h3>最容易误读</h3><ul>{constraints.map((x) => <li>{x}</li>)}</ul></div>}
+  </div>
+</section>
+
+<section class="section role-section">
+  <div class="section-head"><div><h2>完整基础拳脚帧表</h2><p>{role?.normal_frame_table?.scope}</p></div></div>
+  <div class="table-wrap">
+    <table class="frame-table">
+      <thead><tr><th>输入 / 招式</th><th>发生</th><th>持续</th><th>硬直</th><th>Hit</th><th>Block</th><th>Cancel</th><th>伤害</th><th>备注</th></tr></thead>
+      <tbody>{frameRows.map((r) => <tr><td>{r.input}<br/><span style="color:var(--muted);font-family:inherit;font-weight:600">{r.name}</span></td><td>{r.startup}</td><td>{r.active}</td><td>{r.recovery}</td><td>{r.hit}</td><td>{r.block}</td><td>{r.cancel}</td><td>{r.damage}</td><td>{r.note}</td></tr>)}</tbody>
+    </table>
+  </div>
+</section>
