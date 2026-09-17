@@ -1,0 +1,306 @@
+schema_version: '1.0'
+character: zangief
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-17'
+  primary_source: SRC03
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Zangief S0 must already contain the strike -> respect -> command-grab loop.'
+stages:
+  S0: {label: 最小可玩, short: '走路 / Strike / 360P'}
+  S1: {label: 基本功成型, short: 'Punish / KD / Corner'}
+  S2: {label: 实战结构化, short: 'DRC / DI / 正帧分流'}
+  S3: {label: 选择成熟, short: '+38 / 距离 / 抓投反馈'}
+  S4: {label: 高分上探, short: 'SA / 特殊状态 / Kill'}
+shared_packages:
+  OD_LARIAT_38:
+    label: 'OD 双臂旋转 +38 强起攻'
+    sequence: 'PPP -> KD +38 -> DR -> 6HP active-frame meaty'
+    next: 'Block +4 -> 3MP / M 360P / block'
+    verification: conditioned
+    conditions: [od_lariat_plus38_bucket]
+    sources: [SRC03]
+  LARIAT_27:
+    label: '普通双臂旋转 +27 桶'
+    sequence: 'PP -> KD +27 -> DR'
+    next: '按距离选择 5MP / 2HK / L 360P / 继续走近'
+    verification: conditioned
+    conditions: [lariat_plus27_bucket, spacing]
+    sources: [SRC03]
+  SPD_RESET:
+    label: '360P 后重新追近'
+    sequence: '360P -> KD +28~30 -> DR / walk'
+    next: '重新读 strike / 360P / block；不是保证贴脸 Oki'
+    verification: conditioned
+    conditions: [strength, screen_position, spacing]
+    sources: [SRC03]
+opportunities:
+- id: hellstab
+  title: '3MP｜稳定确认入口'
+  stage: S0
+  subtitle: '先把最简单的 strike confirm 做稳'
+  guide:
+    short: '3MP 是 7F 可取消的稳定桥接。它的意义不是长连段，而是命中后可靠收尾、让对手开始尊重地面。'
+    play_target: T01
+  rows:
+  - result: WHIFF
+    stage: S0
+    choice: 停
+    input: '3MP whiff -> stop'
+    value: {drive: 0}
+    next_loop: '回走位 / 继续压空间'
+    why: '挥空后不要硬把双臂旋转播出来。'
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: '3MP block -> stop'
+    value: {frame: -3}
+    next_loop: '守 / 走位 / 等下一次接触'
+    why: '被防后不是你的强势回合。'
+    verification: verified
+    sources: [SRC01, SRC02]
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '3MP > PP'
+    value: {drive: 0, kd: 'state-dependent'}
+    next_loop: '先看击倒距离，再决定 DR 追近还是继续走路'
+    why: '最短、最容易复现的 strike confirm；先学会把命中兑现。'
+    verification: verified
+    sources: [SRC03]
+- id: headbutt
+  title: '6HP｜建立尊重的核心正帧接触'
+  stage: S0
+  subtitle: 'Hit 就确认；Block +4 才是老桑真正的角色问题'
+  guide:
+    short: '6HP 被防后你先恢复。S0 就要学“对手愿意防 -> 360P 才成立”，不能把指令投拖到很后面。'
+    play_target: T02
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 稳定确认
+    input: '6HP > 3MP > PP'
+    value: {drive: 0, frame: 'Hit +8 starter'}
+    next_loop: 'PP 击倒 -> 看距离'
+    why: '命中时直接兑现，不需要临场现编。'
+    verification: verified
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S0
+    choice: 打击
+    input: '6HP block (+4) -> 3MP'
+    value: {frame: '+4'}
+    next_loop: 'Hit -> PP | Block -> stop / 继续读'
+    why: '先用打击让对手相信“站着防更安全”。'
+    verification: verified
+    sources: [SRC01, SRC03]
+  - result: BLOCK
+    stage: S0
+    choice: 指令投
+    input: '6HP block (+4) -> M 360P'
+    value: {damage: 2900, frame: '+4 entry'}
+    next_loop_package: SPD_RESET
+    why: '对手已经愿意站着防时，command grab 才是角色核心收益。'
+    verification: conditioned
+    conditions: [in_spd_range, opponent_holds_ground]
+    sources: [SRC01, SRC03]
+  - result: BLOCK
+    stage: S2
+    choice: 反凹
+    input: '6HP block (+4) -> block'
+    value: {frame: '+4'}
+    next_loop: '挡住 reversal -> PC punish'
+    why: '怕 SPD 的对手会用无敌技逃；block 是同一猜拳里的必要答案。'
+- id: spd
+  title: '360P｜对手开始老实防以后'
+  stage: S0
+  subtitle: '高伤不等于自动继续贴脸'
+  guide:
+    short: '先建立尊重再抓。不同强度伤害/距离不同；抓完后大多是重新追近读人，不要把 +28/+30 直接当贴脸 Oki。'
+    play_target: T03
+  rows:
+  - result: READ
+    stage: S0
+    choice: 高伤默认
+    input: 'H 360P'
+    value: {damage: 3300, kd: '+28 approx'}
+    next_loop_package: SPD_RESET
+    why: '高回报，但下一次接近有成本；只有“对手愿意站着防”时才值得交。'
+    verification: conditioned
+    conditions: [range, opponent_grounded]
+    sources: [SRC01, SRC03]
+  - result: READ
+    stage: S1
+    choice: 距离/节奏
+    input: 'L 360P'
+    value: {damage: 2500, kd: '+30 approx'}
+    next_loop_package: SPD_RESET
+    why: '伤害低一些；具体为什么选轻版要和距离/后续一起判断。'
+    verification: conditioned
+    sources: [SRC01, SRC03]
+  - result: READ
+    stage: S3
+    choice: OD现金化
+    input: 'OD 360P'
+    value: {damage: 3400, drive: 2, kd: '+28 approx'}
+    next_loop_package: SPD_RESET
+    why: '多花 Drive 换更高当前回报；并不自动解决抓后重新接近的问题。'
+    verification: conditioned
+    sources: [SRC01, SRC03]
+- id: light
+  title: 'Light｜小机会换 +38 强起攻'
+  stage: S1
+  subtitle: '花 Drive 的理由是下一轮，不只是伤害'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Oki优先
+    input: '2LK > 5LP > PPP'
+    value: {drive: 2, kd: '+38 bucket'}
+    next_loop_package: OD_LARIAT_38
+    why: '小命中也能买到 +38 强起攻接口；Drive 是为了下一轮质量。'
+    verification: conditioned
+    conditions: [od_lariat_plus38_bucket]
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: 省资源 DRC
+    input: '2LK > 5LP > CDR > 2LP > 3MP > PP'
+    value: {drive: 3, kd: '+27 bucket'}
+    next_loop_package: LARIAT_27
+    why: '花 3 Drive 做稳定 strike conversion；与 +38 路线是不同价值。'
+    verification: conditioned
+    sources: [SRC03]
+- id: punish
+  title: 'Punish / PC｜大破绽先稳定重罚'
+  stage: S1
+  subtitle: '大机会也要比较 strike route 与 command grab 的位置价值'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 默认稳定
+    input: '6HK (PC) > 3MP > PP'
+    value: {drive: 0}
+    next_loop: 'PP 击倒 -> 看距离/命中桶'
+    why: '简单、0 Drive、稳定。'
+    verification: verified
+    sources: [SRC03]
+  - result: PC
+    stage: S2
+    choice: 指令投现金化
+    input: '挡住大无敌 -> H 360P'
+    value: {damage: 3300, drive: 0}
+    next_loop_package: SPD_RESET
+    why: '最直接的高伤惩罚；但要接受抓后的位置成本。'
+    verification: conditioned
+    sources: [SRC01, SRC03]
+- id: di
+  title: 'DI｜Strike 还是 360P'
+  stage: S2
+  subtitle: '同一个大机会，选伤害、位置或下一轮'
+  rows:
+  - result: DI_PC
+    stage: S2
+    choice: 指令投
+    input: 'DI (PC) -> H 360P'
+    value: {state: 'command-grab cashout'}
+    next_loop_package: SPD_RESET
+    why: '直接拿抓投回报；适合当前伤害价值更高时。'
+    verification: verified
+    sources: [SRC03]
+  - result: DI_PC
+    stage: S2
+    choice: Strike
+    input: 'DI (PC) > 6HP > 3MP > PP'
+    value: {state: 'strike route'}
+    next_loop: 'PP 击倒 -> 看位置/命中桶'
+    why: '保留 strike route 的位置/后续价值；不是所有大机会都该抓。'
+    verification: verified
+    sources: [SRC03]
+  - result: WALL_SPLAT
+    stage: S2
+    choice: 角落稳定
+    input: 'DI wall splat > 3MP > PP'
+    value: {state: corner}
+    next_loop: 'Corner -> 6HP meaty -> strike / 360P / shimmy / block'
+    why: '已有墙角位置，直接进入角色最强的尊重循环。'
+    verification: verified
+    sources: [SRC03]
+- id: od38
+  title: 'PPP +38｜成熟后的强起攻选择树'
+  stage: S3
+  subtitle: '这里才把“同一 +38 状态”的多个答案全部展开'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: 默认压力
+    input: 'PPP -> KD +38 -> DR -> 6HP active-frame meaty'
+    value: {drive: 2, kd: '+38'}
+    next_loop: 'Block +4 -> 3MP / M 360P / block'
+    why: '这是 +38 桶最重要的共享接口。'
+    verification: conditioned
+    conditions: [od_lariat_plus38_bucket]
+    sources: [SRC03]
+  - result: HIT
+    stage: S3
+    choice: 低段
+    input: 'PPP -> KD +38 -> DR -> 2MK > 3MP > PP'
+    value: {drive: 2, kd: '+38 entry'}
+    next_loop: 'PP 击倒 -> 再看状态'
+    why: '用低段惩罚只盯 SPD/throw 的防守。'
+    verification: conditioned
+    sources: [SRC03]
+  - result: HIT
+    stage: S3
+    choice: 指令投
+    input: 'PPP -> KD +38 -> DR -> M 360P'
+    value: {drive: 2, damage: 2900}
+    next_loop_package: SPD_RESET
+    why: '对手开始坐防时，+38 直接转成 command-grab 威胁。'
+    verification: conditioned
+    sources: [SRC03]
+  - result: HIT
+    stage: S3
+    choice: 反凹
+    input: 'PPP -> KD +38 -> DR -> block'
+    value: {drive: 2}
+    next_loop: '挡住 reversal -> PC punish'
+    why: '完整选择树必须包含“不按”。'
+    verification: conditioned
+    sources: [SRC03]
+- id: super
+  title: 'SA｜最后才为收局花大量 Drive / Super'
+  stage: S4
+  subtitle: '只留两种不同工作：简单 SA3 斩杀、Drive-heavy SA2 现金化'
+  guide:
+    short: '老桑 S4 不需要把所有 PC starter 都接一遍 Super。先保留一个简单 kill route 和一个真正不同的 6-Drive SA2 路线。'
+    play_target: T08
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3简单斩杀
+    input: '2LK > 5LP > PPP > SA3'
+    value: {drive: 2, sa: 3}
+    next_loop: 'Kill；未击杀则按 SA3 +26 / 实际距离重新进场'
+    why: '从已会的 light confirm 直接进入 SA3；简单、目的清楚，不需要再背另一个 starter。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S4
+    choice: 6 Drive + SA2
+    input: '2LK > 5LP > DRC > 2LP > 3MP > DRC > 2MP > 3MP > SA2'
+    value: {drive: 6, sa: 2}
+    next_loop: '按 SA2 实际落点 / 回合状态继续；只在当前回合价值值得清大量资源时使用'
+    why: '这条唯一的学习价值就是“极高资源换当前回报”；平时不占基础工作记忆。'
+    verification: verified
+    sources: [SRC03]
+backend_only:
+- {label: '6HK PC -> OD Lariat -> SA2 / SA3', reason: '完整字符串已闭合，但和当前两个 S4 Super 工作重叠；只有 damage/position 证明独立价值才再升。'}
+- {label: 'Power Stomps 完整取消家族', reason: 'Year4 hit-1 cancel 已确认，但 learner-facing 完整字符串/价值比较还未闭合。'}
+- {label: 'Borscht Dynamite juggle family', reason: '需要 starter-specific current strings 后再决定是否值得进 S3/S4。'}
+- {label: 'Lariat 其它 KD 桶', reason: '必须按具体命中高度/状态归类；Training Mode 未闭合前不能发布万能数字。'}
