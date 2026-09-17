@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CharacterHero from './CharacterHero.astro';
+import LearningPanel from './LearningPanel.astro';
 import MarkdownPanel from './MarkdownPanel.astro';
 import RolePanel from './RolePanel.astro';
 import PracticalWorkbench from './PracticalWorkbench.astro';
@@ -16,7 +17,11 @@ const { character } = Astro.props;
     </div>
 
     <section class="tab-panel" data-panel="learn" hidden>
-      <MarkdownPanel markdown={character.learnMarkdown} kind="learn" title={`${character.nameZh} 学习内容`} />
+      {character.isReady ? (
+        <LearningPanel character={character} />
+      ) : (
+        <div class="pending-panel"><div class="pending-kicker">LEARNING PENDING</div><h2>{character.nameZh} · 学习主线待 Source Closure</h2><p>角色仍可从固定的 31 人选择器进入，但不会把旧学习材料伪装成当前验收内容。</p></div>
+      )}
     </section>
 
     <section class="tab-panel" data-panel="role">
@@ -36,7 +41,11 @@ const { character } = Astro.props;
     </section>
 
     <section class="tab-panel" data-panel="reference" hidden>
-      <MarkdownPanel markdown={character.referenceMarkdown} kind="reference" title={`${character.nameZh} 资料库`} />
+      {character.isReady ? (
+        <MarkdownPanel markdown={character.referenceMarkdown} kind="reference" title={`${character.nameZh} 资料库`} />
+      ) : (
+        <div class="pending-panel"><div class="pending-kicker">REFERENCE PENDING</div><h2>{character.nameZh} · 当前资料库待 Source Closure</h2><p>Reference 只展示当前已验收内容，不把 legacy 资料直接投到前台。</p></div>
+      )}
     </section>
   </div>
 
