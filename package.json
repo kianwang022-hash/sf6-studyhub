@@ -6,10 +6,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "content:gate": "node tools/content_integration_gate.mjs",
     "browser:gate": "node tools/astro_browser_gate.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0",
+    "marked": "^15.0.0",
     "yaml": "^2.0.0"
   },
   "devDependencies": {
