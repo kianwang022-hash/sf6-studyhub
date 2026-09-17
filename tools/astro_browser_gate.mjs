@@ -24,6 +24,18 @@ try {
 
   await page.goto(`${BASE}/`, { waitUntil:'networkidle' });
   assert(await page.locator('.char-link').count() === 5, 'home must expose exactly current five-character Gold lane');
+
+  const basePath = new URL(`${BASE}/`).pathname.replace(/\/$/, '');
+  const homeHrefs = await page.locator('.char-link').evaluateAll((nodes) => nodes.map((n) => n.getAttribute('href')));
+  for (const c of chars) {
+    assert(homeHrefs.includes(`${basePath}/character/${c.slug}/`), `${c.slug}: broken home href under base path`);
+  }
+  await page.locator('.char-link').first().click();
+  await page.waitForLoadState('networkidle');
+  assert(page.url().includes(`${basePath}/character/ryu/`), 'home click did not navigate to Ryu under Pages base path');
+  assert(await page.locator('#role').count() === 1, 'Ryu Role missing after real home click');
+
+  await page.goto(`${BASE}/`, { waitUntil:'networkidle' });
   await page.screenshot({ path:`${SHOTS}/home-desktop.png`, fullPage:true });
 
   for (const c of chars) {
@@ -80,7 +92,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO BROWSER GATE PASS | 5 current characters | Role | Practical | S0 folding | route completeness | dark/light | mobile | visual receipts');
+  console.log('ASTRO BROWSER GATE PASS | home-click navigation | 5 current characters | Role | Practical | S0 folding | route completeness | dark/light | mobile | visual receipts');
 } finally {
   await browser.close();
 }
