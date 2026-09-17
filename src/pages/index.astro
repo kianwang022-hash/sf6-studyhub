@@ -1,18 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { CURRENT_CHARACTERS } from '../lib/characters';
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+import UnifiedCharacterPage from '../components/UnifiedCharacterPage.astro';
+import { loadCharacter } from '../lib/characters';
+const character = loadCharacter('ryu');
 ---
-<BaseLayout title="SF6 StudyHub">
-  <div class="shell">
-    <section class="hero">
-      <div><div class="eyebrow">CANONICAL SF6 LEARNING SYSTEM</div><h1>SF6<br/>STUDYHUB</h1><div class="en">Role → Practical → Guide → Reference</div></div>
-      <div class="status">ASTRO MIGRATION · CURRENT GOLD LANE</div>
-    </section>
-    <div class="home-grid">
-      {CURRENT_CHARACTERS.map((c) => <a class="char-link" href={`${base}/character/${c.slug}/`}>
-        <div><div class="eyebrow">{c.group}</div><h2>{c.nameZh}</h2><p>{c.nameEn}</p></div><div class="state">{c.state}</div>
-      </a>)}
-    </div>
-  </div>
-</BaseLayout>
+<UnifiedCharacterPage character={character} />
