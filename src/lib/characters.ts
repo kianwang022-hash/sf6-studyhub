@@ -31,6 +31,10 @@ function readYaml(file: string) {
   return YAML.parse(fs.readFileSync(file, 'utf8'));
 }
 
+function readYamlIf(file: string) {
+  return fs.existsSync(file) ? readYaml(file) : null;
+}
+
 function readTextIf(file: string) {
   return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
 }
@@ -60,9 +64,11 @@ export function loadCharacter(slug: string) {
   const isReady = Boolean(READY_STATE[slug]);
   let roleProfile: any = null;
   let practical: any = null;
+  let progression: any = null;
 
   if (isReady) {
     practical = readYaml(path.join(dir, 'practical.yaml'));
+    progression = readYamlIf(path.join(dir, 'grow.yaml'));
     if (slug === 'ryu') {
       roleProfile = readYaml(path.join(dir, 'meta.yaml')).role_profile;
     } else {
@@ -83,6 +89,7 @@ export function loadCharacter(slug: string) {
     isReady,
     roleProfile,
     practical,
+    progression,
     learnMarkdown: readTextIf(path.join(dir, 'learn.md')),
     referenceMarkdown: readTextIf(path.join(dir, 'reference.md')),
     hero
