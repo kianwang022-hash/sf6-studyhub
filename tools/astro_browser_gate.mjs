@@ -56,6 +56,13 @@ try {
     assert(t.includes('未来') && (t.includes('喝酒') || t.includes('Drink')), 'jamie: Role must explain current-turn vs future Drink investment');
   }
 
+  await page.locator('#theme-toggle').click();
+  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'light', 'light theme toggle failed');
+  await page.locator('#role').screenshot({ path:`${SHOTS}/jamie-role-light-desktop.png` });
+  await page.locator('#practical').screenshot({ path:`${SHOTS}/jamie-practical-s0-light-desktop.png` });
+  await page.locator('#theme-toggle').click();
+  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'dark theme restore failed');
+
   await page.goto(`${BASE}/character/zangief/`, { waitUntil:'networkidle' });
   assert((await page.locator('#role').innerText()).includes('站着防'), 'zangief: respect loop explanation missing');
 
@@ -73,7 +80,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO BROWSER GATE PASS | 5 current characters | Role | Practical | S0 folding | route completeness | mobile | visual receipts');
+  console.log('ASTRO BROWSER GATE PASS | 5 current characters | Role | Practical | S0 folding | route completeness | dark/light | mobile | visual receipts');
 } finally {
   await browser.close();
 }
