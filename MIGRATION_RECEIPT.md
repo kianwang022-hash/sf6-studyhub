@@ -65,13 +65,13 @@ The accepted gate verifies:
 
 ## Public deployment
 
-`.github/workflows/pages.yml` successfully builds and uploads a GitHub Pages artifact. The deploy step currently receives GitHub `404` because repository Pages is not yet enabled.
+Repository Pages has now been enabled with **GitHub Actions** as the source. This commit intentionally retriggers `.github/workflows/pages.yml` so the accepted Astro `dist/` can be published.
 
-Required repository setting:
+Expected public URL:
 
-`Settings -> Pages -> Build and deployment -> Source -> GitHub Actions`
+`https://kianwang022-hash.github.io/sf6-studyhub/`
 
-Once enabled, the existing workflow can publish the accepted Astro `dist/`. This hosting toggle is separate from semantic/render Gold acceptance.
+Deployment success is tracked separately from semantic/render Gold acceptance.
 
 ## Frontend state
 
