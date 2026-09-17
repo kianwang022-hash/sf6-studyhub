@@ -14,6 +14,7 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - run: npm run content:gate
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - name: Start Astro preview
