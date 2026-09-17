@@ -1,0 +1,293 @@
+schema_version: '1.0'
+character: mai
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-17'
+  primary_source: SRC02
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Mai starts from a standard projectile/ground skeleton, then upgrades openings into better next-turn states when position/resource conditions justify it.'
+stages:
+  S0: {label: 最小可玩, short: '飞扇 / 地面 / 236K'}
+  S1: {label: 基本功成型, short: 'Oki / Safe Jump / Corner'}
+  S2: {label: 实战结构化, short: '2MK DRC / DI / PC'}
+  S3: {label: 选择成熟, short: 'OD 214P / 空中转换'}
+  S4: {label: 高分上探, short: '强化资源 / SA / Setplay'}
+shared_packages:
+  L_BACHI_27:
+    label: 'L 236K +27 基础下一轮'
+    sequence: '236LK -> KD +27 -> 66 -> +9'
+    next: 'throw / 4HK active-frame meaty / shimmy / block'
+    verification: verified
+    sources: [SRC02]
+  H_RYU_L_BACHI_30:
+    label: 'H 214P -> L 236K +30'
+    sequence: '214HP > 236LK -> KD about +30 -> 66 -> about +12'
+    next: 'strike / throw / shimmy'
+    verification: conditioned
+    conditions: [airborne_hit_state]
+    sources: [SRC02]
+  CORNER_THROW_21:
+    label: '角落前投 +21'
+    sequence: 'forward throw -> +21 -> 66 -> +3'
+    next: 'forward throw / 2MP / 5LK / walk-back shimmy'
+    verification: verified
+    sources: [SRC02]
+  MUSASABI_SAFEJUMP:
+    label: 'Musasabi +41/+42 安全跳'
+    sequence: 'j.214P -> KD +41/+42 -> forward jump j.HK'
+    next: 'Safe Jump -> strike / throw / shimmy'
+    verification: conditioned
+    conditions: [route_version, hit_height]
+    sources: [SRC02]
+  SA1_STATE:
+    label: 'SA1 状态差异'
+    sequence: '236236P -> normal +26 / enhanced-state +40'
+    next: '按状态进入对应 active-frame setup；不要把两种状态混成一个数字'
+    verification: conditioned
+    conditions: [enhancement_state]
+    sources: [SRC02]
+opportunities:
+- id: basic
+  title: '基础接触｜先会普通状态打一轮'
+  stage: S0
+  subtitle: '飞扇和中距离拳脚拿机会，236K 稳定收尾'
+  guide:
+    short: '火舞的强化资源不是启动键。S0 先把普通状态的 projectile / normal / confirm 骨架打通。'
+    play_target: T01
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 低段默认
+    input: '2LK > 2LP > 2LP > 236LK'
+    value: {drive: 0, kd: '+27'}
+    next_loop_package: L_BACHI_27
+    why: '基础 low confirm；0 Drive 并直接接到固定下一轮。'
+    verification: verified
+    sources: [SRC02]
+  - result: HIT
+    stage: S0
+    choice: 中拳默认
+    input: '2MP > 2LP > 236LK'
+    value: {drive: 0, kd: '+27'}
+    next_loop_package: L_BACHI_27
+    why: '更直接的中距离确认，同样复用 +27 接口。'
+    verification: verified
+    sources: [SRC02]
+  - result: HIT
+    stage: S0
+    choice: 重拳简单
+    input: '5HP > 236HK'
+    value: {drive: 0}
+    next_loop: '66 -> 按 H 236K 实际击倒状态进入 throw / meaty / shimmy'
+    why: '容易记的 heavy confirm；先不为了复杂状态多背长串。'
+    verification: conditioned
+    sources: [SRC02]
+  - result: HIT
+    stage: S0
+    choice: 跳入
+    input: 'j.HK > 5HP > 236HK'
+    value: {drive: 0}
+    next_loop: '按落点接基础 Oki / 继续角落推进'
+    why: '新入口仍复用普通状态收尾。'
+    verification: verified
+    sources: [SRC02]
+- id: 236k
+  title: '236K / 安全跳｜第一层“下一轮价值”升级'
+  stage: S1
+  subtitle: '不是所有收尾都一样；这里第一次把普通 Oki 和 Safe Jump 分开'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: L版稳定
+    input: '2MP > 2LP > 236LK'
+    value: {kd: '+27'}
+    next_loop_package: L_BACHI_27
+    why: '最容易复现的固定起攻接口；S1 仍保留一个低负担默认答案。'
+    verification: verified
+    sources: [SRC02]
+  - result: HIT
+    stage: S1
+    choice: Safe Jump
+    input: '5LK > LK > LK > j.214P'
+    value: {kd: '+41/+42 conditioned'}
+    next_loop_package: MUSASABI_SAFEJUMP
+    why: '这条存在的理由不是更长，而是把机会换成安全跳这一种完全不同的下一轮。'
+    verification: conditioned
+    conditions: [route_version, hit_height]
+    sources: [SRC02]
+  - result: HIT
+    stage: S1
+    choice: 角落投循环
+    input: 'corner forward throw'
+    value: {kd: '+21', state: corner}
+    next_loop_package: CORNER_THROW_21
+    why: '角落位置本身就是价值；不需要每次追长 Combo。'
+    verification: verified
+    sources: [SRC02]
+- id: 2mk
+  title: '2MK｜取消绿冲后把普通机会升级'
+  stage: S2
+  subtitle: '3 Drive 买的是伤害 + Oki + 位置，不是“因为能绿冲”'
+  guide:
+    short: '先看 Hit / Block / Whiff；命中后用当前稳定的 H 214P -> L 236K 路线，其他 ender 等价值足够不同再加入。'
+    play_target: T03
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回中距离'
+    why: 'Drive 用来买真实机会。'
+  - result: BLOCK
+    stage: S2
+    choice: 分状态
+    input: '未 DRC: 接触结束 | 已 DRC: 近身 strike / throw / stop'
+    value: {drc_cost: 3}
+    next_loop: '按是否已取消绿冲处理'
+    why: '2MK 被防本身是 -6；别把它和 DRC 后压力混为一谈。'
+    verification: verified
+    sources: [SRC01, SRC03]
+  - result: HIT
+    stage: S2
+    choice: 默认稳定
+    input: '2MK > DRC > 4HK > 2MP > 214HP > 236LK'
+    value: {drive: 3, kd: 'about +30'}
+    next_loop_package: H_RYU_L_BACHI_30
+    why: '当前最完整的稳定 DRC 答案；花 3 Drive 换更强下一轮。'
+    verification: conditioned
+    conditions: [airborne_hit_state]
+    sources: [SRC02]
+- id: punish
+  title: 'Punish / PC｜大机会先拿稳定路线'
+  stage: S1
+  subtitle: 'S3 以后才按资源/状态偏离'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 默认稳定
+    input: '5MK (PC) > 5HP > 214HP > 236LK'
+    value: {drive: 0, kd: 'about +30'}
+    next_loop_package: H_RYU_L_BACHI_30
+    why: '0 Drive、稳定；spacing 合格时直接换强 Oki。'
+    verification: conditioned
+    conditions: [5mk_to_5hp_spacing]
+    sources: [SRC02]
+  - result: PC
+    stage: S2
+    choice: 挡无敌后稳定
+    input: '2HP (PC) > 2MP > 214HP > 236LK'
+    value: {drive: 0, kd: 'about +30'}
+    next_loop_package: H_RYU_L_BACHI_30
+    why: '防住大无敌后固定重罚，不临场现编。'
+    verification: verified
+    sources: [SRC02]
+- id: di
+  title: 'DI｜先看位置，再决定要不要升级状态'
+  stage: S2
+  subtitle: '墙角已有位置时不必为 carry 重复付费'
+  rows:
+  - result: WALL_SPLAT
+    stage: S2
+    choice: 省资源稳定
+    input: 'DI wall splat > 4HK > HK > 623MK'
+    value: {extra_drive: 0, state: corner}
+    next_loop: '约 +30 状态 -> 角落 throw / shimmy / meaty'
+    why: '已经有墙角，直接保位置。'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC02]
+  - result: DI_PC
+    stage: S3
+    choice: Year4 状态转换
+    input: 'DI (PC) > 5HP > OD 214P > 214LP > 623HK'
+    value: {extra_drive: 2, state: 'OD 214P conversion'}
+    next_loop: '按 623HK 空中高度/落点进入角落压力'
+    why: '这条存在的理由是把大机会转成 Year4 OD 214P 的位置/后续价值，不只是多一点伤害。'
+    verification: conditioned
+    conditions: [midscreen_or_corner_state, airborne_height]
+    sources: [SRC02]
+- id: od214p
+  title: 'OD 214P｜花 Drive 把普通命中加工成更强状态'
+  stage: S3
+  subtitle: '被防 -3；不是“强化招所以自动继续压”'
+  guide:
+    short: 'Year4 OD 214P 从旧版本更危险的被防状态改善到 -3。它的价值在转换和后续，不是被防后白拿回合。'
+    play_target: T06
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: 停 / 防 / 重读
+    input: 'OD 214P block (-3) -> stop / block'
+    value: {drive: 2, frame: '-3'}
+    next_loop: '重新读对手，不把 -3 当正帧'
+    why: '先把最容易误解的规则固定住。'
+    verification: verified
+    sources: [SRC01, SRC02]
+  - result: HIT
+    stage: S3
+    choice: SA1 状态
+    input: '2MP > OD 214P > 236236P'
+    value: {drive: 2, sa: 1, kd: '+26 normal state'}
+    next_loop_package: SA1_STATE
+    why: '同一次命中开始把 Drive / SA 换成不同的下一轮状态。'
+    verification: conditioned
+    conditions: [sa1_state]
+    sources: [SRC02]
+  - result: HIT
+    stage: S3
+    choice: 版中继续转换
+    input: 'OD 214P > 5HP > 214HP > 236LK'
+    value: {drive: 2, kd: 'conditioned'}
+    next_loop_package: H_RYU_L_BACHI_30
+    why: 'OD 214P 不是独立终点，而是一个能把命中接到更强 end-state 的中继站。'
+    verification: conditioned
+    conditions: [starter, screen_position, airborne_state]
+    sources: [SRC02]
+  - result: HIT
+    stage: S3
+    choice: 空中转换 / Safe Jump
+    input: '5MP > OD 236K > j.MP > j.214P'
+    value: {drive: 2, state: 'air conversion'}
+    next_loop_package: MUSASABI_SAFEJUMP
+    why: '和地面 +30 不同，这 2 Drive 买的是把地面开口转成空中 setup / Safe Jump。'
+    verification: conditioned
+    conditions: [air_conversion_state, hit_height]
+    sources: [SRC02]
+- id: resource
+  title: '强化资源｜到 S4 才展开“强化版”与 Super'
+  stage: S4
+  subtitle: '先理解资源让动作变强，再只保留有独立工作的高资源路线'
+  guide:
+    short: 'S4 也不做第二套 Combo 百科。只保留“强化状态识别”和一个真正不同的 SA2 现金化代表。'
+    play_target: T08
+  rows:
+  - result: RESOURCE_STATE
+    stage: S4
+    choice: 先认状态
+    input: '确认当前有强化资源 -> 再选择对应强化动作'
+    value: {resource: '强化资源 available'}
+    next_loop: '比较伤害 / Safe Jump / corner / Super，而不是默认最高伤害'
+    why: '强化状态的核心是路线价值变化，不是第二套 Combo 表。'
+    verification: conditioned
+    conditions: [stock_available]
+    sources: [SRC02]
+  - result: HIT
+    stage: S4
+    choice: SA2现金化
+    input: '5LK > LK > LK > OD j.214P > SA2'
+    value: {drive: 2, sa: 2}
+    next_loop: '按 SA2 当前状态/落点重读；总伤害不从单招伤害反推'
+    why: '从已经会的轻脚 target-combo / 空中家族进入 Super；它代表高资源现金化，不需要再堆同职能 SA 路线。'
+    verification: verified
+    sources: [SRC02]
+backend_only:
+- {label: '强化状态 OD Musasabi -> H 214P -> H 623K', reason: '完整字符串已闭合，但和当前 Safe Jump / SA2 代表相比是否值得独立占前台，等待 exact value / Training Mode 再判。'}
+- {label: 'OD 214P multi-ender family', reason: '来源按 L236K / H623K / SA1 / SA2 / SA3 分组；只把完整字符串和 distinct-value survivors 升前台。'}
+- {label: 'OD Kachousen -> SA3 family', reason: '当前来源存在 missing segment，不允许用省略号当 finished route。'}
+- {label: 'Advanced +48 / +43 frame-kill setplay', reason: '来源已足够作为 conditioned backend asset；仍需 Training Mode / 教学价值审查后再 learner-surface。'}
