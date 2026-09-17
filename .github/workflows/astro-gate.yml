@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-browser:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,6 +15,17 @@ jobs:
           node-version: 22
       - run: npm install
       - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Start Astro preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4176 > /tmp/sf6-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4176/sf6-studyhub/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/sf6-preview.log
+          exit 1
+      - run: npm run browser:gate
       - uses: actions/upload-artifact@v4
         with:
           name: sf6-astro-dist
