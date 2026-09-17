@@ -1,0 +1,431 @@
+schema_version: '1.0'
+character: ryu
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-16'
+  primary_source: SRC03
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  damage_note: 'damage values are current-source/calculation assets; rows marked training_mode must be rechecked before exact canonical freeze'
+stages:
+  S0:
+    label: 最小可玩
+    short: '3 条核心 + +37 Loop'
+  S1:
+    label: 基本功成型
+    short: 'Oki / PC / Carry'
+  S2:
+    label: 实战结构化
+    short: '2MK DRC / DI'
+  S3:
+    label: 选择成熟
+    short: '位置 / Denjin / 资源'
+  S4:
+    label: 高分上探
+    short: 'Kill / Safe Jump / 条件优化'
+shared_packages:
+  HPDP_PLUS37:
+    label: '+37 主循环'
+    sequence: '623HP -> KD +37 -> 66 -> about +18 -> 6HP meaty'
+    next: 'strike / throw / shimmy / block reversal'
+    verification: verified
+    sources: [SRC01, SRC03]
+  OD_HBK_CARRY:
+    label: 'OD236K 运版 Oki'
+    sequence: 'OD236K -> dl.6HK -> j.214K -> 66 -> 66'
+    next: 'strike / throw / shimmy'
+    verification: conditioned
+    conditions: [starter_and_height_affect_landing]
+    sources: [SRC03]
+opportunities:
+- id: 5mp
+  title: '5MP｜近身确认主干'
+  stage: S0
+  subtitle: 'Hit +7 / Block -1；命中才提交'
+  guide:
+    short: '先固定 Hit / Block / Whiff。S0 只练稳定确认；S1 才加运版；S4 才讨论 4HP 紧连接。'
+    play_target: T01
+  rows:
+  - result: WHIFF
+    stage: S0
+    choice: 停止
+    input: '停止剩余输入'
+    value: {drive: 0}
+    next_loop: 'Neutral'
+    why: '挥空后继续播串只会增加被差合时间。'
+  - result: BLOCK
+    stage: S0
+    choice: 默认
+    input: '停手 -> 重读'
+    value: {frame: -1, turn: 不保证回合}
+    next_loop: 'Neutral / 重新观察'
+    why: '不要把 Block 当成 Hit 树继续走。'
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '5MP > 2MP xx 623HP'
+    value: {damage: 2320, drive: 0, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '0 Drive、低认知负担，并直接回 +37 主循环。'
+    verification: verified
+    sources: [SRC01, SRC03]
+  - result: HIT
+    stage: S1
+    choice: 'Carry + Oki'
+    input: '5MP > 2MP > OD236K > dl.6HK > j.214K'
+    value: {damage: 2940, drive: 2, carry: high}
+    next_loop_package: OD_HBK_CARRY
+    why: '多花 2 Drive，换明显运版与近身 Oki。'
+    verification: conditioned
+    sources: [SRC03]
+  - result: HIT
+    stage: S4
+    choice: 优化候选
+    input: '5MP > 4HP xx 623HP'
+    value: {damage: 2520, drive: 0, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '同资源多 200 伤害，但 7F 紧连接与距离稳定性仍需判断是否值得替换 S0。'
+    verification: provisional
+    verify: training_mode
+    sources: [SRC01, SRC02]
+- id: light
+  title: 'Light｜贴身低段 / 紧急确认'
+  stage: S0
+  subtitle: '只保留稳定收尾与真正不同的 Oki 收尾'
+  guide:
+    short: 'Light 的重点是确认纪律：Hit 才提交，Block 停；第二答案只为 Oki 存在。'
+    play_target: T01
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: 停止提交
+    input: '不把轻链自动播进 623HP'
+    value: {drive: 0}
+    next_loop: '停 / 重读'
+    why: '能连不等于被防也该把尾段播完。'
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LK > 5LP > 5LP xx 623HP'
+    value: {damage: 1690, drive: 0, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '轻确认最稳答案；小机会也能直接接入主循环。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S1
+    choice: Oki优先
+    input: '2LK > 5LP > 5LP xx 214LK'
+    value: {damage: 1340, drive: 0, oki: alternate}
+    next_loop: '66 -> 214LP active-frame meaty'
+    why: '少约 350 伤害，换另一套起攻结构。'
+    verification: verified
+    sources: [SRC03]
+- id: 2mk
+  title: '2MK｜低段 DRC 结构化入口'
+  stage: S2
+  subtitle: '先分 Whiff / Block / Hit，再决定资源'
+  guide:
+    short: 'S2 学状态判断；S3 才学为什么偏离默认；S4 长串只在 Kill 条件出现。'
+    play_target: T03
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不交DRC
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回距离'
+    why: 'Drive 用来买机会，不为挥空补票。'
+  - result: BLOCK
+    stage: S2
+    choice: 分状态
+    input: '未 DRC: 结束接触 | 已 DRC: 进入近身判断'
+    value: {drc_cost: 3}
+    next_loop: '未 DRC -> Neutral | 已 DRC -> strike / throw / shimmy / stop'
+    why: '必须区分“2MK 被防”和“已经花 3 格进入 DRC 压力”。'
+  - result: HIT
+    stage: S2
+    choice: 默认
+    input: '2MK > DRC > 5HP > 4HP xx 623HP'
+    value: {damage: 2234, drive: 3, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '3 Drive 买稳定伤害和熟悉的 +37。'
+    verification: verified
+    sources: [SRC01, SRC03]
+  - result: HIT
+    stage: S3
+    choice: Denjin
+    input: '2MK > DRC > 5HP > 4HP xx 236HK > 22P'
+    value: {damage: 2183, drive: 3, resource: Denjin}
+    next_loop: '22P -> 下一轮强化'
+    why: '只比默认少约 51 伤害；安全能蓄电时是真正的价值分叉。'
+    verification: conditioned
+    conditions: [safe_charge_window, spacing]
+    sources: [SRC03]
+  - result: HIT
+    stage: S4
+    choice: SA3简单收局
+    input: '2MK > DRC > 5HP > 4HP xx 623HP xx SA3'
+    value: {damage: 4234, drive: 3, sa: 3}
+    next_loop: 'Round End / 大幅压血'
+    why: '接近收局时才出现；平时不占工作记忆。'
+    verification: provisional
+    verify: training_mode
+    sources: [SRC01, SRC03]
+  - result: HIT
+    stage: S4
+    choice: Lethal
+    input: '2MK > DRC > 5HP > 4HP > DRC > 5HK > 5HP > 623HP xx SA3'
+    value: {damage: 4603, drive: 6, sa: 3}
+    next_loop: Kill
+    why: '比简单 SA3 多约 369；只有斩杀线才值得增加执行负担。'
+    verification: provisional
+    verify: training_mode
+    sources: [SRC01, SRC03]
+- id: punish
+  title: 'Punish / PC｜Shimmy、无敌技防住、Drive Reversal'
+  stage: S1
+  subtitle: '大破绽只保留稳定 / 位置 / Kill'
+  guide:
+    short: '先看见 tech whiff / reversal 后稳定重罚；S3 再按位置换 carry，S4 才看最大伤害。'
+    play_target: T04
+  rows:
+  - result: PC
+    stage: S1
+    choice: 默认稳定
+    input: '5HK (PC) > 5HP xx 623HP'
+    value: {damage: 3000, drive: 0, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '高伤、0 Drive、低认知负担。'
+    verification: verified
+    sources: [SRC03]
+  - result: PC
+    stage: S2
+    choice: D-Reversal稳定
+    input: '5MP (PC) > 5HP xx 623HP'
+    value: {damage: 2640, drive: 0, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '挡住 Drive Reversal 后用固定答案，不临场现编。'
+    verification: verified
+    sources: [SRC03]
+  - result: PC
+    stage: S3
+    choice: Carry
+    input: '5HK (PC) > 66 > 2HP xx 214MK'
+    value: {damage: 2680, drive: 0, carry: high}
+    next_loop: '按 214MK 命中状态进入对应 Oki'
+    why: '少约 320 伤害换位置；墙角价值高时才偏离稳定线。'
+    verification: conditioned
+    sources: [SRC03]
+  - result: PC
+    stage: S4
+    choice: 最大斩杀
+    input: '5HK PC > 2HP > DRC > 5HK > 2HP > DRC > 5HK > 2HP > 623HP xx SA3'
+    value: {damage: 6051, drive: 6, sa: 3}
+    next_loop: Kill
+    why: '只有资源和血量都允许收局时才显示。'
+    verification: provisional
+    verify: training_mode
+    sources: [SRC03]
+- id: di
+  title: 'DI｜先看位置，再选路线'
+  stage: S2
+  subtitle: '墙角 / 版中 / 自己背墙是三个不同问题'
+  guide:
+    short: '墙角已有位置就选伤害；版中可花 Drive 买运版；自己背墙时换边价值高于伤害。'
+    play_target: T05
+  rows:
+  - result: WALL_SPLAT
+    stage: S2
+    choice: 省资源
+    input: 'DI wall splat > 2HP xx 214MP > 623HP'
+    value: {damage: 2176, extra_drive: 0, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '已经有墙，不需要再为运版付钱。'
+    verification: verified
+    sources: [SRC03]
+  - result: WALL_SPLAT
+    stage: S3
+    choice: 伤害
+    input: 'DI > 4HP > 236HK > 623MP'
+    value: {damage: 3230, extra_drive: 0}
+    next_loop: 'Corner pressure'
+    why: '同是墙角机会，这条买的是当前火力。'
+    verification: verified
+    sources: [SRC03]
+  - result: DI_PC_MID
+    stage: S2
+    choice: Easy
+    input: 'DI (PC) > 6HP > 2MP xx 623HP'
+    value: {damage: 2860, extra_drive: 0, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '版中 DI 的低认知负担稳定答案。'
+    verification: verified
+    sources: [SRC03]
+  - result: DI_PC_MID
+    stage: S3
+    choice: 'Carry + Oki'
+    input: 'DI (PC) > 6HP > 2MP > OD236K > 6HK > j.214K'
+    value: {damage: 3260, extra_drive: 2, carry: high}
+    next_loop_package: OD_HBK_CARRY
+    why: '比 Easy 多约 400，又获得运版和近身 Oki。'
+    verification: conditioned
+    sources: [SRC03]
+  - result: DI_PC_BACK_TO_CORNER
+    stage: S3
+    choice: Side Switch
+    input: 'DI (PC) > crumple 中 walk/66 > 2HP > OD236K > 66 > 623MP'
+    value: {damage: 2880, extra_drive: 2, side_switch: true}
+    next_loop: '脱离自己背墙'
+    why: '存在理由不是伤害，而是把坏位置翻过来。'
+    verification: conditioned
+    conditions: [ryu_back_near_corner]
+    sources: [SRC03]
+  - result: DI_PC
+    stage: S4
+    choice: SA3
+    input: 'DI (PC) > 6HP > 2MP > OD236K > 4HK > 623HP xx SA3'
+    value: {damage: 5460, extra_drive: 2, sa: 3}
+    next_loop: 'Kill / 大幅压血'
+    why: '只在收局条件成立时展开。'
+    verification: provisional
+    verify: training_mode
+    sources: [SRC03]
+- id: forward
+  title: '6HP / Raw DR｜复用已经会的 Ender'
+  stage: S2
+  subtitle: '新起手，不新增一套收尾体系'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Carry
+    input: '6HP > 2MP > OD236K > 6HK > j.214K'
+    value: {damage: 3140, extra_drive: 2, carry: high}
+    next_loop_package: OD_HBK_CARRY
+    why: '新起手，但复用已经学会的 OD236K Ender。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S3
+    choice: Overhead convert
+    input: 'DR > 6MP > 4HP > OD236K > 6HK > j.214K'
+    value: {damage: 3140, extra_drive: 2, entry: raw_drive}
+    next_loop_package: OD_HBK_CARRY
+    why: '高段命中后只增加一个入口，不增加新的收尾。'
+    verification: verified
+    sources: [SRC03]
+- id: oki
+  title: 'Throw / +42｜直接进入 Next Loop 的特殊入口'
+  stage: S1
+  subtitle: '价值在固定起攻，不在最长连段'
+  rows:
+  - result: CORNER_THROW
+    stage: S1
+    choice: '+17'
+    input: 'Forward Throw -> whiff 5LP'
+    value: {damage: 1200, kd: '+17'}
+    next_loop: '再投 / 打 / Shimmy / 停手防'
+    why: '用 whiff 5LP 把角落投命中变成固定下一轮。'
+    verification: verified
+    sources: [SRC03]
+  - result: PLUS42
+    stage: S4
+    choice: Safe Jump
+    input: '236LK grounded hit / 236HK airborne hit -> forward jump j.HK'
+    value: {kd: '+42', oki: safe_jump}
+    next_loop: 'j.HK / 空跳投 / 空跳2LK / 落地防'
+    why: '+42 的意义就是把击倒兑换成 Safe Jump。'
+    verification: conditioned
+    conditions: [236LK_grounded_hit_or_236HK_airborne_hit]
+    sources: [SRC03]
+- id: air
+  title: 'Air / Anti-air｜空中状态不复用地面假设'
+  stage: S0
+  subtitle: '高度和落点是前置条件'
+  rows:
+  - result: JUMP_IN
+    stage: S0
+    choice: 稳定
+    input: 'j.HP > 4HP xx 623HP'
+    value: {damage: 2720, drive: 0, kd: '+37'}
+    next_loop_package: HPDP_PLUS37
+    why: '跳入足够深时直接接回主循环。'
+    verification: verified
+    sources: [SRC03]
+  - result: ANTI_AIR
+    stage: S0
+    choice: 边界
+    input: '623P / 623HP anti-air'
+    value: {landing: height_dependent}
+    next_loop: '按实际落点重读'
+    why: '反空 HP 升龙不能机械套地面连段 +37。'
+    verification: conditioned
+    sources: [SRC01, SRC03]
+  - result: AIR_TO_AIR
+    stage: S3
+    choice: 待复核
+    input: 'j.MP xx j.214K'
+    value: {state: airborne}
+    next_loop: '落地 / 重新读距离'
+    why: '当前候选保留，但高度与 timing 未正式收口。'
+    verification: provisional
+    verify: training_mode
+    sources: [SRC01]
+  - result: HASHO_LAUNCH
+    stage: S3
+    choice: 待复核
+    input: 'L/M 214P CH/PC launch > 214MK'
+    value: {state: launch}
+    next_loop: '按高度 / 落点接 Oki'
+    why: '机制成立，但强度与高度 timing 还没到可机械练的程度。'
+    verification: provisional
+    verify: training_mode
+    sources: [SRC01, SRC04]
+- id: denjin
+  title: 'Denjin｜当前收益换下一轮资源 / 决策权'
+  stage: S3
+  subtitle: '只在安全窗口或明确强化接触里加入'
+  guide:
+    short: 'Denjin 是资源转换，不是独立第二套角色。没有安全窗口就不硬蓄。'
+    play_target: T06
+  rows:
+  - result: SAFE_WINDOW
+    stage: S3
+    choice: 蓄电
+    input: '22P -> Denjin'
+    value: {resource: Denjin}
+    next_loop: 'Neutral / 强化下一次接触'
+    why: '用安全空档把价值移到下一轮。'
+    verification: verified
+    sources: [SRC01, SRC03]
+  - result: BLOCK
+    stage: S3
+    choice: '+4'
+    input: 'Denjin OD214P blocked -> +4'
+    value: {drive: 2, frame: '+4'}
+    next_loop: '投 / 5LP / 2MP / Shimmy'
+    why: '这里是真正花资源买到近身决策权。'
+    verification: verified
+    sources: [SRC01, SRC03]
+  - result: HIT
+    stage: S3
+    choice: Carry
+    input: 'medium / strong normal > Denjin/strong 214P > 214MK'
+    value: {damage: starter_dependent, resource: Denjin}
+    next_loop: 'Carry / 对应 MTatsu Oki'
+    why: '这是一个 route family；起手不同，但资源兑现目标相同。'
+    verification: conditioned
+    sources: [SRC03]
+backend_only:
+- label: 'Corner Drive Reversal 最大伤害'
+  reason: '主来源字符串仍未闭合；BLOCKED_VERIFY。'
+- label: 'Air-to-air / Hashogeki launch'
+  reason: '保留候选，但要 Year4 Training Mode 收口高度与 timing。'
+- label: '长双 DRC / SA3'
+  reason: '已给计算值；最终 canonical 前再做 Training Mode exact check。'
+- label: '旧 Year3 派生路线'
+  reason: 'Reference only；不因存在就占前台注意力。'
