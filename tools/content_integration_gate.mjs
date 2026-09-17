@@ -19,6 +19,7 @@ for (const c of chars) {
   const dir = `characters/${c.group}/${c.slug}`;
   const practicalText = read(`${dir}/practical.yaml`);
   const practical = YAML.parse(practicalText);
+  const progression = yaml(`${dir}/grow.yaml`);
   const learn = read(`${dir}/learn.md`);
   const reference = read(`${dir}/reference.md`);
   const role = c.slug === 'ryu'
@@ -31,6 +32,8 @@ for (const c of chars) {
   assert(role?.normal_frame_table?.rows?.length === c.normals, `${c.slug}: normal table must be ${c.normals}`);
   assert(practical?.stages?.S0 && practical?.stages?.S4, `${c.slug}: S0-S4 practical stages missing`);
   assert(Array.isArray(practical?.opportunities) && practical.opportunities.length >= 4, `${c.slug}: practical Opportunity Hub too small`);
+  assert(Array.isArray(progression?.progression_stages) && progression.progression_stages.length === 5, `${c.slug}: learning S0-S4 progression missing`);
+  assert(progression.progression_stages.every((s) => s.learner_goal && Array.isArray(s.add_now) && s.gate), `${c.slug}: incomplete learning progression stage`);
 
   for (const token of c.learn) assert(learn.includes(token), `${c.slug}: learning marker missing: ${token}`);
   for (const token of c.ref) assert(reference.includes(token), `${c.slug}: reference marker missing: ${token}`);
@@ -60,4 +63,4 @@ for (const c of chars) {
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | Ryu/Jamie/Mai/Zangief/Cammy Learn + Role + Practical + Reference');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters | Learn progression + Role + Practical + Reference');
