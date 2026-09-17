@@ -1,0 +1,315 @@
+schema_version: '1.0'
+character: jamie
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-17'
+  primary_source: SRC03
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Jamie S0 must already teach the decision between keeping the turn and investing a safe window into Drink Level.'
+stages:
+  S0: {label: 最小可玩, short: '正常确认 + 压还是喝'}
+  S1: {label: 基本功成型, short: 'Lv1 +42 / Punish'}
+  S2: {label: 实战结构化, short: '2MK DRC / Carry / PC'}
+  S3: {label: 选择成熟, short: 'Lv2–3 / 抓取 / Oki'}
+  S4: {label: 高分上探, short: 'Lv4 / SA / 条件优化'}
+shared_packages:
+  H_ARROW_39:
+    label: 'H 箭踢 +39 主循环'
+    sequence: '623HK -> KD +39 -> 66 -> about +16'
+    next: 'strike / throw / shimmy / block；或确认安全窗口后考虑 22P 喝酒'
+    verification: verified
+    sources: [SRC03]
+  PLUS42:
+    label: '+42 强起攻家族'
+    sequence: '623LK 或 236LK -> KD +42'
+    next: '版中 66 -> 66 -> about +4~5；角落立即前跳 j.HP Safe Jump'
+    verification: conditioned
+    conditions: [drink_level_requirement, corner_for_safe_jump]
+    sources: [SRC03]
+  CORNER_PLUS4:
+    label: '角落 +4 接回猜拳'
+    sequence: 'TC ender -> +4'
+    next: 'strike / throw / shimmy / block'
+    verification: conditioned
+    conditions: [corner, target_combo_available]
+    sources: [SRC03]
+  HERMIt_20:
+    label: 'Lv4 Hermit +20'
+    sequence: '214P > 6P -> KD +20'
+    next: '按实际距离继续推进；不是自动贴脸 Oki'
+    verification: conditioned
+    conditions: [drink_level_4]
+    sources: [SRC03]
+opportunities:
+- id: 5mp
+  title: '5MP｜Lv0 就能用的近身主干'
+  stage: S0
+  subtitle: '先证明“不喝酒也能完整打一轮”'
+  guide:
+    short: '5MP 被防 +2；命中后用稳定路线收尾。先建立正常 SF6，再谈等级。'
+    play_target: T01
+  rows:
+  - result: WHIFF
+    stage: S0
+    choice: 停止
+    input: '5MP whiff -> stop'
+    value: {drive: 0}
+    next_loop: '回中近距离重新找接触'
+    why: '挥空后不要自动播后续。'
+  - result: BLOCK
+    stage: S0
+    choice: 继续读人
+    input: '5MP block (+2) -> light / throw / walk-back / block'
+    value: {frame: '+2'}
+    next_loop: '观察对手按、拆、跳还是凹'
+    why: '这是杰米 Lv0 就有的尊重工具，不需要先喝酒。'
+    verification: verified
+    sources: [SRC01, SRC02]
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '5MP > 2MP > 623HK'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: H_ARROW_39
+    why: '0 Drive、稳定，并直接进入杰米最重要的下一轮判断。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S1
+    choice: 'Lv1 · 更强 Oki'
+    input: '[喝酒 Lv1+] 5MP > 5LP > 5LK > 5MP > 623LK'
+    value: {drive: 0, kd: '+42', resource: 'Drink Lv1+'}
+    next_loop_package: PLUS42
+    why: '第一杯以后，同一个接触开始可以买到 +42；这是“投资未来”真正第一次有路线回报。'
+    verification: verified
+    sources: [SRC03]
+- id: light
+  title: 'Light｜小机会也先拿稳定击倒'
+  stage: S0
+  subtitle: '轻确认不是为了追复杂，而是让小命中也回主循环'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: 停止提交
+    input: 'light chain block -> stop / throw / 重读'
+    value: {drive: 0}
+    next_loop: '继续近身判断'
+    why: '不要把轻攻击被防也自动播进不安全尾段。'
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LP > 2LP > 5LK > 623HK'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: H_ARROW_39
+    why: '基础轻确认；Lv0 就能稳定把小机会接回下一轮。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S0
+    choice: 贴身低段
+    input: '2LP > 2LK > 5LK > 623HK'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: H_ARROW_39
+    why: 'point-blank low 变体；功能仍是回到同一个 +39 主循环。'
+    verification: conditioned
+    conditions: [point_blank]
+    sources: [SRC03]
+- id: drink
+  title: '22P｜安全窗口到底喝不喝？'
+  stage: S0
+  subtitle: '这是杰米从第一阶段就必须学的角色决策'
+  guide:
+    short: '安全窗口不等于必须喝。比较当前 Oki、角落位置和下一杯会解锁什么，再决定是否投资。'
+    play_target: O01
+  rows:
+  - result: SAFE_WINDOW
+    stage: S0
+    choice: 保持当前回合
+    input: '不喝 -> 保持位置 / 继续 Oki'
+    value: {resource: 'Drink 不变'}
+    next_loop: 'strike / throw / shimmy / block'
+    why: '当前角落或贴身优势可能比未来等级更值钱。'
+  - result: SAFE_WINDOW
+    stage: S0
+    choice: 投资未来
+    input: '22P'
+    value: {resource: 'Drink +1'}
+    next_loop: '等级提高 -> 下一次重新进入 Neutral / 接触时多一层工具'
+    why: '只有窗口够安全、未来解锁的价值高于当前 Oki/位置时才喝。'
+    verification: conditioned
+    conditions: [safe_drink_window]
+    sources: [SRC02, SRC03]
+- id: jump
+  title: 'Jump-in｜跳入也复用 +39'
+  stage: S0
+  subtitle: '新入口，不新增一套记忆'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认
+    input: 'j.HP > 2HP > 623HK'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: H_ARROW_39
+    why: '跳入成功后仍回同一个稳定击倒接口。'
+    verification: verified
+    sources: [SRC03]
+- id: 2mk
+  title: '2MK｜取消绿冲后的结构化分支'
+  stage: S2
+  subtitle: '先看 Hit / Block / Whiff，再决定是否花 Drive'
+  guide:
+    short: 'S2 才把 2MK DRC 当资源转换来学；目标不是背长串，而是按位置和资源选 end-state。'
+    play_target: T03
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回距离'
+    why: 'Drive 不是用来给挥空补票。'
+  - result: BLOCK
+    stage: S2
+    choice: 分状态
+    input: '未 DRC: 接触结束 | 已 DRC: 进入近身 strike / throw / stop'
+    value: {drc_cost: 3}
+    next_loop: '按是否已经取消绿冲分别处理'
+    why: '2MK 本身 Block -6；只有已经花资源时才有后续压力。'
+    verification: verified
+    sources: [SRC01, SRC02]
+  - result: HIT
+    stage: S2
+    choice: 资源/喝酒型
+    input: '2MK > DRC > 2MP > 2HP > 236HP > K > K'
+    value: {drive: 3, resource: 'Freeflow Kicks / Drink gain'}
+    next_loop: '喝酒等级变化 -> 明确回 Neutral / 下一次接触'
+    why: '这条路线买的是资源变化，不假装成固定贴脸 Oki。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: Carry +39
+    input: '2MK > DRC > 2KK > jump > j.HK > 5HP(2-hit) > 623HK'
+    value: {drive: 3, carry: high, kd: '+39'}
+    next_loop_package: H_ARROW_39
+    why: '多执行换明显运版，同时仍落回熟悉的 +39。'
+    verification: verified
+    sources: [SRC03]
+- id: punish
+  title: 'Punish / PC｜大破绽先用稳定答案'
+  stage: S1
+  subtitle: '伤害、Oki、资源要分开看'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 默认稳定
+    input: '5HK (PC) > 66 > 2HP > 623HK'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: H_ARROW_39
+    why: '0 Drive、稳定，并回主循环。'
+    verification: verified
+    sources: [SRC03]
+  - result: PC
+    stage: S2
+    choice: Drive Reversal punish
+    input: '2MP (PC) > 2HP > 623HK'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: H_ARROW_39
+    why: '挡住 Drive Reversal 后固定重罚，不临场现编。'
+    verification: verified
+    sources: [SRC03]
+- id: drink_state
+  title: '喝酒等级｜同一个机会开始买不同下一轮'
+  stage: S3
+  subtitle: '不是五套 Combo；是同一决策网络逐步多出答案'
+  guide:
+    short: '到 S3 才同时比较 +39、+42、近身抓取和角落状态；先问想要什么 end-state。'
+    play_target: T06
+  rows:
+  - result: HIT
+    stage: S3
+    choice: 'Lv2 · +42'
+    input: '[喝酒 Lv2+] 5MP (CH) > 2MP > 236LK'
+    value: {kd: '+42', resource: 'Drink Lv2+'}
+    next_loop_package: PLUS42
+    why: 'Lv2 后用旋转腿把 CH 机会换成 +42 强起攻。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S3
+    choice: 'Lv3 · 抓取后伤害'
+    input: '[喝酒 Lv3+] 63214K > 2MP > 5LP > 5LK > 5MP > 623HK'
+    value: {kd: '+39', resource: 'Drink Lv3+'}
+    next_loop_package: H_ARROW_39
+    why: '对手已经愿意站着防时，近身抓取把尊重换成真实伤害，再回主循环。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S3
+    choice: 'Lv3 · 抓取后 Oki'
+    input: '[喝酒 Lv3+] 63214K > 2MP > 5LP > 5LK > 5MP > 236LK'
+    value: {kd: '+42', resource: 'Drink Lv3+'}
+    next_loop_package: PLUS42
+    why: '同一个抓取 starter 少看当前伤害、改买更强下一轮。'
+    verification: verified
+    sources: [SRC03]
+- id: lv4
+  title: 'Lv4｜最后才做高等级优化'
+  stage: S4
+  subtitle: 'Lv4 不是角色启动，只是 option space 的最深层'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: Hermit收尾
+    input: '[喝酒 Lv4] 5MP > 5LP > 5LK > 5MP > 214LP > 6P'
+    value: {kd: '+20', resource: 'Drink Lv4'}
+    next_loop_package: HERMIt_20
+    why: '这是 Lv4 的独特收尾价值；不把它提前塞进基础工作记忆。'
+    verification: verified
+    sources: [SRC03]
+- id: super
+  title: 'SA / OD抓取｜只有独立价值的高资源路线才进前台'
+  stage: S4
+  subtitle: 'SA2 展示临时 Lv4 状态；SA3 回熟悉 +39；OD抓取买确认收益'
+  guide:
+    short: 'S4 不是把所有长连段倒进页面。这里只保留三种不同工作：临时 Lv4、SA3 现金化、OD Tenshin 高资源确认。'
+    play_target: T08
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA2临时Lv4
+    input: '2LP > 2LP > SA2 > 2MK > 214LP > 6P'
+    value: {sa: 2, kd: '+20', resource: 'SA2 temporary Lv4 state'}
+    next_loop_package: HERMIt_20
+    why: '这条存在的理由不是长，而是 SA2 让普通轻确认直接进入 Lv4/Hermit 的下一轮。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S4
+    choice: SA3现金化
+    input: 'SA3 > 66 > 5HP(1–2 hit) > 623HK'
+    value: {sa: 3, kd: '+39'}
+    next_loop_package: H_ARROW_39
+    why: '高 SA 兑现后仍回已经会的 +39 主循环，不额外制造一套 Oki 记忆。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S4
+    choice: OD近身抓取
+    input: '[喝酒 Lv3+] 63214KK > 2HP > 236HK'
+    value: {drive: 2, resource: 'Drink Lv3+'}
+    next_loop: '按 H 236K 实际落点 / 资源状态继续；总伤害待 current-source / Training Mode 闭合'
+    why: '这是高资源 command-grab payoff；只有当抓取确认收益值得 2 Drive 时才偏离普通 63214K。'
+    verification: conditioned
+    conditions: [drink_level_3_plus, od_tenshin_confirm]
+    sources: [SRC03]
+backend_only:
+- {label: 'Corner TC +4 family', reason: '来源路线真实，但 learner-facing TC 的完整按钮序列/等级条件还要展开后再升前台。'}
+- {label: 'Luminous Dive Kick routes', reason: '完整字符串已有，但 spacing/air-entry 条件仍需 Training Mode 判断是否值得占 S3/S4 工作记忆。'}
+- {label: 'SA1 family', reason: '来源给 generic cancelable move placeholder；必须枚举完整 starter 后才能前台。'}
+- {label: '其它 SA2 / OD Tenshin starter 变体', reason: '当前完整串不少，但先保留一个代表每种独立价值；其余只有 damage/position 证明不同才再升。'}
