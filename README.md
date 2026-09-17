@@ -2,7 +2,7 @@
 
 Personal Street Fighter 6 learning system.
 
-This repository is now the **canonical SF6 repository**. It was split out from `kianwang022-hash/StudyHub` so the private StudyHub can remain a general experiment/workbench repo.
+This repository is the **canonical SF6 repository**. It was split out from `kianwang022-hash/StudyHub` so the private StudyHub can remain a general experiment/workbench repo.
 
 ## Product model
 
@@ -18,16 +18,22 @@ Migration source: `kianwang022-hash/StudyHub`, branch `sf6-practical-role-contra
 
 Current accepted state:
 
-- Ryu — Gold reference.
-- Jamie / Mai / Zangief / Cammy — `CONTENT_READY`, Gold browser/render QA pending.
-- Remaining roster — legacy/source-closure pending and will be migrated/rewritten character by character.
+- Ryu — `GOLD_REFERENCE`.
+- Jamie / Mai / Zangief / Cammy — `GOLD_PAGE_READY` after real Astro + Chromium desktop/mobile QA.
+- Remaining roster — `SOURCE_CLOSURE_PENDING`; migrate character by character under the Gold contracts.
+
+The current Astro build generates home + five accepted character pages. `Astro Gate` performs real Chromium checks for Role, Practical, S0–S4 folding, route completeness, dark/light rendering and mobile overflow.
 
 ## Canonical rule
 
-From this migration onward, new SF6 work belongs here. The old `StudyHub/projects/sf6` tree is historical migration evidence, not a second writable source of truth.
+New SF6 work belongs here. The old `StudyHub/projects/sf6` tree is historical migration evidence, not a second writable source of truth.
 
 ## Frontend direction
 
-Long-term frontend: **Astro as the engineering/build layer**, while preserving static HTML output and a standalone HTML export for offline use.
+**Astro is the engineering/build layer.** Output remains static HTML, and a standalone HTML export can remain available for offline use.
 
-Canonical content remains repository data (`YAML / JSON / Markdown`); generated HTML is never the semantic source of truth.
+Canonical content stays in repository data (`YAML / JSON / Markdown`); generated HTML is never the semantic source of truth.
+
+## Public deployment
+
+`.github/workflows/pages.yml` is ready to publish the accepted Astro `dist/` through GitHub Pages. Repository Pages still needs to be enabled with **Source = GitHub Actions** before deployment can succeed.
