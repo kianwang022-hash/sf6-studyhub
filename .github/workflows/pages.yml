@@ -38,3 +38,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify public Pages URL
+        shell: bash
+        run: |
+          url='${{ steps.deployment.outputs.page_url }}'
+          echo "Pages URL: $url"
+          for i in {1..12}; do
+            code=$(curl -L -sS -o /tmp/sf6-page.html -w '%{http_code}' "$url" || true)
+            echo "attempt=$i http=$code"
+            if [ "$code" = "200" ] && grep -q 'SF6 StudyHub' /tmp/sf6-page.html; then
+              echo 'PUBLIC_PAGES_VERIFY_PASS'
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'Public page did not become readable in the verification window.'
+          head -c 500 /tmp/sf6-page.html || true
+          exit 1
