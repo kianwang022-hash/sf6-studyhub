@@ -43,10 +43,22 @@ try {
   }
 
   await page.goto(`${BASE}/character/jamie/`, { waitUntil:'networkidle' });
-  assert((await page.locator('#role').innerText()).includes('投资未来'), 'jamie: Role must explain current-turn vs future Drink investment');
+  const jamieRole = await page.locator('#role').innerText();
+  assert(
+    jamieRole.includes('未来') &&
+    (jamieRole.includes('喝酒') || jamieRole.includes('Drink')) &&
+    (jamieRole.includes('当前') || jamieRole.includes('现在')),
+    'jamie: Role must explain current-turn vs future Drink investment'
+  );
 
   await page.goto(`${BASE}/character/zangief/`, { waitUntil:'networkidle' });
-  assert((await page.locator('#role').innerText()).includes('站着防'), 'zangief: respect loop explanation missing');
+  const zangiefRole = await page.locator('#role').innerText();
+  assert(
+    zangiefRole.includes('360P') &&
+    zangiefRole.includes('尊重') &&
+    (zangiefRole.includes('防') || zangiefRole.includes('站着')),
+    'zangief: respect -> command-grab loop explanation missing'
+  );
 
   await page.goto(`${BASE}/character/cammy/`, { waitUntil:'networkidle' });
   await page.locator('[data-stage="ALL"]').click();
