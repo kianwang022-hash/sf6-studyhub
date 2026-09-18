@@ -13,7 +13,10 @@ const chars = [
   { slug:'zangief', normals:23, learn:'尊重', ref:'SPD 后重置', practical:['360P','SA3'] },
   { slug:'cammy', normals:18, learn:'M Spiral Arrow', ref:'Cannon Strike', practical:['SA1','SA3'] },
   { slug:'ken', normals:18, learn:'Quick Dash Tatsu', ref:'Forward Step Kick', practical:['KK > Tatsu','SA3'] },
-  { slug:'akuma', normals:18, learn:'同一个 opening 可以买不同的 Oki 时间预算', ref:'Shun Goku Satsu', practical:['L Tatsu > 2HK','Demon Raid','charged Gou Hadoken'] }
+  { slug:'akuma', normals:18, learn:'同一个 opening 可以买不同的 Oki 时间预算', ref:'Shun Goku Satsu', practical:['L Tatsu > 2HK','Demon Raid','charged Gou Hadoken'] },
+  { slug:'luke', normals:18, learn:'Perfect Flash Knuckle', ref:'DDT', practical:['L Flash Knuckle','DDT'] },
+  { slug:'terry', normals:18, learn:'Round Wave', ref:'Triple Geyser', practical:['M Burning Knuckle','OD Quick Burn'] },
+  { slug:'sagat', normals:18, learn:'High Tiger Shot', ref:'Tiger Knee', practical:['236MP','H Tiger Knee Crush airborne hit'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -51,6 +54,21 @@ try {
       assert(roleText.includes('28F') && roleText.includes('Block +1'), 'ken: H Dragonlash 28F/+1 projection truth missing');
       assert(roleText.includes('Quick Dash / Jinrai end-state engine'), 'ken: signature end-state engine missing from Role');
     }
+    if (c.slug === 'luke') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Execution investment via Flash Knuckle timing'), 'luke: execution-investment signature missing');
+      assert(roleText.includes('Perfect Flash Knuckle') && roleText.includes('+36'), 'luke: stable-vs-perfect tradeoff missing');
+    }
+    if (c.slug === 'terry') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Special-role relay'), 'terry: special-role relay signature missing');
+      assert(roleText.includes('Round Wave') && roleText.includes('29F') && roleText.includes('Block +5'), 'terry: Round Wave setup truth missing');
+    }
+    if (c.slug === 'sagat') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Projectile-to-contact space conversion'), 'sagat: projectile-to-contact signature missing');
+      assert(roleText.includes('2MK') && roleText.includes('不可取消'), 'sagat: non-cancelable 2MK truth missing');
+    }
     if (c.slug === 'akuma') {
       const roleText = await page.locator('#role').innerText();
       assert(roleText.includes('9000') && roleText.includes('Option density under 9000 health'), 'akuma: 9000-health option-density truth missing');
@@ -71,6 +89,24 @@ try {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('j.HP > 5MP > 5HP > KK > Tatsu'), 'ken: S0 carry identity route missing');
       assert(!s0Text.includes('H Dragonlash推进'), 'ken: S3 signature branch leaked into S0');
+    }
+    if (c.slug === 'luke') {
+      const s0Text = await page.locator('#practical').innerText();
+      const visibleRoutes = await page.locator('.pr-row:visible .route').allInnerTexts();
+      assert(s0Text.includes('2MP > 2LP > L Flash Knuckle'), 'luke: S0 +36 stable route missing');
+      assert(visibleRoutes.every(x => !/Perfect Flash|\(Perfect\)|fully charged/i.test(x)), 'luke: Perfect optimization route leaked into S0');
+    }
+    if (c.slug === 'terry') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LK > 2LP > M Burning Knuckle'), 'terry: S0 carry route missing');
+      assert(s0Text.includes('2LK > 2LP > H Rising Tackle'), 'terry: S0 damage route missing');
+      assert(!s0Text.includes('earned setup -> Round Wave block (+5)'), 'terry: earned Round Wave layer leaked into S0');
+    }
+    if (c.slug === 'sagat') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('236MP -> watch jump / walk / crouch / parry'), 'sagat: S0 projectile-reaction loop missing');
+      assert(s0Text.includes('5MP > 2LP > M Tiger Uppercut'), 'sagat: S0 contact conversion missing');
+      assert(!s0Text.includes('H Tiger Knee Crush airborne hit -> +42 -> forward jump HP'), 'sagat: S3 +42 safe jump leaked into S0');
     }
     if (c.slug === 'akuma') {
       const s0Text = await page.locator('#practical').innerText();
@@ -100,7 +136,7 @@ try {
   assert(page.url().includes('/character/jamie/'), 'real 31-character selector navigation failed');
   assert(await page.locator('#heroCharacterSelect').inputValue() === 'jamie', 'selector did not land on Jamie');
 
-  await page.goto(`${BASE}/character/luke/#role`, { waitUntil:'networkidle' });
+  await page.goto(`${BASE}/character/guile/#role`, { waitUntil:'networkidle' });
   assert((await page.locator('[data-panel="role"]').innerText()).includes('GOLD PAGE QA PENDING'), 'CONTENT_READY roster shell must not masquerade as Gold content');
 
   await page.goto(`${BASE}/character/jamie/#role`, { waitUntil:'networkidle' });
@@ -128,6 +164,16 @@ try {
   await page.screenshot({ path:`${SHOTS}/akuma-v6-dark.png`, fullPage:false });
   await page.locator('#theme-toggle').click();
 
+  for (const slug of ['luke','terry','sagat']) {
+    await page.goto(`${BASE}/character/${slug}/#role`, { waitUntil:'networkidle' });
+    await page.locator('#theme-toggle').click();
+    assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', `${slug}: dark theme toggle failed`);
+    const heroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(heroLoaded, `${slug}: dark hero art missing`);
+    await page.screenshot({ path:`${SHOTS}/${slug}-v6-dark.png`, fullPage:false });
+    await page.locator('#theme-toggle').click();
+  }
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -137,7 +183,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 7 accepted light+dark heroes | 学习/角色/实战/资料 | 7 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 10 accepted light+dark heroes | 学习/角色/实战/资料 | 10 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
