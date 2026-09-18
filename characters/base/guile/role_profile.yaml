@@ -1,0 +1,106 @@
+schema_version: '1.0'
+character: guile
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Guile不是蹲着等蓄力；他一边做普通SF6动作，一边保留Boom/Flash Kick资格，用横向飞道和垂直反空把对手夹在中间。'
+    preferred_range: '中远距离以Sonic Boom塑造推进节奏；对手跳就Somersault，对手开始尊重后再用5MP/2MP/4HP和throw吃地面犹豫。'
+    win_pattern: '边防守/按键边存charge -> Sonic Boom限制前进 -> Somersault惩罚跳 -> normal confirm -> H Somersault -> 中场Blade重建空间 / 角落+4打投shimmy -> repeat。'
+    lose_pattern: '为了保charge一直蹲着不动、发Boom后不看跳、随意走掉down/back charge、把特定hit-height的+42当通用、过早沉迷Blade/SA2。'
+  character_model:
+    essence_short: 'Guile真正的新技能是“charge availability管理”：普通移动、防守、按键同时都在决定下一秒还剩不剩Boom和Somersault。'
+    essence_detail: 'Charge不是一个要单独停下来完成的动作，而是一种后台状态。你在蹲防、用兼容的蹲拳、保持后下方向、准备反空时，都应该同时判断“我现在还保留Boom / Flash Kick资格吗”。Sonic Boom只负责横向限制；对手因此改变前走、跳跃、Parry和节奏以后，Somersault Kick、5MP、2MP、4HP与throw才真正兑现收益。当前路线也支持这条主线：最常见light/medium confirm都汇到H Somersault；中场之后可以用Sonic Blade重新塑造空间，角落则能用3HK whiff拿+4继续throw / strike / shimmy。Year 4的OD Sonic Blade block +1让pressure更强，但它应该在基础charge discipline稳定以后才加入。成熟Guile不是永远保charge，而是知道什么时候值得放弃charge换位置，什么时候必须让Boom/Flash Kick继续存在。'
+    force_opponent_to:
+    - 'Sonic Boom让对手不能无成本直线前进。'
+    - 'Somersault让“看到Boom就跳”不能成为免费答案。'
+    - '对手开始尊重横向/垂直双威胁后，5MP/2MP/4HP和throw更容易成立。'
+    - '角落+4与OD Blade +1让对手继续处理strike/throw/shimmy。'
+    payoff_after_respect:
+    - '地面按钮更容易占位。'
+    - 'H Somersault收尾后可以重建空间或进入角落Oki。'
+    - 'Sonic Blade/Cross把一次击倒继续变成空间层。'
+    - '对手越不敢跳，Boom和走位越自由。'
+    core_tradeoff: '立即移动/按键自由度 vs 保持charge威胁。不是charge越久越好，而是当前局面下Boom/Flash Kick availability是否比走位更值钱。'
+    successful_round:
+    - '边蹲防/兼容动作边存charge'
+    - 'Boom限制水平推进'
+    - '对手跳就Somersault；不跳就normal/throw'
+    - '确认到H Somersault'
+    - '中场Blade重建空间，角落+4继续压制'
+    - '根据对手适应决定继续保charge、发Boom还是走位'
+    common_misplays:
+    - '为了蓄力一直蹲着不动。'
+    - '发Boom以后注意力结束，没有准备Somersault。'
+    - '把所有地面动作都视为“会丢charge所以不能按”。'
+    - '把所有H Somersault都记成+42。'
+    - '基础Boom/Flash Kick没稳就先学Blade/Cross/SA2。'
+    unique_decision: '相对前面角色，Guile每个普通动作都多一个问题：这一步会不会让下一秒失去Boom或Somersault资格？'
+    transfer_in:
+    - 'projectile/anti-air基本框架。'
+    - 'grounded spacing、strike/throw/shimmy。'
+    - 'punish、corner与knockdown→Oki。'
+    new_skill:
+    - '在普通防守/按键里保存charge。'
+    - '同时维持水平Boom与垂直Somersault威胁。'
+    - '主动决定何时放弃charge换位置。'
+    - 'Sonic Blade/Cross作为击倒后的空间层。'
+    - '+42只按hit-height条件使用。'
+    unlearn:
+    - 'charge等于原地等待。'
+    - '有charge就绝不能走动。'
+    - 'projectile角色的回合结束在发波那一刻。'
+    - '所有H Somersault都有同一个Oki数字。'
+  glossary:
+  - {term: 'Charge｜蓄力', meaning: '按住后/下后等方向，在防守、蹲拳和其他兼容动作期间后台累积；不是停下来单独等。'}
+  - {term: '[4]6P｜Sonic Boom', meaning: '横向飞道。核心用途是改变推进节奏并逼出跳跃/Parry/停顿。'}
+  - {term: '[2]8K｜Somersault Kick', meaning: '主要反空与combo ender。是否可用取决于你有没有保住下蓄力。'}
+  - {term: '214P｜Sonic Blade', meaning: '后置的空间/setplay物体；可接Sonic Cross。S0不要求。'}
+  - {term: 'Sonic Cross', meaning: 'Blade后的6P follow-up；用于空间压制、combo与反跳层。'}
+  - {term: 'SA2｜Solid Puncher', meaning: '后期projectile系统层；不是入门charge练习。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '7F / Hit +6 / Block 0 / C；基础medium confirm。'}
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +4 / Block -2 / C；可在保持下蓄力的思路里使用。'}
+  - {input: '4HP', name: 'Recoil Cannon', use: '16F可取消back-direction normal；常用于charge-compatible route。'}
+  - {input: '6HP', name: 'Burning Straight', use: '9F / Block -4 / C；PC与pressure route。'}
+  - {input: '[4]6P', name: 'Sonic Boom', use: '10F；normal block -3，负责水平空间。'}
+  - {input: '[2]8K', name: 'Somersault Kick', use: 'L/M/H 5/6/7F；反空与稳定ender。'}
+  - {input: '214P', name: 'Sonic Blade', use: 'S2/S3以后进入空间与setplay层；OD版Year4 block +1。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Unique、Boom、Somersault、Blade/Cross与SA由关键工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-7', recovery: '7', hit: '+4', block: '-2', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-6', recovery: '12', hit: '+3', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '7', active: '7-9', recovery: '15', hit: '+6', block: '0', cancel: 'C', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '7', active: '7-11', recovery: '18', hit: '+1', block: '-4', cancel: '-', damage: '700', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '7', active: '7-9', recovery: '23', hit: '-1', block: '-6', cancel: 'C', damage: '900', note: 'CH命中+14。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '12', active: '12-14', recovery: '21', hit: '+4', block: '-4', cancel: 'SA', damage: '800', note: 'Year4由13F改为12F。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-6', recovery: '8', hit: '+5', block: '-2', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '12', hit: '+1', block: '-3', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-8', recovery: '13', hit: '+4', block: '-2', cancel: 'C', damage: '600', note: '挥空额外+3F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '18', hit: '+4', block: '-5', cancel: '-', damage: '500', note: '不可取消。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '9', active: '9-13', recovery: '20', hit: '0', block: '-9', cancel: 'C', damage: '900', note: '首active强制站立；当前可special/SA取消。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '9', active: '9-29 / 9-10,27-29', recovery: '21', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: '首段CH可launch；PC hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '7', active: '7-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '600', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'CH/PC slam knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Charge availability management'
+    rule: '在兼容防守/normal里后台存charge；每次移动和按键都同时判断是否还保留Boom/Somersault资格。'
+  key_numbers:
+  - {label: 'Sonic Boom', value: '10F / normal Block -3', decision: '横向塑形；发完继续看跳。'}
+  - {label: 'OD Sonic Boom', value: 'Block +3', decision: '资源换更强projectile pressure。'}
+  - {label: 'H Somersault', value: '7F / common KD约+37；特定+39~41', decision: '核心ender；Oki受hit height影响。'}
+  - {label: 'Corner H Somersault', value: '3HK whiff -> +4', decision: 'S1最重要角落strike/throw/shimmy入口。'}
+  - {label: 'OD Sonic Blade', value: '15F / Block +1', decision: 'Year4 S2/S3 pressure升级。'}
+  - {label: 'Hit-height Somersault', value: 'about +42', decision: 'S3 safe jump；必须带hit-height condition。'}
+  constraints:
+  - '2MK不可取消，不能继承标准角色2MK DRC。'
+  - 'Flash Kick/ Boom learner route必须承认charge availability。'
+  - '+42不是通用H Somersault数字。'
+  - 'Blade/Cross meaty保留spacing/timing/corner条件。'
+  - 'Solid Puncher固定留在高阶段。'
