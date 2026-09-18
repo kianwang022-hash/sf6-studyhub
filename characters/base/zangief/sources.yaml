@@ -1,0 +1,48 @@
+schema_version: '1.1'
+character: zangief
+accessed: '2026-09-18'
+sources:
+- id: SRC00
+  tier: migration_baseline
+  title: SF6_StudyHub_31Chars_Complete.html — accepted learner-facing baseline
+  status: contextual_only
+  covers: [teaching_order, learner_labels, frozen_ux]
+  notes: User-owned accepted Complete artifact in File Library. Preserve its accepted teaching/UX decisions; do not promote patch-sensitive numbers from it alone.
+- id: SRC01
+  tier: 0
+  title: Official Street Fighter 6 Frame Data — Zangief
+  url: https://www.streetfighter.com/6/en-us/character/zangief/frame
+  game_version: current official frame data
+  covers: [startup, active, recovery, hit_advantage, block_advantage, damage, invulnerability]
+  notes: Official frame-data endpoint is the primary numeric authority; some automated fetches may be blocked but SF6 Lab cites the same current official reference.
+- id: SRC02
+  tier: 1
+  title: SF6 Lab — Zangief Frame Data
+  url: https://sf6-lab.net/en/fighters/zangief/frame
+  freshness: page references current official data through 2026-08-27
+  game_version: post-2026-08-03 balance update
+  covers: [frames, cancel, damage, move_names, conditions]
+- id: SRC03
+  tier: 1
+  title: SF6 Lab — Zangief Combos & Okizeme Year 4
+  url: https://sf6-lab.net/en/fighters/zangief/combo
+  freshness: updated 2026-08-31
+  game_version: Year 4 / 2026-08-03 battle balance update
+  covers: [starter_routes, practical_routes, knockdown_advantage, oki, training_order, current_game_plan]
+- id: SRC04
+  tier: 1
+  title: SF6 Lab — Zangief Move List
+  url: https://sf6-lab.net/en/fighters/zangief/moves
+  game_version: Year 4
+  covers: [commands, official_move_names, drink_or_portal_or_charge_requirements, special_properties]
+- id: SRC05
+  tier: 0
+  title: CAPCOM / official Year 4 battle-adjustment boundary
+  url: https://www.streetfighter.com/6/buckler/en
+  date: '2026-08-03'
+  covers: [version_boundary]
+  notes: Official Buckler hub is the patch-note boundary; character numbers are resolved through official frame data / current structured mirrors.
+policy:
+  preferred_order: [SRC01, SRC05, SRC02, SRC03, SRC04, SRC00]
+  numeric_conflict_rule: current official data overrides structured secondary and local accepted text; unresolved spacing/height/resource differences remain conditioned
+  route_publish_rule: published routes carry verified / conditioned / provisional status; provisional routes are not Core Loop dependencies
