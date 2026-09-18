@@ -401,7 +401,7 @@ for (const c of chars) {
     assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'manon: inherited 2MK DRC route leaked');
     assert(/Medal reward escalation.*strike revaluation/i.test(role?.signature_mechanic?.name ?? ''), 'manon: Medal feedback signature owner missing');
     const manonText = learn + "\n" + reference + "\n" + practicalText;
-    assert(!/(?:guaranteed\s+(?:continued\s+)?throw|throw\s+(?:is\s+)?guaranteed|保证续投|必定续投)/i.test(manonText), 'manon: guaranteed throw-after wording leaked');
+    assert(!/(?:(?<!not )(?<!not a )guaranteed\s+(?:continued\s+)?throw|throw\s+(?:is\s+|is\s+always\s+|always\s+)?guaranteed|保证续投|必定续投)/i.test(manonText), 'manon: positive guaranteed throw-after wording leaked');
     for (const op of practical.opportunities ?? []) {
       for (const row of op.rows ?? []) {
         const stage = String(row.stage ?? '');
