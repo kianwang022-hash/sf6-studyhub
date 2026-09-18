@@ -25,7 +25,7 @@ Judgment states:
 | base | Blanka | `SOURCE_CLOSURE_PENDING` |
 | base | Dhalsim | `SOURCE_CLOSURE_PENDING` |
 | base | E. Honda | `SOURCE_CLOSURE_PENDING` |
-| base | Dee Jay | `SOURCE_CLOSURE_PENDING` |
+| base | Dee Jay | `CONTENT_READY` |
 | base | Manon | `SOURCE_CLOSURE_PENDING` |
 | base | Marisa | `SOURCE_CLOSURE_PENDING` |
 | base | JP | `SOURCE_CLOSURE_PENDING` |
@@ -50,7 +50,7 @@ Judgment states:
 
 Five characters now render through the canonical Astro runtime:
 
-Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, and Yasmine, and Rashid, and Kimberly, and Guile are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, and Yasmine, and Rashid, and Kimberly, and Guile, and Dee Jay are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
