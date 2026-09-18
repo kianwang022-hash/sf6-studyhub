@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: elena
+accessed: '2026-09-18'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Elena', url: 'https://www.streetfighter.com/6/en-us/character/elena/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Elena Frame Data', url: 'https://sf6-lab.net/en/fighters/elena/frame', freshness: 'official-reference data checked 2026-09-18', covers: [frames, active, recovery, advantage, cancel, damage]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Elena Move List', url: 'https://sf6-lab.net/en/fighters/elena/moves', freshness: 'checked 2026-09-18', covers: [normals, unique_attacks, specials, supers, commands, move_names]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Elena Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/elena/combo', freshness: 'updated 2026-08-31; checked 2026-09-18', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, current_game_plan, lynx_song, spinning_scythe, rhino_horn, revival_dance]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; hit height, spacing, Lynx branch state, active-frame timing and corner position remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; Lynx branches and +42 safe-jump claims must retain the exact ender/setup condition'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current structured Game Plan / route / setplay evidence closes the character model directly'
+  learner_projection_rule: 'grounded contact and stable Scythe/Rhino end states first; Lynx mix, +42 safe jump and SA2 system are staged later'
