@@ -1,0 +1,98 @@
+schema_version: '1.0'
+character: luke
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Luke先用很稳定的中近距离确认把机会换成清楚的Oki；基础路线稳定后，再决定要不要为Perfect Flash Knuckle增加执行成本。'
+    preferred_range: '中近距离。Sand Blast控节奏，2MP/2MK/轻攻击拿接触；命中后优先L Flash Knuckle、Rising Uppercut或DDT换明确下一轮。'
+    win_pattern: '中距离控场 -> 稳定确认 -> L Flash +36 / DDT +12 / corner Rising Uppercut -> strike / throw / shimmy -> 只在值得时升级Perfect路线。'
+    lose_pattern: '把Perfect当入门门槛、每次opening都追高执行、只看伤害不看end-state、基础Oki没稳就开始背+64和active-frame setplay。'
+  character_model:
+    essence_short: 'Luke真正新增的不是“更难的连段”，而是决定这次机会值不值得增加执行投资：稳定+36已经够强，Perfect只在它买到更好结果时才值得。'
+    essence_detail: 'Luke并不是“先把Perfect Flash Knuckle练会才能开始玩”的角色。当前资料反而把学习顺序写得很清楚：先会L Flash Knuckle收尾后的+36起攻、2MK取消绿冲、稳定PC惩罚、角落L Rising Uppercut和DDT硬倒地，再把Perfect Flash Knuckle加进来。也就是说，他的第一层是非常实用的中近距离转换角色：2MP被防+1、2MK可以DRC，拿到接触后用Flash Knuckle / Rising Uppercut / DDT把这一轮结算成明确的下一轮。第二层才是“执行质量换路线质量”：更好的Flash Knuckle timing会让伤害、运角或setplay更强。成熟的Luke不是每次都追Perfect，而是知道什么时候稳定路线已经够好，什么时候值得用更高执行成本去买更好的结果。'
+    force_opponent_to:
+    - '尊重2MP block +1与中近距离可取消按钮。'
+    - '处理2MK DRC带来的低段 / throw / shimmy。'
+    - '在L Flash +36、DDT +12与角落Rising Uppercut后持续猜下一轮。'
+    payoff_after_respect:
+    - 'throw / shimmy / active-frame 2MP的基础循环更可信。'
+    - '稳定路线成立后，Perfect Flash Knuckle才有机会用更高执行换更好路线。'
+    - '角落forward throw与Rising Uppercut ender把位置价值继续放大。'
+    core_tradeoff: '稳定确认 / 低执行成本 vs Perfect Flash Knuckle等高执行路线带来的额外伤害、carry与setplay。能Perfect不等于必须Perfect。'
+    successful_round:
+    - 'Sand Blast / 中距离按钮控节奏'
+    - '2MP / 2MK / light拿接触'
+    - 'L Flash / Rising Uppercut / DDT稳定收尾'
+    - '用+36 / +12 / corner Oki继续打投骗拆'
+    - '基础循环稳定后再把Perfect timing加入高价值机会'
+    - '失误率上升时主动退回稳定路线'
+    common_misplays:
+    - '开局就把Perfect Flash Knuckle当入门门槛，基础确认和Oki反而不稳。'
+    - '每个opening都追高执行路线，掉combo比多出的收益更亏。'
+    - '把+64高级setplay提前塞进工作记忆。'
+    - '只看Luke伤害高，不看ender后的Oki与位置。'
+    unique_decision: '相对Ryu/Ken，Luke高频新增的是“执行投资决策”：同一机会先问稳定路线是否已经够好，再决定是否为Perfect timing增加执行成本。'
+    transfer_in:
+    - 'projectile / anti-air / 2MK DRC。'
+    - 'strike / throw / shimmy与knockdown -> Oki。'
+    - 'punish / DI / corner / SA。'
+    new_skill:
+    - 'Flash Knuckle蓄力与Perfect timing分层。'
+    - '按稳定性、Oki、damage、carry决定是否提高执行成本。'
+    - 'DDT / No Chaser / Rising Uppercut不同end-state识别。'
+    unlearn:
+    - '技巧更难就一定更应该优先学。'
+    - 'Perfect timing是Luke正常玩的前置条件。'
+    - '只看damage就足够决定路线优先级。'
+  glossary:
+  - {term: '214P｜Flash Knuckle', meaning: 'Luke核心路线工具。轻中重与蓄力/Perfect版本用途不同；入门先稳定L Flash +36，再加Perfect。'}
+  - {term: 'Perfect Flash Knuckle', meaning: '在特定蓄力timing释放的高质量版本。它是优化层，不是S0入场券。'}
+  - {term: 'OD Flash Knuckle > DDT', meaning: '用Drive换成+12 hard knockdown；后续throw / shimmy简单明确。'}
+  - {term: 'No Chaser', meaning: 'Avenger体系中的派生；部分路线用whiff制造point-blank +7 setplay。'}
+  - {term: '+36 / +12 / +64', meaning: '不同ender给的Oki时间预算。数字不是强弱排名，要看后续、位置、资源和执行成本。'}
+  tools:
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +5 / Block +1 / C；Luke最清楚的近身respect与确认工具。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Block -6 / C；主要低段DRC入口。'}
+  - {input: '236P', name: 'Sand Blast', use: '中距离飞道控制；L/M/H发生速度不同。'}
+  - {input: '214LP', name: 'L Flash Knuckle', use: '稳定低负担ender；当前路线核心+36 Oki。'}
+  - {input: 'OD 214P > DDT', name: 'OD Flash Knuckle > DDT', use: 'Drive换+12 hard knockdown，简单throw/shimmy。'}
+  - {input: '623P', name: 'Rising Uppercut', use: '反空与角落ender；L版本角落+28…31受hit height影响。'}
+  - {input: '214HP charged / Perfect', name: 'H Flash Knuckle', use: '高执行 / 高价值路线；+64等高级setplay后置。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Unique / Flash Knuckle charge states / Avenger派生由关键工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '7', active: '7-8', recovery: '11', hit: '+2', block: '-3', cancel: 'C', damage: '300', note: '挥空额外+3F recovery。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-6', recovery: '12', hit: '+3', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '9', active: '9-12', recovery: '16', hit: '+2', block: '-3', cancel: 'SA', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-10', recovery: '16', hit: '+1', block: '-3', cancel: '-', damage: '700', note: '挥空额外+3F recovery。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '10', active: '10-12', recovery: '23', hit: '+1', block: '-4', cancel: 'C', damage: '800', note: '被防时recovery减少1F。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '10', active: '10-16', recovery: '16', hit: '+2', block: '-5', cancel: '-', damage: '900', note: '空中命中launch；PC launch。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '10', hit: '+4', block: '-2', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '11', hit: '0', block: '-3', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-8', recovery: '13', hit: '+5', block: '+1', cancel: 'C', damage: '600', note: '挥空额外+3F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '19', hit: '-2', block: '-6', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '7', active: '7-11', recovery: '24', hit: '+1', block: '-13', cancel: 'C', damage: '800', note: '强制站立；只有前段active可取消。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '10', active: '10-12', recovery: '24', hit: 'KD', block: '-9', cancel: '-', damage: '900', note: 'PC更长hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '700', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中CH/PC可slam knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Execution investment via Flash Knuckle timing'
+    rule: '稳定路线先成立；只有当Perfect timing真正买到独立damage/carry/setplay价值时，才提高执行成本。'
+  key_numbers:
+  - {label: '2MP', value: '6F / Hit +5 / Block +1', decision: '早期近身respect与确认核心。'}
+  - {label: 'L Flash Knuckle', value: '常见KD +36', decision: '第一套稳定Oki：PDR后throw / 2MP / shimmy。'}
+  - {label: 'DDT', value: '+12 hard knockdown', decision: 'Drive换简单throw / shimmy，不追复杂timing。'}
+  - {label: 'Forward throw', value: '+19', decision: '中场PDR 5LP与角落throw loop。'}
+  - {label: 'Corner L Rising Uppercut', value: '+28…31', decision: 'hit height conditioned；不能背成固定数字。'}
+  - {label: 'H Flash fully charged / airborne', value: '+64', decision: '高阶+15 / +7 / safe-jump family，后置。'}
+  constraints:
+  - 'Perfect Flash Knuckle不是入门要求。'
+  - 'Corner L Rising Uppercut +28…31必须保留hit-height条件。'
+  - '+64 H Flash setplay属于高阶段，不因为数值大就提前学。'
+  - 'active-frame 2MP / 5HK setup在exact timing闭合前保持conditioned。'

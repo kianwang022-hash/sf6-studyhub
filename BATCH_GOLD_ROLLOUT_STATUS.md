@@ -15,7 +15,7 @@ Judgment states:
 | Group | Character | Current Gold state |
 |---|---|---|
 | base | Ryu | `GOLD_REFERENCE` |
-| base | Luke | `SOURCE_CLOSURE_PENDING` |
+| base | Luke | `CONTENT_READY` |
 | base | Jamie | `GOLD_PAGE_READY` |
 | base | Chun-Li | `SOURCE_CLOSURE_PENDING` |
 | base | Guile | `SOURCE_CLOSURE_PENDING` |
@@ -50,7 +50,7 @@ Judgment states:
 
 Five characters now render through the canonical Astro runtime:
 
-Ken and Akuma are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Ken, Akuma, and Luke are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
