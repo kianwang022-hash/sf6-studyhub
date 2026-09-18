@@ -1,0 +1,17 @@
+schema_version: '1.1'
+character: cviper
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — C. Viper', url: 'https://www.streetfighter.com/6/en-us/character/cviper/frame', game_version: current, covers: [frames, commands, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary — C. Viper', url: 'https://www.streetfighter.com/6/buckler/ja-jp/battle_change/20260803/cviper', date: '2026-08-03', covers: [version_boundary, year4_adjustments]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — C. Viper Frame Data', url: 'https://sf6-lab.net/en/fighters/cviper/frame', freshness: 'official-reference current data; checked 2026-09-19', covers: [frames, normals, high_jump_cancel, specials]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — C. Viper Move List', url: 'https://sf6-lab.net/en/fighters/cviper/moves', freshness: 'checked 2026-09-19', covers: [commands, thunder_dash, burning_kick, seismic_hammer, focus_force, supers]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — C. Viper Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/cviper/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, hJc_routes, oki, setplay, current_game_plan, training_order]}
+- {id: SRC06, tier: 1, title: 'Ultimate Frame Data — C. Viper', url: 'https://ultimateframedata.com/sf6/cviper', freshness: 'August 2026 patch updates complete; checked 2026-09-19', covers: [frames, hitboxes, high_jump_cancel, thunder_dash, burning_kick, seismic_hammer, supers]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC06, SRC00]
+  numeric_conflict_rule: 'current official-reference / August-2026 maintained data overrides older guides; spacing, airborne height, active-frame timing, corner and exact HJC route remain part of the fact'
+  route_publish_rule: 'verified / conditioned / provisional required; High Jump Cancel ownership and Drive cost must remain explicit'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Year4 route/Oki guide explicitly publishes the current game-plan and HJC route structure'
+  learner_projection_rule: 'stable ground contact and one HJC proof first; full HJC/Seismic/Feint execution tree only after ordinary Oki and st.MP +1 pressure are stable'
