@@ -1,0 +1,256 @@
+schema_version: '1.0'
+character: blanka
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 is Thunder + charge basics; +42 enters S1; Bomb/OD Thunder high-low S2; Lightning Beast S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Thunder +39 / Charge Basics'}
+  S1: {label: 基本功成型, short: '+42 / Throw / Oki'}
+  S2: {label: 实战结构化, short: 'CDR / First Bomb / OD Thunder'}
+  S3: {label: 选择成熟, short: 'Advanced Bomb / Movement'}
+  S4: {label: 高分上探, short: 'Lightning Beast / SA'}
+shared_packages:
+  THUNDER39:
+    label: 'Electric Thunder +39'
+    sequence: 'Electric Thunder hit -> +39'
+    next: 'dash +20 / two dashes +1 / Hop +11'
+    verification: verified
+    sources: [SRC05]
+  VERTICAL42:
+    label: 'M/H Vertical Rolling +42'
+    sequence: 'exact Vertical Rolling route -> +42'
+    next: 'immediate forward jump HK safe jump'
+    verification: conditioned
+    conditions: [vertical_rolling_exact_state]
+    sources: [SRC05]
+  BOMB_CORNER:
+    label: 'Corner Bomb object setplay'
+    sequence: 'earned corner route -> Blanka-chan Bomb -> activate via Electric Thunder'
+    next: 'body overhead / low / throw around delayed explosion'
+    verification: conditioned
+    conditions: [corner, bomb_placed, activation_timing]
+    sources: [SRC05]
+  OD_THUNDER_PLUS4:
+    label: 'OD Electric Thunder +4'
+    sequence: 'OD Electric Thunder block -> +4'
+    next: '6MP overhead / 2MK low / throw'
+    verification: verified
+    sources: [SRC03, SRC05]
+opportunities:
+- id: charge
+  title: 'Charge｜Rolling是一个轴，不是整个角色'
+  stage: S0
+  subtitle: 'Thunder不需要charge'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Preserve charge
+    input: 'hold back/down-back while playing normal ground'
+    value: {state: 'Rolling / Vertical available'}
+    next_loop: 'use charge special only from confirm/read'
+    why: 'charge给你Rolling资格，但S0主loop仍可用Electric Thunder完成。'
+    verification: verified
+    sources: [SRC00]
+- id: light
+  title: 'Light｜S0默认Electric Thunder +39'
+  stage: S0
+  subtitle: '先建立一条完整Oki'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Thunder
+    input: '5LK > 2LP > Electric Thunder'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: THUNDER39
+    why: '最稳定、最清楚的Blanka基础回合。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S0
+    choice: Rolling damage
+    input: '5LK > 5LK > M Rolling Attack'
+    value: {drive: 0, state: 'damage/travel'}
+    next_loop: 'position reset / rebuild charge'
+    why: '第一条charge替代路线；只在命中确认后用。'
+    verification: conditioned
+    conditions: [back_charge_ready]
+    sources: [SRC05]
+- id: wild_edge
+  title: '4MK｜+2 respect但挥空更贵'
+  stage: S0
+  subtitle: 'Year4强接触，不是无限挥'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: +2
+    input: '4MK block (+2) -> 5LK / throw / delayed strike'
+    value: {frame: '+2'}
+    next_loop: 'Thunder confirm / spacing read'
+    why: '正帧创造respect，但Year4 whiff recovery增加到16F。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S0
+    choice: Thunder confirm
+    input: '4MK > 5MK > Electric Thunder'
+    value: {kd: '+39'}
+    next_loop_package: THUNDER39
+    why: '把正帧工具接回最熟的Oki。'
+    verification: verified
+    sources: [SRC05]
+- id: medium
+  title: '2MP｜Thunder与Rolling按目的分流'
+  stage: S0
+  subtitle: 'Oki vs damage/travel'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Oki
+    input: '2MP > Electric Thunder'
+    value: {kd: '+39'}
+    next_loop_package: THUNDER39
+    why: '需要稳定下一Turn时优先Thunder。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Rolling
+    input: '2MP > M Rolling Attack'
+    value: {state: 'damage/travel'}
+    next_loop: 'position / spacing read'
+    why: '有back charge且需要damage/travel时才切换。'
+    verification: conditioned
+    conditions: [back_charge_ready]
+    sources: [SRC05]
+- id: safe_jump
+  title: '+42｜S1才加入Vertical safe jump'
+  stage: S1
+  subtitle: '只属于exact Vertical state'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Safe Jump
+    input: 'M Vertical Rolling Attack exact hit -> +42 -> immediate forward jump HK'
+    value: {kd: '+42'}
+    next_loop_package: VERTICAL42
+    why: '把charge anti-air/ender转成高价值下一轮，但条件不能省。'
+    verification: conditioned
+    conditions: [down_charge_ready, vertical_rolling_exact_state]
+    sources: [SRC05]
+- id: throw
+  title: 'Forward throw｜+30简单继续'
+  stage: S1
+  subtitle: 'Bomb之前先有普通throw Oki'
+  rows:
+  - result: THROW
+    stage: S1
+    choice: Hop
+    input: 'forward throw -> +30 -> Surprise Forward Hop'
+    value: {frame: '+3'}
+    next_loop: 'throw / 5LK / DR 2MK / DR 6MK'
+    why: '先建立无Bomb的普通角落/近身循环。'
+    verification: verified
+    sources: [SRC05]
+- id: drive
+  title: '2MP CDR｜S2结构化carry/Oki'
+  stage: S2
+  subtitle: '同一starter按damage/Oki选'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Damage
+    input: '2MP > CDR > 5HK > 5HP > Coward Crouch > Wild Lift > M Vertical Rolling Attack'
+    value: {drive: 3, kd: '+42 family'}
+    next_loop_package: VERTICAL42
+    why: '资源换更强damage和safe-jump预算。'
+    verification: conditioned
+    conditions: [down_charge_ready, vertical_rolling_exact_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Oki
+    input: '2MP > CDR > 5HK > 5HP > Coward Crouch > Wild Lift > Amazon River Run'
+    value: {drive: 3, state: 'Oki focus'}
+    next_loop: 'grounded +29 / airborne +35 branch by hit state'
+    why: '需要更灵活Oki时换Amazon River Run。'
+    verification: conditioned
+    conditions: [amazon_hit_state]
+    sources: [SRC05]
+- id: bomb
+  title: 'Blanka-chan Bomb｜S2赢到角落后才进主线'
+  stage: S2
+  subtitle: '对象setplay不是neutral任务'
+  rows:
+  - result: SETUP
+    stage: S2
+    choice: Corner placement
+    input: 'corner 5HP > Coward Crouch > Wild Lift > Blanka-chan Bomb'
+    value: {state: 'Bomb placed'}
+    next_loop_package: BOMB_CORNER
+    why: '先赢corner，再把延迟对象加入时间轴。'
+    verification: conditioned
+    conditions: [corner, bomb_placed, activation_timing]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S2
+    choice: OD Thunder +4
+    input: 'corner Bomb setup -> OD Electric Thunder block (+4)'
+    value: {drive: 2, frame: '+4'}
+    next_loop_package: OD_THUNDER_PLUS4
+    why: 'Bomb延迟威胁存在时，高/低/throw才真正难处理。'
+    verification: conditioned
+    conditions: [corner, bomb_placed, activation_timing]
+    sources: [SRC05]
+- id: advanced
+  title: 'Advanced movement｜S3才扩Hop/Backstep/Wild Hunt'
+  stage: S3
+  subtitle: '只保留distinct-value分支'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: OD Wild Hunt +64
+    input: 'OD Wild Hunt hit -> +64'
+    value: {drive: 2, kd: '+64'}
+    next_loop: 'meaty throw / delayed strike / object setup by position'
+    why: '高风险读法只有在读到对手时才换大Oki。'
+    verification: conditioned
+    conditions: [wild_hunt_hit]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: Amazon airborne
+    input: 'Amazon River Run airborne hit -> +35 -> forward dash'
+    value: {frame: '+16'}
+    next_loop: 'meaty / throw / Hop read'
+    why: '按airborne状态使用，不和grounded +29混淆。'
+    verification: conditioned
+    conditions: [airborne_hit]
+    sources: [SRC05]
+- id: super
+  title: 'Lightning Beast｜S4才把Rolling变成系统层'
+  stage: S4
+  subtitle: '不是更长combo，而是install'
+  rows:
+  - result: ACTIVE
+    stage: S4
+    choice: SA2
+    input: 'SA2 Lightning Beast activation'
+    value: {sa: 2, state: 'Rolling Cannon system'}
+    next_loop: 'Rolling / Vertical / Aerial Rolling -> Rolling Cannon by current hit/block state'
+    why: '基础Thunder/Bomb都稳定后才学习install规则。'
+    verification: conditioned
+    conditions: [sa2_active]
+    sources: [SRC03, SRC05]
+backend_only:
+- {label: 'full Bomb setplay tree', reason: 'only selected S2/S3 branches should reach learner surface'}
+- {label: 'generic +42', reason: 'must retain exact Vertical route state'}
+- {label: 'Rolling neutral autopilot', reason: 'blocked Rolling remains highly punishable'}
+- {label: 'Lightning Beast full tree', reason: 'S4 system layer'}
