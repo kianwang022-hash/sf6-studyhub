@@ -1,0 +1,112 @@
+schema_version: '1.1'
+character: aki
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先稳定上毒与+44 Oki，再学第一条毒爆；只有能稳定读poison state后才进入corner puddle与exact setplay。'
+  score_rule: 'Rank/MR是Reality evidence，不替代opponent_poisoned、corner、Drive Parry exception、active-frame与spacing条件。'
+  current_ui: 'S0上毒+44；S1首次毒爆；S2毒+位置与puddle；S3 exact setplay/OD burst；S4 SA2 field与lethal。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '跑通low / 5MK两条稳定H Lash route、+44双dash Oki和H Lash anti-air，并知道poison state会改变下一次route。'
+    add_now:
+      - '2LK > 2LP > 2LP > H Serpent Lash。'
+      - '5MK > 5MP > H Serpent Lash。'
+      - 'H Lash +44 -> forward dash x2 -> 2MK / 5HK / delayed throw。'
+      - 'H Serpent Lash anti-air。'
+      - 'poisoned target = 下一次route会变，但暂不优化burst。'
+    gate:
+      lab: '两条confirm和+44 Oki可复现；不会raw H Lash。'
+      match: '能在下一次opening前主动确认poisoned/unpoisoned。'
+    defer: ['完整poison-burst route matrix', 'corner puddle', 'OD Chaser block-poison', '+18 active meaty', 'SA2 field']
+    hub_focus: [low, medium, oki44, anti_air]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '第一次利用poisoned state改变route，并把Toxic Wreath与DR高低投接回基础loop。'
+    add_now:
+      - 'poisoned M Lash -> +69 burst route。'
+      - 'poisoned H Lash burst -> 回+44。'
+      - '5MP -> Toxic Wreath +40。'
+      - '+44 -> DR 2MK / DR 3MP。'
+      - '6HK Block +2 ordinary pressure。'
+    gate:
+      match: '不会见毒就burst；能解释为什么当前opening选择+44 loop还是burst。'
+    defer: ['puddle setplay', 'Qiong Qi state split', 'OD Chaser block-poison', '+71 OD burst']
+    hub_focus: [first_burst, wreath, dr_pressure]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '把poison state与screen position合并判断：corner puddle、Year4 block-poison与Qiong Qi state split进入。'
+    add_now:
+      - 'poisoned M Lash -> corner Orchid Spring puddle。'
+      - 'puddle +38 -> DR mix / punish escape。'
+      - 'OD Nightshade Chaser block-poison + Drive Parry exception。'
+      - 'Qiong Qi unpoisoned +34 vs poisoned +54。'
+      - '一条Sinister Slide / Heel Strike position route。'
+    gate:
+      match: '能说出当前毒状态、位置与对手逃场行为如何改变route。'
+    defer: ['+18 active meaty', 'safe-jump spacing', 'OD Lash +71', 'SA2 field']
+    hub_focus: [puddle, year4_poison, qiongqi]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'exact +18 meaty、OD Cruel Fate hit/block split、+71 OD burst与safe-jump spacing进入。'
+    add_now:
+      - 'H Lash +44 -> exact +18 -> 6HP active meaty。'
+      - 'OD Cruel Fate hit +42 / block +2。'
+      - 'opponent poisoned -> OD Serpent Lash +71 family。'
+      - 'H Lash spacing-dependent safe jump -> shimmy。'
+      - 'puddle -> Nightshade active meaty family。'
+    gate:
+      behavior: 'exact-state数字不会跨route泛化；Drive消费有明确价值理由。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['SA2 persistent field', 'max poison-burst route', 'matchup-specific poison cadence']
+    hub_focus: [exact_setplay, cruel, od_burst]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA2 persistent poison field、SA3 lethal、matchup poison cadence和character-specific spacing lab进入。'
+    add_now:
+      - 'SA2 poison field压制。'
+      - 'SA3 / lethal cashout。'
+      - 'max poison-burst resource route。'
+      - 'matchup-specific OD Chaser / projectile cadence。'
+      - 'safe-jump / puddle / airborne hit hurtbox lab。'
+    gate:
+      behavior: '高级field与max route不让S0的+44 Oki和state check退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, exact_setplay, puddle]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'low/5MK→H Lash稳定', node: low, upgrade_evidence: '确认命中后才提交-20 ender。'}
+    - {id: EX02, stage: S1, label: 'first poison-burst route稳定', node: first_burst, upgrade_evidence: '先检查poison state再输入。'}
+    - {id: EX03, stage: S3, label: '+18 6HP exact setup稳定', node: exact_setplay, upgrade_evidence: '前置whiff/timing不串。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'poison state check成为习惯', node: medium, upgrade_evidence: '下一次contact前知道对手是否已中毒。'}
+    - {id: NE02, stage: S2, label: 'OD Chaser后会针对Parry/移动', node: year4_poison, upgrade_evidence: '不会假设block一定上毒。'}
+    - {id: NE03, stage: S2, label: 'puddle改变对手移动后会追逃场', node: puddle, upgrade_evidence: '能抓jump/walk/reversal。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'ordinary +44 vs poisoned future state分清', node: oki44, upgrade_evidence: '不把所有Lash数字混在一起。'}
+    - {id: CO02, stage: S1, label: 'burst or loop有理由', node: first_burst, upgrade_evidence: '不是见毒就自动burst。'}
+    - {id: CO03, stage: S3, label: '+42/+53/+69/+71 exact owner分清', node: od_burst, upgrade_evidence: 'state数字不跨route。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'H Lash +44闭环', node: oki44, upgrade_evidence: 'two dash后低/strike/throw能回confirm。'}
+    - {id: OF02, stage: S1, label: 'poison-burst→回+44闭环', node: first_burst, upgrade_evidence: 'burst后不丢普通Oki主线。'}
+    - {id: OF03, stage: S2, label: 'corner puddle loop', node: puddle, upgrade_evidence: 'field后会根据逃场行为调整。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: 'jump→H Lash anti-air', node: anti_air, upgrade_evidence: '不靠puddle处理跳。'}
+    - {id: DA02, stage: S2, label: '对手Parry OD Chaser会改poison入口', node: year4_poison, upgrade_evidence: '能转throw/spacing。'}
+    - {id: DA03, stage: S4, label: 'matchup poison cadence调整', node: super, upgrade_evidence: '不机械循环projectile。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'apply poison→H Lash +44→ordinary Oki先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'first burst / +40 / DR mix多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'poison + position / puddle / block-poison结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；exact-state数字不泄漏。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA2 field / max burst围绕真实高分瓶颈。'}
