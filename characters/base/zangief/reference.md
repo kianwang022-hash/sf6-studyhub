@@ -159,6 +159,6 @@
 
 - Baseline patch：**2026-08-03**
 - Current structured guide：**2026-08-31 Year 4**
-- Checked through：**2026-09-11**
+- Checked through：**2026-09-18**
 - 数值与当前路线来源见 `sources.yaml`
 - Accepted Complete HTML 只作为 learner-facing migration baseline；不能单独提升 patch-sensitive claim。
