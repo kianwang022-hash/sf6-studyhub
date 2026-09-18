@@ -6,7 +6,7 @@
 
 - Baseline balance update: **2026-08-03**
 - Current combo source update: **2026-08-31**
-- Checked: **2026-09-12**
+- Checked: **2026-09-18**
 - Controls: **Classic**
 - 涉及空中高度、墙距、后段接触、起身恢复的数字，只在列出的条件下使用。
 - **ID规则**：`R01–R10 / O01–O05` 与稳定实战语义保持同义；只放 Reference 的扩展候选使用 `Xxx`，不再复用稳定 ID。
