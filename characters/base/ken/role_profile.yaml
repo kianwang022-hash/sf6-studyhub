@@ -1,0 +1,101 @@
+schema_version: '1.0'
+character: ken
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: '肯把一次普通确认当成推进器：碰到以后不只拿伤害，还要把对手送到更差的位置，再用击倒继续下一轮。'
+    preferred_range: '中距离先用 5HK、Hadoken、2MK 与走位制造接触；真正拿到近身后，用 2MP / DRC / Quick Dash 路线把人持续推向角落。'
+    win_pattern: '普通 shoto 控场 -> 可靠接触 -> 按位置选择 +6 起攻 / carry / 角落 setplay -> 打投骗拆 -> 对手为了逃角落花资源 -> 再推进。'
+    lose_pattern: '只看最大伤害、把 Quick Dash / Jinrai 当自动续压、看到 H Dragonlash +1 就无脑进、一直用 Ryu 节奏打而不用 Ken 的位置转换。'
+  character_model:
+    essence_short: '把一次普通接触换成更好的屏幕位置和下一轮：伤害只是一个结果，运角、击倒和角落状态才是肯不断滚雪球的核心。'
+    essence_detail: '从隆转到肯，波动拳、升龙反空、2MK 取消绿冲、打 / 投 / 骗拆这些基础都可以直接继承。肯真正多出来的不是另一套完全不同的游戏，而是“接触以后怎么把这一回合继续向前推”。中距离先用 5HK、Hadoken、2MK 与 Quick Dash 派生让对手处理空间；一旦靠 2MP、2MK DRC 或 Drive Rush 5MP 贴到人，路线就不只比较伤害，而是在 +25→前冲 +6、Quick Dash Tatsu 运角、角落 +5 setplay 和 SA 之间选 end-state。对手开始尊重这些推进和角落压力后，低段、投、shimmy 才越来越值钱。肯最容易玩歪的地方，是把所有 Quick Dash / Jinrai 分支当自动 blockstring，或者每次命中都只选最高伤害；真正成熟的肯是把同一个 opening 换成最值钱的位置和下一轮。'
+    force_opponent_to:
+    - '先尊重 5HK / Hadoken / 2MK 的中距离控制，不敢只靠站桩等你靠近。'
+    - '近身后尊重 2MP、DR 5MP 和 +6 起攻，不敢每次都抢按。'
+    - '在被逐步推向角落时提前花 Drive、跳出或承担风险，而不是一直守到墙边。'
+    payoff_after_respect:
+    - '普通投 / 低段 / shimmy 的基础三角变得更可信。'
+    - 'Quick Dash Tatsu 等路线把一次普通命中换成明显 corner carry。'
+    - 'H / Quick Dash Shoryuken 收尾进入 +25 -> dash +6，再开一轮。'
+    - '角落后把同一 opening 分成 throw loop、meaty、shimmy、damage / SA。'
+    core_tradeoff: '同一个 opening 到底换成什么 end-state：伤害、corner carry、稳定 +6 起攻、角落 setplay，还是 SA。Quick Dash / Jinrai 的额外收益只有在条件和风险值得时才加入。'
+    successful_round:
+    - '用普通 shoto 工具控制中距离'
+    - '2MP / 2MK DRC / DR 5MP 拿可靠接触'
+    - '按屏幕位置选 damage / carry / knockdown'
+    - 'dash +6 或角落 setplay 继续打 / 投 / shimmy'
+    - '逼对手为了逃角落提前花资源或改变防守'
+    - '把新答案再转成下一次推进'
+    common_misplays:
+    - '每次命中都选最高伤害，丢掉 Ken 最值钱的运角和角落状态。'
+    - 'H Dragonlash 被防 +1 就当万能进场，忽略 28F startup 与距离。'
+    - 'Quick Dash / Jinrai 一路播到底，不看对手 interrupt / DI / reversal。'
+    - '只用波动升龙打成“换皮 Ryu”，不主动兑现 Ken 的位置转换。'
+    unique_decision: '普通 starter 命中后，不只问“能打多少”，而要问“这次要把人送到哪里、用什么击倒、下一轮要什么状态”。'
+    transfer_in:
+    - 'Hadoken / Shoryuken 的 projectile-antiair 基座。'
+    - '2MK -> Cancel Drive Rush。'
+    - 'strike / throw / shimmy。'
+    - 'punish、DI、corner、SA conversion。'
+    new_skill:
+    - '把 corner carry 当成路线价值，而不是 combo 副产品。'
+    - '用 Quick Dash / Jinrai 改变 end-state，同时识别 conditioned 分支。'
+    - '同一机会在 damage / carry / Oki / SA 之间做位置化选择。'
+    unlearn:
+    - '每个 shoto 都应该用同样的中距离节奏打一整局。'
+    - 'Combo 只看伤害最高就是最佳。'
+    - 'plus 或角色专属推进技等于可以无脑续压。'
+  glossary:
+  - {term: 'KK｜奮迅脚 / Quick Dash', meaning: '肯的角色专属快速前进状态，可接不同派生。主要价值是改变路线、距离和 end-state，不是无脑中立跳过。'}
+  - {term: 'KK > Tatsu｜Quick Dash Tatsu', meaning: '常见运角收尾；很多当前路线用它把普通 starter 直接送向角落。'}
+  - {term: '236K｜迅雷脚 / Jinrai Kick', meaning: '带不同派生的踢技 family。每个 follow-up 的风险和 block 状态不同，不能当成一条万能安全字符串。'}
+  - {term: '623P｜昇龍拳 / Shoryuken', meaning: '主要反空与稳定 combo ender。H / Quick-Dash Shoryuken 常见 +25 击倒，可前冲后剩 +6。'}
+  - {term: 'Oki｜击倒后的起身压制', meaning: '把击倒后的先手时间换成打 / 投 / shimmy；Ken 的很多路线价值就在下一轮和角落位置。'}
+  tools:
+  - {input: '5HK', name: '站重脚', use: '12F 中距离占位 / PC 工具；普通命中后不是自动连段，主要承担空间和大读法价值。'}
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +5 / Block 0；Year 4 后成为非常稳定的近身确认和连接点。'}
+  - {input: '2MK', name: '蹲中脚', use: '7F 可取消低段；主要 DRC 入口，被防 -6，本体不要自动续。'}
+  - {input: '236P', name: '波动拳 | Hadoken', use: '普通 shoto 中距离控制；发波后仍要继续看跳与 Drive。'}
+  - {input: '623P', name: '升龙拳 | Shoryuken', use: '反空 / 伤害收尾；H 版常见 +25，前冲后 +6。'}
+  - {input: 'KK', name: '奮迅脚 | Quick Dash', use: '把路线转换成运角 / 不同 ender 的核心状态；不是默认 neutral skip。'}
+  - {input: '236K', name: '迅雷脚 | Jinrai Kick', use: '近身和角落的分支工具；follow-up 必须按实际 block / hit 条件判断。'}
+  - {input: '214K', name: '龍尾脚 | Dragonlash Kick', use: 'H 版被防 +1，但发生慢；作为 conditioned 推进而不是 S0 万能入口。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整 18 个基础 Normal；Neutral Jump HK、Unique、Quick Dash / Jinrai 派生与 Specials 由关键工具和 Reference 承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '7', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-6', recovery: '12', hit: '0', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '5', active: '5-8', recovery: '14', hit: '+4', block: '-2', cancel: 'C', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-10', recovery: '20', hit: '+3', block: '-5', cancel: 'SA', damage: '600', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '10', active: '10-14', recovery: '17', hit: '+3', block: '-2', cancel: 'C', damage: '800', note: ''}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '12', active: '12-13', recovery: '23', hit: '+1', block: '-5', cancel: '-', damage: '800', note: 'PC 用途高；特定状态 recovery 会变化。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '9', hit: '+5', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '10', hit: '+1', block: '-3', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-8', recovery: '14', hit: '+5', block: '0', cancel: 'C', damage: '600', note: '挥空额外 +2F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '7', active: '7-9', recovery: '19', hit: '-2', block: '-6', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '8', active: '8-11', recovery: '24', hit: '+3', block: '-7', cancel: 'C', damage: '800', note: '强制站立。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '8', active: '8-10', recovery: '24', hit: 'KD', block: '-10', cancel: '-', damage: '900', note: 'PC 更长 hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '6', active: '6-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '700', note: '空中命中 launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中 CH/PC 可 slam knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Quick Dash / Jinrai end-state engine'
+    rule: '角色特色不是独立资源，而是把普通确认通过 Quick Dash / Jinrai / ender 选择换成更强的 carry、Oki 或角落状态。'
+  key_numbers:
+  - {label: '2MP', value: '6F / Hit +5 / Block 0', decision: 'Year 4 后普通命中可接 5LK；贴身还能接更高价值路线。'}
+  - {label: '2MK', value: '7F / Hit -2 / Block -6 / C', decision: '主要低段 DRC 入口；未取消时被防就结束。'}
+  - {label: 'H / Quick-Dash Shoryuken', value: '常见 KD +25 -> dash +6', decision: '第一套稳定 Oki 标尺：打 / 投 / shimmy。'}
+  - {label: 'Corner M Shoryuken', value: '常见 +33 -> 2MK whiff -> +5', decision: '角落 frame-kill family；只在对应角落路线使用。'}
+  - {label: 'H Dragonlash', value: '28F / Block +1', decision: '结果是正帧，但发生慢；价值取决于距离和对手反应。'}
+  - {label: 'Quick Dash Forward Step Kick', value: '8F branch / Hit +1 / Block -4', decision: 'Year 4 后更快，但不是命中后固定大收益。'}
+  constraints:
+  - 'Quick Dash 是路线/距离状态，不是看到中距离就自动冲。'
+  - 'Jinrai 各 follow-up 的 block/hit 结果不同，不能投影成一条万能安全字符串。'
+  - 'H Dragonlash +1 必须和 28F startup 一起理解。'
+  - '角落 active-frame meaty、空中命中 Quick Dash Tatsu 等必须保留条件。'
