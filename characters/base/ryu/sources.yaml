@@ -1,0 +1,15 @@
+schema_version: '1.1'
+character: ryu
+accessed: '2026-09-18'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'SF6_StudyHub_31Chars_Complete.html — accepted learner-facing baseline', status: contextual_only, covers: [teaching_order, learner_labels, frozen_ux]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Ryu', url: 'https://www.streetfighter.com/6/en-us/character/ryu/frame', game_version: current, covers: [frames, damage, invulnerability]}
+- {id: SRC02, tier: 1, title: 'SF6 Lab — Ryu Frame Data', url: 'https://sf6-lab.net/en/fighters/ryu/frame', freshness: '2026-08-27 official-reference data', covers: [frames, cancel, conditions]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Ryu Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/ryu/combo', freshness: 'updated 2026-08-31', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, training_order, denjin, key_frames]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Ryu Move List', url: 'https://sf6-lab.net/en/fighters/ryu/moves', covers: [commands, move_names, properties]}
+- {id: SRC05, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+policy:
+  preferred_order: [SRC01, SRC05, SRC02, SRC03, SRC04, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; spacing/height/grounded/airborne differences remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required'
+  learner_projection_rule: 'source route existence does not force current-stage exposure; stage owner is grow.yaml and Reference remains lookup-only'
