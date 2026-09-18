@@ -1,0 +1,296 @@
+schema_version: '1.0'
+character: sagat
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-18'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Sagat S0 is projectile-shaped movement -> anti-air/long-normal contact -> stable Uppercut Oki. +42 safe jump and Knee spacing families come later.'
+stages:
+  S0: {label: 最小可玩, short: 'Tiger Shot -> Contact -> Uppercut'}
+  S1: {label: 基本功成型, short: '+2 Pressure / Nexus / +32 DR'}
+  S2: {label: 实战结构化, short: '2MP CDR / Target Combo / Position'}
+  S3: {label: 选择成熟, short: 'Tiger Knee / +42 Safe Jump'}
+  S4: {label: 高分上探, short: 'Charged TU / OD Knee / SA'}
+shared_packages:
+  UPPERCUT27:
+    label: 'H Tiger Uppercut +27'
+    sequence: 'H Tiger Uppercut -> +27 -> forward dash 23F'
+    next: '+4 -> 5MP / 2MK / throw / block'
+    verification: verified
+    sources: [SRC05]
+  L_UPPERCUT32:
+    label: 'L Tiger Uppercut +32'
+    sequence: 'L Tiger Uppercut -> +32 -> Drive Rush'
+    next: 'DR 6MP / DR 5MP / DR throw / spacing read'
+    verification: verified
+    sources: [SRC05]
+  KNEE42_SAFEJUMP:
+    label: 'H Tiger Knee airborne +42 safe jump'
+    sequence: 'H Tiger Knee Crush airborne hit -> +42 -> forward jump HP'
+    next: 'safe jump -> strike / throw / shimmy after landing'
+    verification: conditioned
+    conditions: [airborne_hit_state]
+    sources: [SRC05]
+  MP_PLUS2:
+    label: '5MP block +2'
+    sequence: '5MP block -> +2'
+    next: '2LP / 5MP / 2MK / throw / walk-back shimmy'
+    verification: verified
+    sources: [SRC03, SRC05]
+opportunities:
+- id: shot
+  title: 'Tiger Shot｜火球的任务是逼对手改变移动'
+  stage: S0
+  subtitle: '发波以后继续看跳；真正收益来自下一次normal/Uppercut'
+  rows:
+  - result: READ
+    stage: S0
+    choice: M High Tiger Shot
+    input: '236MP -> watch jump / walk / crouch / parry'
+    value: {startup: '16F', block: '+3'}
+    next_loop: '对手跳 -> Tiger Uppercut | 地面推进 -> 5MP / 5MK占位'
+    why: '用正帧较慢火球塑造节奏，不把发波当回合终点。'
+    verification: verified
+    sources: [SRC03]
+  - result: READ
+    stage: S0
+    choice: H High Tiger Shot
+    input: '236HP -> immediately keep anti-air attention'
+    value: {startup: '12F', block: '-1'}
+    next_loop: '跳 -> Tiger Uppercut | 不跳 -> 按距离继续shot或站5MP位置'
+    why: '更快的火球改变时机，但恢复后仍要处理跳跃。'
+    verification: verified
+    sources: [SRC03]
+- id: light
+  title: 'Light｜小命中先用稳定Uppercut'
+  stage: S0
+  subtitle: '先把空间控制兑现成可靠击倒'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 稳定
+    input: '2LK > 2LK > 5LP > M Tiger Uppercut'
+    value: {drive: 0, kd: '+27'}
+    next_loop_package: UPPERCUT27
+    why: '最简单的light确认，直接进入可理解的下一Turn。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: '2LK / 5LP block -> stop / spacing reset'
+    value: {drive: 0}
+    next_loop: '回High Tiger Shot / 5MP工作区'
+    why: '不要因为想维持zoning就把被防light硬接不安全必杀。'
+- id: medium
+  title: '5MP｜火球逼出移动后最重要的地面兑现'
+  stage: S0
+  subtitle: '命中拿Uppercut；被防+2直接进入打投'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 稳定确认
+    input: '5MP > 2LP > M Tiger Uppercut'
+    value: {drive: 0, kd: '+27'}
+    next_loop_package: UPPERCUT27
+    why: '长medium抓到移动后，先用稳定Uppercut兑现。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: +2选择点
+    input: '5MP block (+2) -> 2LP / 5MP / 2MK / throw / walk-back shimmy'
+    value: {frame: '+2'}
+    next_loop_package: MP_PLUS2
+    why: '这就是火球让对手站住后的近身收益，不需要先学花式setplay。'
+    verification: verified
+    sources: [SRC03, SRC05]
+- id: nexus
+  title: 'Tiger Nexus｜S1只保留一个简单分支'
+  stage: S1
+  subtitle: '先学用途，不背完整派生树'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Mighty稳定
+    input: '2MP > M Tiger Nexus > Mighty Tiger'
+    value: {state: 'Mighty Tiger hit +3 continuation'}
+    next_loop: '继续5MP / throw / spacing read'
+    why: '先理解Nexus是contact转换工具，再谈Greedy/Nova的更高Oki。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S2
+    choice: OD Mighty真相
+    input: 'OD Tiger Nexus > Mighty Tiger block'
+    value: {frame: '-3'}
+    next_loop: '回防 / spacing，不假装plus'
+    why: 'Year4改善到-3，但仍不是你的自动回合。'
+    verification: verified
+    sources: [SRC03, SRC05]
+- id: oki
+  title: 'Tiger Uppercut｜先学+27/+32，再学大Knee预算'
+  stage: S1
+  subtitle: '稳定end-state先于条件化safe jump'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: H Uppercut基础
+    input: 'H Tiger Uppercut hit -> +27 -> forward dash'
+    value: {kd: '+27', frame: 'after dash +4'}
+    next_loop_package: UPPERCUT27
+    why: '第一套清晰Oki标尺。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: L Uppercut DR
+    input: 'L Tiger Uppercut hit -> +32 -> Drive Rush'
+    value: {kd: '+32'}
+    next_loop_package: L_UPPERCUT32
+    why: '用更大的时间预算进入DR 6MP / 5MP / throw。'
+    verification: verified
+    sources: [SRC05]
+- id: cdr
+  title: '2MP CDR｜S2开始把空间contact转成长路线'
+  stage: S2
+  subtitle: 'Sagat的主cancel medium是2MP，不是2MK'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MP whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回shot / long-normal spacing'
+    why: 'Drive只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: CDR后+6
+    input: '2MP > CDR > 5MP block'
+    value: {drc_cost: 3, frame: '+6'}
+    next_loop: '5MP / delayed throw / 2MK / 5HK'
+    why: 'S2才把高优势DR接触加入选择树。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: 稳定
+    input: '2MP > CDR > 5MP > 4HP > H Tiger Knee Crush > L Tiger Uppercut'
+    value: {drive: 3, carry: high}
+    next_loop_package: L_UPPERCUT32
+    why: '用CDR把地面contact换成位置和后续Oki。'
+    verification: verified
+    sources: [SRC05]
+- id: target
+  title: 'Target Combo｜Year4 +38之后才进入active-frame setplay'
+  stage: S1
+  subtitle: '先记end-state，再记精细meaty'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: +38
+    input: '5MK > 6HK'
+    value: {kd: '+38'}
+    next_loop: 'S1先按位置接近；S2再练H Tiger Knee active-frame meaty'
+    why: 'Year4第二段更快，+38本身就是独立的Oki预算。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: active-frame
+    input: '5MK > 6HK -> +38 -> H Tiger Knee Crush meaty'
+    value: {frame: 'block about +4'}
+    next_loop: '5MP / throw / walk-back shimmy'
+    why: '只有+38 setup成立时，H Knee才变成真正plus的meaty。'
+    verification: conditioned
+    conditions: [exact_plus38_state, active_timing]
+    sources: [SRC05]
+- id: punish
+  title: 'Punish｜6HK PC把大破绽变成高价值Oki'
+  stage: S1
+  subtitle: '先一条稳定，再扩资源'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 稳定
+    input: '6HK (PC) > 4HP > H Tiger Knee Crush > L Tiger Uppercut'
+    value: {drive: 0}
+    next_loop_package: L_UPPERCUT32
+    why: '大确反先稳定拿下，不为了最大伤害增加失败率。'
+    verification: verified
+    sources: [SRC05]
+- id: knee
+  title: 'Tiger Knee｜S3才真正学spacing / hit-state分流'
+  stage: S3
+  subtitle: '不是所有H Knee都+42'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: L Knee基础预算
+    input: 'L Tiger Knee Crush hit -> check actual KD -> forward dash when +36 family is confirmed'
+    value: {kd: '+36…46'}
+    next_loop: 'dash -> 2HP / DR 5MP / DR throw by actual spacing'
+    why: '先学“范围”而不是固定数字。'
+    verification: conditioned
+    conditions: [spacing, hit_state]
+    sources: [SRC05]
+  - result: AIR_HIT
+    stage: S3
+    choice: +42 Safe Jump
+    input: 'H Tiger Knee Crush airborne hit -> +42 -> forward jump HP'
+    value: {kd: '+42', state: 'safe jump'}
+    next_loop_package: KNEE42_SAFEJUMP
+    why: '只有对应airborne hit state才把+42当safe-jump入口。'
+    verification: conditioned
+    conditions: [airborne_hit_state]
+    sources: [SRC05]
+- id: di
+  title: 'DI｜当前简单源字符串有缺口，不凭记忆补'
+  stage: S4
+  subtitle: '只保留当前来源完整的高资源grounded路线'
+  rows:
+  - result: DI_PC
+    stage: S4
+    choice: Grounded SA3
+    input: 'DI (PC) > 4HP grounded hit > M High Tiger Shot > DR 2MP > CDR > 4HP > H Tiger Knee Crush > M Tiger Uppercut > SA3'
+    value: {sa: 3, drive: 'high'}
+    next_loop: 'Kill；未击杀按SA3落点重建'
+    why: '当前来源完整；简单DI路线仍因源字符串缺token而留backend。'
+    verification: conditioned
+    conditions: [grounded_di_pc, resources]
+    sources: [SRC05]
+- id: super
+  title: 'SA｜最后才把已有空间优势现金化'
+  stage: S4
+  subtitle: 'Super不是新的neutral starter'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA1
+    input: 'OD High Tiger Shot > SA1'
+    value: {sa: 1}
+    next_loop: '按SA1 +22…34实际落点继续'
+    why: '从已经存在的shot机会现金化，不新增陌生starter。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: SA2 Forward
+    input: '5MP > 2LP > SA2 forward variation > DR 4HP > fully charged H Tiger Uppercut'
+    value: {sa: 2}
+    next_loop: '按SA2 variation / charged Uppercut落点继续'
+    why: '高阶段资源路线，只有现有confirm和charge都稳定后进入。'
+    verification: conditioned
+    conditions: [sa2_variation, charge_timing]
+    sources: [SRC05]
+backend_only:
+- {label: '2MP PC abbreviated HP route', reason: 'source abbreviates the exact HP input; do not reconstruct from memory'}
+- {label: 'DI airborne easy route', reason: 'current source string contains an omitted token before 4HP'}
+- {label: 'fixed Tiger Knee KD values', reason: 'spacing / airborne state changes the result'}
+- {label: 'active-frame Knee / normal meaties', reason: 'exact setup state required'}
