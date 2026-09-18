@@ -1,0 +1,111 @@
+schema_version: '1.1'
+character: lily
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先学1层Windclad与plus Spire，让资源改变进场风险可见；再加Mexican Typhoon、hold-vs-spend、多stock和SA。'
+  score_rule: 'Rank/MR是Reality evidence，不替代资源窗口、stock状态、respect与safe-jump条件。'
+  current_ui: 'S0只学1层Windclad；Typhoon S1；hold-vs-spend/+52 S2；multi-stock S3。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '跑通普通light confirm、拿1层Windclad、用一次Windclad Spire并看懂normal -8 vs Windclad plus。'
+    add_now:
+      - 'light→M Tomahawk基础confirm。'
+      - '安全窗口拿1层Windclad。'
+      - 'Windclad light→M Spire。'
+      - 'normal Spire block -8 vs Windclad +1。'
+      - 'Tomahawk anti-air。'
+    gate:
+      lab: '1层stock取得、Windclad route、normal/Windclad风险差异稳定。'
+      match: '不会机械攒满；能把1层stock换成真实plus entry。'
+    defer: ['Mexican Typhoon主线', '+52 safe jump', '多stock', 'Condor Dive', 'SA']
+    hub_focus: [resource, light, spire_truth]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: 'plus Spire先用strike造respect，再第一次加入Mexican Typhoon与基础punish。'
+    add_now:
+      - 'Windclad H Spire plus entry→strike first。'
+      - '对手开始block后加入Mexican Typhoon。'
+      - 'point-blank PC→H Typhoon。'
+      - 'Windclad two-dash +5/+7/+10 Oki。'
+      - 'normal Spire hit Oki。'
+    gate:
+      match: 'Typhoon不成为plus entry第一拍固定答案；被jump/backwalk后会转strike/anti-air。'
+    defer: ['hold-vs-spend主线', '多stock', 'corner stock loop']
+    hub_focus: [typhoon, spire_truth]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: 'CDR、Windclad H +52 safe jump与hold-vs-spend进入。'
+    add_now:
+      - 'normal CDR→L Spire。'
+      - 'Windclad CDR→H Spire +52。'
+      - '+52 two-dash +10 / delayed safe jump。'
+      - 'hold stock vs spend stock。'
+      - 'DI branches。'
+    gate:
+      match: '能解释为什么当前opening花stock或保留stock。'
+    defer: ['2/3 stock长投资', 'Condor Dive', 'max SA']
+    hub_focus: [drive, state_choice]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '2/3 stock、spacing OD Spire、Condor Dive与corner Typhoon setplay进入，但每次资源投资有安全窗口。'
+    add_now:
+      - '2/3 Windclad只在长安全窗口。'
+      - 'spacing OD Spire。'
+      - 'Condor Dive activation。'
+      - 'corner Typhoon→Windclad OD Spire。'
+      - 'deeper Windclad Tomahawk route。'
+    gate:
+      behavior: '资源动作被punish后会降频；多stock不会取代当前pressure。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['max resource SA/lethal']
+    hub_focus: [multi_stock, corner, state_choice]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA、高资源Windclad、multi-stock lethal与matchup-specific stock频率进入。'
+    add_now:
+      - 'SA1/SA2/SA3 cashout。'
+      - 'high-resource Windclad routes。'
+      - 'multi-stock lethal / corner。'
+      - 'matchup-specific Condor Wind windows。'
+    gate:
+      behavior: '高资源route不让1-stock投资纪律和respect loop退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, multi_stock, corner]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '1-stock Condor Wind稳定', node: resource, upgrade_evidence: '安全窗口才建资源。'}
+    - {id: EX02, stage: S0, label: 'Windclad Spire输入稳定', node: light, upgrade_evidence: '有stock才提交强化版。'}
+    - {id: EX03, stage: S2, label: '+52 safe-jump状态稳定', node: drive, upgrade_evidence: 'exact H Spire end state才执行。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '不机械攒满', node: resource, upgrade_evidence: '当前pressure高时会放弃Wind。'}
+    - {id: NE02, stage: S1, label: 'plus entry先strike', node: typhoon, upgrade_evidence: 'respect没形成时不乱grab。'}
+    - {id: NE03, stage: S3, label: '多stock按安全窗口', node: multi_stock, upgrade_evidence: '资源投资有真实时间理由。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'normal -8 vs Windclad plus分清', node: spire_truth, upgrade_evidence: '不会把normal Spire当safe。'}
+    - {id: CO02, stage: S2, label: 'hold vs spend有理由', node: state_choice, upgrade_evidence: '能说出消费stock买到了什么。'}
+    - {id: CO03, stage: S3, label: 'Typhoon/Spire资源组合按state', node: corner, upgrade_evidence: 'stock/position/timing不串错。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: '1-stock plus entry闭环', node: light, upgrade_evidence: '强化Spire后能回下一Turn。'}
+    - {id: OF02, stage: S1, label: 'strike/Typhoon反馈闭环', node: typhoon, upgrade_evidence: 'jump/backwalk后会回strike。'}
+    - {id: OF03, stage: S3, label: 'corner Windclad loop', node: corner, upgrade_evidence: 'Typhoon/Spire后会重新做资源选择。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: 'Typhoon被jump会调整', node: typhoon, upgrade_evidence: '转anti-air/strike。'}
+    - {id: DA02, stage: S2, label: '对手等Wind会调资源频率', node: state_choice, upgrade_evidence: '不会固定时机建stock。'}
+    - {id: DA03, stage: S4, label: 'matchup stock窗口调整', node: super, upgrade_evidence: '资源节奏按对手变化。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '1-stock investment→Windclad plus entry先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'respect→Mexican Typhoon反馈循环多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'CDR/+52/hold-vs-spend结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；多stock不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA/高资源Windclad围绕真实高分瓶颈。'}
