@@ -1,0 +1,110 @@
+schema_version: '1.1'
+character: elena
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让ground contact→stable knockdown→simple Oki成立，再打开Lynx Song mix，Healing最后加入。'
+  score_rule: 'Rank/MR是Reality evidence，不替代确认、Oki、mix条件和资源判断。'
+  current_ui: 'Lynx Song不会在S0全开；SA2 Healing固定留在S4。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通5MK/light/2MK接触→L Scythe或M Rhino击倒→一个固定strike/throw→回spacing。'
+    add_now:
+      - '5MK +1作为普通respect点。'
+      - '2LP×2→L Scythe与2MK→2LP→L Scythe两条基础确认。'
+      - '5MP target→M Rhino Horn作为medium ender。'
+      - '2HP / Scratch Wheel负责典型反空。'
+      - '击倒后先只保留一个固定strike和throw。'
+    gate:
+      lab: '两条Scythe确认、M Rhino路线和主要反空稳定。'
+      match: '真人能出现contact→knockdown→next turn，不靠Lynx花活也能打完整回合。'
+    defer: ['完整Lynx Song mix', '2MP CDR', '+41', '+42 safe jump', 'SA2 Healing', 'active-frame高级setplay']
+    hub_focus: [light, low, medium]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '第一次打开Elena角色特有mix：earned Lynx Song只保留overhead / low / throw三选，同时把punish和corner基础补齐。'
+    add_now:
+      - 'M Rhino +39→L Lynx Song→Mallet Smash作为第一条overhead setup。'
+      - '同一setup加入2MK low与throw。'
+      - '挡无敌技有稳定punish。'
+      - 'corner forward throw +24→dash +4。'
+      - 'L Scythe +34的一个简单meaty按真实条件加入。'
+    gate:
+      match: 'Lynx Song只在有setup时出现；高/低/投不会随机裸放。'
+    defer: ['shimmy第四分支', '+41高资源', '+42 safe jump', 'Healing']
+    hub_focus: [lynx, punish, corner]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MP CDR和完整Lynx mix进入；同一个knockdown开始按simple Oki vs mix hub分流。'
+    add_now:
+      - '2MP CDR加入主循环；Hit/Block/Whiff正确分流。'
+      - 'Lynx mix补上walk-back shimmy第四分支。'
+      - 'OD Scythe→DR→Lynx→Harvest +41作为高资源setplay。'
+      - 'midscreen M Scythe +42两dash +2加入。'
+      - '位置开始决定Rhino / Scythe / corner route。'
+    gate:
+      match: '能解释为什么这次选simple Oki还是Lynx mix；不是所有击倒都运行同一脚本。'
+    defer: ['corner +42 safe jump主线', 'Healing', '全部airborne Lynx Whirl']
+    hub_focus: [cdr, lynx, plus41]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'corner +42 safe jump、Harvest/Leopard高预算与airborne Lynx Whirl进入，但条件必须显式。'
+    add_now:
+      - 'corner M Scythe grounded +42→forward jump HP safe jump。'
+      - 'Harvest Circle +50 / Leopard Snap +48只保留有独立Oki价值的分支。'
+      - 'airborne Spinning Scythe→Lynx Whirl按实际高度/版本区分。'
+      - 'active-frame Mallet / 5MK / 6MK在lab闭合后加入。'
+    gate:
+      behavior: '知道+42为什么成立；高级mix失败会回稳定Scythe/Rhino循环。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['SA2 Healing资源优化', 'SA高资源最大伤害']
+    hub_focus: [corner, lynx, plus41]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA2 damage-vs-Healing、SA1/SA3与精细active-frame进入；角色基础仍是ground→knockdown→mix。'
+    add_now:
+      - 'SA2正常分支与Healing variation按血量/Drive/斩杀线选择。'
+      - 'SA1 +42 corner safe jump与SA3 +24 DR setup。'
+      - '高资源OD Scythe / Rhino / SA路线按真实价值加入。'
+      - '回放重点从“mix有没有用出来”转向“当前选择是不是最值钱”。'
+    gate:
+      behavior: 'Healing选择有明确长期收益理由，不为了角色特色硬回。'
+      reality: '高分目标由实际目标和持续表现定义。'
+    hub_focus: [super, corner, lynx]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条L Scythe确认稳定', node: light, upgrade_evidence: 'light与2MK starter双侧稳定。'}
+    - {id: EX02, stage: S0, label: 'M Rhino medium route稳定', node: medium, upgrade_evidence: 'grounded hit后能接简单下一Turn。'}
+    - {id: EX03, stage: S3, label: '+42 safe jump条件稳定', node: corner, upgrade_evidence: '只在corner M Scythe grounded状态执行。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '5MK +1与2MK -3分工', node: medium, upgrade_evidence: '不会把低段被防当成持续压力。'}
+    - {id: NE02, stage: S0, label: '2HP反空稳定', node: medium, upgrade_evidence: 'Year4反空转换可控。'}
+    - {id: NE03, stage: S2, label: 'Lynx不绑架neutral', node: lynx, upgrade_evidence: '没有setup就不裸开mix。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'Hit/Block分流稳定', node: light, upgrade_evidence: '被防不播放Scythe/Rhino命中路线。'}
+    - {id: CO02, stage: S2, label: 'simple Oki vs mix hub分流', node: lynx, upgrade_evidence: '能解释为什么这次进Lynx。'}
+    - {id: CO03, stage: S4, label: 'SA2 damage vs Healing有理由', node: super, upgrade_evidence: '按血量/Drive/局面而不是按角色特色。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'Scythe/Rhino→简单Oki闭环', node: light, upgrade_evidence: '击倒后能接下一Turn。'}
+    - {id: OF02, stage: S1, label: 'Lynx三选mix闭环', node: lynx, upgrade_evidence: 'overhead/low/throw有真实setup。'}
+    - {id: OF03, stage: S3, label: '+42 safe jump回核心Loop', node: corner, upgrade_evidence: 'safe jump后继续strike/throw/read。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '挡无敌技会punish', node: punish, upgrade_evidence: '确定机会不丢。'}
+    - {id: DA02, stage: S2, label: '对手防高低后会加入shimmy', node: lynx, upgrade_evidence: '根据真实习惯扩mix，不预先全开。'}
+    - {id: DA03, stage: S4, label: 'Healing频率按资源/血量调整', node: super, upgrade_evidence: '恢复分支不会机械使用。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'ground contact→stable knockdown→simple Oki先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '基础确认、punish、corner与Lynx三选多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'CDR与full Lynx mix结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；+42/active-frame不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA2 Healing和高资源优化围绕真实局面价值。'}
