@@ -1,0 +1,222 @@
+schema_version: '1.0'
+character: manon
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 teaches ordinary Rond-point/Renversé Oki without Medal-table burden. S1 first Medal interaction; S2-S3 behavior changes with higher Medal.'
+stages:
+  S0: {label: 最小可玩, short: 'Ordinary Oki / Rond-point / Renversé'}
+  S1: {label: 基本功成型, short: 'First Medal / Respect'}
+  S2: {label: 实战结构化, short: 'Medal Changes Opponent Behavior'}
+  S3: {label: 选择成熟, short: 'High Medal / Strike Revaluation'}
+  S4: {label: 高分上探, short: 'SA / Lethal / Medal Math'}
+shared_packages:
+  ROND_DASH:
+    label: 'H Rond-point -> forward dash Oki'
+    sequence: 'H Rond-point ender -> forward dash'
+    next: 'strike / throw / shimmy / block-vs-reversal'
+    verification: verified
+    sources: [SRC05]
+  MEDAL_FEEDBACK:
+    label: 'Medal feedback loop'
+    sequence: 'successful Medal interaction -> future throw reward rises'
+    next: 'opponent jumps/mashes more -> strike/anti-air value rises'
+    verification: verified
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜S0稳定Rond-point收尾'
+  stage: S0
+  subtitle: '先学普通Oki，不背Medal表'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '2LP > 2LP > H Rond-point'
+    value: {medal_change: 0}
+    next_loop_package: ROND_DASH
+    why: 'Training Priority里最基础的稳定route。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '2LP block -> stop / spacing / throw-read'
+    value: {medal_change: 0}
+    next_loop: '回5MP / 2MP'
+    why: '不确认就不提交不安全ender。'
+- id: medium
+  title: '5MP｜S0普通DR→Renversé'
+  stage: S0
+  subtitle: 'Medal成长先从正常combo出现'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Renversé
+    input: '5MP > Drive Rush > 2MP > 4HP > M Renversé'
+    value: {medal_change: 1}
+    next_loop: 'notice Medal growth -> return to ordinary Oki'
+    why: '先把Medal看成combo后的未来收益变化，而不是当前唯一目标。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Re-read
+    input: 'Drive Rush > 2MP block'
+    value: {state: 'pressure'}
+    next_loop: 'throw / strike / shimmy'
+    why: '先维持普通SF6 pressure。'
+    verification: verified
+    sources: [SRC05]
+- id: oki
+  title: 'H Rond-point｜S0核心dash读人'
+  stage: S0
+  subtitle: '不发明固定KD数字'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Strike
+    input: 'H Rond-point ender -> forward dash -> strike'
+    value: {medal_change: 0}
+    next_loop_package: ROND_DASH
+    why: '对手mash/jump时先用普通strike建立respect。'
+    verification: conditioned
+    conditions: [rond_point_dash_state]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Throw
+    input: 'H Rond-point ender -> forward dash -> normal throw'
+    value: {medal_change: 0}
+    next_loop_package: ROND_DASH
+    why: '普通throw先于Medal command-grab复杂度。'
+    verification: conditioned
+    conditions: [rond_point_dash_state, opponent_block]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Shimmy
+    input: 'H Rond-point ender -> forward dash -> walk back'
+    value: {medal_change: 0}
+    next_loop: 'throw-tech whiff -> punish starter'
+    why: '先有普通throw-tech反馈。'
+    verification: conditioned
+    conditions: [rond_point_dash_state, opponent_throw_tech]
+    sources: [SRC05]
+- id: first_medal
+  title: 'First Medal｜S1才主动追一次未来收益'
+  stage: S1
+  subtitle: '不是每次都抓'
+  rows:
+  - result: READ
+    stage: S1
+    choice: Manège Doré
+    input: 'opponent respect / point-blank read -> H Manège Doré'
+    value: {medal_change: 1, medal_level: 'current -> +1'}
+    next_loop_package: MEDAL_FEEDBACK
+    why: '对手愿意block时，第一次把respect换成future reward。'
+    verification: conditioned
+    conditions: [opponent_respect, point_blank]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S1
+    choice: Strike instead
+    input: 'opponent jumps or mashes to avoid Medal throw -> strike / anti-air'
+    value: {medal_change: 0}
+    next_loop: 'punish escape -> rebuild respect'
+    why: 'Medal threat的价值来自对手行为改变，不是只看grab命中。'
+    verification: conditioned
+    conditions: [opponent_escape_grab]
+    sources: [SRC05]
+- id: throw_aftermath
+  title: 'Throw after｜dash不是guaranteed throw'
+  stage: S1
+  subtitle: '保留spacing truth'
+  rows:
+  - result: THROW
+    stage: S1
+    choice: Dash read
+    input: 'normal throw or Manège Doré hit -> forward dash'
+    value: {state: 'spacing-dependent follow-up'}
+    next_loop: 'strike / throw / shimmy / block'
+    why: 'source明确提醒throw后的dash不是自动续抓。'
+    verification: conditioned
+    conditions: [throw_spacing]
+    sources: [SRC05]
+- id: medal_behavior
+  title: 'Medal Lv2-3｜S2开始读逃抓行为'
+  stage: S2
+  subtitle: '未来收益改变对手决策'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Hold strike
+    input: 'Medal Level 2-3 -> opponent jump/mash rises -> use meaty strike / anti-air'
+    value: {medal_level: '2-3'}
+    next_loop: 'hit -> stable route / Renversé'
+    why: '高一点的throw威胁让strike更值钱。'
+    verification: conditioned
+    conditions: [medal_level_2_3, opponent_escape_grab]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Grab when respect returns
+    input: 'Medal Level 2-3 -> opponent blocks -> Manège Doré'
+    value: {medal_level: '2-3'}
+    next_loop_package: MEDAL_FEEDBACK
+    why: '只有对手重新站防时再现金化。'
+    verification: conditioned
+    conditions: [medal_level_2_3, opponent_respect, point_blank]
+    sources: [SRC05]
+- id: high_medal
+  title: 'Medal Lv4-5｜S3高威胁反馈'
+  stage: S3
+  subtitle: '越痛越不能机械抓'
+  rows:
+  - result: READ
+    stage: S3
+    choice: High-Medal grab
+    input: 'Medal Level 4-5 + opponent respect -> H Manège Doré'
+    value: {medal_level: '4-5', damage: '3000-3700'}
+    next_loop: 'observe stronger escape behavior'
+    why: '高伤抓技只在respect仍然存在时值得。'
+    verification: conditioned
+    conditions: [medal_level_4_5, opponent_respect, point_blank]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S3
+    choice: Strike revaluation
+    input: 'Medal Level 4-5 -> opponent jumps/mashes/reversals -> strike / anti-air / block-punish'
+    value: {medal_level: '4-5'}
+    next_loop: 'stable damage -> preserve threat'
+    why: 'Medal越高，对手越想逃grab，strike反而常更值钱。'
+    verification: conditioned
+    conditions: [medal_level_4_5, opponent_escape_grab]
+    sources: [SRC05]
+- id: super
+  title: 'SA｜S4才做精确Medal cashout'
+  stage: S4
+  subtitle: '详细伤害表留Reference'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: 'confirmed route -> SA3 Pas de Deux'
+    value: {medal_level: 'explicit current level', damage: '4000-4600'}
+    next_loop: 'kill / round-state reset'
+    why: 'SA3也随Medal变化，S4才做精确斩杀计算。'
+    verification: conditioned
+    conditions: [medal_level, sa_resource]
+    sources: [SRC03]
+backend_only:
+- {label: 'source route with ellipsis before OD Rond-point', reason: 'starter omitted; do not reconstruct'}
+- {label: 'fixed H Rond-point KD number', reason: 'current source only closes action structure'}
+- {label: 'command grab without respect/point-blank truth', reason: 'violates character model'}
+- {label: 'Medal damage without explicit level', reason: 'state leakage'}
