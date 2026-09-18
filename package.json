@@ -3,7 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "hero:materialize": "node tools/materialize_hero_assets.mjs",
+    "predev": "npm run hero:materialize",
     "dev": "astro dev",
+    "prebuild": "npm run hero:materialize",
     "build": "astro build",
     "preview": "astro preview",
     "content:gate": "node tools/content_integration_gate.mjs",
