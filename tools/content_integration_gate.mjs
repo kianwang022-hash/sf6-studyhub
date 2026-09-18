@@ -48,7 +48,8 @@ const chars = [
   { slug:'lily', group:'base', normals:18, learn:['S0｜最小可玩','Windclad','Mexican Typhoon'], ref:['Normal vs Windclad Spire','Mexican Typhoon','+52'], practical:['Mexican Typhoon','Windclad H Condor Spire'], candidate:true },
   { slug:'manon', group:'base', normals:18, learn:['S0｜最小可玩','Medal','H Rond-point'], ref:['Medal Level','Manège Doré','Throw Aftermath'], practical:['Manège Doré','Medal Level'], candidate:true },
   { slug:'alex', group:'year3', normals:18, learn:['S0｜最小可玩','Prowler','4MK'], ref:['+42','Flying Cross Chop','Power Bomb'], practical:['Power Bomb','Prowler','Flying Cross Chop'], candidate:true },
-  { slug:'chunli', group:'base', normals:18, learn:['S0｜最小可玩','Serenity Stream','Up exit'], ref:['Lotus Fist','+46','charge'], practical:['Serenity Stream','Spinning Bird Kick','safe-jump'], candidate:true }
+  { slug:'chunli', group:'base', normals:18, learn:['S0｜最小可玩','Serenity Stream','Up exit'], ref:['Lotus Fist','+46','charge'], practical:['Serenity Stream','Spinning Bird Kick','safe-jump'], candidate:true },
+  { slug:'aki', group:'year1', normals:18, learn:['S0｜最小可玩','H Serpent Lash','poison'], ref:['+69','Orchid Spring','Drive Parry'], practical:['H Serpent Lash','opponent poisoned','Orchid Spring'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -514,9 +515,57 @@ for (const c of chars) {
     assert((practical.opportunities ?? []).some((op) => op.id === 'stance_tree' && op.stage === 'S2'), 'chunli: S2 full stance tree missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'safejump' && op.stage === 'S3'), 'chunli: S3 exact safe-jump opportunity missing');
   }
+  if (c.slug === 'aki') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === 'SA', 'aki: 2MK must remain SA-only cancel');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'aki: inherited 2MK DRC route leaked');
+    assert(/Poison application.*\+44 Oki.*poisoned-state conversion.*corner puddle/i.test(role?.signature_mechanic?.name ?? ''), 'aki: poison-state conversion signature owner missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+
+        if (stage === 'S0') {
+          assert(!/poison burst/i.test(input), 'aki: poison-burst optimization leaked into S0');
+          assert(!/Orchid Spring|OD Nightshade Chaser|Qiong Qi/i.test(input), 'aki: puddle/Year4 advanced state leaked into S0');
+        }
+        if (/poison burst/i.test(input)) {
+          assert(/opponent_poisoned/i.test(conditions), 'aki: poison-burst route missing opponent_poisoned');
+          assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'aki: poison-burst route appears before S1');
+        }
+        if (/\+69|\+53|\+71/.test(rowText)) {
+          assert(/opponent_poisoned/i.test(conditions), 'aki: poisoned Lash value lost poisoned-state truth');
+        }
+        if (/Orchid Spring/i.test(input) && /\+38/.test(rowText)) {
+          assert(/corner/i.test(conditions) && /orchid_spring_puddle_setup/i.test(conditions), 'aki: puddle +38 lost corner/exact-route truth');
+        }
+        if (/Nightshade Chaser blocked normally/i.test(input)) {
+          assert(/not_drive_parry/i.test(conditions), 'aki: OD Chaser block-poison lost Drive Parry exception');
+        }
+        if (/Drive Parried/i.test(input)) {
+          assert(/drive_parry/i.test(conditions), 'aki: Drive Parry exception row missing drive_parry condition');
+        }
+        if (/6HP active meaty/i.test(input)) {
+          assert(/exact_plus18_setup/i.test(conditions) && /active_frame_timing/i.test(conditions), 'aki: +18 6HP active meaty lost exact-state truth');
+        }
+        if (/OD Cruel Fate hit/i.test(input) && /\+42/.test(rowText)) {
+          assert(/od_cruel_fate_hit_state/i.test(conditions), 'aki: OD Cruel Fate +42 lost hit-state truth');
+        }
+        if (/OD Cruel Fate block/i.test(input)) {
+          assert(/od_cruel_fate_block_state/i.test(conditions), 'aki: OD Cruel Fate block row lost block-state truth');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'oki44' && op.stage === 'S0'), 'aki: S0 +44 Oki owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'first_burst' && op.stage === 'S1'), 'aki: S1 first poison-burst owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'puddle' && op.stage === 'S2'), 'aki: S2 poison-puddle owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'exact_setplay' && op.stage === 'S3'), 'aki: S3 exact-setplay owner missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 20 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 21 content candidates | Learn + Role + Practical + Reference + resolved source registries');
