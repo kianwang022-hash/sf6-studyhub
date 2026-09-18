@@ -28,7 +28,7 @@ Judgment states:
 | base | Dee Jay | `CONTENT_READY` |
 | base | Manon | `CONTENT_READY` |
 | base | Marisa | `CONTENT_READY` |
-| base | JP | `SOURCE_CLOSURE_PENDING` |
+| base | JP | `CONTENT_READY` |
 | base | Zangief | `GOLD_PAGE_READY` |
 | base | Lily | `CONTENT_READY` |
 | base | Cammy | `GOLD_PAGE_READY` |
@@ -50,7 +50,7 @@ Judgment states:
 
 Five characters now render through the canonical Astro runtime:
 
-Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., and Ed are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, and JP are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
@@ -116,4 +116,4 @@ After repository Pages is enabled with **Source = GitHub Actions**, the existing
 
 ## Next roster rule
 
-Four characters remain `SOURCE_CLOSURE_PENDING`: Dhalsim, JP, C. Viper, and Ingrid. They do not inherit existing pages by templating their gameplay; they inherit only the production/runtime quality bar. Character order and transfer assumptions are owned by `CHARACTER_SKILL_TRANSFER_MAP.md`.
+Three characters remain `SOURCE_CLOSURE_PENDING`: Dhalsim, C. Viper, and Ingrid. They do not inherit existing pages by templating their gameplay; they inherit only the production/runtime quality bar. Character order and transfer assumptions are owned by `CHARACTER_SKILL_TRANSFER_MAP.md`.
