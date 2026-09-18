@@ -1,0 +1,115 @@
+schema_version: '1.1'
+character: cviper
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先稳定+1 pressure、confirmed knockdown和一个HJC proof，再按实际价值扩展Burning/Seismic/HJC树。'
+  score_rule: 'Rank/MR是Reality evidence，不替代HJC Drive owner、hit-confirm、height、corner与exact-state条件。'
+  current_ui: 'S0一条HJC；S1 Burning/Seismic；S2 broader HJC/Drive/corner；S3 exact +42/+44/+45；S4 SA1 install。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '跑通5MP +1、light→H Dash→Tracer、H Tracer Oki、meterless 5MK route和一条2MK HJC route。'
+    add_now:
+      - '5MP Block +1 -> 2LP / throw。'
+      - '2LP > 2LP > 5LK > H Thunder Dash > Tracer。'
+      - 'H Tracer +25..26 -> dash +4..5 -> 5MP / throw / 2MK。'
+      - '5MK > 5LK > M Thunder Dash。'
+      - '2MK hit -> HJC -> M Thunder Dash -> Tracer。'
+      - '5HK anti-air。'
+    gate:
+      lab: '能复现一条ordinary route与一条HJC route；知道两者Drive成本不同。'
+      match: '不会为了角色感每次都HJC，也不会raw H Thunder Dash。'
+    defer: ['full HJC matrix', 'Burning hit/block split', 'Seismic air route', '+42/+44/+45', 'SA1 install']
+    hub_focus: [pressure, light, oki, meterless, hjc_identity, anti_air]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把Burning Kick hit/block分流、L Tracer +37、Seismic launcher与普通throw Oki加入。'
+    add_now:
+      - '5MP > 2MP > L Thunder Dash > Tracer +37。'
+      - 'Burning Kick hit -> Knuckled Pursuit。'
+      - 'Burning Kick block -> Double Burn +2。'
+      - '2HP -> M Seismic Hammer -> air route。'
+      - 'forward throw +28。'
+    gate:
+      match: 'Burning follow-up不串线；Seismic route不影响基础confirm稳定性。'
+    defer: ['OD Seismic HJC', 'DR high/low', 'corner active meaty', 'exact jump-in']
+    hub_focus: [tracer37, burning_split, seismic, throw]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: 'HJC从一条扩成结构：第二normal入口、OD Seismic、DR低/中与corner meaty。'
+    add_now:
+      - '5MK HJC route。'
+      - 'OD Seismic -> delayed HJC route。'
+      - 'DR 6MP overhead / DR 2MK low。'
+      - 'L Thunder Dash PC current route。'
+      - 'corner H Tracer -> active 5MP。'
+      - 'one HJC Seismic route。'
+    gate:
+      match: '复杂route只在它买到carry/damage/setplay时出现。'
+    defer: ['exact +42/+44/+45', 'Focus Force', 'SA1 install']
+    hub_focus: [hjc_expand, drive_mix, corner_meaty]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'exact +42/+44/+45、OD states与2HK PC setplay进入，同时保留route owner。'
+    add_now:
+      - 'Seismic route +45 jump-in。'
+      - 'Seismic route +42 jump-in。'
+      - 'Seismic/H Burning Kick +44。'
+      - 'OD Thunder Dash +42。'
+      - 'OD Seismic -> 2HK +42。'
+      - '2HK PC active-meaty family。'
+    gate:
+      behavior: '每个数字都能说出前置route/height；不会跨route泛化。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['SA1 install max routes', 'matchup Focus/feint']
+    hub_focus: [exact_setplay, od_state]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA1 install经济、max HJC/Seismic routes、SA2/SA3 lethal与matchup feint进入。'
+    add_now:
+      - 'SA1 install下HJC/special follow-up免费。'
+      - 'max HJC / Seismic / Burning route。'
+      - 'SA2 / SA3 lethal。'
+      - 'Focus Force dash-cancel。'
+      - 'matchup-specific Seismic / feint cadence。'
+    gate:
+      behavior: 'install期间的免费HJC不会污染普通回合的Drive纪律。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, exact_setplay, hjc_expand]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'light→H Dash→Tracer稳定', node: light, upgrade_evidence: '只在confirmed hit提交。'}
+    - {id: EX02, stage: S0, label: '2MK HJC route稳定', node: hjc_identity, upgrade_evidence: 'HJC与Tracer Drive owner明确。'}
+    - {id: EX03, stage: S3, label: '+42/+44/+45 exact route稳定', node: exact_setplay, upgrade_evidence: '高度/route不串。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '5MP +1普通pressure', node: pressure, upgrade_evidence: '不靠HJC也能赢turn。'}
+    - {id: NE02, stage: S1, label: 'Seismic/5MK/2MK按距离选', node: seismic, upgrade_evidence: '不机械launcher。'}
+    - {id: NE03, stage: S4, label: 'feint/Focus按matchup', node: super, upgrade_evidence: '高级移动有具体对手理由。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'H Dash只confirm后提交', node: light, upgrade_evidence: 'block能停。'}
+    - {id: CO02, stage: S1, label: 'Burning hit/block分流', node: burning_split, upgrade_evidence: 'Knuckled/Double Burn不串。'}
+    - {id: CO03, stage: S2, label: 'ordinary route vs HJC value有理由', node: hjc_expand, upgrade_evidence: 'Drive消费换到明确价值。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'H Tracer +4..5闭环', node: oki, upgrade_evidence: '5MP/throw/2MK回到contact。'}
+    - {id: OF02, stage: S1, label: 'L Tracer / Burning pressure闭环', node: tracer37, upgrade_evidence: '大Oki仍回strike/throw。'}
+    - {id: OF03, stage: S2, label: 'corner active-meaty闭环', node: corner_meaty, upgrade_evidence: 'exact state才执行。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: 'jump→5HK anti-air', node: anti_air, upgrade_evidence: '不靠复杂route反空。'}
+    - {id: DA02, stage: S1, label: '对手block Burning会切Double Burn', node: burning_split, upgrade_evidence: '按outcome调整。'}
+    - {id: DA03, stage: S4, label: 'matchup feint/Focus调整', node: super, upgrade_evidence: '高级工具不是固定流程。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '+1 pressure + H Tracer Oki + one HJC proof先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'Burning split / Seismic / +37多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'broader HJC / Drive / corner结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；exact-state数字不泄漏。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA1 install / max routes围绕真实高分瓶颈。'}

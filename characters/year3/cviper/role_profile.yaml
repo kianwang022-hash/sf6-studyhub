@@ -1,0 +1,123 @@
+schema_version: '1.0'
+character: cviper
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Viper先用5MP +1和稳定Thunder Dash击倒跑普通回合；真正新增的是High Jump Cancel——把已经命中的Normal重新路由进special，而不是一开始就把复杂执行当入门门票。'
+    preferred_range: '中近距离用5MP/2MK/5MK拿contact；普通opening先收进Thunder Dash/Tracer，价值更高时再花Drive用HJC升级conversion。'
+    win_pattern: 'ground contact -> confirmed Thunder Dash/Tracer knockdown -> +4..5 strike/throw/low -> one HJC reroute when worth it -> Seismic/Burning Kick carry or setplay -> exact-state jump-in -> SA install/cashout。'
+    lose_pattern: '先练最大HJC长连、忘记HJC和Tracer都吃Drive、2HK也硬套HJC、H Thunder Dash裸交、Burning Kick命中/被防都按同一follow-up、泛化+42/+44/+45。'
+  character_model:
+    essence_short: '先跑普通+1 pressure与稳定击倒；opening值得时，再用HJC把Normal重写成special route。'
+    essence_detail: 'C. Viper不是“操作越难越像Viper”。她的第一层仍然是普通SF6：5MP被防+1后做2LP、throw、shimmy；light确认到H Thunder Dash再接Tracer Combination，可以拿到约+25击倒，dash后还有+4..+5继续strike/throw。角色真正独特的是High Jump Cancel：除2HK和unique attacks外，多数ground normal都能在hit/block后取消到High Jump，而High Jump的pre-jump又能special cancel，于是原本不能直接special-cancel的5MK、2MK、5HP也能被重新接进Thunder Dash、Seismic Hammer等route。Year4把5MK提高到Hit +5，2MK也保留Hit +5/-1，让这套cancel grammar更实战。成熟Viper不是每次都走最复杂HJC，而是按opening价值决定：最稳route、Drive换conversion、Seismic launcher、Burning Kick hit/block分支，还是保留资源和位置。'
+    force_opponent_to:
+    - '尊重5MP Block +1后的2LP / throw / shimmy。'
+    - 'H Thunder Dash -> Tracer击倒后处理dash +4..+5下一拍。'
+    - '不能只靠后退躲中距离，因为2MK/5MK可以通过HJC转special route。'
+    - 'Seismic Hammer命中后必须处理air conversion与setplay。'
+    - 'Burning Kick被防后必须考虑Double Burn；命中则考虑Knuckled Pursuit。'
+    create_respect_with:
+    - '5MP Block +1。'
+    - '2LP > 2LP > 5LK > H Thunder Dash > Tracer。'
+    - 'Year4 5MK > 5LK > M Thunder Dash。'
+    - 'H Tracer +25..26后的dash Oki。'
+    - '2MK HJC route作为低段conversion威胁。'
+    payoff_after_respect:
+    - '5MK / 2MK / 5HP等可通过HJC重新接入special。'
+    - 'Seismic Hammer launch可转air Burning Kick / Thunder Dash / carry。'
+    - 'Burning Kick按hit/block选择Knuckled Pursuit或Double Burn。'
+    - 'exact +42/+44/+45 route可进一步转jump-in/setplay。'
+    - 'SA1 install后HJC与special follow-up不再消耗Drive，进入真正高密度Viper。'
+    core_tradeoff: '最稳confirm/Oki保存Drive与位置 vs 花Drive用HJC/Tracer买conversion、carry和setplay；复杂度只有买到明确价值时才值得。'
+    successful_round:
+    - '5MP / 2MK / 5MK拿ground contact'
+    - '稳定opening收进Thunder Dash / Tracer'
+    - 'dash后用5MP / throw / 2MK继续respect'
+    - '高价值opening才切一条已练熟HJC route'
+    - 'Seismic/Burning Kick拿carry或exact setplay'
+    - 'SA1 install与最大route最后再打开'
+    common_misplays:
+    - '入门先练最大HJC route，基础+1/Oki不会。'
+    - '把HJC当免费special cancel。'
+    - '说所有normal都能HJC，忽略2HK/unique exceptions。'
+    - 'H Thunder Dash没确认就裸交。'
+    - 'Burning Kick hit/block用同一个follow-up。'
+    - '把+42/+44/+45当通用Viper数字。'
+    unique_decision: 'Viper新增的是cancel-routing grammar：normal可先HJC，再在pre-jump取消到special，把“能不能special cancel”变成Drive与执行选择。'
+    transfer_in:
+    - 'grounded spacing。'
+    - 'strike / throw / shimmy。'
+    - 'knockdown -> Oki。'
+    - 'Drive价值判断。'
+    - 'Chun-Li式的route grammar优先于背全招。'
+    new_skill:
+    - 'High Jump Cancel input / Drive ownership。'
+    - 'normal -> HJC -> special route。'
+    - 'Thunder Dash -> Tracer resource/Oki package。'
+    - 'Burning Kick hit vs block follow-up split。'
+    - 'Seismic Hammer air conversion。'
+    - 'exact-state jump-in/setplay ownership。'
+    unlearn:
+    - '不能直接special cancel的normal就不能进special。'
+    - '复杂route永远更好。'
+    - 'HJC免费。'
+    - '所有normal都能HJC。'
+    - 'Burning Kick只有一个follow-up。'
+  glossary:
+  - {term: 'HJC｜High Jump Cancel', meaning: 'Normal命中/被防后取消到High Jump，再在pre-jump取消special；SA1外会消耗Drive。'}
+  - {term: '214P｜Thunder Dash', meaning: '主要conversion/移动special。H版7F但Block -24；必须确认。'}
+  - {term: '6+PP｜Tracer Combination', meaning: '普通Thunder Dash后的Drive follow-up；不同Dash强度对应不同击倒。OD Thunder Dash不能接。'}
+  - {term: '236K｜Burning Kick', meaning: 'Hit后Knuckled Pursuit；Block后Double Burn +2。分支不能混。'}
+  - {term: '623P｜Seismic Hammer', meaning: '低位launcher / setplay owner；普通KD +53，OD当前Block -8。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '8F / Hit +6 / Block +1 / C+HJC；普通pressure核心。'}
+  - {input: '5MK', name: '站中脚', use: '8F / Hit +5 / Block -3 / HJC；Year4稳定link与HJC starter。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Hit +5 / Block -1 / HJC；角色低段conversion，不是普通direct special cancel。'}
+  - {input: '214HP', name: 'H Thunder Dash', use: '7F / KD +21 / Block -24；confirmed ender / anti-air-invul special。'}
+  - {input: '623P', name: 'Seismic Hammer', use: '24F low / KD +53 / Block -10；air conversion核心。'}
+  - {input: '236K', name: 'Burning Kick', use: 'Hit KD +38 / Block -2；follow-up按hit/block分流。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；neutral-jump HK、unique attacks、HJC、高跳、specials与SA由工具/Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '8', hit: '+4', block: '-2', cancel: 'C / HJC', damage: '300', note: 'chain-cancelable。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-7', recovery: '11', hit: '+3', block: '-2', cancel: 'C / HJC', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '8', active: '8-11', recovery: '12', hit: '+6', block: '+1', cancel: 'C / HJC', damage: '600', note: 'pressure owner。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-10', recovery: '18', hit: '+5', block: '-3', cancel: 'HJC', damage: '700', note: 'Year4 Hit +5。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '12', active: '12-14', recovery: '21', hit: '+3', block: '-2', cancel: 'HJC', damage: '900', note: '无普通special cancel但可HJC route。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '10', active: '10-13', recovery: '20', hit: '+4', block: '-3', cancel: 'HJC', damage: '900', note: 'airborne hit knockdown。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-6', recovery: '8', hit: '+5', block: '-1', cancel: 'C / HJC', damage: '300', note: 'chain-cancelable。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '9', hit: '+4', block: '-1', cancel: 'HJC', damage: '200', note: 'chain-cancelable。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-9', recovery: '16', hit: '+5', block: '-2', cancel: 'C / HJC', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '17', hit: '+5', block: '-1', cancel: 'HJC', damage: '600', note: 'core low HJC starter。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '9', active: '9-11', recovery: '20', hit: '+2', block: '-5', cancel: 'C / HJC', damage: '800', note: 'forces stand / Seismic route。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '10', active: '10-12', recovery: '25', hit: 'KD +34', block: '-11', cancel: '-', damage: '900', note: 'standard-normal HJC exception。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '600', note: 'airborne launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '11', active: '11-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'airborne slam。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '8', active: '8-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '700', note: 'Cross-up / Air Burning Kick cancel。'}
+  resource:
+    name: 'HJC / Follow-up Drive Budget'
+    gain: 'universal Drive Gauge; no character stock.'
+    spend: 'HJC costs 1 Drive outside SA1; Tracer / Burning Kick follow-ups also spend Drive.'
+    changes: 'Drive converts otherwise non-direct-cancel normals into special routes and upgrades knockdown/carry/setplay.'
+    rule: 'S0 sees one HJC route and one Tracer route; full Drive-intensive HJC tree is deferred.'
+  signature_mechanic:
+    name: 'Drive-owned High Jump Cancel -> pre-jump special rerouting'
+    rule: 'normal contact can be HJC-routed into specials; use it only when the added conversion/carry/setplay is worth the Drive and execution.'
+  key_numbers:
+  - {label: '5MP', value: 'Block +1', decision: 'ordinary pressure exists before HJC。'}
+  - {label: 'H Thunder Dash', value: 'Block -24', decision: 'confirmed only。'}
+  - {label: 'H Dash -> Tracer', value: 'about +25..26', decision: 'S0 core knockdown -> dash +4..5。'}
+  - {label: 'OD Thunder Dash', value: 'KD +42 / Block -2', decision: 'S3 exact resource state；不能接Tracer。'}
+  - {label: 'OD Seismic Hammer', value: 'Block -8 CURRENT', decision: '旧-6资料不得回流。'}
+  constraints:
+  - 'HJC在SA1 install外必须带Drive owner。'
+  - '2HK不可HJC；unique attacks不继承ground-normal HJC规则。'
+  - 'H Thunder Dash learner route必须confirmed。'
+  - 'Tracer不能接OD Thunder Dash。'
+  - 'Burning Kick hit/block follow-up必须分开。'
+  - '+42/+44/+45必须绑定exact route/height state。'

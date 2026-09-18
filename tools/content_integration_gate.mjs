@@ -52,7 +52,8 @@ const chars = [
   { slug:'aki', group:'year1', normals:18, learn:['S0｜最小可玩','H Serpent Lash','poison'], ref:['+69','Orchid Spring','Drive Parry'], practical:['H Serpent Lash','opponent poisoned','Orchid Spring'], candidate:true },
   { slug:'ed', group:'year1', normals:18, learn:['S0｜最小可玩','M Psycho Blitz','charged Flicker'], ref:['back throw','Psycho Knuckle','+42'], practical:['M Psycho Blitz','charged L/M Psycho Flicker','Psycho Knuckle'], candidate:true },
   { slug:'jp', group:'base', normals:18, learn:['S0｜最小可玩','Departure','M Stribog'], ref:['+42','OD Amnesia','Lovushka'], practical:['Departure','M Stribog','OD Torbalan'], candidate:true },
-  { slug:'ingrid', group:'year3', normals:18, learn:['S0｜最小可玩','Sun Shot Stock','Sun Flare Lv2'], ref:['OD Lv3','+44','Sun Veil'], practical:['stock_level_1','OD Sun Flare Lv3','Sun Veil'], candidate:true }
+  { slug:'ingrid', group:'year3', normals:18, learn:['S0｜最小可玩','Sun Shot Stock','Sun Flare Lv2'], ref:['OD Lv3','+44','Sun Veil'], practical:['stock_level_1','OD Sun Flare Lv3','Sun Veil'], candidate:true },
+  { slug:'cviper', group:'year3', normals:18, learn:['S0｜最小可玩','High Jump Cancel','H Thunder Dash'], ref:['+45','SA1 Limit Decoupler','OD Seismic Hammer'], practical:['High Jump Cancel','Double Burn','Seismic Hammer'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -756,9 +757,80 @@ for (const c of chars) {
     assert((practical.opportunities ?? []).some((op) => op.id === 'exact_setplay' && op.stage === 'S3'), 'ingrid: S3 exact-setplay owner missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'super' && op.stage === 'S4'), 'ingrid: S4 super owner missing');
   }
+  if (c.slug === 'cviper') {
+    const row2hk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2HK');
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2hk?.cancel === '-', 'cviper: 2HK must remain the standard-normal HJC exception');
+    assert(/HJC/i.test(String(row2mk?.cancel ?? '')), 'cviper: 2MK HJC ownership missing');
+    assert(/Drive-owned High Jump Cancel.*pre-jump special rerouting/i.test(role?.signature_mechanic?.name ?? ''), 'cviper: HJC rerouting signature owner missing');
+    assert(/OD Seismic Hammer[\s\S]{0,100}-8|OD Seismic Hammer.*Block -8/i.test(JSON.stringify(role)) || /OD Seismic Hammer[\s\S]{0,120}Block -8/i.test(reference), 'cviper: current OD Seismic -8 truth missing');
+
+    const allText = learn + "\n" + reference + "\n" + practicalText;
+    assert(!/2HK\s*(?:>|xx|→)[^\n]{0,40}(?:High Jump Cancel|HJC)|(?:High Jump Cancel|HJC)[^\n]{0,40}(?:>|xx|→)\s*2HK/i.test(allText), 'cviper: illegal 2HK HJC route leaked');
+
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+
+        if (stage === 'S0' && /High Jump Cancel|HJC/i.test(input)) {
+          assert(op.id === 'hjc_identity', 'cviper: multiple HJC branches leaked into S0');
+          assert(/hJC_capable_normal/i.test(conditions) && /drive_resource/i.test(conditions), 'cviper: S0 HJC route lost normal/Drive owner');
+        }
+
+        if (/High Jump Cancel|HJC/i.test(input) && !/SA1 Limit Decoupler/i.test(input)) {
+          assert(/drive_resource/i.test(conditions), 'cviper: HJC route lost Drive ownership');
+        }
+
+        if (/H Thunder Dash/i.test(input) && /Tracer/i.test(input)) {
+          assert(/confirmed_hit|h_tracer_exact_state/i.test(conditions), 'cviper: H Thunder Dash/Tracer lost confirmed or owned end-state truth');
+        }
+
+        if (/OD Thunder Dash[^\n]*Tracer|Tracer[^\n]*OD Thunder Dash/i.test(input)) {
+          assert(false, 'cviper: illegal Tracer after OD Thunder Dash leaked');
+        }
+
+        if (/Knuckled Pursuit/i.test(input)) {
+          assert(/burning_kick_hit/i.test(conditions), 'cviper: Knuckled Pursuit lost Burning Kick hit owner');
+        }
+
+        if (/Double Burn/i.test(input)) {
+          assert(/burning_kick_block/i.test(conditions), 'cviper: Double Burn lost Burning Kick block owner');
+        }
+
+        const numericClaimText = input + ' ' + JSON.stringify(row?.value ?? {});
+
+        if (/\+45/.test(numericClaimText)) {
+          assert(/exact_plus45_route/i.test(conditions), 'cviper: +45 lost exact route owner');
+        }
+
+        if (/\+44/.test(numericClaimText) && /Seismic|Burning/i.test(input + ' ' + String(op.title ?? ''))) {
+          assert(/exact_plus44_route/i.test(conditions), 'cviper: +44 lost exact route owner');
+        }
+
+        if (/\+42/.test(numericClaimText)) {
+          const ok = /exact_plus42_route|od_thunder_dash_state|od_seismic_state/i.test(conditions);
+          assert(ok, 'cviper: +42 lost exact OD/route owner');
+        }
+
+        if (/SA1 Limit Decoupler/i.test(input)) {
+          assert(stage === 'S4', 'cviper: SA1 install must remain S4');
+          assert(/sa1_install_active/i.test(conditions), 'cviper: SA1 install route lost install state');
+        }
+      }
+    }
+
+    assert((practical.opportunities ?? []).some((op) => op.id === 'hjc_identity' && op.stage === 'S0'), 'cviper: S0 single HJC identity route missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'burning_split' && op.stage === 'S1'), 'cviper: S1 Burning hit/block split missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'hjc_expand' && op.stage === 'S2'), 'cviper: S2 broader HJC owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'exact_setplay' && op.stage === 'S3'), 'cviper: S3 exact-state owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'super' && op.stage === 'S4'), 'cviper: S4 SA1 owner missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 24 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 25 content candidates | Learn + Role + Practical + Reference + resolved source registries');
