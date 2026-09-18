@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: elena
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Elena', url: 'https://www.streetfighter.com/6/en-us/character/elena/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Elena Frame Data', url: 'https://sf6-lab.net/en/fighters/elena/frame', freshness: 'official-reference data checked 2026-09-19; referenced 2026-08-27', covers: [frames, active, recovery, advantage, cancel, health, damage]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Elena Move List', url: 'https://sf6-lab.net/en/fighters/elena/moves', freshness: 'checked 2026-09-19', covers: [normals, unique_attacks, specials, supers, commands, move_names]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Elena Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/elena/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, current_game_plan, lynx_song, rhino_horn, spinning_scythe, healing_sa2, safe_jump]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; Rhino Horn/Scratch Wheel hit height, active-frame timing, corner position and Lynx Song follow-up state remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; Lynx Song follow-ups and safe-jump claims keep their exact setup state'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Tier0/1 Training Order, Game Plan and route/Oki evidence directly support the model'
+  learner_projection_rule: 'stable ground contact and knockdown first; Lynx Song mix second; SA2 healing/damage choice later'
