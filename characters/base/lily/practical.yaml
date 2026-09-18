@@ -1,0 +1,249 @@
+schema_version: '1.0'
+character: lily
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 acquires one Windclad and learns one plus Spire entry; Mexican Typhoon begins S1; hold-vs-spend S2; multi-stock S3+.'
+stages:
+  S0: {label: 最小可玩, short: '1 Windclad / Plus Entry'}
+  S1: {label: 基本功成型, short: 'Respect -> Mexican Typhoon'}
+  S2: {label: 实战结构化, short: 'CDR / +52 / Hold vs Spend'}
+  S3: {label: 选择成熟, short: 'Multi-stock / Dive / Corner'}
+  S4: {label: 高分上探, short: 'SA / High Resource / Matchup'}
+shared_packages:
+  WIND_ENTRY:
+    label: 'Windclad Spire plus entry'
+    sequence: 'Windclad stock active -> Condor Spire'
+    next: 'strike first -> later Mexican Typhoon'
+    verification: conditioned
+    conditions: [windclad_stock, spacing]
+    sources: [SRC03, SRC05]
+  WIND52:
+    label: 'Windclad H Spire +52'
+    sequence: 'Windclad H Condor Spire exact hit -> +52'
+    next: 'two dashes +10 OR delayed forward jump safe jump'
+    verification: conditioned
+    conditions: [windclad_stock, windclad_h_spire_end_state]
+    sources: [SRC05]
+  WIND_INVEST:
+    label: 'One-stock investment'
+    sequence: 'safe Condor Wind hold -> gain 1 Windclad'
+    next: 'preserve current position -> choose later Spire'
+    verification: conditioned
+    conditions: [safe_resource_window]
+    sources: [SRC03, SRC05]
+opportunities:
+- id: resource
+  title: 'Windclad｜S0只学拿1层'
+  stage: S0
+  subtitle: '不是有空就攒满'
+  rows:
+  - result: READ
+    stage: S0
+    choice: One stock
+    input: 'safe window -> hold Condor Wind for 1 Windclad stock'
+    value: {stock_gain: 1}
+    next_loop_package: WIND_INVEST
+    why: '先学“投资有成本”；一层已经足够体验角色变化。'
+    verification: conditioned
+    conditions: [safe_resource_window]
+    sources: [SRC03, SRC05]
+- id: light
+  title: 'Light｜无Wind与有Wind分开'
+  stage: S0
+  subtitle: '先看懂同一Spire为何变质'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Basic
+    input: '2LK > 2LP > M Tomahawk Buster'
+    value: {stock_spend: 0}
+    next_loop: 'reset / find resource window'
+    why: '没stock也有普通稳定confirm。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S0
+    choice: Windclad entry
+    input: 'Windclad stock active -> 2LK > 2LP > 2LP > Windclad M Condor Spire'
+    value: {stock_spend: 1, kd: '+49'}
+    next_loop_package: WIND_ENTRY
+    why: '第一条资源兑现：同一进场从高风险变成plus/Oki。'
+    verification: conditioned
+    conditions: [windclad_stock]
+    sources: [SRC05]
+- id: spire_truth
+  title: 'Condor Spire｜normal -8，Windclad才plus'
+  stage: S0
+  subtitle: '绝不混成一个招'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: Normal risk
+    input: 'normal Condor Spire block'
+    value: {frame: '-8'}
+    next_loop: 'opponent punish / reset'
+    why: '没有Windclad时不能把Spire当safe pressure。'
+    verification: verified
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S0
+    choice: Windclad plus
+    input: 'Windclad stock active -> Windclad M Condor Spire block'
+    value: {stock_spend: 1, frame: '+1'}
+    next_loop: 'strike first / observe respect'
+    why: 'Windclad真正买到的是进场风险改写。'
+    verification: conditioned
+    conditions: [windclad_stock, spacing]
+    sources: [SRC03]
+- id: typhoon
+  title: 'Mexican Typhoon｜S1才进入主线'
+  stage: S1
+  subtitle: 'plus entry先造respect'
+  rows:
+  - result: READ
+    stage: S1
+    choice: Strike first
+    input: 'Windclad stock active -> Windclad H Condor Spire block -> 2HP'
+    value: {stock_spend: 1, frame: 'plus entry'}
+    next_loop: 'opponent blocks -> Mexican Typhoon becomes credible'
+    why: '先让对手真的愿意站防。'
+    verification: conditioned
+    conditions: [windclad_stock, spacing, opponent_respect_setup]
+    sources: [SRC05]
+  - result: READ
+    stage: S1
+    choice: Command grab
+    input: 'Windclad H Condor Spire plus entry -> Mexican Typhoon'
+    value: {damage: '2000-2800', kd: '+28'}
+    next_loop: 'jump/backwalk response -> strike/anti-air next time'
+    why: 'command grab是respect cash-in，不是plus entry第一拍固定答案。'
+    verification: conditioned
+    conditions: [windclad_stock, opponent_respect]
+    sources: [SRC05]
+  - result: PC
+    stage: S1
+    choice: Point-blank punish
+    input: '5HP Punish Counter point-blank -> H Mexican Typhoon'
+    value: {damage: 2800}
+    next_loop: 'reset / resource decision'
+    why: '这是明确punish，不依赖respect循环。'
+    verification: conditioned
+    conditions: [punish_counter, point_blank]
+    sources: [SRC05]
+- id: drive
+  title: 'CDR｜S2把普通/强化ender分流'
+  stage: S2
+  subtitle: 'damage / Oki / stock状态一起看'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Normal Spire
+    input: '2HP > CDR > 4HP > 5MK > L Condor Spire'
+    value: {drive: 3, stock_spend: 0, kd: '+33'}
+    next_loop: 'simple strike/throw Oki'
+    why: '没有stock时仍有完整路线。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Windclad +52
+    input: 'Windclad stock active -> 2HP > CDR > 4HP > 5MK > Windclad H Condor Spire'
+    value: {drive: 3, stock_spend: 1, kd: '+52'}
+    next_loop_package: WIND52
+    why: '有stock时把同一opening升级为高预算Oki。'
+    verification: conditioned
+    conditions: [windclad_stock, windclad_h_spire_end_state]
+    sources: [SRC05]
+- id: state_choice
+  title: 'Windclad active｜S2正式学“花还是留”'
+  stage: S2
+  subtitle: '资源不是自动消费'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Hold stock
+    input: 'Windclad stock active -> keep stock and play normal ground'
+    value: {stock_spend: 0}
+    next_loop: 'preserve future plus entry'
+    why: '当前opening不值得时，未来安全进场本身就有价值。'
+    verification: conditioned
+    conditions: [windclad_stock]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Spend stock
+    input: 'Windclad stock active -> Windclad H Condor Spire'
+    value: {stock_spend: 1, kd: '+52'}
+    next_loop_package: WIND52
+    why: '当前位置/对手/回合值得时再兑现。'
+    verification: conditioned
+    conditions: [windclad_stock, windclad_h_spire_end_state]
+    sources: [SRC05]
+- id: multi_stock
+  title: 'Multi-stock｜S3才考虑2/3层投资'
+  stage: S3
+  subtitle: '只有安全窗口足够才值得'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Two stocks
+    input: 'safe long window -> hold Condor Wind for 2 Windclad stocks'
+    value: {stock_gain: 2}
+    next_loop: 'plan multiple future enhanced entries'
+    why: '长资源动作必须由真实安全窗口支持。'
+    verification: conditioned
+    conditions: [safe_resource_window, long_resource_window]
+    sources: [SRC03]
+  - result: READ
+    stage: S3
+    choice: Three stocks
+    input: 'safe very long window -> hold Condor Wind for 3 Windclad stocks'
+    value: {stock_gain: 3}
+    next_loop: 'high-resource route / preserve multiple entries'
+    why: '不是neutral默认任务，只在超大安全窗口。'
+    verification: conditioned
+    conditions: [safe_resource_window, very_long_resource_window]
+    sources: [SRC03]
+- id: corner
+  title: 'Corner｜S3才加入Typhoon→Windclad OD Spire'
+  stage: S3
+  subtitle: 'command grab命中后继续资源setplay'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Corner active meaty
+    input: 'corner Mexican Typhoon hit + Windclad stock active -> Windclad OD Condor Spire'
+    value: {stock_spend: 1, drive: 2}
+    next_loop: 'active-frame strike / throw / safe-jump by exact state'
+    why: 'command grab和Windclad在角落形成第二层资源循环。'
+    verification: conditioned
+    conditions: [corner, windclad_stock, active_timing]
+    sources: [SRC05]
+- id: super
+  title: 'Super｜S4才做高资源现金化'
+  stage: S4
+  subtitle: '不改变investment主线'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA cashout
+    input: 'confirmed Windclad route -> SA2'
+    value: {sa: 2, kd: '+42/+43 family'}
+    next_loop: 'safe-jump / resource rebuild by exact end state'
+    why: '从已会的资源route现金化，不另造身份。'
+    verification: conditioned
+    conditions: [windclad_stock, sa_resource, exact_super_end_state]
+    sources: [SRC05]
+backend_only:
+- {label: 'full multi-stock max route', reason: 'S4 high-resource optimization'}
+- {label: 'generic Spire safety', reason: 'normal state remains -8'}
+- {label: 'Mexican Typhoon without respect/punish state', reason: 'violates character model'}
+- {label: 'safe jump outside Windclad H Spire exact state', reason: 'state leakage'}
