@@ -261,7 +261,7 @@ opportunities:
     next_loop_package: SEISMIC_AIR
     why: '第一次把ground hit转换成Viper空中route，不铺开全部变体。'
     verification: conditioned
-    conditions: [confirmed_hit, seismic_hit, height_verified]
+    conditions: [confirmed_hit, seismic_hit, exact_plus44_route, height_verified]
     sources: [SRC05]
 - id: throw
   title: 'Forward throw｜S1普通throw Oki'
