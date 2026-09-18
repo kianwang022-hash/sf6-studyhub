@@ -1,0 +1,109 @@
+schema_version: '1.1'
+character: rashid
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让快地面→Mixer/Eagle Spike→固定Oki成立，再逐层打开Cyclone、Air Current和Ysaar。'
+  score_rule: 'Rank/MR是Reality evidence，不替代确认、spacing、状态识别和re-entry选择。'
+  current_ui: 'Air Current固定后置，Ysaar固定S4；移动复杂度不会抢S0。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通light/2MP接触→M Mixer +31或Eagle Spike carry→固定strike/throw→回ground spacing。'
+    add_now:
+      - '5MP / 2MP +1作为普通近身respect。'
+      - '2LK→5LP→5LP→M Mixer作为默认确认。'
+      - '2MP→5LK→L Eagle Spike作为第一条carry分流。'
+      - 'M Mixer +31后DR只先保留一个strike。'
+      - '主要反空/OD Mixer防守角色先建立。'
+    gate:
+      lab: 'M Mixer确认、Eagle Spike carry和+31 Oki稳定。'
+      match: '真人里不靠Air Current也能完成ground→knockdown→next turn。'
+    defer: ['Arabian Cyclone完整树', 'Air Current', '+42', 'charged Whirlwind', 'Ysaar']
+    hub_focus: [light, ground]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: 'M Eagle Spike Run Oki、punish和throw补齐；移动仍然只服务已有opening。'
+    add_now:
+      - 'M Eagle Spike后Run active cr.MP与Run throw二选。'
+      - '5HP/5HK PC各有一条稳定Eagle Spike route。'
+      - 'forward throw +27按spacing接下一轮。'
+      - 'block +1 contact逐步加入shimmy。'
+    gate:
+      match: '主要损失不再来自漏确认、漏punish、Run Oki或spacing误判。'
+    defer: ['Air Current', '完整Cyclone branch', 'Ysaar']
+    hub_focus: [oki, punish, ground]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MK DRC和第一条Arabian Cyclone movement route进入；开始按位置/防守选择固定Oki还是移动re-entry。'
+    add_now:
+      - '2MK DRC Hit/Block/Whiff分流。'
+      - 'H Arabian Cyclone→Wing Stroke→L Skyhigh作为第一条movement route。'
+      - 'DI分carry和Oki focus。'
+      - 'Run Oki与Cyclone Oki按对手反应选择。'
+    gate:
+      match: '能解释为什么这次需要movement branch，而不是为了动而动。'
+    defer: ['Boosted +42主线', 'charged OD Whirlwind', 'Ysaar']
+    hub_focus: [2mk, cyclone, di]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'Air Current进入；Boosted special只在真实状态使用，并把+42/+44转成有目的re-entry。'
+    add_now:
+      - 'Air Current Boosted M Mixer +42→jump-in。'
+      - 'Boosted L Mixer block +2状态区别。'
+      - 'Nail/Rolling +44按branch条件加入。'
+      - 'OD Arabian Cyclone active-frame只在lab闭合后使用。'
+      - '对手适应空中/移动后会主动降低复杂branch频率。'
+    gate:
+      behavior: '状态识别不出错；Boosted招式不会脱离Air Current出现。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['Ysaar完整树', '最大资源Air Current路线']
+    hub_focus: [air_current, cyclone, di]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'Ysaar、高资源Air Current、SA与matchup-specific移动进入，但基础ground loop不退化。'
+    add_now:
+      - 'Ysaar作为screen-control system加入overhead/low/throw。'
+      - '高资源Boosted OD Mixer / Skyhigh / SA路线。'
+      - 'charged Whirlwind / Rolling Assault按真实对手和setplay加入。'
+      - '复盘重点是re-entry角度是否有理由，不是移动量。'
+    gate:
+      behavior: '复杂系统只放大已稳定的ground/oki判断。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, air_current, cyclone]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'M Mixer基础确认稳定', node: light, upgrade_evidence: 'light starter双侧稳定。'}
+    - {id: EX02, stage: S1, label: 'Eagle Spike Run Oki稳定', node: oki, upgrade_evidence: 'spacing支持时能执行strike/throw。'}
+    - {id: EX03, stage: S3, label: 'Air Current Boosted route合法', node: air_current, upgrade_evidence: '状态存在才提交Boosted招式。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '不靠移动也能打ground', node: ground, upgrade_evidence: '5MP/2MP/light骨架成立。'}
+    - {id: NE02, stage: S2, label: 'Cyclone移动有目的', node: cyclone, upgrade_evidence: '能说出为何改变re-entry角度。'}
+    - {id: NE03, stage: S3, label: 'Air Current不绑架neutral', node: air_current, upgrade_evidence: '没有状态/需求时会回普通ground。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: '+1 contact是真实选择点', node: ground, upgrade_evidence: 'strike/throw/stop分流。'}
+    - {id: CO02, stage: S2, label: 'Mixer vs Eagle vs Cyclone按end-state选', node: cyclone, upgrade_evidence: '稳定Oki/carry/re-entry有明确理由。'}
+    - {id: CO03, stage: S3, label: '+42带Air Current条件', node: air_current, upgrade_evidence: '不把normal Mixer误记为+42。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'M Mixer +31闭环', node: light, upgrade_evidence: 'DR后能接下一Turn。'}
+    - {id: OF02, stage: S1, label: 'Eagle Spike Run闭环', node: oki, upgrade_evidence: 'spacing正确时能接strike/throw。'}
+    - {id: OF03, stage: S3, label: 'Air Current re-entry回核心Loop', node: air_current, upgrade_evidence: '+42 jump-in后仍回普通hit/block/read。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '挡无敌技会稳定punish', node: punish, upgrade_evidence: '确定机会不丢。'}
+    - {id: DA02, stage: S2, label: '对手反移动会降低Cyclone频率', node: cyclone, upgrade_evidence: '复杂movement失败后会退回ground。'}
+    - {id: DA03, stage: S4, label: 'Ysaar期间仍按防守反应选', node: super, upgrade_evidence: '不机械播放overhead/low/throw。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'ground→Mixer/Eagle→Oki先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '确认、Run Oki、punish与基础throw多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'DRC与movement re-entry选择结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；Air Current不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'Ysaar和高资源移动围绕真实高分瓶颈。'}
