@@ -1,0 +1,19 @@
+schema_version: '1.1'
+character: ken
+accessed: '2026-09-18'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Ken', url: 'https://www.streetfighter.com/6/en-us/character/ken/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary, balance_direction]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Ken Frame Data', url: 'https://sf6-lab.net/en/fighters/ken/frame', freshness: 'checked 2026-09-18; official-reference current data', covers: [frames, active, recovery, advantage, cancel, damage]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Ken Move List', url: 'https://sf6-lab.net/en/fighters/ken/moves', freshness: 'checked 2026-09-18', covers: [normals, unique_attacks, specials, supers, commands, move_names]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Ken Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/ken/combo', freshness: 'updated 2026-08-31; checked 2026-09-18', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, corner_carry, hit_confirms, punish, DI, SA, key_frames, training_order]}
+- {id: SRC06, tier: 1, title: 'SF6 Original / Ken current strategy and official-change digest', url: 'https://www.sf6-ingrid.com/character/ken', freshness: 'checked 2026-09-18', covers: [year4_change_digest, quick_dash_usage, pressure_interpretation]}
+- {id: SRC07, tier: 2, title: 'Iori Channel — 新ケンの調整を徹底解説', url: 'https://www.youtube.com/watch?v=W54CloixNoM', covers: [year4_strategy_interpretation]}
+- {id: SRC08, tier: 2, title: 'Iori Channel — ケンの強いセットプレイ', url: 'https://www.youtube.com/watch?v=HxtZ3TxK8b8', covers: [oki, setplay, pressure_choices]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC06, SRC07, SRC08, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; spacing, grounded/airborne state, hit height and active-frame differences remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; no ellipsis route is learner-complete'
+  tier2_rule: 'evidence on demand; Ken uses Tier2 for strategic/setplay interpretation, not as a quota'
+  learner_projection_rule: 'source route existence does not force learner exposure; Pareto and S0-S4 own promotion'
