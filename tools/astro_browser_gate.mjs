@@ -92,8 +92,9 @@ try {
     }
     if (c.slug === 'luke') {
       const s0Text = await page.locator('#practical').innerText();
+      const visibleRoutes = await page.locator('.pr-row:visible .route').allInnerTexts();
       assert(s0Text.includes('2MP > 2LP > L Flash Knuckle'), 'luke: S0 +36 stable route missing');
-      assert(!s0Text.includes('Perfect Flash'), 'luke: Perfect optimization leaked into S0');
+      assert(visibleRoutes.every(x => !/Perfect Flash|\(Perfect\)|fully charged/i.test(x)), 'luke: Perfect optimization route leaked into S0');
     }
     if (c.slug === 'terry') {
       const s0Text = await page.locator('#practical').innerText();
