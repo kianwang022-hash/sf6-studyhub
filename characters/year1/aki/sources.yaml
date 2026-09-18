@@ -1,0 +1,17 @@
+schema_version: '1.1'
+character: aki
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — A.K.I.', url: 'https://www.streetfighter.com/6/en-us/character/aki/frame', game_version: current, covers: [frames, damage, cancel_properties, commands]}
+- {id: SRC02, tier: 0, title: 'CAPCOM A.K.I. battle adjustments — 2026-08-03', url: 'https://www.streetfighter.com/6/buckler/ja-jp/battle_change/20260803/aki', date: '2026-08-03', covers: [version_boundary, year4_adjustments]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — A.K.I. Frame Data', url: 'https://sf6-lab.net/en/fighters/aki/frame', freshness: 'official-reference data through 2026-08-27; checked 2026-09-19', covers: [frames, normals, unique_attacks, specials, supers]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — A.K.I. Move List', url: 'https://sf6-lab.net/en/fighters/aki/moves', freshness: 'checked 2026-09-19', covers: [commands, poison_tools, sinister_slide, specials, supers]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — A.K.I. Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/aki/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, poison_burst, oki, setplay, current_game_plan, training_order]}
+- {id: SRC06, tier: 1, title: 'Ultimate Frame Data — Street Fighter 6', url: 'https://ultimateframedata.com/', freshness: 'August 2026 patch updates complete; A.K.I. updated 2026-08-11', covers: [frame_crosscheck, hitboxes, august_2026_patch]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC06, SRC00]
+  numeric_conflict_rule: 'current official-reference / Year4 maintained data overrides older material; poison state, spacing, corner, airborne hit, active-frame timing and exact knockdown state remain part of the fact'
+  route_publish_rule: 'verified / conditioned / provisional required; poisoned-vs-unpoisoned target state must be explicit for burst routes'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Year4 route/Oki material explicitly publishes the current game plan and poison-state route differences'
+  learner_projection_rule: 'S0 teaches one stable poison-application ender plus +44 Oki; poison-burst route changes begin S1; puddle/setplay layers begin later'
