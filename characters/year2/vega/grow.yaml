@@ -1,0 +1,112 @@
+schema_version: '1.1'
+character: vega
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先学plant Mine与normal-state truth，再第一次cash-in，之后才学hold-vs-detonate和高资源Mine/air pressure。'
+  score_rule: 'Rank/MR是Reality evidence，不替代Mine状态、charge availability和高度条件判断。'
+  current_ui: 'S0只plant；S1 first cash-in；S2 hold-vs-detonate；S3 OD Crusher/air。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '跑通light/medium Backfist植Mine、normal Crusher charge route、+1 normal pressure；看到Mine但不要求马上爆。'
+    add_now:
+      - '2LP/2LK→5LK→L Backfist plant。'
+      - '5MP→2MP→M Backfist plant。'
+      - '一条L Crusher charge confirm。'
+      - '5HP/4HK block +1。'
+      - '明确normal Backfist/Crusher被防仍unsafe。'
+    gate:
+      lab: 'plant Mine与normal charge route稳定。'
+      match: '能保持Mine一段时间，不会每次立刻cash。'
+    defer: ['Mine +42 cash-in', 'hold-vs-detonate主线', 'Devil Reverse', 'OD Crusher +82', '高资源SA']
+    hub_focus: [plant, charge, normal_oki]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '第一次完成plant→cash-in：Mine Backfist +42、Mine Crusher +6与普通+31 Oki。'
+    add_now:
+      - 'H Backfist +31 DR Oki。'
+      - 'Mine L/M Backfist +42 safe jump。'
+      - 'Mine M Crusher block +6。'
+      - 'forward throw / sweep基础Oki。'
+      - 'normal vs Mine special风险差异。'
+    gate:
+      match: 'Mine-enhanced值不会脱离Mine状态使用。'
+    defer: ['hold-vs-detonate主动决策', 'OD Crusher', 'Devil Reverse Mine pressure']
+    hub_focus: [first_cash, normal_oki]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MK DRC与hold-vs-detonate正式进入；Mine状态从“combo资源”变成决策变量。'
+    add_now:
+      - '2MK DRC→H Backfist plant。'
+      - 'DR 5MP +4 / DR 2LK +2。'
+      - 'Mine H Backfist +49。'
+      - 'Mine H Crusher block +5。'
+      - '有Mine时比较“现在爆 vs 留着威慑”。'
+    gate:
+      match: '能解释为什么这次cash Mine，或者为什么不cash。'
+    defer: ['OD Crusher +82', 'Mine Devil Reverse高压', 'max corner loop']
+    hub_focus: [drive, state_choice, first_cash]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'OD Crusher、Shadow Rise/Devil Reverse与更深Mine pressure进入，同时保持Mine+charge双状态正确。'
+    add_now:
+      - 'Mine OD Crusher block +10 / up to +82。'
+      - 'normal vs Mine Devil Reverse高度差。'
+      - 'OD Head Press plus pressure。'
+      - 'selected corner Mine cash-in/replant。'
+      - 'Mine timer与detonation frequency按对手调整。'
+    gate:
+      behavior: 'Mine/charge/height三个条件不会串错。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['max resource SA / burnout tree']
+    hub_focus: [od_crusher, air, state_choice]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'Mine+charge+Drive/Super堆叠、SA与matchup-specific timer/detonation进入。'
+    add_now:
+      - 'OD Crusher→Shadow Rise高资源route。'
+      - 'SA1/SA2/SA3 cashout。'
+      - 'corner Mine max / replant loop。'
+      - 'burnout Mine pressure。'
+      - 'matchup-specific Mine hold/detonate frequency。'
+    gate:
+      behavior: '高资源优化不让normal/Mine truth和charge判断退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, od_crusher, air]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'Backfist植Mine稳定', node: plant, upgrade_evidence: 'light/medium starter都能稳定plant。'}
+    - {id: EX02, stage: S0, label: 'Crusher charge route稳定', node: charge, upgrade_evidence: '有back charge才提交。'}
+    - {id: EX03, stage: S3, label: 'Mine/charge/air三状态不混', node: air, upgrade_evidence: 'Devil Reverse/OD Crusher条件正确。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'normal Crusher不autopilot', node: charge, upgrade_evidence: '知道-20风险。'}
+    - {id: NE02, stage: S2, label: 'Mine存在时不急着cash', node: state_choice, upgrade_evidence: '会利用状态威慑。'}
+    - {id: NE03, stage: S3, label: 'Mine air pressure按高度/状态选', node: air, upgrade_evidence: '不背固定plus。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'plant vs charge ender分工', node: plant, upgrade_evidence: '知道何时先种Mine。'}
+    - {id: CO02, stage: S2, label: 'hold vs detonate有理由', node: state_choice, upgrade_evidence: '能说出cash买到什么。'}
+    - {id: CO03, stage: S3, label: 'Mine-enhanced值带state', node: od_crusher, upgrade_evidence: '不会泛化+10/+82。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'plant Mine→simple Oki闭环', node: plant, upgrade_evidence: '状态建立后能接下一Turn。'}
+    - {id: OF02, stage: S1, label: 'Mine +42 cash-in闭环', node: first_cash, upgrade_evidence: 'safe jump后回普通pressure。'}
+    - {id: OF03, stage: S3, label: 'OD Crusher/air回plant loop', node: od_crusher, upgrade_evidence: 'detonation后会回normal route重建Mine。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '对手尊重Mine会用throw/low', node: first_cash, upgrade_evidence: '不机械cash。'}
+    - {id: DA02, stage: S2, label: '对手等detonation会调Mine timing', node: state_choice, upgrade_evidence: '会hold更久或突然cash。'}
+    - {id: DA03, stage: S4, label: 'matchup timer/detonation频率调整', node: super, upgrade_evidence: '状态使用按真实防守变化。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'plant Mine / normal charge truth先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'first cash-in / +42 / +6 pressure多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'hold-vs-detonate与DRC结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；OD Crusher/air不破坏state truth。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '高资源Mine/charge优化围绕真实瓶颈。'}
