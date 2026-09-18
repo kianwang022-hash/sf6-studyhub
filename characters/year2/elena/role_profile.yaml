@@ -1,0 +1,101 @@
+schema_version: '1.0'
+character: elena
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Elena先用快地面接触拿稳定击倒；击倒后再用Lynx Song把overhead / low / throw / shimmy组织成同一个mix hub，Healing只在后期进入。'
+    preferred_range: '中近距离。5MK、2MK、light拿接触，先用Spinning Scythe或Rhino Horn拿清楚end state，再决定是否进入Lynx Song。'
+    win_pattern: 'ground contact -> Spinning Scythe / Rhino Horn -> Oki -> Lynx Song mix hub -> high / low / throw / shimmy -> corner safe jump -> later SA2 damage-vs-healing choice。'
+    lose_pattern: '一上来背满Lynx派生、把Healing当角色主线、把+42 safe jump当通用、忽略Rhino/Scratch Wheel的高度与spacing条件。'
+  character_model:
+    essence_short: '先把地面contact换成稳定击倒，再把Lynx Song当下一轮的选择中心；Healing不是入门主线，而是后期把已有优势换成恢复的额外选择。'
+    essence_detail: 'Elena不是“有Healing所以先围着回血玩”的角色。当前资料最先给出的都是普通地面和稳定击倒：5MK只有6F而且被防+1，2MK在Year 4变成被防-3，light / medium contact可以用Spinning Scythe或Rhino Horn收尾。真正属于Elena的第二层发生在击倒以后：Spinning Scythe、Rhino Horn、Harvest Circle等end state给她时间进入Lynx Song，再从Mallet Smash overhead、2MK low、throw、shimmy之间组织下一轮。也就是说，她的特色不是“更快地再次贴脸”，而是把一次击倒变成一个结构化mix hub。到更后面，SA2 Revival Dance才加入新的资源问题：这次Super更应该拿伤害/Oki，还是用Healing variation恢复生命并补Drive。Healing很特别，但它应该放大已经建立的角色循环，而不是替代地面确认、反空和Oki。'
+    force_opponent_to:
+    - '先尊重5MK block +1和快地面按钮。'
+    - '被Spinning Scythe / Rhino Horn击倒后处理Elena下一轮的高 / 低 / 投 / shimmy。'
+    - '进入Lynx Song有效setup后，不能只用一种固定防守规则。'
+    payoff_after_respect:
+    - 'Mallet Smash overhead与2MK low更容易成立。'
+    - 'throw / shimmy开始惩罚只会站防或固定拆投。'
+    - '角落M Spinning Scythe +42进入safe jump。'
+    - '后期SA2可以选择伤害/Oki或Healing恢复生命/Drive。'
+    core_tradeoff: '稳定击倒与低认知负担 vs 更复杂Lynx Song mix；后期再加入SA2当前伤害/Oki vs Healing恢复的取舍。'
+    successful_round:
+    - '5MK / 2MK / light拿ground contact'
+    - 'Spinning Scythe或Rhino Horn拿击倒'
+    - '先跑简单Oki'
+    - 'S1以后进入Lynx Song mix'
+    - '角落用+42 safe jump放大机会'
+    - '有SA2时再比较伤害与Healing价值'
+    common_misplays:
+    - '因为有Healing就过早围着SA2打。'
+    - '第一天把Lynx Song全部派生一起背。'
+    - '把M Spinning Scythe +42当成任何位置都能safe jump。'
+    - '把Rhino Horn / Scratch Wheel后续数字当固定值。'
+    unique_decision: 'Elena新增的是“击倒后的mix hub组织”：Lynx Song把overhead / low / throw / shimmy集中到同一个下一轮结构里；Healing是后期的恢复分支。'
+    transfer_in:
+    - '快地面contact、strike / throw / shimmy。'
+    - 'anti-air / punish / corner / Oki。'
+    - 'CDR / Super cashout基础。'
+    new_skill:
+    - '识别哪些ender真正给Lynx Song setup时间。'
+    - '在同一mix hub里组织overhead / low / throw / shimmy。'
+    - '+42 safe jump只在正确corner Spinning Scythe状态使用。'
+    - 'SA2伤害/Oki vs Healing恢复的后期选择。'
+    unlearn:
+    - 'mobility character就应该一直重新突进。'
+    - '有Healing就应该尽早围着回血打。'
+    - 'mix选项越多越应该S0全学。'
+  glossary:
+  - {term: '214K｜Spinning Scythe', meaning: 'Elena最常见击倒家族之一。L / M / H当前约+34 / +42 / +52；不同版本承担不同Oki预算。'}
+  - {term: '236K｜Rhino Horn', meaning: '前进end​​er/路线工具。M版grounded hit当前+39；高度和spacing会改变后续。'}
+  - {term: '236P｜Lynx Song', meaning: '击倒后mix hub，可接Leopard Snap、Harvest Circle、Mallet Smash或Lynx Whirl。只有赚到setup时间时才真正强。'}
+  - {term: '6HK follow-up｜Mallet Smash', meaning: 'Lynx Song里的overhead分支。普通版block -3；Boosted版block +3。'}
+  - {term: 'SA2｜Revival Dance', meaning: '后期Super选择：普通伤害分支，或Healing variation恢复生命并补Drive。'}
+  tools:
+  - {input: '5MK', name: '站中脚', use: '6F / Hit +5 / Block +1 / C；S0核心respect与确认。'}
+  - {input: '2MK', name: '蹲中脚', use: '9F / Hit +4 / Block -3；Year4更安全，但不可取消，不套Cammy/Juri 2MK DRC。'}
+  - {input: '2HP', name: '蹲重拳', use: '9F；8–20F对空无敌，Year4二段空中命中更容易追击。'}
+  - {input: '214LK', name: 'L Spinning Scythe', use: '基础light/low ender；当前+34 family。'}
+  - {input: '236MK', name: 'M Rhino Horn', use: '中等contact ender；grounded hit当前+39 family。'}
+  - {input: '236P', name: 'Lynx Song', use: 'S1以后打开mix hub；不是neutral自动mix。'}
+  - {input: '623K', name: 'Scratch Wheel', use: '反空 / combo ender；OD版6F全无敌。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Lynx Song派生、Rhino Horn / Scythe / Scratch Wheel与SA由关键工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-8', recovery: '8', hit: '+4', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-7', recovery: '11', hit: '+2', block: '-4', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '8', active: '8-12', recovery: '15', hit: '+3', block: '-3', cancel: 'SA', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '6', active: '6-9', recovery: '13', hit: '+5', block: '+1', cancel: 'C', damage: '500', note: '挥空额外+2F recovery。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '12', active: '12-15', recovery: '20', hit: '+2', block: '-2', cancel: '-', damage: '800', note: '强制站立。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '12', active: '12-15', recovery: '19', hit: '+2', block: '-4', cancel: '-', damage: '900', note: '9-17F low-profile invul；PC launch。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-6', recovery: '8', hit: '+5', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '8', hit: '+3', block: '-1', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '8', active: '8-10', recovery: '20', hit: '+1', block: '-4', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '9', active: '9-11', recovery: '18', hit: '+4', block: '-3', cancel: '-', damage: '600', note: 'Year4 block由-4改善到-3。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '9', active: '9-18 / 9-11,16-18', recovery: '20', hit: '+6', block: '-7', cancel: 'C', damage: '800', note: '8-20F反空无敌；二段空中命中launch。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '11', active: '11-13', recovery: '24', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: 'PC hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '10', active: '10-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-20 / 10-11,13-20', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '二段结构；首段空中命中launch。'}
+  signature_mechanic:
+    name: 'Earned Lynx Song mix hub + late SA2 Healing choice'
+    rule: '先用稳定击倒赚Lynx Song时间，再组织高/低/投/shimmy；Healing只在S4比较当前伤害/Oki与恢复价值。'
+  key_numbers:
+  - {label: '5MK', value: '6F / Hit +5 / Block +1', decision: 'S0最干净的近身respect点。'}
+  - {label: '2MK', value: '9F / Hit +4 / Block -3 / non-cancel', decision: 'Year4低段更安全，但不能套2MK DRC模板。'}
+  - {label: 'L / M Spinning Scythe', value: '+34 / +42', decision: '基础Oki vs 更大时间预算；+42 corner可safe jump。'}
+  - {label: 'M Rhino Horn', value: '+39 grounded', decision: '可接Lynx Song -> Mallet Smash active setup。'}
+  - {label: 'Harvest Circle', value: '+50', decision: '高价值Lynx hub end state；后置。'}
+  - {label: 'SA2', value: '+25 normal branch; Healing variation exists', decision: 'S4才比较damage/Oki与恢复生命/Drive。'}
+  constraints:
+  - '2MK不可取消，不能继承Cammy/Juri的2MK DRC骨架。'
+  - 'M Spinning Scythe +42 safe jump是corner-specific。'
+  - 'Rhino Horn / Scratch Wheel后续受hit height / spacing影响。'
+  - 'Lynx Song只有在earned setup时才是mix hub。'
+  - 'Healing不进入S0-S3主线。'
