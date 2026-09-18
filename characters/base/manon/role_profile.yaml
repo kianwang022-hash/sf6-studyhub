@@ -1,0 +1,107 @@
+schema_version: '1.0'
+character: manon
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Manon先用普通strike/throw/Oki赢回合；每拿到一层Medal，未来command grab和Renversé收益更高，对手更想跳/抢/逃，反过来让strike越来越值钱。'
+    preferred_range: '中近距离用5MP/5MK/2MP和长unique normal找contact；H Rond-point收尾后跑dash Oki，Renversé负责route/Medal成长，Manège Doré只在read/respect成立时使用。'
+    win_pattern: 'ordinary contact -> H Rond-point / Renversé -> dash strike/throw/shimmy -> win one Medal interaction -> future throw reward rises -> opponent escapes grab more -> strike/anti-air value rises -> repeat。'
+    lose_pattern: '开局追Medal牺牲position、Medal高以后机械抓、普通throw后dash当guaranteed throw、不同Medal伤害混成固定值、2MK照抄DRC。'
+  character_model:
+    essence_short: 'Medal不是S0资源任务，而是成功interaction后提高未来收益的长期放大器；越高Medal越应该观察对手如何逃grab，而不是越高越多抓。'
+    essence_detail: 'Current Training Priorities先教H Rond-point、st.MP/DR/Renversé、jump-in、DI、anti-air、dash Oki和shimmy，Medal Level甚至排在SA3之后。这说明Manon的基础必须先是普通SF6。Medal的作用是改变未来收益：Manège Doré从Lv1 2000升到Lv5 3700，Renversé和SA3也随Level提高。对手越怕高Medal throw，就越会jump、mash、reversal；Current Medal策略也明确在Lv3到Lv5强调这种逃grab行为。于是高Medal真正带来的不是“更应该抓”，而是strike与anti-air因为对手逃抓而变得更值钱。成熟Manon会根据Medal和对手反应动态重新定价strike、throw、shimmy和稳定damage/Oki。'
+    force_opponent_to:
+    - '先处理H Rond-point后的dash strike/throw/shimmy。'
+    - '普通throw后的dash不是guaranteed throw，必须继续读人。'
+    - 'Medal越高，Manège Doré的潜在损失越难忽略。'
+    - '对手为躲高Medal grab跳/抢以后，strike和anti-air获得更高回报。'
+    payoff_after_respect:
+    - 'Manège Doré command grab更容易成立。'
+    - '成功Medal interaction继续抬高未来throw/route收益。'
+    - '对手越怕grab，jump/mash越多，meaty strike与anti-air越值钱。'
+    - 'Renversé把combo route与Medal成长结合。'
+    core_tradeoff: '当前稳定damage/Oki vs 追求一次提高未来收益的Medal interaction；Medal不是当前回合唯一目标。'
+    successful_round:
+    - 'ground contact / anti-air'
+    - 'H Rond-point或Renversé拿稳定结果'
+    - 'dash Oki先用strike/throw/shimmy读人'
+    - '有respect/read时拿一次Medal'
+    - '观察对手是否因高Medal更爱jump/mash'
+    - '用strike/anti-air惩罚逃grab'
+    - '再次利用respect拿更高价值throw'
+    common_misplays:
+    - '开局为了Medal牺牲所有position/Oki。'
+    - 'Medal高以后反而更机械command grab。'
+    - '普通throw后把dash当guaranteed throw。'
+    - '把不同Medal Level伤害写成固定数字。'
+    - '把2MK当2MK DRC。'
+    unique_decision: 'Manon新增的是reward-escalation feedback：成功interaction提高未来throw收益，而更高收益改变对手逃抓行为；你要利用行为变化，不只追数字。'
+    transfer_in:
+    - 'Marisa/Lily/Honda的respect-command-grab框架。'
+    - 'grounded spacing / DR / anti-air。'
+    - 'strike / throw / shimmy。'
+    new_skill:
+    - 'Medal Level future-value tracking。'
+    - 'Medal对opponent escape behavior的影响。'
+    - 'Renversé/Manège Medal scaling。'
+    - '高Medal下strike重新定价。'
+    unlearn:
+    - '角色资源应该优先于position。'
+    - 'Medal越高越应该多抓。'
+    - 'throw后dash自动等于继续throw。'
+    - 'Medal只是伤害lookup表。'
+  glossary:
+  - {term: 'Medal Level', meaning: '成功Manège Doré / Renversé interaction提高未来投技/route/SA收益；不是S0背诵任务。'}
+  - {term: 'Manège Doré', meaning: 'Medal-scaled command grab。H版5F，Lv1到Lv5伤害显著上升。'}
+  - {term: 'Rond-point', meaning: '常用稳定ender/anti-air route工具；H版后接forward-dash Oki。'}
+  - {term: 'Renversé', meaning: 'projectile-invulnerable route/Medal-growth工具，伤害按Medal Level变化。'}
+  - {term: 'Révérence', meaning: '8F / Hit +3 / Block +1 / C 的unique normal，普通pressure工具。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '7F / Hit +2 / Block -2 / C；DR route入口。'}
+  - {input: '2MP', name: '蹲中拳', use: '7F / Hit +6 / Block -1 / C；高价值ground confirm。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Hit +4 / Block -2 / non-cancel；不能套2MK DRC。'}
+  - {input: 'H Rond-point', name: '重Rond-point', use: '14F / Block -11；S0稳定ender，后续dash Oki。'}
+  - {input: 'H Manège Doré', name: '重Manège Doré', use: '5F command grab；Medal-scaled，S1以后read/respect使用。'}
+  - {input: 'M Renversé', name: '中Renversé', use: 'route/Medal成长；不能脱离Medal Level理解伤害。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Unique、Medal specials、SA由工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '10', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-6', recovery: '12', hit: '+2', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '7', active: '7-10', recovery: '15', hit: '+2', block: '-2', cancel: 'C', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '10', active: '10-12', recovery: '18', hit: '0', block: '-5', cancel: 'C', damage: '600', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '10', active: '10-13', recovery: '20', hit: '0', block: '-3', cancel: 'SA', damage: '800', note: 'airborne hit launch。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '15', active: '15-17', recovery: '26', hit: 'PC +17 / launch', block: '-6', cancel: '-', damage: '900', note: ''}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '11', hit: '+3', block: '-2', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '13', hit: '-1', block: '-3', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '7', active: '7-9', recovery: '11', hit: '+6', block: '-1', cancel: 'C', damage: '600', note: '挥空额外+4F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-11', recovery: '16', hit: '+4', block: '-2', cancel: '-', damage: '600', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '10', active: '10-14', recovery: '21', hit: '-2', block: '-8', cancel: '-', damage: '600', note: 'anti-air职责。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '11', active: '11-12', recovery: '27', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: 'PC hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: 'airborne hit launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'airborne hit slam。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '11', active: '11-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  resource:
+    name: 'Medal Level'
+    gain: 'successful Manège Doré / Renversé interactions advance future Medal-scaled reward.'
+    spend: 'not a spendable stock; higher Level changes future damage/reward.'
+    changes: 'Manège Doré, Renversé, SA3/CA damage scale upward.'
+    rule: 'S0 only notices Medal growth; S1 first deliberate Medal opportunity; detailed Level table stays Reference/S3+.'
+  signature_mechanic:
+    name: 'Medal reward escalation -> opponent escape -> strike revaluation'
+    rule: 'higher Medal raises future grab/route reward, causing more jump/mash/reversal behavior; Manon must answer that behavior with strike/anti-air rather than simply grab more.'
+  key_numbers:
+  - {label: 'H Manège Doré', value: '5F / Lv1 2000 -> Lv5 3700', decision: 'future throw reward escalates with Medal。'}
+  - {label: 'Révérence', value: '8F / Block +1', decision: 'ordinary pressure independent of Medal chase。'}
+  - {label: 'H Rond-point', value: '14F / Block -11', decision: 'S0 stable ender; dash Oki action structure。'}
+  - {label: '2MP', value: '7F / Hit +6', decision: 'stable DR/ground confirm。'}
+  constraints:
+  - '2MK不可取消。'
+  - 'Medal-scaled值必须带medal_level。'
+  - 'throw-after dash不是guaranteed throw。'
+  - 'command grab必须是respect/read或point-blank punish。'
