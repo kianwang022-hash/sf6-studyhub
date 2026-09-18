@@ -14,7 +14,8 @@ const chars = [
   { slug:'cammy', normals:18, learn:'M Spiral Arrow', ref:'Cannon Strike', practical:['SA1','SA3'] },
   { slug:'ken', normals:18, learn:'Quick Dash Tatsu', ref:'Forward Step Kick', practical:['KK > Tatsu','SA3'] },
   { slug:'akuma', normals:18, learn:'同一个 opening 可以买不同的 Oki 时间预算', ref:'Shun Goku Satsu', practical:['L Tatsu > 2HK','Demon Raid','charged Gou Hadoken'] },
-  { slug:'luke', normals:18, learn:'不靠 Perfect，也能在真人里打出完整 Luke', ref:'Perfect Flash Knuckle', practical:['2MP > 2LP > L Flash Knuckle','OD Flash Knuckle > DDT','+64'] }
+  { slug:'luke', normals:18, learn:'不靠 Perfect，也能在真人里打出完整 Luke', ref:'Perfect Flash Knuckle', practical:['2MP > 2LP > L Flash Knuckle','OD Flash Knuckle > DDT','+64'] },
+  { slug:'terry', normals:18, learn:'Burning Knuckle买位置', ref:'Round Wave', practical:['2LK > 2LP > M Burning Knuckle','2LK > 2LP > H Rising Tackle','OD Quick Burn'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -64,6 +65,12 @@ try {
       assert(roleText.includes('Perfect Flash Knuckle不是入门要求'), 'luke: Perfect-not-required constraint missing');
       assert(roleText.includes('+36') && roleText.includes('+64'), 'luke: stable-vs-advanced Oki budget truth missing');
     }
+    if (c.slug === 'terry') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Special-role relay'), 'terry: special-role relay signature missing');
+      assert(roleText.includes('29F') && roleText.includes('Block +5'), 'terry: Round Wave 29F/+5 truth missing');
+      assert(roleText.includes('+30…42') || roleText.includes('+30...42'), 'terry: spacing-dependent Burning Knuckle budget missing');
+    }
 
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
@@ -93,6 +100,13 @@ try {
       assert(!s0Text.includes('L Flash Knuckle (Perfect)'), 'luke: Perfect route leaked into S0');
       assert(!s0Text.includes('H Flash Knuckle (Perfect)'), 'luke: +64 Perfect route leaked into S0');
     }
+    if (c.slug === 'terry') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LK > 2LP > M Burning Knuckle'), 'terry: S0 carry/Oki route missing');
+      assert(s0Text.includes('2LK > 2LP > H Rising Tackle'), 'terry: S0 damage route missing');
+      assert(!s0Text.includes('earned setup -> Round Wave block (+5)'), 'terry: S2 Round Wave pressure leaked into S0');
+      assert(!s0Text.includes('OD Quick Burn hit -> +33'), 'terry: S3 OD Quick Burn shimmy leaked into S0');
+    }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
     for (const token of c.practical) assert(practicalText.includes(token), `${c.slug}: practical marker missing ${token}`);
@@ -114,7 +128,7 @@ try {
   assert(page.url().includes('/character/jamie/'), 'real 31-character selector navigation failed');
   assert(await page.locator('#heroCharacterSelect').inputValue() === 'jamie', 'selector did not land on Jamie');
 
-  await page.goto(`${BASE}/character/terry/#role`, { waitUntil:'networkidle' });
+  await page.goto(`${BASE}/character/sagat/#role`, { waitUntil:'networkidle' });
   assert((await page.locator('[data-panel="role"]').innerText()).includes('GOLD PAGE QA PENDING'), 'CONTENT_READY roster shell must not masquerade as Gold content');
 
   await page.goto(`${BASE}/character/jamie/#role`, { waitUntil:'networkidle' });
@@ -150,6 +164,14 @@ try {
   await page.screenshot({ path:`${SHOTS}/luke-v6-dark.png`, fullPage:false });
   await page.locator('#theme-toggle').click();
 
+  await page.goto(`${BASE}/character/terry/#role`, { waitUntil:'networkidle' });
+  await page.locator('#theme-toggle').click();
+  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'terry: dark theme toggle failed');
+  const terryDarkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+  assert(terryDarkHeroLoaded, 'terry: dark hero art missing');
+  await page.screenshot({ path:`${SHOTS}/terry-v6-dark.png`, fullPage:false });
+  await page.locator('#theme-toggle').click();
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -159,7 +181,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 8 accepted light+dark heroes | 学习/角色/实战/资料 | 8 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 9 accepted light+dark heroes | 学习/角色/实战/资料 | 9 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
