@@ -7,6 +7,22 @@ const assert = (ok, msg) => { if (!ok) throw new Error(msg); };
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const yaml = (p) => YAML.parse(read(p));
 
+const collectSourceRefs = (node, out = []) => {
+  if (Array.isArray(node)) {
+    for (const item of node) collectSourceRefs(item, out);
+    return out;
+  }
+  if (!node || typeof node !== 'object') return out;
+  for (const [key, value] of Object.entries(node)) {
+    if ((key === 'source_id' || key === 'primary_source') && typeof value === 'string') out.push(value);
+    if (key === 'sources' && Array.isArray(value)) {
+      for (const id of value) if (typeof id === 'string') out.push(id);
+    }
+    collectSourceRefs(value, out);
+  }
+  return out;
+};
+
 const chars = [
   { slug:'ryu', group:'base', normals:18, learn:['S0｜最小可玩','623HP','236P'], ref:['+42','236236K'], practical:['623HP'] },
   { slug:'jamie', group:'base', normals:18, learn:['安全窗口','Drink Level','H Arrow Kick'], ref:['Bakkai','Tenshin'], practical:['236K','63214'] },
@@ -22,9 +38,19 @@ for (const c of chars) {
   const progression = yaml(`${dir}/grow.yaml`);
   const learn = read(`${dir}/learn.md`);
   const reference = read(`${dir}/reference.md`);
-  const role = c.slug === 'ryu'
-    ? yaml(`${dir}/meta.yaml`).role_profile
-    : yaml(`${dir}/role_profile.yaml`).role_profile;
+  const roleOwner = c.slug === 'ryu'
+    ? yaml(`${dir}/meta.yaml`)
+    : yaml(`${dir}/role_profile.yaml`);
+  const role = c.slug === 'ryu' ? roleOwner.role_profile : roleOwner.role_profile;
+  const sourceRegistry = yaml(`${dir}/sources.yaml`);
+  const sourceIds = new Set((sourceRegistry?.sources ?? []).map((s) => s?.id).filter(Boolean));
+
+  assert(sourceRegistry?.character === c.slug, `${c.slug}: source registry character mismatch`);
+  assert(sourceIds.size >= 4, `${c.slug}: source registry is missing current evidence tiers`);
+  assert((sourceRegistry.sources ?? []).some((s) => Number(s?.tier) === 0), `${c.slug}: official Tier 0 source missing`);
+  for (const id of new Set([...collectSourceRefs(roleOwner), ...collectSourceRefs(practical)])) {
+    assert(sourceIds.has(id), `${c.slug}: unresolved source reference ${id}`);
+  }
 
   assert(learn.length > 500, `${c.slug}: learning content missing/thin`);
   assert(reference.length > 400, `${c.slug}: reference content missing/thin`);
@@ -63,4 +89,4 @@ for (const c of chars) {
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters | Learn progression + Role + Practical + Reference');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters | Learn + Role + Practical + Reference + resolved source registries');
