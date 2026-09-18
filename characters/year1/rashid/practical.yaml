@@ -1,0 +1,276 @@
+schema_version: '1.0'
+character: rashid
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 is stable fast ground -> M Mixer +31 / Eagle Spike carry. Air Current enters S3; Ysaar remains S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Mixer +31 / Eagle Spike Carry'}
+  S1: {label: 基本功成型, short: 'Run Oki / Punish / Throw'}
+  S2: {label: 实战结构化, short: '2MK DRC / Arabian Cyclone'}
+  S3: {label: 选择成熟, short: 'Air Current +42 / Re-entry'}
+  S4: {label: 高分上探, short: 'Ysaar / SA / High Resource'}
+shared_packages:
+  MIXER31:
+    label: 'M Spinning Mixer +31'
+    sequence: 'M Spinning Mixer -> +31 -> Drive Rush'
+    next: 'strike / throw / walk-back shimmy'
+    verification: verified
+    sources: [SRC05]
+  EAGLE_RUN:
+    label: 'M Eagle Spike Run Oki'
+    sequence: 'M Eagle Spike -> Run'
+    next: 'active cr.MP / throw / carry branch by spacing'
+    verification: conditioned
+    conditions: [eagle_spike_spacing]
+    sources: [SRC05]
+  BOOST42:
+    label: 'Air Current Boosted Mixer +42'
+    sequence: 'Air Current Boosted M or OD Spinning Mixer -> +42'
+    next: 'forward jump attack / safe-jump family'
+    verification: conditioned
+    conditions: [air_current_state]
+    sources: [SRC05]
+  ASSAULT44:
+    label: 'Nail / Rolling Assault +44'
+    sequence: 'Nail Assault or Rolling Assault hit -> +44'
+    next: 'jump-in / throw / overhead'
+    verification: conditioned
+    conditions: [assault_branch]
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜S0先用M Mixer +31跑完整回合'
+  stage: S0
+  subtitle: '先有稳定Oki，再学更多移动'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LK > 5LP > 5LP > M Spinning Mixer'
+    value: {drive: 0, kd: '+31'}
+    next_loop_package: MIXER31
+    why: '最低负担的Rashid完整循环：confirm -> knockdown -> next turn。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: 'light block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '回5MP / 2MP工作区'
+    why: 'M Mixer被防极危险，不能自动提交。'
+- id: ground
+  title: '2MP / 5MP｜不靠风也有正帧地面骨架'
+  stage: S0
+  subtitle: '两个6F中拳都能先建立普通打投'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: +1
+    input: '5MP or 2MP block (+1) -> 4F / throw / delayed strike / stop'
+    value: {frame: '+1'}
+    next_loop: '观察对手按、拆、跳或凹'
+    why: 'Rashid不是必须靠Air Current才有压力。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S0
+    choice: Carry
+    input: '2MP > 5LK > L Eagle Spike'
+    value: {drive: 0, carry: high}
+    next_loop: '按实际Eagle Spike落点进入Run / spacing read'
+    why: '第一条位置分流，让Rashid身份从S0可见。'
+    verification: conditioned
+    conditions: [eagle_spike_spacing]
+    sources: [SRC05]
+- id: oki
+  title: 'M Eagle Spike｜S1才系统学Run Oki'
+  stage: S1
+  subtitle: 'spacing决定你能不能跑到点'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Active cr.MP
+    input: 'M Eagle Spike > Run > active cr.MP'
+    value: {state: 'spacing-conditioned'}
+    next_loop: '5MP > M Eagle Spike / throw / reset'
+    why: '只在当前spacing支持时才把Run变成真正Oki。'
+    verification: conditioned
+    conditions: [eagle_spike_spacing]
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Throw
+    input: 'M Eagle Spike > Run > throw'
+    value: {state: 'spacing-conditioned'}
+    next_loop: 'throw result -> reset / corner pressure'
+    why: '与active strike构成第一套简单二选。'
+    verification: conditioned
+    conditions: [eagle_spike_spacing]
+    sources: [SRC05]
+- id: punish
+  title: 'Punish｜先简单PC，再上风强化'
+  stage: S1
+  subtitle: '确定机会先稳定兑现'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 5HP PC
+    input: '5HP (PC) > H Eagle Spike'
+    value: {drive: 0, carry: high}
+    next_loop: '按H Eagle Spike spacing进入jump-in / Oki'
+    why: '大破绽先拿稳定高价值。'
+    verification: conditioned
+    conditions: [eagle_spike_spacing]
+    sources: [SRC05]
+  - result: PC
+    stage: S1
+    choice: 5HK PC
+    input: '5HK (PC) > 6MP > L Eagle Spike'
+    value: {drive: 0, carry: high}
+    next_loop: 'spacing read / Run Oki'
+    why: 'Year4当前PC路线，先不用Air Current扩展。'
+    verification: verified
+    sources: [SRC05]
+- id: 2mk
+  title: '2MK｜S2才加入DRC和更长carry'
+  stage: S2
+  subtitle: 'Hit / Block / Whiff先分清'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回Neutral'
+    why: 'Drive只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 已DRC才继续
+    input: '2MK > CDR > 5LP block -> throw / delayed strike / stop'
+    value: {drc_cost: 3}
+    next_loop: '按对手防守继续'
+    why: '2MK本体block -5，DRC才改变回合。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S2
+    choice: Carry + Oki
+    input: '2MK > CDR > 5MK > 5HP > M Eagle Spike'
+    value: {drive: 3, carry: high}
+    next_loop_package: EAGLE_RUN
+    why: 'S2把低段contact转换成位置和Run Oki。'
+    verification: verified
+    sources: [SRC05]
+- id: cyclone
+  title: 'Arabian Cyclone｜S2打开第一层移动分支'
+  stage: S2
+  subtitle: '先一条Wing Stroke路线，不一次学完整树'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Wing Stroke
+    input: '5MP / target route > H Arabian Cyclone > Wing Stroke > L Arabian Skyhigh'
+    value: {state: 'movement route'}
+    next_loop: 'forward dash -> +5 -> overhead / throw / 2LK'
+    why: '第一次用移动改变下一轮角度，但仍然有固定落点。'
+    verification: conditioned
+    conditions: [cyclone_followup_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: Assault +44
+    input: 'Arabian Cyclone > Rolling Assault > Nail Assault'
+    value: {kd: '+44'}
+    next_loop_package: ASSAULT44
+    why: 'S3才把更复杂movement branch换成高Oki预算。'
+    verification: conditioned
+    conditions: [assault_branch]
+    sources: [SRC05]
+- id: air_current
+  title: 'Air Current｜S3才让熟悉special进入Boosted状态'
+  stage: S3
+  subtitle: 'Boosted不是普通招式的别名'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: +42 Mixer
+    input: '5HK (PC) > 6MP > OD Arabian Cyclone > Air Current Boosted M Spinning Mixer'
+    value: {drive: 2, kd: '+42'}
+    next_loop_package: BOOST42
+    why: '第一条明确Air Current回报：把熟悉Mixer升级成jump-in预算。'
+    verification: conditioned
+    conditions: [punish_counter, air_current_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S3
+    choice: Boosted L Mixer +2
+    input: 'Air Current active -> L Spinning Mixer block'
+    value: {frame: '+2'}
+    next_loop: '4F / throw / delayed strike'
+    why: '状态改变了同一special的block性质；没有Air Current不能套用。'
+    verification: conditioned
+    conditions: [air_current_state]
+    sources: [SRC03, SRC05]
+- id: di
+  title: 'DI｜位置/后续比最长route更重要'
+  stage: S2
+  subtitle: '先carry，再按Oki需求选H Eagle Spike'
+  rows:
+  - result: DI_PC
+    stage: S2
+    choice: Carry
+    input: 'DI (PC) > j.HK > 5HK > 6MP > L Eagle Spike'
+    value: {carry: high}
+    next_loop: '按spacing进入Run / corner read'
+    why: '稳定把大机会换成位置。'
+    verification: verified
+    sources: [SRC05]
+  - result: DI_PC
+    stage: S3
+    choice: Oki focus
+    input: 'DI (PC) > j.HK > 6MP > H Eagle Spike'
+    value: {kd: '+52…64 by spacing'}
+    next_loop: 'spacing允许时进入jump-in / setplay'
+    why: '需要更大Oki预算时才选H Eagle Spike。'
+    verification: conditioned
+    conditions: [eagle_spike_spacing]
+    sources: [SRC05]
+- id: super
+  title: 'Ysaar｜S4才把屏幕变成系统层'
+  stage: S4
+  subtitle: '不是一个更长combo，而是一段新的screen-control规则'
+  rows:
+  - result: ACTIVE
+    stage: S4
+    choice: Ysaar Mix
+    input: 'SA2 Ysaar active -> 6HP overhead / 2MK low / throw'
+    value: {sa: 2, state: 'screen-control system'}
+    next_loop: '按命中/防守结果继续Mixer/Eagle Spike/Air Current路线'
+    why: '基础mix稳定后，Ysaar才真正放大选择树。'
+    verification: conditioned
+    conditions: [sa2_active]
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: SA3 lethal
+    input: '5MK > 5MP > CDR > 2HP > 5HP > CDR > 2HP > 5HP > L Eagle Spike > SA3'
+    value: {drive: 6, sa: 3}
+    next_loop: 'Kill'
+    why: '只有斩杀线明确时才占工作记忆。'
+    verification: conditioned
+    conditions: [resources, kill_range]
+    sources: [SRC05]
+backend_only:
+- {label: 'charged OD Whirlwind full tree', reason: 'high execution/mobility branch; no S0-S2 need'}
+- {label: 'all Air Current Boosted variants', reason: 'only promote selected routes with distinct value'}
+- {label: 'OD Arabian Cyclone +47…51 active-frame family', reason: 'exact setup/timing required'}
+- {label: 'Ysaar full interaction tree', reason: 'S4 system layer; not one fixed combo'}
