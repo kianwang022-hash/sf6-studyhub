@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: luke
+accessed: '2026-09-18'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Luke', url: 'https://www.streetfighter.com/6/en-us/character/luke/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Luke Frame Data', url: 'https://sf6-lab.net/en/fighters/luke/frame', freshness: 'official-reference data checked 2026-09-18', covers: [frames, active, recovery, advantage, cancel, health, damage]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Luke Move List', url: 'https://sf6-lab.net/en/fighters/luke/moves', freshness: 'checked 2026-09-18', covers: [normals, unique_attacks, specials, supers, commands, move_names]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Luke Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/luke/combo', freshness: 'updated 2026-08-31; checked 2026-09-18', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, game_plan, training_order, perfect_flash_knuckle, key_frames]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; hit height, spacing, charge timing and corner arrival remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; execution-heavy Perfect Flash Knuckle routes do not become S0 merely because they are high value'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current structured guide already states training order and practical game plan'
+  learner_projection_rule: 'stable Flash Knuckle/Oki first; Perfect timing is an optimization layer, not the entry requirement'
