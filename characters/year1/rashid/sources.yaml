@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: rashid
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Rashid', url: 'https://www.streetfighter.com/6/en-us/character/rashid/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Rashid Frame Data', url: 'https://sf6-lab.net/en/fighters/rashid/frame', freshness: 'official-reference data through 2026-08-27; checked 2026-09-19', covers: [frames, active, recovery, advantage, cancel, health, air_current]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Rashid Move List', url: 'https://sf6-lab.net/en/fighters/rashid/moves', freshness: 'checked 2026-09-19', covers: [normals, specials, air_current_boosted_moves, supers, commands]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Rashid Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/rashid/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, current_game_plan, air_current, eagle_spike, arabian_cyclone, ysaar]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; Eagle Spike spacing, Air Current contact, active-frame timing and corner position remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; boosted special claims must retain Air Current state and Eagle Spike knockdown values keep spacing conditions'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current structured guide exposes current Game Plan and setplay hierarchy directly'
+  learner_projection_rule: 'stable M Spinning Mixer / Eagle Spike loop first; Air Current boosted routes later; SA2 Ysaar late system layer'
