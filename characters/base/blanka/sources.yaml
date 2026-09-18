@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: blanka
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Blanka', url: 'https://www.streetfighter.com/6/en-us/character/blanka/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Blanka Frame Data', url: 'https://sf6-lab.net/en/fighters/blanka/frame', freshness: 'official-reference data through 2026-08-27; checked 2026-09-19', covers: [frames, active, recovery, advantage, cancel, health, charge_moves, lightning_beast]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Blanka Move List', url: 'https://sf6-lab.net/en/fighters/blanka/moves', freshness: 'checked 2026-09-19', covers: [normals, rolling_attacks, electric_thunder, blanka_chan_bomb, coward_crouch, supers]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Blanka Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/blanka/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, current_game_plan, electric_thunder, bomb, od_thunder, safe_jump, lightning_beast]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; Rolling Oki, Bomb timing, Electric Thunder charge state, active-frame timing, airborne state and corner position remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; +42 safe jump keeps exact Vertical Rolling state and Bomb routes keep stock/object/setup truth'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current structured Training Order and Game Plan directly establish the Thunder->corner->Bomb hierarchy'
+  learner_projection_rule: 'Electric Thunder/basic Rolling first; Bomb only after corner fundamentals; OD Thunder high/low later; Lightning Beast S4'
