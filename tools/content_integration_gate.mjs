@@ -43,7 +43,8 @@ const chars = [
   { slug:'deejay', group:'base', normals:18, learn:['S0｜最小可玩','Air Slasher','Jus Cool'], ref:['OD Machine Gun Uppercut','+52','Waning Moon'], practical:['Jus Cool','Sunrise Festival'], candidate:true },
   { slug:'ehonda', group:'base', normals:18, learn:['S0｜最小可玩','Oicho','Sumo Spirit'], ref:['+42','Oicho','OD Teppo'], practical:['Oicho','Sumo Spirit'], candidate:true },
   { slug:'blanka', group:'base', normals:18, learn:['S0｜最小可玩','Electric Thunder','Blanka-chan Bomb'], ref:['+42','Blanka-chan Bomb','Lightning Beast'], practical:['Blanka-chan Bomb','SA2'], candidate:true },
-  { slug:'vega', group:'year2', normals:18, learn:['S0｜最小可玩','Psycho Mine','cash-in'], ref:['Psycho Mine','OD Crusher','Devil Reverse'], practical:['Psycho Mine','OD Psycho Crusher'], candidate:true }
+  { slug:'vega', group:'year2', normals:18, learn:['S0｜最小可玩','Psycho Mine','cash-in'], ref:['Psycho Mine','OD Crusher','Devil Reverse'], practical:['Psycho Mine','OD Psycho Crusher'], candidate:true },
+  { slug:'marisa', group:'base', normals:18, learn:['S0｜最小可玩','Enfold','+42'], ref:['charged 5HP','Phalanx','Enfold'], practical:['Enfold','fully charged'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -326,33 +327,52 @@ for (const c of chars) {
         const stage = String(row.stage ?? '');
         const input = String(row.input ?? '');
         const conditions = JSON.stringify(row.conditions ?? []);
-        const rowText = JSON.stringify(row);
         const spend = Number(row?.value?.mine_spend ?? 0);
         if (stage === 'S0') {
           assert(spend === 0, 'vega: S0 must not cash Psycho Mine');
           assert(!/Psycho Mine active/.test(input), 'vega: Mine cash-in leaked into S0');
         }
-        if (/Psycho Mine active/.test(input) || spend > 0) {
-          assert(/psycho_mine_active/i.test(conditions), 'vega: Mine-enhanced row missing psycho_mine_active');
-        }
+        if (/Psycho Mine active/.test(input) || spend > 0) assert(/psycho_mine_active/i.test(conditions), 'vega: Mine-enhanced row missing psycho_mine_active');
         const usesMinePlus = /\+(?:42|49|82)/.test(JSON.stringify(row?.value ?? {})) || /\+(?:42|49|82)/.test(input);
-        if (usesMinePlus && /Backfist|Crusher/.test(input)) {
-          assert(/psycho_mine_active/i.test(conditions), 'vega: Mine Oki value lost Mine-state truth');
-        }
-        if (/Devil Reverse/i.test(input)) {
-          assert(/landing_height/i.test(conditions), 'vega: Devil Reverse lost height condition');
-        }
-        if (/OD Psycho Crusher/i.test(input) || /OD Crusher/i.test(op.title ?? '')) {
-          assert(stage === 'S3' || stage === 'S4', 'vega: OD Crusher high-resource cash-in must remain S3+');
-        }
+        if (usesMinePlus && /Backfist|Crusher/.test(input)) assert(/psycho_mine_active/i.test(conditions), 'vega: Mine Oki value lost Mine-state truth');
+        if (/Devil Reverse/i.test(input)) assert(/landing_height/i.test(conditions), 'vega: Devil Reverse lost height condition');
+        if (/OD Psycho Crusher/i.test(input) || /OD Crusher/i.test(op.title ?? '')) assert(stage === 'S3' || stage === 'S4', 'vega: OD Crusher high-resource cash-in must remain S3+');
       }
     }
     assert((practical.opportunities ?? []).some((op) => op.id === 'plant' && op.stage === 'S0'), 'vega: S0 Mine-plant opportunity missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'state_choice' && op.stage === 'S2'), 'vega: S2 hold-vs-detonate opportunity missing');
+  }
+  if (c.slug === 'marisa') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === '-', 'marisa: 2MK must remain non-cancelable');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'marisa: inherited 2MK DRC route leaked');
+    assert(/Damage-backed respect.*Enfold/i.test(role?.signature_mechanic?.name ?? ''), 'marisa: damage-backed respect owner missing');
+    assert(/armor.*无风险|armor.*not.*safety|armor.*risk/i.test(JSON.stringify(role)), 'marisa: armor-risk truth missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        if (stage === 'S0') assert(!/Enfold/i.test(input), 'marisa: Enfold leaked into S0');
+        if (/Enfold/i.test(input)) {
+          assert(stage !== 'S0', 'marisa: Enfold must start after S0');
+          assert(/opponent_respect|setup_timing/i.test(conditions), 'marisa: Enfold row lost respect/setup truth');
+        }
+        const usesPlus42 = /\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input);
+        if (usesPlus42) assert(/phalanx_ender/i.test(conditions) || /Phalanx ender/i.test(input), 'marisa: +42 lost Phalanx ender truth');
+        if (/fully charged|charged 5HP|charged 4HP|charged .*Gladius/i.test(input)) {
+          assert(/full_charge/i.test(conditions), 'marisa: charged row lost full-charge truth');
+        }
+        if (/Scutum/i.test(input) || /Scutum/i.test(op.title ?? '')) {
+          assert(stage === 'S3' || stage === 'S4', 'marisa: Scutum must remain S3+');
+        }
+      }
+    }
   }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 15 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 16 content candidates | Learn + Role + Practical + Reference + resolved source registries');
