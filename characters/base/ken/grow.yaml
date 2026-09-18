@@ -1,0 +1,108 @@
+schema_version: '1.1'
+character: ken
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让 shoto 基础 + 一条 Ken carry 决策跑成完整回合，再逐层长出 DRC、角落和角色专属分支。'
+  score_rule: 'Rank / MR 是 Reality evidence，不替代确认、对空、位置选择与适应证据。'
+  current_ui: '前台一次只突出当前阶段；Reference 可以更完整，但不会因为“有路线”就提前加入训练。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通普通 shoto 控场 -> 可靠确认 -> Shoryuken +25 -> dash +6 -> 下一轮，同时加入一条 Quick Dash Tatsu 运角让 Ken 身份从第一阶段就存在。'
+    add_now:
+      - 'Hadoken / 5HK / 2MK 控中距离，发波后继续看跳。'
+      - '典型跳跃优先 Shoryuken；来不及用 2HP 兜底。'
+      - '2MP→5LK→H Shoryuken 与 2LK→2LP→5LK→H Shoryuken 两条稳定确认。'
+      - 'H Shoryuken +25→66→约 +6，先固定一个 strike 答案。'
+      - 'j.HP→5MP→5HP→Quick Dash Tatsu 作为第一条 carry 路线。'
+    gate:
+      lab: '两条基础确认、主要反空、+25→dash +6 与 carry 路线双侧稳定。'
+      match: '真人里能主动出现“接触→击倒→下一轮”，并至少一次根据屏幕位置选择 carry 而不是只看伤害。'
+    defer: ['2MK DRC主分支', '完整投/shimmy树', 'Jinrai完整分支', 'H Dragonlash主线', 'active-frame角落setplay', 'SA优化']
+    hub_focus: [ground, light, carry]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把免费价值稳定下来：对空、确认、+6 Oki、shimmy PC、大确反和第一套角落 +5 循环少漏。'
+    add_now:
+      - '+6 固定打击稳定后逐步加入投、shimmy 和防凹。'
+      - '挡住明显无敌技会走稳定 PC -> +25 路线。'
+      - '角落只先保留一条 2HP→H Jinrai→HK follow-up→L Shoryuken。'
+      - '2MP block 0 / 2MK block -6 时知道什么时候回防。'
+    gate:
+      match: '主要损失不再来自漏对空、漏确认、漏大确反、基础 Oki 或墙角稳定路线。'
+    defer: ['多套Jinrai分支', '高资源DRC', 'H Dragonlash高频', '窄条件active-frame meaty']
+    hub_focus: [ground, punish, corner]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MK DRC、DI、角落与位置开始真正改变路线；同一个 opening 不再机械走同一 Combo。'
+    add_now:
+      - '2MK DRC 加入 Easy carry；Hit / Block / Whiff 正确分流。'
+      - 'DI 分版中 carry、墙撞保墙、自己背墙修位置。'
+      - '角落 forward throw +20 加入 throw / strike / delayed read。'
+      - '位置开始决定继续 damage、carry、Oki 还是停手。'
+    gate:
+      match: '常见 opening 能说出为什么这次选 carry / damage / corner state；Drive 不是看到 2MK 就自动花。'
+    defer: ['Year4长DRC优化', 'Jinrai完整派生树', 'SA长路线', 'active-frame窄setplay']
+    hub_focus: [2mk, di, corner, punish]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '同一机会会按位置、Drive、血量和对手习惯选择稳定 +6、carry、corner +5、damage 或 stop；Quick Dash / Jinrai 进入真正条件化选择树。'
+    add_now:
+      - 'Year4 2MK DRC carry 与 damage 路线按目的分流。'
+      - 'Quick Dash Forward Step Kick 按 spacing/read 使用；被防 -4 不自动续。'
+      - 'H Dragonlash 作为 28F / block +1 的 conditioned 推进，不当万能入口。'
+      - 'Jinrai follow-up 逐条加入，只保留有独立实战价值的分支。'
+    gate:
+      behavior: '路线选择能解释 end-state；角色专属推进失败时会降频，不破坏基础 shoto 对空/确认。'
+      reality: '1500 MR 只作为持续 Reality milestone，不替代行为证据。'
+    defer: ['极窄active-frame角落meaty', '只为最大数字增加的高风险路线']
+    hub_focus: [signature, 2mk, corner, punish]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: '优化已经赢到的机会：SA、斩杀、active-frame角落setplay与特定 spacing 条件进入，但基础 carry / +6 选择不能退化。'
+    add_now:
+      - 'SA3 从已会的 Quick Dash / Jinrai starter 现金化。'
+      - '角落 active-frame meaty 只有 Training Mode 条件闭合后才进入。'
+      - '对特定 spacing / matchup 的 Forward Step Kick、Dragonlash、Jinrai 使用做频率优化。'
+      - '复盘问题从“有没有拿到机会”转向“同一个机会 end-state 是否更优”。'
+    gate:
+      behavior: '新增优化建立在稳定对空、确认、位置选择和角落循环之上。'
+      reality: '高分目标不硬编码；由实际目标与持续表现定义。'
+    hub_focus: [super, signature, corner, 2mk]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条 Shoryuken 基础确认稳定', node: ground, upgrade_evidence: '2MP 与 light 两条基础确认双侧稳定。'}
+    - {id: EX02, stage: S0, label: 'Quick Dash Tatsu carry稳定', node: carry, upgrade_evidence: '能在真实大接触后完成路线并识别是否到角落。'}
+    - {id: EX03, stage: S2, label: '2MK DRC不误提交', node: 2mk, upgrade_evidence: 'Hit/Block/Whiff 正确分流。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'Hadoken后继续看跳', node: ground, upgrade_evidence: '发波不会锁死注意力。'}
+    - {id: NE02, stage: S0, label: '5HK / 2MK / 步行有分工', node: ground, upgrade_evidence: '能根据距离选工具，不把所有按钮当进场。'}
+    - {id: NE03, stage: S3, label: 'Quick Dash / Dragonlash不绑架Neutral', node: signature, upgrade_evidence: '角色专属推进被针对后会降频。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S1, label: 'Hit / Block / Whiff三分流', node: ground, upgrade_evidence: '被防和挥空不播放命中路线。'}
+    - {id: CO02, stage: S2, label: '同一starter按end-state分流', node: 2mk, upgrade_evidence: '能说出carry / damage / Oki差别。'}
+    - {id: CO03, stage: S3, label: 'plus与startup一起理解', node: signature, upgrade_evidence: '不会只背H Dragonlash +1。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: '+25→dash +6闭环', node: ground, upgrade_evidence: '击倒后能接下一Turn，而不是combo结束就停。'}
+    - {id: OF02, stage: S1, label: '角落+5 family稳定', node: corner, upgrade_evidence: '知道角落路线存在的理由是下一轮。'}
+    - {id: OF03, stage: S3, label: 'carry / damage / corner state成熟分流', node: 2mk, upgrade_evidence: '按屏幕位置与资源选end-state。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '挡无敌技会确反', node: punish, upgrade_evidence: '大破绽能稳定转+25。'}
+    - {id: DA02, stage: S2, label: '背墙DI先修位置', node: di, upgrade_evidence: '不会只追最长伤害。'}
+    - {id: DA03, stage: S3, label: '角色专属推进失效会调整', node: signature, upgrade_evidence: '连续被interrupt/DI后会降低频率或换节奏。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '最小整轮先 LAB_STABLE 并尽快 MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '基础对空、确认、Oki、确反和角落稳定路线多数 MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: '位置与Drive开始改变路线选择。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数 MATCH_STABLE；1500 MR只作持续Reality milestone。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '优化围绕真实高分瓶颈，不让基础carry/+6循环退化。'}
