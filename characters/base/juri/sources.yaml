@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: juri
+accessed: '2026-09-18'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Juri', url: 'https://www.streetfighter.com/6/en-us/character/juri/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Juri Frame Data', url: 'https://sf6-lab.net/en/fighters/juri/frame', freshness: 'official-reference data checked 2026-09-18', covers: [frames, active, recovery, advantage, cancel, damage, stock_properties]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Juri Move List', url: 'https://sf6-lab.net/en/fighters/juri/moves', freshness: 'checked 2026-09-18', covers: [normals, unique_attacks, specials, supers, commands, move_names]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Juri Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/juri/combo', freshness: 'updated 2026-08-31; checked 2026-09-18', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, training_order, stock_management, corner, feng_shui_engine]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; Tensenrin Oki, hit height, spacing and stock-state variants remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; boosted specials must retain stock state and must not leak into stockless learner defaults'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current structured Training Order, routes and stock/Oki evidence close the model directly'
+  learner_projection_rule: 'M Fuhajin stock-building loop enters early; stock-spending boosted specials and Feng Shui Engine enter only after the base loop is stable'
