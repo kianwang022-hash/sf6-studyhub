@@ -9,7 +9,8 @@ const READY_STATE: Record<string, string> = {
   mai: 'GOLD_PAGE_READY',
   zangief: 'GOLD_PAGE_READY',
   cammy: 'GOLD_PAGE_READY',
-  ken: 'GOLD_PAGE_READY'
+  ken: 'GOLD_PAGE_READY',
+  akuma: 'GOLD_PAGE_READY'
 };
 
 const HERO_DISPLAY: Record<string, { position: string; scale: number }> = {
@@ -18,7 +19,8 @@ const HERO_DISPLAY: Record<string, { position: string; scale: number }> = {
   cammy: { position: '88% 50%', scale: 1 },
   mai: { position: '90% 50%', scale: 1 },
   zangief: { position: '82% 50%', scale: 1 },
-  ken: { position: '88% 50%', scale: 1 }
+  ken: { position: '88% 50%', scale: 1 },
+  akuma: { position: '88% 50%', scale: 1 }
 };
 
 const GROUP_LABELS: Record<string, string> = {

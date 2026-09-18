@@ -12,7 +12,8 @@ const chars = [
   { slug:'mai', normals:18, learn:'dash +9', ref:'OD 214P Ryuuenbu', practical:['j.214P','OD 236K','SA2'] },
   { slug:'zangief', normals:23, learn:'尊重', ref:'SPD 后重置', practical:['360P','SA3'] },
   { slug:'cammy', normals:18, learn:'M Spiral Arrow', ref:'Cannon Strike', practical:['SA1','SA3'] },
-  { slug:'ken', normals:18, learn:'Quick Dash Tatsu', ref:'Forward Step Kick', practical:['KK > Tatsu','SA3'] }
+  { slug:'ken', normals:18, learn:'Quick Dash Tatsu', ref:'Forward Step Kick', practical:['KK > Tatsu','SA3'] },
+  { slug:'akuma', normals:18, learn:'同一个 opening 可以买不同的 Oki 时间预算', ref:'Shun Goku Satsu', practical:['L Tatsu > 2HK','Demon Raid','charged Gou Hadoken'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -50,6 +51,12 @@ try {
       assert(roleText.includes('28F') && roleText.includes('Block +1'), 'ken: H Dragonlash 28F/+1 projection truth missing');
       assert(roleText.includes('Quick Dash / Jinrai end-state engine'), 'ken: signature end-state engine missing from Role');
     }
+    if (c.slug === 'akuma') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('9000') && roleText.includes('Option density under 9000 health'), 'akuma: 9000-health option-density truth missing');
+      assert(roleText.includes('L Tatsu > 2HK') && roleText.includes('+37'), 'akuma: current +37 Tatsu-sweep truth missing');
+      assert(!roleText.includes('L Tatsu > 2HK') || !roleText.includes('旧 +42') || roleText.includes('禁止把旧 +42 投到前台'), 'akuma: old +42 wording leaked without correction');
+    }
 
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
@@ -64,6 +71,13 @@ try {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('j.HP > 5MP > 5HP > KK > Tatsu'), 'ken: S0 carry identity route missing');
       assert(!s0Text.includes('H Dragonlash推进'), 'ken: S3 signature branch leaked into S0');
+    }
+    if (c.slug === 'akuma') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP > 2LP > 5LK > H Gou Shoryuken'), 'akuma: S0 stable shoto route missing');
+      assert(s0Text.includes('2LP > 2LP > 5LK > L Tatsu > 2HK'), 'akuma: S0 +37 Oki-choice route missing');
+      assert(!s0Text.includes('Demon Raid > Demon Low Slash'), 'akuma: S3 Demon Raid branch leaked into S0');
+      assert(!s0Text.includes('charged Gou Hadoken Lv2'), 'akuma: S3 charged-fireball branch leaked into S0');
     }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
@@ -106,6 +120,14 @@ try {
   await page.screenshot({ path:`${SHOTS}/ken-v6-dark.png`, fullPage:false });
   await page.locator('#theme-toggle').click();
 
+  await page.goto(`${BASE}/character/akuma/#role`, { waitUntil:'networkidle' });
+  await page.locator('#theme-toggle').click();
+  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'akuma: dark theme toggle failed');
+  const akumaDarkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+  assert(akumaDarkHeroLoaded, 'akuma: dark hero art missing');
+  await page.screenshot({ path:`${SHOTS}/akuma-v6-dark.png`, fullPage:false });
+  await page.locator('#theme-toggle').click();
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -115,7 +137,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 6 accepted light+dark heroes | 学习/角色/实战/资料 | 6 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 7 accepted light+dark heroes | 学习/角色/实战/资料 | 7 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
