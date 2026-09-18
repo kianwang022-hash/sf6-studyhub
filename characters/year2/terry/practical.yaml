@@ -1,0 +1,268 @@
+schema_version: '1.0'
+character: terry
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-18'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Terry S0 teaches special roles: Power Wave controls, Rising Tackle anti-airs/damages, M Burning Knuckle carries into Oki. Round Wave and OD Quick Burn are later earned-pressure layers.'
+stages:
+  S0: {label: 最小可玩, short: 'Wave / Tackle / Burning Knuckle'}
+  S1: {label: 基本功成型, short: 'Punish / Corner / Throw'}
+  S2: {label: 实战结构化, short: 'DRC / Power Charge / Round Wave'}
+  S3: {label: 选择成熟, short: 'OD Quick Burn / Shimmy / Setplay'}
+  S4: {label: 高分上探, short: 'SA2 / Active-frame / Kill'}
+shared_packages:
+  M_BK_OKI:
+    label: 'M Burning Knuckle carry / Oki family'
+    sequence: 'M Burning Knuckle -> KD +30…42 by spacing -> forward dash'
+    next: 'strike / throw / 2MP / walk-back shimmy'
+    verification: conditioned
+    conditions: [burning_knuckle_spacing]
+    sources: [SRC05]
+  RT27:
+    label: 'H Rising Tackle +27'
+    sequence: 'H Rising Tackle -> KD +27'
+    next: '按实际落点dash / 位置重读'
+    verification: verified
+    sources: [SRC05]
+  THROW22:
+    label: 'Corner forward throw +22'
+    sequence: 'corner forward throw -> +22 -> forward dash'
+    next: '+3 -> throw / 2MP / block / jump-read'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+  OD_QB33:
+    label: 'OD Quick Burn +33 Year4 shimmy'
+    sequence: 'OD Quick Burn hit -> +33'
+    next: 'delay / crouch timing -> bait throw tech -> PC'
+    verification: conditioned
+    conditions: [spacing, timing]
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜先学Burning Knuckle把小命中换成位置'
+  stage: S0
+  subtitle: '同一个小starter只保留carry/Oki和damage两种真正不同结果'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Carry + Oki
+    input: '2LK > 2LP > M Burning Knuckle'
+    value: {drive: 0, carry: high, kd: '+30…42 by spacing'}
+    next_loop_package: M_BK_OKI
+    why: 'Terry第一条身份路线：小命中就能买屏幕位置和下一轮。'
+    verification: conditioned
+    conditions: [burning_knuckle_spacing]
+    sources: [SRC05]
+  - result: HIT
+    stage: S0
+    choice: Damage
+    input: '2LK > 2LP > H Rising Tackle'
+    value: {drive: 0, kd: '+27'}
+    next_loop_package: RT27
+    why: '同一小机会需要伤害时，用更直接的Rising Tackle。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: '2LK / 2LP block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '回近身观察'
+    why: 'Burning Knuckle不是被防后的自动提交。'
+- id: close
+  title: '2MP / 5HP｜普通接触先于special relay'
+  stage: S0
+  subtitle: '先用正常按钮拿确认，再决定交给哪个special'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认carry
+    input: '2MP > 5LK > M Burning Knuckle'
+    value: {drive: 0, carry: high}
+    next_loop_package: M_BK_OKI
+    why: '稳定medium starter直接回核心carry/Oki。'
+    verification: conditioned
+    conditions: [burning_knuckle_spacing]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 5HP +1
+    input: '5HP block (+1) -> 2LP / throw / walk-back shimmy / block'
+    value: {frame: '+1'}
+    next_loop: '看对手按、拆、跳或凹'
+    why: '不需要先靠Round Wave才能建立respect。'
+    verification: verified
+    sources: [SRC03]
+- id: punish
+  title: 'Punish｜大机会先稳定交给正确ender'
+  stage: S1
+  subtitle: '先把确定punish练稳，再长special relay'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 5HK PC
+    input: '5HK (PC) > 5HP hit 1 > H Power Charge > delayed H Crack Shoot > H Rising Tackle'
+    value: {drive: 0, kd: '+27'}
+    next_loop_package: RT27
+    why: '大破绽先稳定兑现伤害和明确击倒。'
+    verification: conditioned
+    conditions: [punish_counter, delayed_crack_shoot]
+    sources: [SRC05]
+  - result: PC
+    stage: S1
+    choice: 挡无敌后
+    input: '2HP (PC) > H Power Charge > delayed H Crack Shoot > H Rising Tackle'
+    value: {drive: 0, kd: '+27'}
+    next_loop_package: RT27
+    why: '防住大无敌技后不丢确定价值。'
+    verification: conditioned
+    conditions: [punish_counter, delayed_crack_shoot]
+    sources: [SRC05]
+- id: corner
+  title: 'Corner｜前投 +22 是第一套墙角循环'
+  stage: S1
+  subtitle: '先会throw / 2MP / block，再加Round Wave'
+  rows:
+  - result: THROW
+    stage: S1
+    choice: 前投loop
+    input: 'corner forward throw -> +22 -> forward dash'
+    value: {kd: '+22', frame: 'after dash +3'}
+    next_loop_package: THROW22
+    why: '角落最简单稳定的持续问题。'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: 基础角落combo
+    input: '5HP hit 1 > H Power Charge > Round Wave > M Power Charge > H Rising Tackle'
+    value: {state: corner, kd: '+27'}
+    next_loop_package: RT27
+    why: '已在角落时，special relay服务伤害和保墙，而不是继续追carry。'
+    verification: conditioned
+    conditions: [corner, first_hit_confirm]
+    sources: [SRC05]
+- id: 2mk
+  title: '2MK｜S2才把DRC接进special relay'
+  stage: S2
+  subtitle: 'Hit / Block / Whiff先分清，再花3Drive'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回Neutral'
+    why: 'Drive只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 分状态
+    input: '未DRC: 接触结束 | 已DRC: 2MP / throw / shimmy / stop'
+    value: {drc_cost: 3}
+    next_loop: '按是否已取消绿冲处理'
+    why: '2MK本体被防-6。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: Relay
+    input: '2MK > DRC > 2HP > H Power Charge > delayed H Crack Shoot > Quick Burn'
+    value: {drive: 3}
+    next_loop: '按Quick Burn落点 / 资源决定Rising Tackle或重置'
+    why: 'S2开始学同一个starter如何交给不同special接棒。'
+    verification: conditioned
+    conditions: [delayed_crack_shoot]
+    sources: [SRC05]
+- id: round_wave
+  title: 'Round Wave｜+5只在赚到时间后才强'
+  stage: S2
+  subtitle: '29F startup和Block +5必须一起记'
+  rows:
+  - result: BLOCK
+    stage: S2
+    choice: Earned +5
+    input: 'earned setup -> Round Wave block (+5)'
+    value: {startup: '29F', frame: '+5'}
+    next_loop: '2MP / throw / delayed strike / shimmy'
+    why: '强在setup后的压制，不是中立裸放29F就免费拿回合。'
+    verification: conditioned
+    conditions: [earned_setup, spacing]
+    sources: [SRC03, SRC05]
+  - result: BLOCK
+    stage: S3
+    choice: 角落meaty
+    input: 'corner M Burning Knuckle -> Round Wave active-frame meaty'
+    value: {frame: 'block about +7'}
+    next_loop: 'throw / 2MP / strike / shimmy'
+    why: 'active-frame让Round Wave更赚，但只在对应角落setup成立。'
+    verification: conditioned
+    conditions: [corner, meaty_timing]
+    sources: [SRC05]
+- id: od_quick_burn
+  title: 'OD Quick Burn｜Year4 +33才开始教shimmy'
+  stage: S3
+  subtitle: '先有基础打投，+33才真正值钱'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Year4 shimmy
+    input: 'OD Quick Burn hit -> +33 -> delay / crouch timing'
+    value: {drive: 2, damage: 1600, kd: '+33'}
+    next_loop_package: OD_QB33
+    why: '利用对手预期throw的习惯制造tech whiff，再PC惩罚。'
+    verification: conditioned
+    conditions: [spacing, timing]
+    sources: [SRC05]
+- id: di
+  title: 'DI｜先有一条稳定，再按SA资源升级'
+  stage: S2
+  subtitle: '不要把DI变成Super路线背诵题'
+  rows:
+  - result: DI_PC
+    stage: S2
+    choice: 稳定
+    input: 'DI > 2HP > M Crack Shoot > H Rising Tackle'
+    value: {drive: 0, kd: '+27'}
+    next_loop_package: RT27
+    why: '简单、稳定，先把大机会拿到手。'
+    verification: verified
+    sources: [SRC05]
+  - result: DI_PC
+    stage: S4
+    choice: SA2
+    input: 'DI > 2HP > M Power Charge > SA2 > Twin Geyser > Triple Geyser'
+    value: {sa: 2}
+    next_loop: '按SA2/Triple Geyser落点继续'
+    why: '资源足、伤害值得时才展开多段cashout。'
+    verification: conditioned
+    conditions: [sa_resource]
+    sources: [SRC05]
+- id: super
+  title: 'SA｜最后才把已有special relay现金化'
+  stage: S4
+  subtitle: '不为Super新增一套陌生starter'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA2 Geyser chain
+    input: 'OD Quick Burn hit 2 > SA2 > Twin Geyser > Triple Geyser'
+    value: {drive: 2, sa: 2}
+    next_loop: '按Triple Geyser后状态继续'
+    why: '只有已经会OD Quick Burn确认后才加，不反过来为了SA背新路线。'
+    verification: conditioned
+    conditions: [od_quick_burn_hit2, sa_resource]
+    sources: [SRC05]
+backend_only:
+- {label: 'M Burning Knuckle fixed +11 claim', reason: 'only one spacing package reaches about +11 after dash; never universalize'}
+- {label: 'active-frame 5HP / 2MP / Round Wave meaty', reason: 'exact timing/spacing remains conditioned'}
+- {label: 'H Crack Shoot +43 corner tree', reason: 'late spacing-dependent setplay'}
+- {label: 'CA +37 -> DR 2MP', reason: 'high-stage resource/setplay optimization'}
