@@ -11,7 +11,8 @@ const chars = [
   { slug:'jamie', normals:18, learn:'Drink Level', ref:'Bakkai', practical:['236K','63214'] },
   { slug:'mai', normals:18, learn:'dash +9', ref:'OD 214P Ryuuenbu', practical:['j.214P','OD 236K','SA2'] },
   { slug:'zangief', normals:23, learn:'尊重', ref:'SPD 后重置', practical:['360P','SA3'] },
-  { slug:'cammy', normals:18, learn:'M Spiral Arrow', ref:'Cannon Strike', practical:['SA1','SA3'] }
+  { slug:'cammy', normals:18, learn:'M Spiral Arrow', ref:'Cannon Strike', practical:['SA1','SA3'] },
+  { slug:'ken', normals:18, learn:'Quick Dash Tatsu', ref:'Forward Step Kick', practical:['KK > Tatsu','SA3'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -44,6 +45,11 @@ try {
     assert(await page.locator('#role:visible').count() === 1, `${c.slug}: Role panel missing`);
     assert(await page.locator('.frame-table tbody tr').count() === c.normals, `${c.slug}: normal frame table count mismatch`);
     await page.locator('#role').screenshot({ path:`${SHOTS}/${c.slug}-role-v6-light.png` });
+    if (c.slug === 'ken') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('28F') && roleText.includes('Block +1'), 'ken: H Dragonlash 28F/+1 projection truth missing');
+      assert(roleText.includes('Quick Dash / Jinrai end-state engine'), 'ken: signature end-state engine missing from Role');
+    }
 
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
@@ -54,6 +60,11 @@ try {
     assert(await page.locator('[data-stage]').count() === 6, `${c.slug}: S0-S4 + ALL missing`);
     assert(await page.locator('[data-op]').count() >= 5, `${c.slug}: Opportunity Hub too small`);
     assert(await page.locator('[data-row-stage="S4"]:visible').count() === 0, `${c.slug}: future S4 should be folded at S0`);
+    if (c.slug === 'ken') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('j.HP > 5MP > 5HP > KK > Tatsu'), 'ken: S0 carry identity route missing');
+      assert(!s0Text.includes('H Dragonlash推进'), 'ken: S3 signature branch leaked into S0');
+    }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
     for (const token of c.practical) assert(practicalText.includes(token), `${c.slug}: practical marker missing ${token}`);
@@ -76,7 +87,7 @@ try {
   assert(await page.locator('#heroCharacterSelect').inputValue() === 'jamie', 'selector did not land on Jamie');
 
   await page.goto(`${BASE}/character/luke/#role`, { waitUntil:'networkidle' });
-  assert((await page.locator('[data-panel="role"]').innerText()).includes('SOURCE CLOSURE PENDING'), 'pending roster shell must not masquerade as Gold content');
+  assert((await page.locator('[data-panel="role"]').innerText()).includes('GOLD PAGE QA PENDING'), 'CONTENT_READY roster shell must not masquerade as Gold content');
 
   await page.goto(`${BASE}/character/jamie/#role`, { waitUntil:'networkidle' });
   assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'light', 'v6 default/saved test theme should start light');
@@ -96,7 +107,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 5 accepted light+dark heroes | 学习/角色/实战/资料 | 5 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 6 accepted light+dark heroes | 学习/角色/实战/资料 | 6 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
