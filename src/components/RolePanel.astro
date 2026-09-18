@@ -7,6 +7,8 @@ const glossary = role?.glossary ?? [];
 const frameRows = role?.normal_frame_table?.rows ?? [];
 const keyNumbers = role?.key_numbers ?? [];
 const constraints = role?.constraints ?? [];
+const signature = role?.signature_mechanic ?? null;
+const resource = role?.resource ?? null;
 const list = (value) => Array.isArray(value) ? value : value ? [value] : [];
 ---
 <section id="role" class="section role-section">
@@ -32,6 +34,20 @@ const list = (value) => Array.isArray(value) ? value : value ? [value] : [];
     {tools.length > 0 && <>
       <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>关键工具</h2><p>输入优先；名字只是别名。</p></div></div>
       <div class="tool-grid">{tools.map((t) => <div class="tool"><div class="input">{t.input}</div><div><b>{t.name}</b><p>{t.use}</p></div></div>)}</div>
+    </>}
+
+    {(signature || resource) && <>
+      <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>角色机制</h2><p>只保留会改变选择的状态与规则。</p></div></div>
+      <div class="model-grid">
+        {signature && <article class="mini-card"><h3>{signature.name}</h3><p>{signature.rule}</p></article>}
+        {resource && <article class="mini-card">
+          <h3>{resource.name}</h3>
+          {resource.gain && <p><b>怎么获得：</b>{resource.gain}</p>}
+          {resource.spend && <p><b>怎么使用：</b>{resource.spend}</p>}
+          {resource.changes && <p><b>会改变什么：</b>{resource.changes}</p>}
+          {resource.rule && <p><b>学习规则：</b>{resource.rule}</p>}
+        </article>}
+      </div>
     </>}
 
     {keyNumbers.length > 0 && <>
