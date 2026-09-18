@@ -800,15 +800,17 @@ for (const c of chars) {
           assert(/burning_kick_block/i.test(conditions), 'cviper: Double Burn lost Burning Kick block owner');
         }
 
-        if (/\+45/.test(rowText)) {
+        const numericClaimText = input + ' ' + JSON.stringify(row?.value ?? {});
+
+        if (/\+45/.test(numericClaimText)) {
           assert(/exact_plus45_route/i.test(conditions), 'cviper: +45 lost exact route owner');
         }
 
-        if (/\+44/.test(rowText) && /Seismic|Burning/i.test(input + ' ' + String(op.title ?? ''))) {
+        if (/\+44/.test(numericClaimText) && /Seismic|Burning/i.test(input + ' ' + String(op.title ?? ''))) {
           assert(/exact_plus44_route/i.test(conditions), 'cviper: +44 lost exact route owner');
         }
 
-        if (/\+42/.test(rowText)) {
+        if (/\+42/.test(numericClaimText)) {
           const ok = /exact_plus42_route|od_thunder_dash_state|od_seismic_state/i.test(conditions);
           assert(ok, 'cviper: +42 lost exact OD/route owner');
         }
