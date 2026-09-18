@@ -1,0 +1,327 @@
+schema_version: '1.0'
+character: ken
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-18'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Ken S0 keeps normal shoto fundamentals, but must already expose one carry decision so the learner does not collapse him into Ryu.'
+stages:
+  S0: {label: 最小可玩, short: 'Ground Hit -> DP / Carry'}
+  S1: {label: 基本功成型, short: 'Punish / +6 / Corner'}
+  S2: {label: 实战结构化, short: '2MK DRC / DI / Position'}
+  S3: {label: 选择成熟, short: 'Carry / Damage / Jinrai'}
+  S4: {label: 高分上探, short: 'SA / Active-frame / Kill'}
+shared_packages:
+  DP25_LOOP:
+    label: 'Shoryuken +25 基础下一轮'
+    sequence: 'H / Quick-Dash Shoryuken -> KD +25 -> 66'
+    next: '剩约 +6 -> strike / throw / shimmy / block'
+    verification: verified
+    sources: [SRC05]
+  QD_TATSU_CARRY:
+    label: 'Quick Dash Tatsu 搬运'
+    sequence: 'starter > KK > Tatsu'
+    next: '先确认是否到角落；到角落才进入专用 setplay，否则按位置继续推进'
+    verification: conditioned
+    conditions: [screen_position, airborne_hit_state]
+    sources: [SRC05]
+  CORNER_PLUS5:
+    label: '角落 +5 frame-kill family'
+    sequence: 'corner M Shoryuken -> +33 -> 2MK whiff'
+    next: '+5 -> throw / 2MP / shimmy'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+opportunities:
+- id: ground
+  title: '2MP｜Year 4 最稳定的近身接触'
+  stage: S0
+  subtitle: '先学普通命中怎么变成稳定击倒，再决定是否追求更复杂 end-state'
+  rows:
+  - result: WHIFF
+    stage: S0
+    choice: 不补票
+    input: '2MP whiff -> stop'
+    value: {drive: 0}
+    next_loop: '回距离 / 继续看跳与步行'
+    why: '挥空额外 recovery；不要因为角色快就自动追第二段。'
+    verification: verified
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S0
+    choice: 重读
+    input: '2MP block (0) -> block / walk / throw-read'
+    value: {frame: '0'}
+    next_loop: '近身观察，对手抢按就记住'
+    why: 'Block 0 不是固定你的回合。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2MP > 5LK > H Shoryuken'
+    value: {damage: 2020, drive: 0, kd: '+25'}
+    next_loop_package: DP25_LOOP
+    why: '短、稳定，而且直接进入 Ken 最重要的 +6 下一轮。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: 贴身更高价值
+    input: 'point-blank 2MP > 5MP > 5HP > KK > Shoryuken'
+    value: {damage: 2540, drive: 0, kd: '+25'}
+    next_loop_package: DP25_LOOP
+    why: '只有贴身条件满足时才升级，不把 point-blank 路线当通用。'
+    verification: conditioned
+    conditions: [point_blank]
+    sources: [SRC05]
+- id: light
+  title: 'Light｜低段/轻攻击先复用同一个 +6 Loop'
+  stage: S0
+  subtitle: '小机会也要换成稳定下一轮，不急着背更多派生'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LK > 2LP > 5LK > H Shoryuken'
+    value: {damage: 1490, drive: 0, kd: '+25'}
+    next_loop_package: DP25_LOOP
+    why: '低段命中直接回同一套 Oki，降低第一阶段工作记忆。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 观察
+    input: '2LK / 2LP block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '不确认就不提交 Shoryuken'
+    why: '先建立确认纪律，避免把命中路线播放到防御上。'
+- id: carry
+  title: 'Jump-in / 大接触｜第一次学 Ken 的位置转换'
+  stage: S0
+  subtitle: '这条路线存在的理由不是伤害，而是把人送向角落'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 运角
+    input: 'j.HP > 5MP > 5HP > KK > Tatsu'
+    value: {drive: 0, carry: high}
+    next_loop_package: QD_TATSU_CARRY
+    why: '从第一阶段就知道 Ken 的 combo 可以为位置服务，而不只为伤害服务。'
+    verification: conditioned
+    conditions: [screen_position, airborne_hit_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 不播放命中路线
+    input: 'j.HP block -> strike / throw / stop by spacing'
+    value: {state: 'close contact'}
+    next_loop: '回普通打 / 投判断'
+    why: 'Quick Dash Tatsu 是命中转换，不是跳入被防后的自动字符串。'
+- id: punish
+  title: 'Punish / Shimmy PC｜骗到大破绽就买伤害 + 下一轮'
+  stage: S1
+  subtitle: '优先稳定收尾，别为了长路线丢掉确定价值'
+  rows:
+  - result: PC
+    stage: S1
+    choice: Shimmy默认
+    input: '2MP (PC) > 2MK > KK > Shoryuken'
+    value: {damage: 2700, drive: 0, kd: '+25'}
+    next_loop_package: DP25_LOOP
+    why: '骗拆投成功以后，直接拿稳定高价值和 +6 下一轮。'
+    verification: verified
+    sources: [SRC05]
+  - result: PC
+    stage: S1
+    choice: 挡无敌后稳定
+    input: '5HP (PC) > 2MK > KK > Shoryuken'
+    value: {drive: 0, kd: '+25'}
+    next_loop_package: DP25_LOOP
+    why: '大确反先保证不掉，再继续 Oki。'
+    verification: verified
+    sources: [SRC05]
+  - result: PC
+    stage: S3
+    choice: 高价值运角
+    input: '2HP (PC) > DRC > 2HP > Emergency Stop > 2MP > 5MP > 5HP > KK > Tatsu'
+    value: {drive: 3, carry: high}
+    next_loop_package: QD_TATSU_CARRY
+    why: '只有位置价值值得花 3 Drive 时才偏离零资源稳定路线。'
+    verification: verified
+    sources: [SRC05]
+- id: 2mk
+  title: '2MK｜DRC 不是固定 Combo，而是三种 end-state'
+  stage: S2
+  subtitle: 'Easy carry / Year4 carry / damage，按位置和资源选'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回 Neutral'
+    why: 'Drive 只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 分状态
+    input: '未 DRC: 接触结束 | 已 DRC: strike / throw / shimmy / stop'
+    value: {drc_cost: 3}
+    next_loop: '按是否已经取消绿冲继续'
+    why: '2MK 本体被防 -6；不要把本体和 DRC 压力混成一件事。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: Easy运角
+    input: '2MK > DRC > 5LP > 5MP > 5HP > KK > Tatsu'
+    value: {drive: 3, carry: high}
+    next_loop_package: QD_TATSU_CARRY
+    why: '路线短，先用它学“低段命中 -> 搬运 -> 看位置”。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: Year4运角
+    input: '2MK > DRC > 2HP > Emergency Stop > 2MP > 5MP > 5HP > KK > Tatsu'
+    value: {damage: 2072, drive: 3, carry: high}
+    next_loop_package: QD_TATSU_CARRY
+    why: '多执行换更完整的 carry / SA 状态，只有需要这个价值时才用。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: Damage
+    input: '2MK > DRC > 2HP > Emergency Stop > 2MP > L Tatsu > M Shoryuken'
+    value: {damage: 2360, drive: 3}
+    next_loop_package: CORNER_PLUS5
+    why: '角落附近才真正体现 damage + setplay 的独立价值。'
+    verification: conditioned
+    conditions: [corner_or_near_corner]
+    sources: [SRC05]
+- id: di
+  title: 'DI｜位置不同就不是同一条答案'
+  stage: S2
+  subtitle: '版中优先 carry，角落保墙，自己背墙先修位置'
+  rows:
+  - result: WALL_SPLAT
+    stage: S2
+    choice: 角落稳定
+    input: 'DI wall splat > 5HP > H Jinrai > HK follow-up > M Shoryuken'
+    value: {state: corner, kd: '+33'}
+    next_loop_package: CORNER_PLUS5
+    why: '墙已经拿到，重点是保住角落并继续 +5 选择树。'
+    verification: conditioned
+    conditions: [corner_wall_splat]
+    sources: [SRC05]
+  - result: DI_PC
+    stage: S2
+    choice: 版中运角
+    input: 'DI (PC) > 5MP > 5HP > KK > Tatsu'
+    value: {damage: 2120, carry: high}
+    next_loop_package: QD_TATSU_CARRY
+    why: '简单稳定，并把版中大机会直接换成位置。'
+    verification: verified
+    sources: [SRC05]
+  - result: DI_PC_BACK_TO_CORNER
+    stage: S3
+    choice: 修位置
+    input: 'DI (PC) > j.HK > KK > Dragonlash > H Shoryuken'
+    value: {damage: 3220, state: 'position reversal'}
+    next_loop: '确认自己已经脱离背墙，再按 +25 / 角落状态继续'
+    why: '存在的理由是修位置，不只是多伤害。'
+    verification: conditioned
+    conditions: [back_to_corner]
+    sources: [SRC05]
+- id: corner
+  title: 'Corner｜+5 之后才是真正的墙角循环'
+  stage: S1
+  subtitle: '先保留一个 frame-kill family，再慢慢长 throw / shimmy / 防凹'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: 角落稳定
+    input: '2HP > H Jinrai > HK follow-up > L Shoryuken'
+    value: {damage: 2910, state: corner}
+    next_loop: '2MK whiff -> +5 -> throw / 2MP / shimmy'
+    why: '一条稳定角落路线就够先学完整墙角循环。'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+  - result: THROW
+    stage: S2
+    choice: 前投继续墙角
+    input: 'corner forward throw -> +20'
+    value: {kd: '+20'}
+    next_loop: 'forward throw / 5HP / delayed defense-read'
+    why: '角落投的价值是继续逼对手选防守答案。'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+- id: signature
+  title: 'Quick Dash / Jinrai｜角色专属工具只在有理由时加'
+  stage: S3
+  subtitle: '学的是“为什么现在用”，不是背完整派生树'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Forward Step Kick spacing
+    input: 'KK > Forward Step Kick'
+    value: {startup: '8F branch', hit: '+1', block: '-4'}
+    next_loop: '命中回近身观察；被防不自动续压'
+    why: 'Year 4 更快，但风险仍然存在；把它当 spacing/read 工具。'
+    verification: verified
+    sources: [SRC03, SRC06]
+  - result: READ
+    stage: S3
+    choice: H Dragonlash推进
+    input: 'H Dragonlash'
+    value: {startup: '28F', block: '+1'}
+    next_loop: '对手尊重时才进入 strike / throw；被打断就降低频率'
+    why: '正帧结果和慢发生必须一起记。'
+    verification: verified
+    sources: [SRC03]
+  - result: READ
+    stage: S3
+    choice: Jinrai分支
+    input: 'H Jinrai > follow-up by confirmed route / opponent response'
+    value: {state: 'branch family'}
+    next_loop: '按具体 follow-up 的 hit/block 状态继续'
+    why: '不是一条万能安全字符串；每个 follow-up 独立判断。'
+    verification: conditioned
+    conditions: [followup_specific]
+    sources: [SRC03, SRC05]
+- id: super
+  title: 'SA｜最后才把已有机会换成收局资源'
+  stage: S4
+  subtitle: 'Super 不是新的 starter，只是已有 opening 的 cashout'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3稳定入口
+    input: 'KK > Dragonlash > SA3'
+    value: {sa: 3}
+    next_loop: 'Kill；未击杀则按 SA3 落点重建位置'
+    why: '当前来源给出完整输入，适合作为第一条 SA3 cashout。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: Jinrai转SA3
+    input: 'M Jinrai > HK follow-up > SA3'
+    value: {sa: 3}
+    next_loop: 'Kill；未击杀则按 SA3 落点继续'
+    why: '只有已经会 Jinrai 分支时才加入，不反过来为了 SA 背新 starter。'
+    verification: verified
+    sources: [SRC05]
+backend_only:
+- {label: '2MP CH approximate-damage route', reason: 'source damage is approximate; route/value stays backend until exact closure'}
+- {label: 'SA1 / SA2 long Quick-Dash HK branch families', reason: 'branch naming/input needs official-input normalization before learner publication'}
+- {label: 'corner H Shoryuken active-frame 5HP meaty', reason: 'source explicitly asks Training Mode verification; do not publish as universal'}
+- {label: 'corner Quick-Dash Shoryuken active-frame 5MP meaty', reason: 'exact active timing remains conditioned'}
