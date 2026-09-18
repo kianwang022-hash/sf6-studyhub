@@ -1,0 +1,111 @@
+schema_version: '1.1'
+character: sagat
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先把Tiger Shot塑造移动→继续看跳→long normal兑现→Uppercut Oki跑成整轮，再加入Tiger Knee与safe jump。'
+  score_rule: 'Rank/MR是Reality evidence，不替代fireball后反空注意力、spacing和Oki条件判断。'
+  current_ui: '不会把+42 safe jump或Tiger Knee帧表提前塞进S0。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通High Tiger Shot塑造移动→Tiger Uppercut反空/5MP抓地面→稳定+27 Oki→5MP +2打投这一整轮。'
+    add_now:
+      - 'M/H High Tiger Shot用不同速度改变推进节奏；发波后继续看跳。'
+      - '跳跃优先Tiger Uppercut。'
+      - '2LK×2→5LP→M Uppercut与5MP→2LP→M Uppercut两条基础确认。'
+      - 'H Uppercut +27→dash +4，先固定一个5MP/strike答案。'
+      - '5MP block +2只先练strike / throw两种。'
+    gate:
+      lab: '两条基础确认、主要反空、+27→dash+4和5MP+2基础选择稳定。'
+      match: '真人能出现“shot→看跳/地面→contact→Oki”；发波后不再把注意力丢掉。'
+    defer: ['2MP CDR长路线', 'Tiger Knee spacing family', '+42 safe jump', 'Tiger Nexus完整树', 'active-frame meaty', 'SA优化']
+    hub_focus: [shot, light, medium, oki]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把L Uppercut +32 DR、Nexus简单分支、target combo +38、大确反与基础throw补齐。'
+    add_now:
+      - 'L Uppercut +32→DR加入strike / throw / spacing read。'
+      - '2MP→M Tiger Nexus→Mighty Tiger只作为第一条Nexus用途。'
+      - '5MK→6HK +38先学end-state，不急着active-frame Knee。'
+      - '6HK PC有一条稳定punish。'
+      - 'forward throw +21按spacing练最简单下一轮。'
+    gate:
+      match: '主要损失不再来自漏反空、漏确认、漏大确反或基础Uppercut Oki。'
+    defer: ['完整Knee帧差树', 'OD Knee', 'Nova/Greedy高级setplay', 'safe jump']
+    hub_focus: [nexus, target, punish, oki]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MP CDR与+6 DR接触进入；route开始按位置/Oki选择，但不把不完整DI源硬塞进前台。'
+    add_now:
+      - '2MP CDR加入主循环，Hit/Block/Whiff正确分流。'
+      - 'CDR 5MP block +6形成更强strike/throw/2MK/5HK分支。'
+      - '5MK→6HK +38后H Knee active-frame只在setup稳定后加入。'
+      - '角落basic route与Nexus follow-up按独立价值加入。'
+      - 'DI简单路线如果source未闭合，明确留空而不是凭记忆补。'
+    gate:
+      match: '能解释为什么这次选Uppercut、Nexus、target combo或carry；Drive不是自动花。'
+    defer: ['+42 safe jump主线', 'OD Knee大范围优化', '高资源SA']
+    hub_focus: [cdr, target, nexus, punish]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'Tiger Knee的spacing / airborne-hit条件进入；+42 safe jump只在正确状态使用。'
+    add_now:
+      - 'L/M/H Knee分别按实际KD范围学，不背单值。'
+      - 'H Knee airborne +42→forward jump HP safe jump。'
+      - 'OD High Tiger Shot +6作为资源pressure选择。'
+      - 'Greedy +48 / Nova +62只在其Oki价值真正需要时加入。'
+      - '对手开始PP/跳/前走后动态改变shot频率和normal占位。'
+    gate:
+      behavior: '能说出Knee当前为什么是这个Oki，而不是背“+42”。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['charged H Uppercut最大punish', 'OD Knee极值', 'SA高资源树']
+    hub_focus: [knee, shot, nexus, target]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'charged Uppercut、OD Knee、SA与特定active-frame/Matchup加入，但projectile→contact基础循环不退化。'
+    add_now:
+      - 'fully charged H Uppercut与OD Knee只在高价值punish/route使用。'
+      - 'SA1/SA2/SA3按已有starter现金化。'
+      - '高资源PC/corner路线和active-frame setplay精确闭合。'
+      - '回放重点是shot频率、normal占位和Oki选择是否对，而不是fireball数量。'
+    gate:
+      behavior: '高阶优化不让发波后反空、long normal spacing和基本Oki退化。'
+      reality: '高分目标由实际目标和持续表现定义。'
+    hub_focus: [super, knee, shot, punish]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条基础Uppercut确认稳定', node: light, upgrade_evidence: 'light与5MP starter双侧稳定。'}
+    - {id: EX02, stage: S0, label: '反空Uppercut稳定', node: shot, upgrade_evidence: '发波后仍能处理典型跳跃。'}
+    - {id: EX03, stage: S3, label: '+42 safe jump条件稳定', node: knee, upgrade_evidence: '只在airborne H Knee对应状态执行。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'Tiger Shot是movement tool', node: shot, upgrade_evidence: '会观察跳/前走/parry，而不是只数发波次数。'}
+    - {id: NE02, stage: S0, label: 'shot后继续看跳', node: shot, upgrade_evidence: 'projectile不会锁死注意力。'}
+    - {id: NE03, stage: S3, label: 'shot与long normal频率动态调整', node: shot, upgrade_evidence: '对手进入5MP/5MK区时会减少机械发波。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: '5MP +2是真实选择点', node: medium, upgrade_evidence: '会在strike/throw/stop间选。'}
+    - {id: CO02, stage: S2, label: '2MP CDR按结果分流', node: cdr, upgrade_evidence: 'Hit/Block/Whiff不混淆。'}
+    - {id: CO03, stage: S3, label: 'Knee帧差带spacing/state', node: knee, upgrade_evidence: '不再说所有H Knee都+42。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'Uppercut→基础Oki闭环', node: oki, upgrade_evidence: '+27dash+4或+32DR能接下一Turn。'}
+    - {id: OF02, stage: S1, label: '+38 target / Nexus分支有明确职责', node: target, upgrade_evidence: '不是横向堆route。'}
+    - {id: OF03, stage: S3, label: '+42 safe jump回核心Loop', node: knee, upgrade_evidence: 'safe jump后继续strike/throw/read。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: '跳火球会被Uppercut', node: shot, upgrade_evidence: '对手跳跃频率改变时能提高反空注意力。'}
+    - {id: DA02, stage: S2, label: 'PP/前走改变shot cadence', node: shot, upgrade_evidence: '同一节奏被适应后会换速度或normal占位。'}
+    - {id: DA03, stage: S3, label: 'Knee spacing失效会降频', node: knee, upgrade_evidence: '不会为了更大Oki硬用错误spacing。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'shot→anti-air/contact→Uppercut Oki整轮先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '反空、确认、+2 pressure、+32DR与punish多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'CDR与route end-state结构化，不补猜DI。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；Knee条件/safe jump不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '高阶优化围绕真实空间与Oki瓶颈。'}
