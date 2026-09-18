@@ -9,7 +9,7 @@ await mkdir(SHOTS, { recursive: true });
 const chars = [
   { slug:'ryu', normals:18, learn:'623HP', ref:'Version Boundary', practical:['5MP','623HP'] },
   { slug:'jamie', normals:18, learn:'Drink Level', ref:'Bakkai', practical:['236K','63214'] },
-  { slug:'mai', normals:18, learn:'dash +9', ref:'OD Ryuuenbu block -3', practical:['j.214P','OD 236K','SA2'] },
+  { slug:'mai', normals:18, learn:'dash +9', ref:'OD 214P Ryuuenbu', practical:['j.214P','OD 236K','SA2'] },
   { slug:'zangief', normals:23, learn:'尊重', ref:'SPD 后重置', practical:['360P','SA3'] },
   { slug:'cammy', normals:18, learn:'M Spiral Arrow', ref:'Cannon Strike', practical:['SA1','SA3'] }
 ];
