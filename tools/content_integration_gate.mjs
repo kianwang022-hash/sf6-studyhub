@@ -41,7 +41,8 @@ const chars = [
   { slug:'kimberly', group:'base', normals:18, learn:['S0｜最小可玩','Shadow Slide','Bomb'], ref:['Shuriken Bomb','+42','SA3'], practical:['Shuriken Bomb','SA3'], candidate:true },
   { slug:'guile', group:'base', normals:18, learn:['S0｜最小可玩','Sonic Boom','charge'], ref:['OD Sonic Blade','+42','Solid Puncher'], practical:['OD Sonic Blade','Solid Puncher'], candidate:true },
   { slug:'deejay', group:'base', normals:18, learn:['S0｜最小可玩','Air Slasher','Jus Cool'], ref:['OD Machine Gun Uppercut','+52','Waning Moon'], practical:['Jus Cool','Sunrise Festival'], candidate:true },
-  { slug:'ehonda', group:'base', normals:18, learn:['S0｜最小可玩','Oicho','Sumo Spirit'], ref:['+42','Oicho','OD Teppo'], practical:['Oicho','Sumo Spirit'], candidate:true }
+  { slug:'ehonda', group:'base', normals:18, learn:['S0｜最小可玩','Oicho','Sumo Spirit'], ref:['+42','Oicho','OD Teppo'], practical:['Oicho','Sumo Spirit'], candidate:true },
+  { slug:'blanka', group:'base', normals:18, learn:['S0｜最小可玩','Electric Thunder','Blanka-chan Bomb'], ref:['+42','Blanka-chan Bomb','Lightning Beast'], practical:['Blanka-chan Bomb','SA2'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -278,30 +279,45 @@ for (const c of chars) {
         const stage = String(row.stage ?? '');
         const input = String(row.input ?? '');
         const conditions = JSON.stringify(row.conditions ?? []);
-        const rowText = JSON.stringify(row);
-        if (stage === 'S0') {
-          assert(!/Oicho/i.test(input), 'ehonda: Oicho input leaked into S0');
-        }
-        if (/Oicho/i.test(input)) {
-          assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'ehonda: Oicho must start after S0');
-        }
+        if (stage === 'S0') assert(!/Oicho/i.test(input), 'ehonda: Oicho input leaked into S0');
+        if (/Oicho/i.test(input)) assert(stage !== 'S0', 'ehonda: Oicho must start after S0');
         const usesPlus42 = /\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input);
-        if (usesPlus42) {
-          assert(/teppo_first_hit/i.test(conditions) || /Teppo Triple Slap first hit/i.test(input), 'ehonda: +42 lost Teppo first-hit truth');
-        }
-        if (/Sumo Spirit/i.test(input) || /Sumo Spirit/i.test(op.title ?? '')) {
-          assert(stage === 'S3' || stage === 'S4', 'ehonda: Sumo Spirit must remain S3+');
-        }
-        if (/OD Teppo/i.test(input) || /OD Teppo/i.test(op.title ?? '')) {
-          assert(stage === 'S3' || stage === 'S4', 'ehonda: OD Teppo +3 must remain S3+');
-        }
+        if (usesPlus42) assert(/teppo_first_hit/i.test(conditions) || /Teppo Triple Slap first hit/i.test(input), 'ehonda: +42 lost Teppo first-hit truth');
+        if (/Sumo Spirit/i.test(input) || /Sumo Spirit/i.test(op.title ?? '')) assert(stage === 'S3' || stage === 'S4', 'ehonda: Sumo Spirit must remain S3+');
+        if (/OD Teppo/i.test(input) || /OD Teppo/i.test(op.title ?? '')) assert(stage === 'S3' || stage === 'S4', 'ehonda: OD Teppo +3 must remain S3+');
       }
     }
     assert((practical.opportunities ?? []).some((op) => op.id === 'charge' && op.stage === 'S0'), 'ehonda: S0 charge opportunity missing');
+  }
+  if (c.slug === 'blanka') {
+    assert(/Earned corner object setplay/i.test(role?.signature_mechanic?.name ?? ''), 'blanka: corner-object signature owner missing');
+    assert(/very unsafe on block|被防很危险/i.test(JSON.stringify(role)), 'blanka: Rolling blocked-risk truth missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        const bombUse = /Blanka-chan Bomb|Bomb setup|Bomb placed/i.test(input) || /Bomb/i.test(op.title ?? '');
+        if (bombUse) {
+          assert(stage === 'S2' || stage === 'S3' || stage === 'S4', 'blanka: Bomb must not enter S0/S1');
+          assert(/corner/i.test(conditions) || /corner/i.test(rowText), 'blanka: Bomb row lost corner truth');
+          assert(/bomb_placed|activation_timing|setup/i.test(conditions) || /activation|setup/i.test(rowText), 'blanka: Bomb row lost placement/activation truth');
+        }
+        const usesPlus42 = /\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input);
+        if (usesPlus42 && /Vertical Rolling/i.test(input + ' ' + String(op.title ?? ''))) {
+          assert(/vertical_rolling_exact_state/i.test(conditions) || /exact/i.test(input), 'blanka: +42 Vertical Rolling lost exact-state truth');
+        }
+        if (/Lightning Beast|SA2/i.test(input) || /Lightning Beast|SA2/i.test(op.title ?? '')) {
+          assert(stage === 'S4', 'blanka: Lightning Beast must remain S4');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'charge' && op.stage === 'S0'), 'blanka: S0 charge opportunity missing');
   }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 13 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 14 content candidates | Learn + Role + Practical + Reference + resolved source registries');

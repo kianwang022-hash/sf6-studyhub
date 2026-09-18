@@ -1,0 +1,112 @@
+schema_version: '1.1'
+character: blanka
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让Thunder+39与charge basics成立，再加+42和throw，Bomb只在corner基础稳定后进入，SA2最后。'
+  score_rule: 'Rank/MR是Reality evidence，不替代charge、Bomb timing、corner与safe-jump条件判断。'
+  current_ui: 'Bomb不进S0/S1必修；Lightning Beast固定S4。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通light/4MK/2MP→Electric Thunder +39，保留Rolling/Vertical charge，并能做基础anti-air。'
+    add_now:
+      - '5LK→2LP→Electric Thunder。'
+      - '2LK→2LP→Electric Thunder。'
+      - '4MK +2→5MK→Thunder。'
+      - '2MP→Thunder；有charge时可切M Rolling damage。'
+      - 'Vertical Rolling负责charge anti-air/ender。'
+    gate:
+      lab: 'Thunder确认、4MK接触、charge Rolling与anti-air稳定。'
+      match: '不靠Bomb也能完整跑ground→knockdown→Oki。'
+    defer: ['Bomb', 'OD Thunder high-low', 'advanced Hop/Backstep', 'Lightning Beast']
+    hub_focus: [charge, light, wild_edge, medium]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '+39 Oki、+42 safe jump、forward throw与基础punish稳定；仍不要求Bomb。'
+    add_now:
+      - 'Thunder +39 dash/two-dash/Hop Oki。'
+      - 'M Vertical +42 safe jump。'
+      - 'forward throw +30→Hop +3。'
+      - 'Amazon River Run基础grounded/airborne Oki。'
+      - '稳定reversal punish。'
+    gate:
+      match: '主要损失不再来自漏confirm、漏anti-air、+42条件错误或基本Oki。'
+    defer: ['Bomb主线', 'OD Thunder高低', 'SA2']
+    hub_focus: [safe_jump, throw, medium]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: 'CDR与第一层Bomb进入；理解“corner先赢到，Bomb后放大”。'
+    add_now:
+      - '2MP CDR damage/Oki分流。'
+      - 'corner Wild Lift→Bomb placement。'
+      - 'Bomb + OD Thunder block +4。'
+      - 'OD Thunder overhead / low / throw第一层。'
+      - 'DI/corner routes按位置加入。'
+    gate:
+      match: 'Bomb只在有corner/setup时出现；能说出object何时被激活。'
+    defer: ['深Bomb树', 'OD Wild Hunt', 'Lightning Beast']
+    hub_focus: [drive, bomb, throw]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '更深Bomb、Hop/Backstep/Wild Hunt与active-frame加入，但每条都有明确读法或Oki价值。'
+    add_now:
+      - 'OD Wild Hunt +64。'
+      - 'selected Backstep Rolling setup。'
+      - 'Bomb activation / Perfect Parry read。'
+      - 'Amazon grounded/airborne状态分流。'
+      - 'SA3 +50 selected Oki。'
+    gate:
+      behavior: 'movement/object层失败会回Thunder基础，不机械堆花活。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['Lightning Beast完整系统']
+    hub_focus: [advanced, bomb, safe_jump]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'Lightning Beast、Rolling Cannon、高资源Bomb/SA与matchup-specific mobility进入。'
+    add_now:
+      - 'SA2 Lightning Beast install。'
+      - 'Rolling Cannon hit/block follow-ups。'
+      - 'SA2 corner Bomb路线。'
+      - 'SA1/SA3 cashout。'
+      - 'matchup-specific Hop/Roll/Bomb timing。'
+    gate:
+      behavior: 'install/object系统不让基础Thunder/charge/corner判断退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, bomb, advanced]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'Thunder基础确认稳定', node: light, upgrade_evidence: 'light/4MK/2MP starter都稳定。'}
+    - {id: EX02, stage: S0, label: 'Rolling/Vertical charge稳定', node: charge, upgrade_evidence: '有charge才提交对应special。'}
+    - {id: EX03, stage: S2, label: 'Bomb placement/activation稳定', node: bomb, upgrade_evidence: 'corner/setup时序正确。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'Rolling不是neutral autopilot', node: charge, upgrade_evidence: '被防风险会限制频率。'}
+    - {id: NE02, stage: S0, label: '4MK +2但会管理whiff', node: wild_edge, upgrade_evidence: 'Year4 recovery变大后不机械挥。'}
+    - {id: NE03, stage: S3, label: 'Hop/Backstep有明确目的', node: advanced, upgrade_evidence: '复杂movement被针对会降频。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'Thunder vs Rolling按end-state选', node: medium, upgrade_evidence: 'Oki与damage/travel分工清楚。'}
+    - {id: CO02, stage: S2, label: 'Bomb只在earned corner', node: bomb, upgrade_evidence: '不会空放对象。'}
+    - {id: CO03, stage: S4, label: 'Lightning Beast状态判断正确', node: super, upgrade_evidence: 'Rolling Cannon只在install状态使用。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'Thunder +39闭环', node: light, upgrade_evidence: '击倒后能接下一Turn。'}
+    - {id: OF02, stage: S2, label: 'Bomb + body mix闭环', node: bomb, upgrade_evidence: '对象与本体时间轴都能处理。'}
+    - {id: OF03, stage: S4, label: 'Lightning Beast回核心Loop', node: super, upgrade_evidence: 'install结束/消耗后仍回基础。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '对手PP/反跳会调整Thunder/Roll', node: safe_jump, upgrade_evidence: '不会机械重复。'}
+    - {id: DA02, stage: S2, label: 'Bomb被PP/反转会调激活时机', node: bomb, upgrade_evidence: '会延迟/换本体选择。'}
+    - {id: DA03, stage: S4, label: 'Lightning Beast按资源/局面使用', node: super, upgrade_evidence: '不会机械install。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'Thunder+39/charge basics先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '+42/throw/basic Oki多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'CDR/Bomb/OD Thunder结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；advanced movement/object不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'Lightning Beast围绕真实高分瓶颈。'}
