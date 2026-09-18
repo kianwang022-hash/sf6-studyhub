@@ -1,6 +1,6 @@
 # SF6 Gold Page Rollout Status
 
-Status date: 2026-09-17  
+Status date: 2026-09-19  
 Canonical repo: `kianwang022-hash/sf6-studyhub`  
 Authority: `CHARACTER_PAGE_GOLD_CONTRACT.md` + `BATCH_SOURCE_CLOSURE_RUNBOOK.md` + `CHARACTER_UNDERSTANDING_CONTRACT.md` + `CHARACTER_MODEL_DEPTH_CONTRACT.md` + `LEARNER_TERMINOLOGY_CONTRACT.md`
 
@@ -42,7 +42,7 @@ Judgment states:
 | year2 | Elena | `CONTENT_READY` |
 | year3 | Sagat | `CONTENT_READY` |
 | year3 | C. Viper | `SOURCE_CLOSURE_PENDING` |
-| year3 | Alex | `SOURCE_CLOSURE_PENDING` |
+| year3 | Alex | `CONTENT_READY` |
 | year3 | Ingrid | `SOURCE_CLOSURE_PENDING` |
 | year4 | Yasmine | `CONTENT_READY` |
 
@@ -50,7 +50,7 @@ Judgment states:
 
 Five characters now render through the canonical Astro runtime:
 
-Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, and Yasmine, and Rashid, and Kimberly, and Guile, and Dee Jay, and E. Honda, and Blanka, and M. Bison, and Marisa, and Lily, and Manon are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, and Alex are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
@@ -116,4 +116,4 @@ After repository Pages is enabled with **Source = GitHub Actions**, the existing
 
 ## Next roster rule
 
-The remaining 26 characters do not inherit the five current pages by templating their gameplay. They inherit only the production/runtime quality bar. Character order and transfer assumptions are owned by `CHARACTER_SKILL_TRANSFER_MAP.md`.
+Seven characters remain `SOURCE_CLOSURE_PENDING`: Chun-Li, Dhalsim, JP, A.K.I., Ed, C. Viper, and Ingrid. They do not inherit existing pages by templating their gameplay; they inherit only the production/runtime quality bar. Character order and transfer assumptions are owned by `CHARACTER_SKILL_TRANSFER_MAP.md`.
