@@ -1,0 +1,386 @@
+schema_version: '1.0'
+character: aki
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT, READ]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 = apply poison through stable H Lash +44 and run ordinary Oki. First poison-burst conversion S1; corner puddle/Year4 block-poison S2; exact active/safe-jump/high-budget states S3.'
+stages:
+  S0: {label: 最小可玩, short: 'Apply poison / H Lash +44 / basic Oki'}
+  S1: {label: 基本功成型, short: 'First burst / +40 / DR pressure'}
+  S2: {label: 实战结构化, short: 'Poison + position / puddle / Year4 entries'}
+  S3: {label: 选择成熟, short: 'Exact setplay / OD burst / safe jump'}
+  S4: {label: 高分上探, short: 'SA2 field / lethal / matchup poison cadence'}
+shared_packages:
+  LASH44:
+    label: 'Ordinary H Serpent Lash +44'
+    sequence: 'confirmed unpoisoned route -> H Serpent Lash -> +44'
+    next: 'two forward dashes -> about +6 -> 2MK / 5HK / throw / shimmy'
+    verification: conditioned
+    conditions: [ordinary_h_lash_end_state]
+    sources: [SRC05]
+  POISON_FEEDBACK:
+    label: 'Poison state changes route value'
+    sequence: 'opponent poisoned -> qualifying Lash/Qiong Qi hit -> poison burst'
+    next: 'choose extension / carry / Oki / corner puddle'
+    verification: conditioned
+    conditions: [opponent_poisoned]
+    sources: [SRC05]
+  WREATH40:
+    label: 'Toxic Wreath +40'
+    sequence: 'Toxic Wreath hit -> +40'
+    next: 'DR strike / low / overhead / throw / shimmy'
+    verification: conditioned
+    conditions: [toxic_wreath_end_state]
+    sources: [SRC05]
+  PUDDLE38:
+    label: 'Corner Orchid Spring puddle +38'
+    sequence: 'corner poison-burst route -> Venomous Fang -> Orchid Spring'
+    next: 'DR strike / low / overhead / throw / shimmy; punish escape'
+    verification: conditioned
+    conditions: [corner, orchid_spring_puddle_setup]
+    sources: [SRC05]
+  ACTIVE18:
+    label: 'Exact +18 -> 6HP active meaty'
+    sequence: 'owned predecessor state -> normalize to +18 -> 6HP active meaty'
+    next: 'Hit +6 / Block 0 family -> 5MP on hit'
+    verification: conditioned
+    conditions: [exact_plus18_setup, active_frame_timing]
+    sources: [SRC05]
+  CRUEL42:
+    label: 'OD Cruel Fate hit/block split'
+    sequence: 'OD Cruel Fate'
+    next: 'hit +42 -> jump-in; block +2 -> low / throw / delayed strike'
+    verification: conditioned
+    conditions: [od_cruel_fate_state]
+    sources: [SRC03, SRC05]
+  CHASER_POISON:
+    label: 'OD Nightshade Chaser block-poison'
+    sequence: 'OD Nightshade Pulse -> Nightshade Chaser blocked'
+    next: 'opponent poisoned -> move them with Lash / 5MK / anti-air / whiff punish'
+    verification: conditioned
+    conditions: [ordinary_block, not_drive_parry]
+    sources: [SRC05]
+opportunities:
+- id: low
+  title: 'Low｜S0稳定上毒+44'
+  stage: S0
+  subtitle: '第一层只建立状态，不背毒爆树'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '2LK > 2LP > 2LP > H Serpent Lash'
+    value: {poison_state: 'applied/established', kd: '+44'}
+    next_loop_package: LASH44
+    why: '用最低复杂度低段confirm进入A.K.I.真正的基础循环。'
+    verification: conditioned
+    conditions: [confirmed_hit, opponent_unpoisoned, ordinary_h_lash_end_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '2LK block -> 2LP check / stop'
+    value: {poison_state: 'unchanged'}
+    next_loop: '回5MK / 5MP / spacing'
+    why: 'H Lash被防-20，没确认绝不提交。'
+    verification: verified
+    sources: [SRC03]
+- id: medium
+  title: '5MK｜S0普通中距离确认'
+  stage: S0
+  subtitle: '第二条稳定上毒路线'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '5MK > 5MP > H Serpent Lash'
+    value: {poison_state: 'applied/established', kd: '+44'}
+    next_loop_package: LASH44
+    why: '把中距离contact也收回同一个+44循环，不制造第二套入门逻辑。'
+    verification: conditioned
+    conditions: [confirmed_hit, opponent_unpoisoned, ordinary_h_lash_end_state]
+    sources: [SRC05]
+- id: oki44
+  title: 'H Lash +44｜S0先把正常起攻跑熟'
+  stage: S0
+  subtitle: 'two dash后约+6'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Low
+    input: 'H Serpent Lash ordinary hit +44 -> forward dash x2 -> 2MK'
+    value: {frame: 'about +6 after two dashes'}
+    next_loop: 'hit -> state check; block +1 -> pressure / reset'
+    why: '最直接低段，先把+44变成可重复的正常回合。'
+    verification: conditioned
+    conditions: [ordinary_h_lash_end_state]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Strike
+    input: 'H Serpent Lash ordinary hit +44 -> forward dash x2 -> 5HK'
+    value: {frame: 'about +6 after two dashes'}
+    next_loop: 'hit confirm / block pressure / shimmy adaptation'
+    why: '对手爱按时用strike制造respect。'
+    verification: conditioned
+    conditions: [ordinary_h_lash_end_state]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Throw
+    input: 'H Serpent Lash ordinary hit +44 -> forward dash x2 -> slight delay throw'
+    value: {frame: 'about +6 after two dashes'}
+    next_loop: 'throw-tech/jump response -> shimmy/anti-air next time'
+    why: '资料明确提示最速throw会略早，因此保留slight-delay语义。'
+    verification: conditioned
+    conditions: [ordinary_h_lash_end_state, throw_timing]
+    sources: [SRC05]
+- id: anti_air
+  title: 'Anti-air｜S0只把跳压回地面'
+  stage: S0
+  subtitle: '先不做poison-burst anti-air extension'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Anti-air
+    input: 'opponent jump -> H Serpent Lash'
+    value: {poison_state: 'apply or burst depends on target'}
+    next_loop: 'check poison state -> stable Oki / later burst route'
+    why: 'H Lash既是招牌anti-air也是状态工具；S0不要求高伤延伸。'
+    verification: conditioned
+    conditions: [anti_air_hit, poison_state_check]
+    sources: [SRC05]
+- id: first_burst
+  title: 'Poisoned target｜S1第一次正式利用毒爆'
+  stage: S1
+  subtitle: '同一个opening因为状态而变质'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: M Lash burst
+    input: 'opponent poisoned -> M Serpent Lash poison burst -> 5HK > Heel Strike > L Serpent Lash'
+    value: {poison_burst: true, kd: '+69 family'}
+    next_loop: 'route/position decision -> reapply poison later'
+    why: '第一条明确展示“毒不是DOT，而是改变route”的路线。'
+    verification: conditioned
+    conditions: [opponent_poisoned, m_lash_burst_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: H Lash burst loop
+    input: 'opponent poisoned -> light confirm > H Serpent Lash burst > DR 2MP > H Serpent Lash'
+    value: {poison_burst: true, first_kd: '+53', final_kd: '+44'}
+    next_loop_package: LASH44
+    why: 'burst后仍能回到熟悉的+44循环，降低状态复杂度。'
+    verification: conditioned
+    conditions: [opponent_poisoned, h_lash_burst_state, drive_resource]
+    sources: [SRC05]
+- id: wreath
+  title: 'Toxic Wreath｜S1增加一个+40结果'
+  stage: S1
+  subtitle: '不用每次都走Lash'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Wreath
+    input: '5MP > Toxic Wreath'
+    value: {kd: '+40'}
+    next_loop_package: WREATH40
+    why: '提供另一种稳定knockdown owner，而不是增加无意义combo数量。'
+    verification: conditioned
+    conditions: [confirmed_hit, toxic_wreath_end_state]
+    sources: [SRC05]
+- id: dr_pressure
+  title: 'Drive Rush｜S1把+44打开成低/中/投'
+  stage: S1
+  subtitle: '用已有Oki扩展，不另造身份'
+  rows:
+  - result: READ
+    stage: S1
+    choice: Low
+    input: 'H Serpent Lash +44 -> Drive Rush > 2MK'
+    value: {drive: 1, frame: 'DR 2MK block +5'}
+    next_loop: '5HK / throw / shimmy by response'
+    why: '最强plus低段之一，但仍从+44 owner出发。'
+    verification: conditioned
+    conditions: [ordinary_h_lash_end_state, drive_resource]
+    sources: [SRC05]
+  - result: READ
+    stage: S1
+    choice: Overhead
+    input: 'H Serpent Lash +44 -> Drive Rush > 3MP'
+    value: {drive: 1, frame: 'DR 3MP block +2'}
+    next_loop: '5MP / throw / reset'
+    why: '对手固定蹲防时再加入overhead。'
+    verification: conditioned
+    conditions: [ordinary_h_lash_end_state, drive_resource]
+    sources: [SRC05]
+- id: puddle
+  title: 'Corner puddle｜S2才把毒变成位置setplay'
+  stage: S2
+  subtitle: '先burst运角，再投资Orchid Spring'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Puddle setup
+    input: 'corner opponent poisoned -> M Serpent Lash burst > 5HK > Toxic Wreath > DR 5HK > Venomous Fang > Orchid Spring'
+    value: {poison_burst: true, field: 'Orchid Spring', frame: 'about +38'}
+    next_loop_package: PUDDLE38
+    why: '毒的第二层价值是把一次burst换成角落field，而不是只追伤害。'
+    verification: conditioned
+    conditions: [corner, opponent_poisoned, orchid_spring_puddle_setup, drive_resource]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Punish escape
+    input: 'corner Orchid Spring active -> observe jump / forward walk / invincible reversal'
+    value: {field: 'active'}
+    next_loop: 'anti-air / 5MK check / whiff punish / block reversal'
+    why: 'puddle价值来自改变对手移动，不只是持续伤害。'
+    verification: conditioned
+    conditions: [corner, orchid_spring_puddle_setup]
+    sources: [SRC05]
+- id: year4_poison
+  title: 'OD Chaser｜S2加入Year4 block-poison'
+  stage: S2
+  subtitle: '普通block可上毒，Parry例外'
+  rows:
+  - result: BLOCK
+    stage: S2
+    choice: Poison on guard
+    input: 'OD Nightshade Pulse > Nightshade Chaser blocked normally'
+    value: {drive: 2, poison_state: 'opponent poisoned'}
+    next_loop_package: CHASER_POISON
+    why: 'Year4新增状态入口；目的不是贴身强压，而是迫使对手带着毒移动。'
+    verification: conditioned
+    conditions: [ordinary_block, not_drive_parry]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Parry exception
+    input: 'OD Nightshade Pulse > Nightshade Chaser is Drive Parried'
+    value: {poison_state: 'not applied by block-poison rule'}
+    next_loop: 'reset spacing / punish Parry behavior later'
+    why: '把例外写进主线，避免“被防就一定上毒”的错误模型。'
+    verification: conditioned
+    conditions: [drive_parry]
+    sources: [SRC05]
+- id: qiongqi
+  title: 'Qiong Qi｜S2学同一TC的毒状态差'
+  stage: S2
+  subtitle: 'unpoisoned +34 vs poisoned +54'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Unpoisoned
+    input: 'opponent unpoisoned -> 5HP > HP Qiong Qi'
+    value: {kd: 'about +34', poison_burst: false}
+    next_loop: 'ordinary Oki / position'
+    why: 'Year4让无毒版本也有明确route价值。'
+    verification: conditioned
+    conditions: [opponent_unpoisoned, qiong_qi_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Poisoned
+    input: 'opponent poisoned -> 5HP > HP Qiong Qi poison burst'
+    value: {kd: 'about +54', poison_burst: true}
+    next_loop: 'M Serpent Lash / DR extension / corner carry'
+    why: '同一TC因poison state重新定价。'
+    verification: conditioned
+    conditions: [opponent_poisoned, qiong_qi_burst_state]
+    sources: [SRC05]
+- id: exact_setplay
+  title: '+18 → 6HP｜S3才学active-frame owner'
+  stage: S3
+  subtitle: '只从声明前置state进入'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Active meaty
+    input: 'H Serpent Lash +44 -> 2LK whiff x2 -> exact +18 -> 6HP active meaty'
+    value: {frame: 'about Hit +6 / Block 0 family'}
+    next_loop_package: ACTIVE18
+    why: 'Year4延长6HP active frames后有价值，但必须保留+18来源。'
+    verification: conditioned
+    conditions: [ordinary_h_lash_end_state, exact_plus18_setup, active_frame_timing]
+    sources: [SRC05]
+- id: cruel
+  title: 'OD Cruel Fate｜S3区分hit +42 / block +2'
+  stage: S3
+  subtitle: '同一招两种完全不同后续'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Hit
+    input: 'OD Cruel Fate hit'
+    value: {drive: 2, kd: '+42'}
+    next_loop_package: CRUEL42
+    why: '命中给大Oki budget，适合jump-in。'
+    verification: conditioned
+    conditions: [od_cruel_fate_hit_state]
+    sources: [SRC03, SRC05]
+  - result: BLOCK
+    stage: S3
+    choice: Block
+    input: 'OD Cruel Fate block'
+    value: {drive: 2, frame: '+2'}
+    next_loop: '2LK / throw / delayed 2MK / 5HK'
+    why: 'block只给plus pressure，不能套用+42。'
+    verification: conditioned
+    conditions: [od_cruel_fate_block_state]
+    sources: [SRC03, SRC05]
+- id: od_burst
+  title: 'OD Lash｜S3高预算poison burst'
+  stage: S3
+  subtitle: '只有已中毒才有+71'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Burst
+    input: 'opponent poisoned -> 2MP > OD Serpent Lash poison burst > 5LK > M Serpent Lash'
+    value: {drive: 2, poison_burst: true, kd: '+71 family'}
+    next_loop: 'carry / high-resource route / position decision'
+    why: '用Drive换最大的poison conversion budget；不是S1必学。'
+    verification: conditioned
+    conditions: [opponent_poisoned, od_lash_burst_state, drive_resource]
+    sources: [SRC05]
+- id: super
+  title: 'Super｜S4才把poison field升级到SA'
+  stage: S4
+  subtitle: '高级状态放大，不改变S0循环'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA2 field
+    input: 'confirmed route -> SA2 Tainted Talons'
+    value: {sa: 2, kd: '+30', field: 'persistent poison puddle'}
+    next_loop: 'strike / throw / overhead while opponent remains in field'
+    why: 'SA2是poison-field高级版本，只有普通puddle与state判断成熟后才值得学。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource]
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: SA3 lethal
+    input: 'confirmed poison-burst route -> SA3 Claws of Ya Zi'
+    value: {sa: 3, damage: '4000 base super value'}
+    next_loop: 'round-state / lethal'
+    why: '只在已确认opening与伤害阈值值得时cashout。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource]
+    sources: [SRC03, SRC05]
+backend_only:
+- {label: 'full poisoned/unpoisoned route matrix in S0', reason: 'state overload before base +44 loop'}
+- {label: 'generic Lash +69/+53/+71', reason: 'poison state required'}
+- {label: 'raw H Serpent Lash pressure', reason: 'Block -20'}
+- {label: 'generic puddle +38', reason: 'corner exact route required'}
+- {label: 'generic +18 6HP meaty', reason: 'predecessor state required'}
+- {label: 'OD Chaser always poisons on block', reason: 'Drive Parry exception'}
