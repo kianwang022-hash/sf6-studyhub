@@ -36,7 +36,8 @@ const chars = [
   { slug:'sagat', group:'year3', normals:18, learn:['S0｜最小可玩','High Tiger Shot','+42 safe jump'], ref:['+32','+42','Tiger Knee Crush'], practical:['High Tiger Shot','SA2'], candidate:true },
   { slug:'juri', group:'base', normals:18, learn:['S0｜最小可玩','M Fuhajin','stock +1'], ref:['Feng Shui Engine','Boosted Saihasho','stock'], practical:['Go Ohsatsu','Feng Shui Engine'], candidate:true },
   { slug:'elena', group:'year2', normals:18, learn:['S0｜最小可玩','Lynx Song','Healing'], ref:['+42','Revival Dance','Healing variation'], practical:['Lynx Song','SA2 Healing'], candidate:true },
-  { slug:'yasmine', group:'year4', normals:18, learn:['S0｜最小可玩','Bayani','Boosted Alon'], ref:['Bayani','Boosted Alon','Nakatagong Lakas'], practical:['Boosted Alon','SA2'], candidate:true }
+  { slug:'yasmine', group:'year4', normals:18, learn:['S0｜最小可玩','Bayani','Boosted Alon'], ref:['Bayani','Boosted Alon','Nakatagong Lakas'], practical:['Boosted Alon','SA2'], candidate:true },
+  { slug:'rashid', group:'year1', normals:18, learn:['S0｜最小可玩','M Spinning Mixer','Air Current'], ref:['+31','+42','Ysaar'], practical:['Air Current','Ysaar'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -155,9 +156,35 @@ for (const c of chars) {
       }
     }
   }
+  if (c.slug === 'rashid') {
+    assert(/Air Current/i.test(role?.signature_mechanic?.name ?? ''), 'rashid: Air Current signature owner missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        if (stage === 'S0') {
+          assert(!/Air Current Boosted|Boosted .*Mixer|Boosted .*Eagle/i.test(input), 'rashid: Boosted Air Current route leaked into S0');
+        }
+        if (/Boosted/i.test(input)) {
+          assert(/air_current/i.test(conditions) || /Air Current/i.test(input), 'rashid: Boosted route missing Air Current condition');
+        }
+        if (/Eagle Spike/i.test(input)) {
+          assert(/spacing/i.test(rowText), 'rashid: Eagle Spike learner row lost spacing truth');
+        }
+        if (/\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input)) {
+          if (/Mixer/i.test(input)) assert(/air_current/i.test(conditions) || /Air Current/i.test(input), 'rashid: +42 Mixer lost Air Current condition');
+        }
+        if (/Ysaar|SA2/i.test(input) || /Ysaar|SA2/i.test(op.title ?? '')) {
+          assert(stage === 'S4', 'rashid: Ysaar must remain S4');
+        }
+      }
+    }
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 8 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 9 content candidates | Learn + Role + Practical + Reference + resolved source registries');
