@@ -8,14 +8,6 @@ role_profile:
     win_pattern: 'safe Wind window -> gain Windclad -> Windclad Spire plus entry -> strike creates respect -> Mexican Typhoon -> opponent jumps/backwalks -> strike/anti-air/safe jump gets stronger -> rebuild stock when worth it。'
     lose_pattern: '机械攒满3层、没Windclad也把Spire当安全进场、有stock就立刻花、plus entry第一拍总Typhoon、把+52泛化到所有Spire。'
   character_model:
-    essence_short: 'Lily的核心不是command grab本身，而是先投资Windclad，把高风险Spire改造成正帧进场；这份plus entry建立respect以后，Mexican Typhoon才值钱。'
-    essence_detail: 'Windclad不是有空就越多越好的库存。Condor Wind要付出明显时间窗口才能拿1/2/3层，而normal Condor Spire被防是-8。Windclad存在以后，同一个Spire会变成block +1，OD版+2，同时命中后的Oki从普通+33/+37提升到+47/+49/+52/+56。Current setplay把Windclad H Spire两dash后的状态推进到+10，接着才是strike与Mexican Typhoon的选择。因此Lily真正的第一层决策是“现在是否值得放弃当前节奏去投资Windclad”；第二层才是“有stock以后，这次opening是否值得花掉”；第三层才是“plus entry让对手站防以后，Mexican Typhoon是否值得猜”。成熟Lily不是机械攒满，也不是plus后一律command grab，而是让资源投资、进场和respect形成一条完整因果链。'
-    force_opponent_to:
-    - '尊重Windclad Condor Spire的正帧进场。'
-    - 'Windclad H Spire后处理两dash约+10的strike/throw状态。'
-    - '越愿意站防，Mexican Typhoon越可信。'
-    - '为了躲Typhoon跳/后退后，strike、anti-air和safe jump重新变强。'
-  character_model:
     essence_short: 'Lily先投资Windclad，再把资源换成正帧Spire进场；plus entry建立respect后，Mexican Typhoon才进入高收益猜拳。'
     essence_detail: 'Windclad的真正价值是改写Condor Spire的风险结构：normal Spire被防-8，Windclad L/M/H变成+1，OD变成+2，同时命中后的Oki上升到+47/+49/+52/+56。资源本身要用Condor Wind的长动作去换，因此并不是越多越好。Lily的基础循环应该先学一层Windclad和一次强化Spire，让学习者亲眼看到同一进场从危险变成正帧；等对手开始尊重这次正帧进场，5F Mexican Typhoon才真正成为command-grab回报。'
     force_opponent_to:
