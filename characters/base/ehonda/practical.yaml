@@ -1,0 +1,254 @@
+schema_version: '1.0'
+character: ehonda
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 uses charge + Hands/Dash/Smash and strike-first Oki. Oicho begins S1 after respect. +42 S2; Spirit/OD pressure S3.'
+stages:
+  S0: {label: 最小可玩, short: 'Charge / Hands / Smash'}
+  S1: {label: 基本功成型, short: 'Respect -> Oicho'}
+  S2: {label: 实战结构化, short: 'CDR / +42 / Taiho'}
+  S3: {label: 选择成熟, short: 'Spirit / OD Teppo / +40'}
+  S4: {label: 高分上探, short: 'SA / High Resource / Matchup'}
+shared_packages:
+  SMASH23:
+    label: 'Sumo Smash +23'
+    sequence: 'Sumo Smash grounded hit -> +23'
+    next: '2LP whiff -> +7 OR dash 19F -> +4'
+    verification: verified
+    sources: [SRC05]
+  OICHO_LOOP:
+    label: 'Strike -> respect -> Oicho'
+    sequence: 'meaty strike -> opponent blocks -> Oicho Throw'
+    next: 'if opponent jumps/backwalks, strike/shimmy becomes stronger'
+    verification: verified
+    sources: [SRC05]
+  TEPPO42:
+    label: 'Teppo first-hit +42'
+    sequence: 'Sumo Dash > Teppo Triple Slap first hit -> +42'
+    next: 'immediate forward jump attack safe jump'
+    verification: conditioned
+    conditions: [teppo_first_hit]
+    sources: [SRC05]
+  SPIRIT_HANDS:
+    label: 'Sumo Spirit Hands pressure'
+    sequence: 'Sumo Spirit active -> Hundred Hand Slap'
+    next: 'L block 0 / OD block +1 -> strike / Oicho / spacing'
+    verification: conditioned
+    conditions: [sumo_spirit_state]
+    sources: [SRC03, SRC05]
+opportunities:
+- id: charge
+  title: 'Charge｜Headbutt/Smash资格在后台存'
+  stage: S0
+  subtitle: '不是蓄好就马上用'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Preserve
+    input: 'hold back/down-back during defense and compatible normals'
+    value: {state: 'Headbutt / Smash charge available'}
+    next_loop: 'use special only when spacing/read is worth it'
+    why: 'charge是资格，不是自动出招命令。'
+    verification: verified
+    sources: [SRC00]
+- id: light
+  title: 'Light｜先用Hands跑稳定回合'
+  stage: S0
+  subtitle: '不需要每次都charge ender'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Default
+    input: '2LP > 2LP > L Hundred Hand Slap'
+    value: {drive: 0}
+    next_loop: 'rebuild charge / 5MP spacing / simple pressure'
+    why: '第一条低负担Honda confirm。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Charge ender
+    input: '2LP > 2LP > H Sumo Smash'
+    value: {kd: '+23'}
+    next_loop_package: SMASH23
+    why: '有down charge时把小命中换成更清楚Oki。'
+    verification: conditioned
+    conditions: [down_charge_ready]
+    sources: [SRC05]
+- id: ground
+  title: '5MP / Sumo Dash｜S0角色路线hub'
+  stage: S0
+  subtitle: '先学Teppo路线，不急着全部分支'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: 5MP +1
+    input: '5MP block (+1) -> 2LP / throw / stop'
+    value: {frame: '+1'}
+    next_loop: '先建立普通respect'
+    why: 'Oicho之前先让对手学会尊重普通strike。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S0
+    choice: Teppo basic
+    input: '5MP > Sumo Dash > Teppo Triple Slap'
+    value: {state: 'Dash route'}
+    next_loop: 'position/Oki read; +42 first-hit setplay deferred'
+    why: 'Year4基础route，先理解Dash是contact转换hub。'
+    verification: verified
+    sources: [SRC05]
+- id: smash
+  title: 'Sumo Smash｜S0先strike，S1才Oicho'
+  stage: S0
+  subtitle: '先制造respect'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Strike first
+    input: 'H Sumo Smash grounded hit -> +23 -> forward dash'
+    value: {frame: '+4'}
+    next_loop: '2LP / 5MP / block'
+    why: '先让对手习惯必须防meaty/strike。'
+    verification: conditioned
+    conditions: [down_charge_ready, grounded_hit]
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Oicho after respect
+    input: 'Sumo Smash +23 -> dash +4 -> H Oicho Throw'
+    value: {state: 'command-grab read'}
+    next_loop_package: OICHO_LOOP
+    why: '只有对手开始站防strike后，Oicho才变成高价值答案。'
+    verification: conditioned
+    conditions: [opponent_respect]
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Shimmy/read
+    input: 'Sumo Smash +23 -> 2LP whiff -> 5HK / walk-back'
+    value: {frame: '+7 after whiff'}
+    next_loop: 'punish jump/tech / reset'
+    why: '对手为了躲Oicho开始跳/tech后，strike/shimmy反过来变强。'
+    verification: verified
+    sources: [SRC05]
+- id: punish
+  title: '6HK PC｜大机会直接接回+4猜拳'
+  stage: S1
+  subtitle: 'punish也服务respect loop'
+  rows:
+  - result: PC
+    stage: S1
+    choice: Headbutt
+    input: '6HK (PC) > M Sumo Headbutt > forward dash'
+    value: {frame: '+4'}
+    next_loop: 'strike first / later Oicho'
+    why: '大确反后重新进入同一strike-vs-command-grab逻辑。'
+    verification: conditioned
+    conditions: [back_charge_ready]
+    sources: [SRC05]
+- id: drive
+  title: '5MP CDR｜S2才把Taiho加入主线'
+  stage: S2
+  subtitle: '高资源换launcher/Oki'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Taiho
+    input: '5MP > CDR > 5MP > 5HP > Sumo Dash > Taiho Cannon Lift'
+    value: {drive: 3, kd: '+64 forward state'}
+    next_loop: 'Sumo Smash / corner route / position-specific Oki'
+    why: 'S2开始按end-state选Teppo还是Taiho。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Smash Oki
+    input: '5MP > CDR > 5MP > 5HP > Taiho Cannon Lift > H Sumo Smash'
+    value: {drive: 3, kd: '+23'}
+    next_loop_package: SMASH23
+    why: '需要简单command-grab loop时把launcher收回熟悉+23。'
+    verification: verified
+    sources: [SRC05]
+- id: safe_jump
+  title: '+42｜Teppo first hit才进入safe jump'
+  stage: S2
+  subtitle: '不把+42泛化到所有Honda击倒'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Safe Jump
+    input: 'Sumo Dash > Teppo Triple Slap first hit -> +42 -> immediate forward jump attack'
+    value: {kd: '+42'}
+    next_loop_package: TEPPO42
+    why: '只有exact first-hit state才当safe-jump入口。'
+    verification: conditioned
+    conditions: [teppo_first_hit]
+    sources: [SRC05]
+- id: spirit
+  title: 'Sumo Spirit｜S3才升级Hands'
+  stage: S3
+  subtitle: '52F启动不是免费'
+  rows:
+  - result: ACTIVE
+    stage: S3
+    choice: L Hands 0
+    input: 'Sumo Spirit active -> L Hundred Hand Slap block'
+    value: {frame: '0'}
+    next_loop_package: SPIRIT_HANDS
+    why: '只有Spirit状态下才把L Hands安全性升级。'
+    verification: conditioned
+    conditions: [sumo_spirit_state]
+    sources: [SRC03]
+  - result: ACTIVE
+    stage: S3
+    choice: OD Hands +1
+    input: 'Sumo Spirit active -> OD Hundred Hand Slap block'
+    value: {drive: 2, frame: '+1'}
+    next_loop_package: SPIRIT_HANDS
+    why: '高阶段plus pressure；没有Spirit不能套用。'
+    verification: conditioned
+    conditions: [sumo_spirit_state]
+    sources: [SRC03]
+- id: od_teppo
+  title: 'OD Teppo｜S3才加入point-blank +3'
+  stage: S3
+  subtitle: '不是所有Sumo Dash都plus'
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: +3
+    input: 'OD Sumo Dash > OD Teppo Triple Slap first hit block'
+    value: {drive: 2, frame: '+3 point-blank'}
+    next_loop: '2LP / Oicho / block'
+    why: '精确OD first-hit状态才有+3。'
+    verification: conditioned
+    conditions: [od_teppo_first_hit, point_blank]
+    sources: [SRC03, SRC05]
+- id: super
+  title: 'Super｜S4才做资源现金化'
+  stage: S4
+  subtitle: '不改变respect主线'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: '2HP > SA3'
+    value: {sa: 3}
+    next_loop: 'SA3 +11 / position reset'
+    why: 'Year4 current crHP可直接SA取消，作为简单cashout。'
+    verification: verified
+    sources: [SRC05]
+backend_only:
+- {label: 'corner Taiho omitted route', reason: 'source omits segment'}
+- {label: 'corner DI +42 omitted route', reason: 'source omits segment'}
+- {label: 'DI +59 -> +42 trigger', reason: 'trigger route incomplete'}
+- {label: 'high-resource Spirit combo', reason: 'S4 optimization'}

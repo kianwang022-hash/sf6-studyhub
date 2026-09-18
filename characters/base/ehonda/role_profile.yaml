@@ -1,0 +1,113 @@
+schema_version: '1.0'
+character: ehonda
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Honda一边保存Headbutt / Smash的charge，一边用正常地面和Sumo Dash拿击倒；真正的角色回报是先让对手尊重strike，再让6F Oicho Throw变成高价值威胁。'
+    preferred_range: '中近距离。light/5MP先拿contact，Sumo Dash / Smash / Headbutt拿击倒预算；先用strike/meaty建立respect，再加入Oicho。'
+    win_pattern: 'charge后台保存 -> Hands/Sumo Dash/Smash拿击倒 -> strike/meaty -> opponent respects -> Oicho -> opponent jumps/backwalks -> strike/shimmy变强 -> repeat。'
+    lose_pattern: '一有charge就Headbutt、击倒后立刻Oicho、把+42当通用、Sumo Spirit太早启动、把OD Teppo +3当全部Dash follow-up都安全。'
+  character_model:
+    essence_short: 'Charge只是Honda的后台资格；真正的角色核心是用大击倒和meaty制造respect，再把respect换成Oicho command grab收益。'
+    essence_detail: 'Honda不是“蓄力好以后就Headbutt”的角色。Charge只是后台资格：你在普通防守、地面按钮和等待跳跃时保存后/下蓄力，让Headbutt和Sumo Smash随时有可能出现。但当前Game Plan真正反复出现的是另一条链：5MP/普通contact进入Sumo Dash / Taiho Cannon Lift，接Sumo Smash或Headbutt拿到+23、+40、+42等击倒预算，再用meaty strike、throw和Oicho Throw继续压。Oicho本身是6F高伤command grab，但它不是“击倒后自动能抓”；只有对手先因为你的strike/meaty愿意站着防，Oicho才真正值钱。这让Honda成为Charge章向高收益猜拳章的桥：Guile管理空间，Dee Jay管理节奏，Honda开始管理respect。成熟Honda会先用+1的5MP、Hands、Sumo Smash Oki、Headbutt/Smash charge威胁让对手收手，再在对手防守倾向形成后用Oicho或shimmy兑现。Sumo Spirit和OD Teppo +3属于更后面的pressure升级，不应该抢走这条基础因果链。'
+    force_opponent_to:
+    - '尊重Headbutt / Sumo Smash charge威胁，不敢只按一个地面节奏推进。'
+    - '在Sumo Smash +23 / Teppo等击倒后先防meaty strike。'
+    - '一旦开始站着防，Oicho Throw会直接惩罚过度respect。'
+    - '对手为躲Oicho跳/后退以后，strike和shimmy重新变强。'
+    payoff_after_respect:
+    - 'Oicho 6F高伤command grab变得可信。'
+    - 'shimmy开始惩罚跳/tech。'
+    - 'Sumo Smash dash +4可以反复重建strike vs Oicho。'
+    - '+42/+45/+64状态进一步放大safe jump与command-grab循环。'
+    - 'Sumo Spirit后Hands更安全，pressure继续升级。'
+    core_tradeoff: '稳定strike/Oki vs Oicho高收益猜拳；同时决定保charge还是主动前进。没有respect时硬Oicho的收益结构很差。'
+    successful_round:
+    - '普通防守/按钮里存charge'
+    - 'light / 5MP / Sumo Dash拿contact'
+    - 'Sumo Smash / Teppo / Headbutt拿击倒'
+    - '先用meaty strike建立respect'
+    - '对手开始站防后加入Oicho'
+    - '对手跳/后退躲Oicho后，用strike/shimmy继续惩罚'
+    common_misplays:
+    - '一有charge就Headbutt，ground game消失。'
+    - '击倒后立刻command grab，不先建立respect。'
+    - '把+42 safe jump当所有Headbutt/Teppo都成立。'
+    - 'Sumo Spirit没必要时就花52F启动。'
+    - '把OD Teppo +3当所有Sumo Dash follow-up都plus。'
+    unique_decision: 'Honda新增的是respect conversion：charge帮助你造出必须防的击倒/strike，Oicho再把这份respect换成command-grab收益。'
+    transfer_in:
+    - 'Guile/Dee Jay的charge storage。'
+    - 'strike / throw / shimmy。'
+    - 'punish / corner / knockdown -> Oki。'
+    new_skill:
+    - 'strike -> respect -> Oicho反馈循环。'
+    - 'Sumo Dash -> Teppo / Taiho路线分工。'
+    - 'Sumo Smash +23与+40/+42高预算Oki。'
+    - 'Sumo Spirit改变Hundred Hand Slap状态。'
+    - 'command grab不是guaranteed Oki的纪律。'
+    unlearn:
+    - 'charge角色主要任务就是保持charge并立刻用special。'
+    - 'command grab有机会就应该马上猜。'
+    - '所有大knockdown都自动给贴脸Oicho。'
+    - 'Teppo/Spirit升级应该第一天全部学。'
+  glossary:
+  - {term: '[4]6P｜Sumo Headbutt', meaning: '后蓄力前冲头槌。L/M/H被防-3；charge威胁的一部分，不是每次蓄好就要用。'}
+  - {term: '[2]8K｜Sumo Smash', meaning: '下蓄力飞扑。L/M/H被防+1，命中常见+23 family；是基础Oki入口。'}
+  - {term: '63214K｜Oicho Throw', meaning: '6F command grab。只有对手因strike/meaty产生respect后才真正强。'}
+  - {term: '236K｜Sumo Dash', meaning: 'Year4总动作44F的路线hub，可接Teppo Triple Slap或Taiho Cannon Lift。'}
+  - {term: '22K｜Sumo Spirit', meaning: '52F启动状态，改变Hundred Hand Slap的hit/block性质；后置。'}
+  - {term: '214P｜Hundred Hand Slap', meaning: 'S0基础light ender；Spirit状态下会变成更安全版本。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '10F / Hit +6 / Block +1 / C；最清楚的普通respect/confirm。'}
+  - {input: '2LP', name: '蹲轻拳', use: '4F / Hit +4 / Block -1 / C；基础light confirm。'}
+  - {input: '214LP', name: 'L Hundred Hand Slap', use: '12F / Hit +2 / Block -4；S0默认light ender。'}
+  - {input: '[2]8K', name: 'Sumo Smash', use: '基础charge knockdown；+23 family后先用strike建立respect。'}
+  - {input: '236K', name: 'Sumo Dash', use: 'Teppo/Taiho路线hub；Year4由51F加快到44F。'}
+  - {input: '63214K', name: 'Oicho Throw', use: 'S1才进入主线；先strike，再在对手respect时抓。'}
+  - {input: '22K', name: 'Sumo Spirit', use: 'S3 pressure状态；不进S0/S1。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Neutral Jump HP、charge specials、Dash/Oicho/Spirit由关键工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-7', recovery: '10', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '4', active: '4-5', recovery: '9', hit: '+5', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '10', active: '10-13', recovery: '13', hit: '+6', block: '+1', cancel: 'C', damage: '700', note: '挥空额外+4F recovery。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '10', active: '10-13', recovery: '16', hit: '+4', block: '-3', cancel: 'conditional', damage: '700', note: '仅Sumo Spirit期间可取消到Hundred Hand Slap。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '8', active: '8-14', recovery: '20', hit: '+1', block: '-6', cancel: 'C/conditional', damage: '900', note: 'PC crumple；Spirit期间Hands条件取消。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '8', active: '8-14 / 8-9,11-14', recovery: '22', hit: '-1', block: '-5', cancel: 'C', damage: '800', note: '强制站立；空中命中launch。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-6', recovery: '10', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '9', hit: '+3', block: '-3', cancel: 'conditional', damage: '200', note: '仅Spirit期间Hands条件取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '8', active: '8-11', recovery: '16', hit: '+3', block: '-3', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '9', active: '9-11', recovery: '17', hit: '+6', block: '-2', cancel: 'conditional', damage: '500', note: '正常状态不可DRC；仅Spirit期间Hands条件取消。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '11', active: '11-14', recovery: '17', hit: '+3', block: '-3', cancel: 'conditional/SA', damage: '800', note: '当前可SA1/2/3；Spirit期间Hands条件取消。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '11', active: '11-24 / 11-13,20-24', recovery: '14', hit: 'KD', block: '-10', cancel: '-', damage: '900', note: 'PC hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '6', active: '6-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'CH/PC slam。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-17', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  resource:
+    name: 'Sumo Spirit'
+    gain: '22K启动，约52F后进入Spirit stock/state。'
+    spend: 'Hundred Hand Slap强化交互消耗/使用对应Spirit状态。'
+    changes: 'L Hands变Block 0；OD Hands变Block +1；部分normal获得Hands条件取消。'
+    rule: 'S0-S2不要求Spirit；S3才进入pressure升级。'
+  signature_mechanic:
+    name: 'Charge-enabled respect -> Oicho conversion'
+    rule: 'charge负责制造Headbutt/Smash威胁和大击倒；先用strike/meaty造respect，再让6F Oicho成为高价值command grab。'
+  key_numbers:
+  - {label: 'Sumo Smash', value: 'grounded +23', decision: 'S0/S1基础Oki：dash后+4或2LP whiff后+7。'}
+  - {label: '5MP', value: 'Block +1', decision: '普通respect起点。'}
+  - {label: 'Oicho', value: '6F / 2000-2800', decision: 'S1开始；不是guaranteed Oki。'}
+  - {label: 'Teppo first hit', value: '+42', decision: 'S2 exact-state safe jump。'}
+  - {label: 'OD Teppo first hit', value: 'Block +3 point-blank', decision: 'S3 pressure升级。'}
+  - {label: 'Taiho Cannon Lift', value: '+64 forward state', decision: '高Oki/route budget。'}
+  constraints:
+  - '2MK不是普通DRC low；conditional只属于Spirit Hands。'
+  - 'S0不能把Oicho当自动knockdown follow-up。'
+  - '+42必须绑定Teppo/具体触发状态。'
+  - 'Sumo Spirit必须显式带state。'
+  - 'OD Teppo +3不是所有Dash分支都plus。'
