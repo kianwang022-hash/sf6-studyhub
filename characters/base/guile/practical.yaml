@@ -1,0 +1,299 @@
+schema_version: '1.0'
+character: guile
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 is charge availability + Boom/Flash Kick + stable confirms. Blade/Cross enters later; +42 and Solid Puncher remain high-stage.'
+stages:
+  S0: {label: 最小可玩, short: 'Charge / Boom / Flash Kick'}
+  S1: {label: 基本功成型, short: 'Corner +4 / Basic Oki'}
+  S2: {label: 实战结构化, short: 'DR / OD Blade +1 / Pressure'}
+  S3: {label: 选择成熟, short: 'Blade/Cross / +42 / Perfect'}
+  S4: {label: 高分上探, short: 'Solid Puncher / SA / Matchup'}
+shared_packages:
+  CORNER_PLUS4:
+    label: 'Corner H Somersault +4'
+    sequence: 'corner H Somersault Kick -> 3HK whiff'
+    next: '+4 -> throw / strike / walk-back shimmy'
+    verification: verified
+    sources: [SRC05]
+  M_SOMERSAULT_DR:
+    label: 'M Somersault -> Drive Rush'
+    sequence: 'M Somersault Kick -> Drive Rush'
+    next: 'DR 2MP / DR 6MP / DR throw'
+    verification: verified
+    sources: [SRC05]
+  BLADE_RESET:
+    label: 'H Somersault -> Sonic Blade space layer'
+    sequence: 'H Somersault Kick -> Sonic Blade'
+    next: 'Sonic Cross / anti-air / spacing reset'
+    verification: conditioned
+    conditions: [spacing, timing]
+    sources: [SRC05]
+  SAFE42:
+    label: 'Hit-height +42 safe jump'
+    sequence: 'specific H Somersault hit state -> about +42'
+    next: 'immediate forward jump attack'
+    verification: conditioned
+    conditions: [hit_height]
+    sources: [SRC05]
+  OD_BLADE_PLUS1:
+    label: 'OD Sonic Blade +1'
+    sequence: 'OD Sonic Blade block -> +1'
+    next: '2LP / Sonic Cross / throw / spacing reset'
+    verification: conditioned
+    conditions: [spacing]
+    sources: [SRC03, SRC05]
+opportunities:
+- id: charge
+  title: 'Charge｜蓄力是在别的动作里存'
+  stage: S0
+  subtitle: '不要单独蹲着等'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Down-back preserve
+    input: 'hold down-back during crouch-block / 2LP / 2MP'
+    value: {state: 'back + down charge preserved'}
+    next_loop: 'Sonic Boom / Somersault availability stays alive'
+    why: '把charge变成后台状态，而不是单独等待动作。'
+    verification: verified
+    sources: [SRC00]
+  - result: READ
+    stage: S1
+    choice: Release charge on purpose
+    input: 'walk forward / dash only when position gain is worth losing current charge'
+    value: {state: 'charge intentionally released'}
+    next_loop: 'rebuild charge after the positional decision'
+    why: '成熟Guile不是永远保charge，而是知道什么时候值得放弃。'
+    verification: verified
+    sources: [SRC00]
+- id: boom
+  title: 'Sonic Boom｜发波以后继续看跳'
+  stage: S0
+  subtitle: 'Boom不是注意力结束点'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: Normal Boom
+    input: '[4]6P -> immediately keep anti-air attention'
+    value: {startup: '10F', block: '-3'}
+    next_loop: 'jump -> Somersault | ground -> spacing / normal / rebuild charge'
+    why: '横向限制只有和垂直反空一起存在才真正强。'
+    verification: verified
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S2
+    choice: OD Boom
+    input: 'OD Sonic Boom block'
+    value: {drive: 2, frame: '+3'}
+    next_loop: 'normal / throw / spacing by distance'
+    why: '资源换更强projectile state，但不是S0必需。'
+    verification: verified
+    sources: [SRC03]
+- id: light
+  title: 'Light｜最小confirm必须保住下蓄力'
+  stage: S0
+  subtitle: '低段确认直接回Somersault'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LK > 2LP > H Somersault Kick'
+    value: {drive: 0, state: 'stable knockdown'}
+    next_loop: 'rebuild down-back charge / reset by position'
+    why: '最短地把小命中换成稳定击倒，同时训练charge-ready确认。'
+    verification: conditioned
+    conditions: [down_charge_ready]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停
+    input: '2LK / 2LP block -> stop / keep charge / observe'
+    value: {drive: 0}
+    next_loop: 'Boom / anti-air / throw-read'
+    why: '不确认就不提交Somersault。'
+- id: medium
+  title: '5MP｜S0主地面确认'
+  stage: S0
+  subtitle: 'neutral normal和charge route同时存在'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '5MP > 2MP > H Somersault Kick'
+    value: {drive: 0}
+    next_loop: 'rebuild charge / position read'
+    why: 'current practical starter里最基础的medium confirm。'
+    verification: conditioned
+    conditions: [route_charge_ready]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 0F重读
+    input: '5MP block (0) -> stop / walk / throw-read'
+    value: {frame: '0'}
+    next_loop: '重新决定保charge还是走位'
+    why: 'Block 0不是固定你的回合。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S1
+    choice: Back-normal route
+    input: '5MP > 4HP > H Somersault Kick'
+    value: {drive: 0}
+    next_loop: 'corner / midscreen Oki by position'
+    why: '加入charge-compatible back normal，开始学“按键同时管理charge”。'
+    verification: verified
+    sources: [SRC05]
+- id: antiair
+  title: 'Anti-air｜Boom必须和Somersault成对'
+  stage: S0
+  subtitle: '没有反空，fireball就没有地面威胁'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Somersault
+    input: 'opponent jump -> [2]8K Somersault Kick'
+    value: {state: 'anti-air / knockdown'}
+    next_loop: 'rebuild down-back charge immediately after landing'
+    why: '让“看到Boom就跳”变成有代价的答案。'
+    verification: conditioned
+    conditions: [down_charge_ready]
+    sources: [SRC03, SRC05]
+- id: corner
+  title: 'Corner｜S1先学最重要的+4'
+  stage: S1
+  subtitle: '一条角落循环就够'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: +4 frame-kill
+    input: 'corner H Somersault Kick > 3HK whiff'
+    value: {frame: '+4'}
+    next_loop_package: CORNER_PLUS4
+    why: '角落第一套真正清楚的throw / strike / shimmy入口。'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S1
+    choice: 6HP +3
+    input: '6HP block (+3) -> 2LP / 5MP / throw'
+    value: {frame: '+3'}
+    next_loop: 'close pressure / charge rebuild'
+    why: '先学普通正帧接触，不急着上Blade复杂层。'
+    verification: conditioned
+    conditions: [spacing]
+    sources: [SRC05]
+- id: drive
+  title: 'Drive｜S2让charge discipline活过DR'
+  stage: S2
+  subtitle: 'DR不是忘掉charge管理'
+  rows:
+  - result: BLOCK
+    stage: S2
+    choice: CDR +4
+    input: '4HP > CDR > 5MP block'
+    value: {drive: 3, frame: '+4'}
+    next_loop: 'throw / 5MP frame trap / walk-back shimmy'
+    why: '在高优势接触里继续做普通打投，同时重新建立charge。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: DR stable
+    input: 'DR > 5MP > 2HP > H Somersault Kick'
+    value: {drive: 1}
+    next_loop: 'rebuild charge / corner progress'
+    why: '把DR转换接回最熟的Somersault ender。'
+    verification: conditioned
+    conditions: [route_charge_ready]
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: DR overhead
+    input: 'DR > 6MP > 2MP > H Somersault Kick'
+    value: {drive: 1}
+    next_loop: 'rebuild charge / Oki by position'
+    why: '加入overhead但不改变基本ender。'
+    verification: conditioned
+    conditions: [route_charge_ready]
+    sources: [SRC05]
+- id: blade
+  title: 'Sonic Blade｜S2/S3才进入空间第二层'
+  stage: S2
+  subtitle: '不是S0必修'
+  rows:
+  - result: BLOCK
+    stage: S2
+    choice: OD Blade +1
+    input: 'OD Sonic Blade block'
+    value: {drive: 2, frame: '+1'}
+    next_loop_package: OD_BLADE_PLUS1
+    why: 'Year4升级后的earned plus pressure。'
+    verification: conditioned
+    conditions: [spacing]
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S3
+    choice: Blade reset
+    input: 'H Somersault Kick > L Sonic Blade'
+    value: {state: 'space-control layer'}
+    next_loop_package: BLADE_RESET
+    why: '基础Boom/Flash Kick稳定后，再学击倒后重建空间。'
+    verification: conditioned
+    conditions: [spacing, timing]
+    sources: [SRC05]
+- id: safe_jump
+  title: '+42｜只属于特定Somersault命中高度'
+  stage: S3
+  subtitle: '禁止背成通用H Flash Kick数字'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Safe Jump
+    input: 'specific H Somersault hit state -> immediate forward jump attack'
+    value: {kd: 'about +42', state: 'safe jump'}
+    next_loop_package: SAFE42
+    why: '只有真实hit-height满足时才把+42变成safe-jump入口。'
+    verification: conditioned
+    conditions: [hit_height]
+    sources: [SRC05]
+- id: super
+  title: 'Super｜S4才打开Solid Puncher/高资源层'
+  stage: S4
+  subtitle: '先有charge角色，再有Super系统'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3 basic
+    input: '2MP > H Somersault Kick > SA3'
+    value: {sa: 3}
+    next_loop: 'Kill / SA3 +16 position rebuild'
+    why: '从已会的confirm直接现金化。'
+    verification: conditioned
+    conditions: [charge_ready, sa_resource]
+    sources: [SRC05]
+  - result: ACTIVE
+    stage: S4
+    choice: Solid Puncher
+    input: 'SA2 Solid Puncher activation'
+    value: {sa: 2, state: 'projectile system'}
+    next_loop: 'Sonic Break / projectile pressure by current spacing'
+    why: '把它当后期screen/projectile系统，而不是S0 combo。'
+    verification: conditioned
+    conditions: [sa2_active]
+    sources: [SRC03, SRC05]
+backend_only:
+- {label: 'delayed Sonic Boom loop', reason: 'high execution; no early distinct learner value'}
+- {label: 'terse SA2 combo string', reason: 'exact input sequence not normalized'}
+- {label: 'generic H Somersault +42', reason: 'hit-height truth required'}
+- {label: 'Perfect Boom/Somersault optimization', reason: 'S4 execution layer, not entry requirement'}
