@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: terry
+accessed: '2026-09-18'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Terry', url: 'https://www.streetfighter.com/6/en-us/character/terry/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Terry Frame Data', url: 'https://sf6-lab.net/en/fighters/terry/frame', freshness: 'official-reference data checked 2026-09-18', covers: [frames, active, recovery, advantage, cancel, health, damage]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Terry Move List', url: 'https://sf6-lab.net/en/fighters/terry/moves', freshness: 'checked 2026-09-18', covers: [normals, unique_attacks, specials, supers, commands, move_names]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Terry Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/terry/combo', freshness: 'updated 2026-08-31; checked 2026-09-18', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, current_game_plan, round_wave, burning_knuckle, quick_burn, power_charge, super_routes]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; Burning Knuckle spacing, active-frame meaty, airborne height and corner state remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; spacing-dependent Burning Knuckle and Round Wave setplay must keep their conditions'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current structured route/game-plan evidence directly supports the model'
+  learner_projection_rule: 'strong specials are staged by function; do not teach the whole special-move tree at once'
