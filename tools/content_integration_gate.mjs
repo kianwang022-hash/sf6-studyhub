@@ -495,7 +495,7 @@ for (const c of chars) {
         }
         const sbkRoute = /Spinning Bird Kick/i.test(input);
         if (sbkRoute && !/Spinning Bird Kick hit/i.test(input)) {
-          assert(/confirmed_hit|earned_stance_entry/i.test(conditions), 'chunli: SBK route lost hit-confirm/earned-entry truth');
+          assert(/confirmed_hit|earned_stance_entry|m_sbk_grounded_end_state|grounded_sbk_end_state/i.test(conditions), 'chunli: SBK route lost hit-confirm/earned-entry/end-state truth');
         }
         const uses46 = /\+46/.test(rowText);
         if (uses46) assert(/exact_safe46_state/i.test(conditions), 'chunli: +46 safe jump lost exact-state truth');
