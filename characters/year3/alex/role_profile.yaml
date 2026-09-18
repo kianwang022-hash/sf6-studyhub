@@ -1,0 +1,109 @@
+schema_version: '1.0'
+character: alex
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Alex先用5MP、4MK和稳定击倒逼对手尊重；尊重一出现，就用Power Bomb与Prowler高低投分支让防守不能只押一种答案。'
+    preferred_range: '中近距离用5MP/2MP/2MK拿contact；4MK +2和Knee/throw Oki继续压缩选择，Prowler只从已赚到的hit/setup进入。'
+    win_pattern: 'ground contact -> stable Knee/Axe -> +2 or knockdown pressure -> strike earns respect -> Power Bomb / earned Prowler branch -> opponent jumps/backwalks/mashes -> strike/anti-air rises -> corner amplification or reset。'
+    lose_pattern: '裸进Prowler、+2后机械Power Bomb、把Power Bomb +15当保证贴脸Oki、Sweep当安全低段、没条件就泛化+8/+42。'
+  character_model:
+    essence_short: '先用稳定strike和+2压力买到respect，再用Power Bomb与Prowler多分支让对手无法只押一种防守。'
+    essence_detail: 'Alex不是“走上去猜指令投”的角色。Year4把5MP命中加强到+4、4MK被防加强到+2，并让2HK命中可以直接进入Prowler；这些改动都在强化同一个循环：先用普通地面接触和稳定击倒把回合拿住。Light和5MP可以稳定收进Flash Axe或Aerial Knee Smash，Knee、前投和M Flash Axe再给出明确下一拍。等对手开始愿意站着防，Power Bomb才从高风险裸猜变成真实威胁；Prowler也不是neutral里长期蹲着等，而是从M Flash Axe、2HP、2HK命中或charged button等已赚到的入口切入，再用Heavy Lariat正帧、Air Stampede overhead、Sweep low、Hyper Takedown throw等不同答案打破固定防守。对手为了躲grab而跳、后退、乱按时，普通strike和anti-air又重新升值。'
+    force_opponent_to:
+    - '尊重5MP与稳定confirm，不敢每次都抢。'
+    - '处理4MK Block +2后的下一拍。'
+    - '在M Flash Axe / 2HK等明确入口后处理Prowler。'
+    - '开始站防以后必须考虑Power Bomb。'
+    create_respect_with:
+    - '5MP / 2MP普通ground contact。'
+    - '2LK > 2LP > L Flash Axe稳定确认。'
+    - '5MP > H Aerial Knee Smash稳定击倒。'
+    - '4MK Block +2后的5LP / strike。'
+    - 'H Knee、forward throw后的具体Oki。'
+    payoff_after_respect:
+    - 'H Power Bomb进入真实read。'
+    - 'Prowler Heavy Lariat / Air Stampede / Sweep / Hyper Takedown形成高低投分支。'
+    - '对手为躲grab跳/后退/乱按以后，strike与anti-air重新变强。'
+    - 'corner Flying Cross Chop +8可以把一次route变成更强下一轮。'
+    core_tradeoff: '继续用稳定strike/Oki守住回合，还是把已赚到的入口投入Prowler / Power Bomb，换更高回报但承担更高commitment。'
+    successful_round:
+    - '5MP / 2MP / light拿第一次contact'
+    - 'Flash Axe或Aerial Knee Smash拿稳定结果'
+    - '4MK +2、throw/Knee Oki继续strike造respect'
+    - 'respect成立后加入Power Bomb或earned Prowler'
+    - '对手jump/backwalk/mash后回strike与anti-air'
+    - '进角后用Cross Chop +8等状态继续放大'
+    common_misplays:
+    - 'neutral里裸进Prowler，把不能block的commitment当常驻模式。'
+    - '看到4MK +2就把Power Bomb当guaranteed。'
+    - 'Power Bomb +15后假装有保证贴脸Oki。'
+    - '每回合都猜command grab，不先用strike建立respect。'
+    - '把Sweep / active-frame / corner +8条件路线泛化成默认答案。'
+    unique_decision: 'Alex新增的是choice-denial layering：先用正常SF6的strike/plus/Oki买到respect，再用Power Bomb和Prowler多分支让“只防一种”失效。'
+    transfer_in:
+    - 'Marisa / Lily / Manon的respect -> command-grab反馈。'
+    - 'grounded spacing / anti-air / strike-throw。'
+    - '大体型角色耐心拿contact再现金化。'
+    new_skill:
+    - 'Prowler是earned-entry stance，不是neutral常驻。'
+    - '同一个stance入口要在plus strike / overhead / low / throw之间按对手反应切换。'
+    - '4MK +2与Knee/throw Oki负责制造respect，而不是保证抓。'
+    - 'damage / stance entry / side switch / Oki之间做route取舍。'
+    unlearn:
+    - '大体型command-grab角色应该优先裸抓。'
+    - 'plus frame等于throw guaranteed。'
+    - 'Prowler可以在neutral里长期等。'
+    - 'Power Bomb命中后一定有贴脸继续抓。'
+  glossary:
+  - {term: '2PP｜Prowler', meaning: '蹲伏stance。应从hit/cancel/knockdown等已赚到的入口进入；不能block，不是neutral常驻模式。'}
+  - {term: '63214P｜Power Bomb', meaning: '5–9F command grab family；高回报但需要respect/read，命中后+15不是保证继续抓。'}
+  - {term: '623K｜Aerial Knee Smash', meaning: 'anti-air / combo ender。H常见+29，OD常见+27。'}
+  - {term: '236P｜Flash Axe / Flash Chop', meaning: 'L/M负责稳定route和Prowler入口；H Flash Chop可建立turn-around/Power Drop路线。'}
+  - {term: '4MK｜Oblique Stomp', meaning: '7F；Year4 Block +2。它给你下一拍决策权，不保证Power Bomb。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '7F / Hit +4 / Block 0 / C；Year4核心ground contact。'}
+  - {input: '2MP', name: '蹲中拳', use: '8F / Hit +1 / Block -2 / C；M Flash Axe→Prowler入口。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Hit +5 / Block -2 / non-cancel；不能套2MK DRC。'}
+  - {input: '4MK', name: 'Oblique Stomp', use: '7F / Hit +5 / Block +2；先strike造respect，再考虑Power Bomb read。'}
+  - {input: '623K', name: 'Aerial Knee Smash', use: 'anti-air / stable ender；S0角色招牌工具。'}
+  - {input: '2PP', name: 'Prowler', use: 'earned-entry stance；S0只学Heavy Lariat一个出口，完整高低投树后置。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；charged state、unique normals、Prowler、specials与SA由工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-5', recovery: '9', hit: '+5', block: '-1', cancel: 'Chain', damage: '300', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '6', active: '6-7', recovery: '13', hit: '+1', block: '-5', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '7', active: '7-10', recovery: '14 hit / 15 block', hit: '+4', block: '0', cancel: 'C / TC', damage: '600', note: 'Year4 Hit +4。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '9', active: '9-11', recovery: '19', hit: '+3', block: '-4', cancel: '-', damage: '700', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '12', active: '12-16', recovery: '19', hit: '+4', block: '-3', cancel: 'SA', damage: '900', note: 'charged版另有Prowler/route属性。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '16', active: '16-18', recovery: '23', hit: '+1', block: '-4', cancel: '-', damage: '900', note: 'charged版另有KD/Prowler属性。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '5', active: '5-7', recovery: '8', hit: '+5', block: '-2', cancel: 'Chain / C', damage: '300', note: ''}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '13', hit: '+2', block: '-2', cancel: 'Chain / TC', damage: '200', note: ''}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '8', active: '8-9', recovery: '16', hit: '+1', block: '-2', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '18', hit: '+5', block: '-2', cancel: '-', damage: '600', note: 'Year4 Hit +5；non-cancel。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '9', active: '9-14', recovery: '22', hit: '-3', block: '-5', cancel: 'C / conditional Prowler', damage: '800', note: 'anti-air / hit-route。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '10', active: '10-12', recovery: '26', hit: 'KD +29', block: '-11', cancel: 'conditional Prowler', damage: '1000', note: 'Year4命中可转Prowler。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-12', recovery: 'Landing 3', hit: '+8..+11', block: '+5..+8', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-14', recovery: 'Landing 3', hit: '+6..+11', block: '+3..+8', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '7', active: '7-10', recovery: 'Landing 3', hit: '+10..+11', block: '+6..+7', cancel: 'route', damage: '700', note: 'Year4 Flying Cross Chop route utility。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '8', active: '8-14', recovery: 'Landing 3', hit: '+11..+14', block: '+8..+11', cancel: '-', damage: '700', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '+9..+15', block: '+5..+11', cancel: '-', damage: '800', note: 'air hit knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-16', recovery: 'Landing 3', hit: '+12..+15', block: '+8..+11', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Earned Prowler entry -> choice-denial high/low/throw layering'
+    rule: '先用普通contact/+2/Oki赚到respect和stance entry，再用Prowler plus strike / overhead / low / throw与Power Bomb打破固定防守。'
+  key_numbers:
+  - {label: '4MK', value: '7F / Block +2', decision: '下一拍先strike；Power Bomb是read不是guarantee。'}
+  - {label: 'M Flash Axe', value: 'KD +39', decision: '高价值earned Prowler gateway。'}
+  - {label: 'H Aerial Knee Smash', value: 'KD +29', decision: 'S0稳定击倒。'}
+  - {label: 'OD Aerial Knee Smash', value: 'KD +27', decision: 'dash后+5 family，S1资源Oki。'}
+  - {label: 'forward-input OD Power Drop', value: 'KD +42', decision: 'S3 exact-state Oki / safe-jump budget。'}
+  constraints:
+  - '2MK不可取消，不能照抄2MK DRC。'
+  - 'Prowler必须有earned entry；不能把raw neutral stance当默认。'
+  - '4MK +2后的Power Bomb必须标opponent_respect/read。'
+  - 'Power Bomb +15不是guaranteed close Oki。'
+  - '+42只属于forward-input OD Power Drop exact state。'
+  - 'corner Cross Chop +8必须保留corner/exact-route条件。'
