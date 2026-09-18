@@ -12,7 +12,11 @@ const chars = [
   { slug:'mai', normals:18, learn:'dash +9', ref:'OD 214P Ryuuenbu', practical:['j.214P','OD 236K','SA2'] },
   { slug:'zangief', normals:23, learn:'尊重', ref:'SPD 后重置', practical:['360P','SA3'] },
   { slug:'cammy', normals:18, learn:'M Spiral Arrow', ref:'Cannon Strike', practical:['SA1','SA3'] },
-  { slug:'ken', normals:18, learn:'Quick Dash Tatsu', ref:'Forward Step Kick', practical:['KK > Tatsu','SA3'] }
+  { slug:'ken', normals:18, learn:'Quick Dash Tatsu', ref:'Forward Step Kick', practical:['KK > Tatsu','SA3'] },
+  { slug:'akuma', normals:18, learn:'9000', ref:'Shun Goku Satsu', practical:['L Tatsu > 2HK','Demon Raid'] },
+  { slug:'luke', normals:18, learn:'Perfect Flash Knuckle', ref:'DDT', practical:['L Flash Knuckle','DDT'] },
+  { slug:'terry', normals:18, learn:'Round Wave', ref:'Triple Geyser', practical:['M Burning Knuckle','OD Quick Burn'] },
+  { slug:'sagat', normals:18, learn:'High Tiger Shot', ref:'Tiger Knee', practical:['236MP','H Tiger Knee Crush airborne hit'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -45,6 +49,26 @@ try {
     assert(await page.locator('#role:visible').count() === 1, `${c.slug}: Role panel missing`);
     assert(await page.locator('.frame-table tbody tr').count() === c.normals, `${c.slug}: normal frame table count mismatch`);
     await page.locator('#role').screenshot({ path:`${SHOTS}/${c.slug}-role-v6-light.png` });
+    if (c.slug === 'akuma') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Option density under 9000 health'), 'akuma: option-density signature missing');
+      assert(roleText.includes('9000') && roleText.includes('Demon Raid'), 'akuma: health/option tradeoff missing');
+    }
+    if (c.slug === 'luke') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Execution investment via Flash Knuckle timing'), 'luke: execution-investment signature missing');
+      assert(roleText.includes('Perfect Flash Knuckle') && roleText.includes('+36'), 'luke: stable-vs-perfect tradeoff missing');
+    }
+    if (c.slug === 'terry') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Special-role relay'), 'terry: special-role relay signature missing');
+      assert(roleText.includes('Round Wave') && roleText.includes('29F') && roleText.includes('Block +5'), 'terry: Round Wave setup truth missing');
+    }
+    if (c.slug === 'sagat') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Projectile-to-contact space conversion'), 'sagat: projectile-to-contact signature missing');
+      assert(roleText.includes('2MK') && roleText.includes('不可取消'), 'sagat: non-cancelable 2MK truth missing');
+    }
     if (c.slug === 'ken') {
       const roleText = await page.locator('#role').innerText();
       assert(roleText.includes('28F') && roleText.includes('Block +1'), 'ken: H Dragonlash 28F/+1 projection truth missing');
@@ -60,6 +84,29 @@ try {
     assert(await page.locator('[data-stage]').count() === 6, `${c.slug}: S0-S4 + ALL missing`);
     assert(await page.locator('[data-op]').count() >= 5, `${c.slug}: Opportunity Hub too small`);
     assert(await page.locator('[data-row-stage="S4"]:visible').count() === 0, `${c.slug}: future S4 should be folded at S0`);
+    if (c.slug === 'akuma') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP > 2LP > 5LK > H Gou Shoryuken'), 'akuma: S0 stable shoto route missing');
+      assert(s0Text.includes('2LP > 2LP > 5LK > L Tatsu > 2HK'), 'akuma: S0 +30 vs +37 identity split missing');
+      assert(!s0Text.includes('Demon Raid > Demon Guillotine'), 'akuma: S3 Demon Raid branch leaked into S0');
+    }
+    if (c.slug === 'luke') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2MP > 2LP > L Flash Knuckle'), 'luke: S0 +36 stable route missing');
+      assert(!s0Text.includes('Perfect Flash'), 'luke: Perfect optimization leaked into S0');
+    }
+    if (c.slug === 'terry') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LK > 2LP > M Burning Knuckle'), 'terry: S0 carry route missing');
+      assert(s0Text.includes('2LK > 2LP > H Rising Tackle'), 'terry: S0 damage route missing');
+      assert(!s0Text.includes('earned setup -> Round Wave block (+5)'), 'terry: earned Round Wave layer leaked into S0');
+    }
+    if (c.slug === 'sagat') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('236MP -> watch jump / walk / crouch / parry'), 'sagat: S0 projectile-reaction loop missing');
+      assert(s0Text.includes('5MP > 2LP > M Tiger Uppercut'), 'sagat: S0 contact conversion missing');
+      assert(!s0Text.includes('H Tiger Knee Crush airborne hit -> +42 -> forward jump HP'), 'sagat: S3 +42 safe jump leaked into S0');
+    }
     if (c.slug === 'ken') {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('j.HP > 5MP > 5HP > KK > Tatsu'), 'ken: S0 carry identity route missing');
@@ -86,7 +133,7 @@ try {
   assert(page.url().includes('/character/jamie/'), 'real 31-character selector navigation failed');
   assert(await page.locator('#heroCharacterSelect').inputValue() === 'jamie', 'selector did not land on Jamie');
 
-  await page.goto(`${BASE}/character/luke/#role`, { waitUntil:'networkidle' });
+  await page.goto(`${BASE}/character/guile/#role`, { waitUntil:'networkidle' });
   assert((await page.locator('[data-panel="role"]').innerText()).includes('GOLD PAGE QA PENDING'), 'CONTENT_READY roster shell must not masquerade as Gold content');
 
   await page.goto(`${BASE}/character/jamie/#role`, { waitUntil:'networkidle' });
@@ -106,6 +153,16 @@ try {
   await page.screenshot({ path:`${SHOTS}/ken-v6-dark.png`, fullPage:false });
   await page.locator('#theme-toggle').click();
 
+  for (const slug of ['akuma','luke','terry','sagat']) {
+    await page.goto(`${BASE}/character/${slug}/#role`, { waitUntil:'networkidle' });
+    await page.locator('#theme-toggle').click();
+    assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', `${slug}: dark theme toggle failed`);
+    const heroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(heroLoaded, `${slug}: dark hero art missing`);
+    await page.screenshot({ path:`${SHOTS}/${slug}-v6-dark.png`, fullPage:false });
+    await page.locator('#theme-toggle').click();
+  }
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -115,7 +172,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 6 accepted light+dark heroes | 学习/角色/实战/资料 | 6 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 10 accepted light+dark heroes | 学习/角色/实战/资料 | 10 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
