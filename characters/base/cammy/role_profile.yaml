@@ -1,6 +1,6 @@
 schema_version: '1.0'
 character: cammy
-status: SOURCE_CLOSURE_DRAFT
+status: CONTENT_READY
 role_profile:
   identity:
     one_line: '嘉米先用极快、很干净的地面接触反复制造近身回合；等对手形成固定防守习惯，再用俯冲踢、骗拆投和 Hooligan 去针对。'

@@ -1,0 +1,17 @@
+---
+import { marked } from 'marked';
+const { markdown = '', kind = 'learn', title = '' } = Astro.props;
+marked.setOptions({ gfm: true, breaks: false });
+const html = markdown ? await marked.parse(markdown) : '';
+---
+<section class={`study-panel markdown-panel ${kind}-panel`} data-panel-body={kind}>
+  {markdown ? (
+    <article class="markdown-book" set:html={html} />
+  ) : (
+    <div class="pending-panel">
+      <div class="pending-kicker">SOURCE CLOSURE PENDING</div>
+      <h2>{title || '内容将在该角色进入批次时接入'}</h2>
+      <p>角色入口与 UI 已保留；学习内容不会用旧 fallback 冒充当前 Gold 内容。</p>
+    </div>
+  )}
+</section>

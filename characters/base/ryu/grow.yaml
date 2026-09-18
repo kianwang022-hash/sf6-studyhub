@@ -1,0 +1,118 @@
+schema_version: '1.1'
+character: ryu
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+
+# Learner-facing progression owner. The same Core Loop grows one decision family at a time.
+# Rank / MR is Reality evidence, never a substitute for capability evidence.
+progression_policy:
+  principle: 'Whole → Part → Whole；先让一套整轮能打，再由真实断点决定下一项训练。'
+  score_rule: 'MR/段位是结果证据，不是单独的能力定义；晋级先看行为是否稳定，再把分数作为 Reality evidence。'
+  current_ui: '前台一次只展开一个当前学习焦点；机会入口 Hub 仍是具体决策中心。'
+
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先让一条完整Loop在真人里反复出现：控地面→对空/取得接触→稳定623HP击倒→固定起攻→下一轮。'
+    add_now:
+      - '236P / 5MK 控地面，发波后继续看跳。'
+      - '正常跳优先623P；来不及时2HP/空对空兜底。'
+      - '5MP→2MP→623HP 与 2LK→5LP→5LP→623HP 两条基础确认。'
+      - '623HP→66→6HP meaty 作为第一套确定起攻。'
+    gate:
+      lab: '两条确认、623P对空与623HP→66→6HP能稳定执行。'
+      match: '真人里能主动出现完整Loop；断掉时能指出是Neutral、确认、击倒还是起攻哪一环。'
+    defer: ['2MK DRC主分支', '完整投/shimmy选择树', 'Denjin/Hashogeki主线', '+42', '复杂角落/SA优化']
+    hub_focus: [light, 5mp, antiair]
+
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把“知道基础答案”变成“比赛里不再反复漏”：对空、确认、固定Oki、大确反、DI与基础防守开始稳定。'
+    add_now:
+      - '跳入只先保留一条稳定收尾，不按深度背完整路线库。'
+      - '挡住明显无敌技/大破绽会走够得到的稳定确反。'
+      - 'DI / 墙撞先认真实状态，再选稳定结果。'
+      - '5MP / 轻攻击被防时默认允许停手；不自动播放命中路线。'
+      - '623HP→66→6HP稳定后，才加入已验证spacing/timing的基础投 / shimmy。'
+    gate:
+      match: '核心对空、确认、Oki、确反和DI多数达到MATCH_STABLE；重复丢回合不再主要来自漏基本答案。'
+    defer: ['2MK DRC作为主学习入口', 'Denjin主线', '+42安全跳优化', '高资源多次DRC', '冷门角色专属punish']
+    hub_focus: [5mp, antiair, jump, punish, di]
+
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '从固定脚本升级到常见分流：根据Hit / Block / Whiff、对手反应、位置与Drive决定下一步。'
+    add_now:
+      - '2MK DRC加入原Loop：Hit / Block / Whiff正确分流，不自动花3格。'
+      - '5MP被防后的停手纪律继续保留；214LP最速/延迟和DRC只在有读法/资源理由时加入。'
+      - 'mash / tech / jump / reversal 四类常见应对开始有不同答案。'
+      - '位置和Drive开始真正改变继续、停手、运版或回Neutral的选择。'
+    gate:
+      match: '常见场景里能解释为什么继续、为什么停、为什么花资源；同一种反制连续出现时会调整。'
+    defer: ['大量Denjin浮空', '+42全套', '极限spacing/active-frame setplay', '只为少量伤害增加的高执行路线']
+    hub_focus: [5mp, 2mk, jump, punish, di]
+
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '同一次机会会按对手、位置、Drive和血量选择稳定、运版、Oki、伤害或斩杀；1500只作为持续Reality milestone。'
+    add_now:
+      - '稳定 / 运版 / Oki / 伤害 / 斩杀按位置和资源分流。'
+      - 'Denjin / Hashogeki只在安全窗口接入已有Loop，不为了角色机制放弃Neutral。'
+      - '角落维持、投拆、防凹与资源压力形成真正的选择树。'
+      - '开始用具体对手行为和回放证据解释为什么这次选择有效/无效。'
+    gate:
+      behavior: '五个能力域多数达到MATCH_STABLE；路线选择能说出“为什么现在选它”。'
+      reality: '1500 MR看跨多个时段的持续表现；单次达到或短期掉分不自动证明或否定能力。'
+    defer: ['低频窄条件优化', '极限spacing/active-frame路线', '只为展示最大数字的高风险路线']
+    hub_focus: [5mp, 2mk, special, punish, di]
+
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: '提升来自少漏、更加值钱的兑现和更快适应，而不是继续横向堆招式。'
+    add_now:
+      - '+42 safe jump、OD 236K运版、PC高收益、SA/斩杀与角落高价值分支。'
+      - 'spacing / active-frame / 空中高度等conditioned路线按真实条件区分，不背成通用口诀。'
+      - 'Burnout / Drive、角色专属punish / 脱出 / setplay按真实高频Matchup加入。'
+      - '回放问题从“漏基础答案”转向“同一正确机会有没有更优选择、旧节奏是否已被适应”。'
+    gate:
+      behavior: '新增优化建立在稳定基础判断上，不让对空、确认、资源和基础Oki退化。'
+      reality: '具体高分目标暂不硬编码；由Kian之后明确目标MR，再用持续表现而非单局峰值作为Reality evidence。'
+    hub_focus: [special, punish, di, 5mp, 2mk]
+
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条基础确认稳定', node: R01, upgrade_evidence: '5MP→2MP→623HP 与 2LK→5LP→5LP→623HP 在需要时都能稳定完成。'}
+    - {id: EX02, stage: S2, label: '2MK DRC不误提交', node: T03, upgrade_evidence: 'S2再加入；Hit/Block/Whiff正确分流。'}
+    - {id: EX03, stage: S0, label: '反空稳定', node: D01, upgrade_evidence: '236P之后仍能继续看跳，并稳定623P/2HP。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '波动后继续看跳', node: N01, upgrade_evidence: '发236P不会锁死注意力。'}
+    - {id: NE02, stage: S1, label: '5MK/2MK/5HP有分工', node: N02, upgrade_evidence: '能根据距离与对手行为选择，而不是把所有按钮当同一用途。'}
+    - {id: NE03, stage: S3, label: 'Denjin不绑架立回', node: T06, upgrade_evidence: 'S3再进主选择树；没安全窗口会放弃22P。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S1, label: 'Hit/Block/Whiff三分流', node: T01, upgrade_evidence: '命中走稳定确认；被防默认允许停手；挥空不自动提交必杀。'}
+    - {id: CO02, stage: S4, label: '条件数字带条件', node: R09, upgrade_evidence: '知道+42来自grounded/airborne特定命中，不把条件路线当通用。'}
+    - {id: CO03, stage: S3, label: '路线按目的选择', node: T03, upgrade_evidence: '稳定/运版/Oki/伤害/斩杀按对手、位置与资源选择。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: '623HP后基础起攻闭环', node: O01, upgrade_evidence: '先能稳定623HP→66→6HP meaty，并在实战把击倒接回下一Turn。'}
+    - {id: OF02, stage: S1, label: '投/shimmy逐步加入', node: T02, upgrade_evidence: '固定打击稳定后才加入；会区分timing与spacing，未验证的版中setup不当无脑模板。'}
+    - {id: OF03, stage: S4, label: '角落与+42高阶优化', node: O05, upgrade_evidence: 'safe jump/角落循环提高已有机会价值，不替代基础起攻。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S2, label: 'mash/tech/jump/reversal四分流', node: C01, upgrade_evidence: '根据对手真实习惯改变打/投/停手比例。'}
+    - {id: DA02, stage: S1, label: '挡无敌技会确反', node: T04, upgrade_evidence: '真的挡住后稳定走PC路线。'}
+    - {id: DA03, stage: S2, label: '读法失效回Neutral', node: N02, upgrade_evidence: '不会为了维持“我的回合”硬续。'}
+
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '最小整轮先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '高频基本答案多数MATCH_STABLE，明显基础漏答不再是主要损失。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: '常见分流与对手应对已结构化，2MK DRC/资源/停手不再机械。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；1500 MR只作为持续Reality milestone，不替代行为证据。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '优化围绕真实高分瓶颈；具体目标MR由Kian另行冻结。'}

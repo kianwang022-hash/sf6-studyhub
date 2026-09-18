@@ -1,0 +1,113 @@
+schema_version: '1.1'
+character: zangief
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+
+progression_policy:
+  principle: 'Whole → Part → Whole；先让走近→稳定确认→Lariat击倒→追到下一次接触这一整轮跑起来，再把 SPD 与高资源威胁接进尊重树。'
+  score_rule: 'MR/段位是 Reality evidence，不替代距离、正帧判断、strike/SPD分流与适应证据。'
+  current_ui: '前台一次只突出一个当前学习阶段；机会入口 Hub 仍负责具体打 / 投 / 停 / reset。'
+
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先证明不靠裸 SPD 也能打一整轮：走近→3MP/地面接触→Lariat击倒→DR追到一个固定打击→回中距离。'
+    add_now:
+      - '走位 / Parry / DR 缩短距离；先学地面接触，不把 SPD 当开局任务。'
+      - '3MP→Lariat 等稳定确认与主对空先成立。'
+      - 'Lariat / OD Lariat 击倒后先只保留一个 DR 追击后的稳定打击。'
+    gate:
+      lab: '稳定确认、主对空与一次击倒后 DR 接触能执行。'
+      match: '真人能反复出现完整 Loop；断掉时能指出是接近、确认、击倒、追人还是下一 Turn。'
+    defer: ['SPD读人主线', '完整6HP+4 strike/SPD树', 'OD Lariat +38', '角落循环', 'SA高资源斩杀']
+    hub_focus: [approach, 3mp, antiair]
+
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把接近与击倒后的高频答案稳定下来：对空、确认、DR追击、被防停手、大确反与DI不再反复漏。'
+    add_now:
+      - '3MP 单发被防 -3，不把确认组件误当持续压力。'
+      - 'Lariat 后 DR 追击先稳定一个打击答案，再增加投/停手。'
+      - '挡明显大无敌技/大破绽会稳定 punish；DI / 墙撞先认状态再兑现。'
+      - '远距离不因为急着贴身就无脑烧 Drive。'
+    gate:
+      match: '主要损失不再反复来自进不去、漏反空、漏确认、漏确反、DI不处理或Lariat后续做不出来。'
+    defer: ['SPD作为主要收益点', '复杂shimmy', 'OD Lariat +38循环', 'SA1/SA2/SA3优化']
+    hub_focus: [approach, 3mp, antiair, punish, di]
+
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '开始用 6HP +4 / DR 正帧接触建立尊重，并根据防 / mash / jump / reversal 决定 strike、投候选或 block。'
+    add_now:
+      - '6HP +4 后不机械续压：先看对手是否防、按、跳或凹。'
+      - '对 mash 提高可靠打击比例；对 jump 保留覆盖/反空；对 reversal 加停手。'
+      - '位置和 Drive 开始改变继续追、停、回 Neutral 的选择。'
+      - 'SPD 仍不是默认按钮，只在已经建立尊重的场景准备进入。'
+    gate:
+      match: '能解释“为什么这次继续打、为什么停、为什么准备投”；同一种逃法重复出现时会调整。'
+    defer: ['SPD高频读人', 'OD Lariat +38高阶循环', '角落高资源/SA优化']
+    hub_focus: [6hp, approach, punish, di, antiair]
+
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '把 SPD 接进已经建立的尊重树：strike / SPD / block 按对手行为分流；SPD 后按真实距离 reset，不伪装成自动 Oki。'
+    add_now:
+      - '对手愿意防时增加 SPD；对手跳/按多时回 strike；对手凹时增加 block。'
+      - 'SPD 命中后按实际距离重建，不把 command grab 后续写成保证回合。'
+      - '稳定 / 运版 / Oki / 伤害 / 斩杀开始按位置、Drive、血量选择。'
+      - '回放开始回答“我有没有先建立尊重”，而不是只看 SPD 猜中几次。'
+    gate:
+      behavior: '五域多数 MATCH_STABLE；SPD频率来自真实读人，不破坏接近、反空与基础确认。'
+      reality: '1500 MR 只作为跨多个时段的持续 Reality milestone。'
+    defer: ['低频高风险 command-grab 读法', '极限角落循环', '只为最大数字的高资源路线']
+    hub_focus: [spd, 6hp, approach, punish, di]
+
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: '把 OD Lariat +38、角落循环、SA anti-jump / 斩杀与窄条件优化接进成熟的接近—尊重—分流体系。'
+    add_now:
+      - 'OD Lariat +38、角落循环、SA1 anti-jump、SA2/SA3 斩杀按真实高频机会加入。'
+      - '距离、投距、起身时序与角落条件继续显式 conditioned。'
+      - '回放重点转向：已经逼到尊重后是否选了更高价值答案，对手适应后是否及时换频率。'
+    gate:
+      behavior: '新增优化建立在稳定接近、反空、确认、正帧判断与SPD reset语义之上。'
+      reality: '具体高分目标不硬编码；由 Kian 后续冻结。'
+    hub_focus: [spd, 6hp, punish, di, antiair]
+
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '核心无/低资源确认稳定', node: R01, upgrade_evidence: '训练场双侧稳定；实战命中后不掉路线。'}
+    - {id: EX02, stage: S2, label: '资源路线不误提交', node: T07, upgrade_evidence: '能在 Hit/Block/Whiff 后正确决定是否花 Drive。'}
+    - {id: EX03, stage: S0, label: '反空输入稳定', node: D01, upgrade_evidence: '能在实战把典型跳跃稳定处理，并知道成功后去哪。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '知道远/中/近三段接近任务', node: N02, upgrade_evidence: '实战能解释当前距离为什么走、DR或出这个地面工具。'}
+    - {id: NE02, stage: S0, label: '不被SPD绑架', node: N01, upgrade_evidence: 'S0 不依赖 command grab 也能打完整回合。'}
+    - {id: NE03, stage: S2, label: '对跳/后退/DI会改接近计划', node: D01, upgrade_evidence: '对手习惯变化后能减少原来的高承诺接近。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S1, label: 'Hit / Block / Whiff 三分流', node: T01, upgrade_evidence: '被防不播放命中连段，挥空不自动取消。'}
+    - {id: CO02, stage: S2, label: '正帧不是无限续压', node: T02, upgrade_evidence: '6HP/DR正帧接触只做一次清晰选择并继续观察。'}
+    - {id: CO03, stage: S4, label: 'conditioned 数字知道条件', node: T09, upgrade_evidence: '说得出距离/角落/资源/投距条件，不裸背帧数。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'Starter→Route→Ender→追击闭环', node: O01, upgrade_evidence: '实战完成核心 Loop 后能接下一 Turn。'}
+    - {id: OF02, stage: S2, label: '路线按目的选', node: T07, upgrade_evidence: '能在稳定/运版/Oki/伤害之间按场面选择。'}
+    - {id: OF03, stage: S3, label: 'SPD进入尊重树而非第二套游戏', node: T03, upgrade_evidence: 'SPD命中后按真实距离 reset；失败会回基础strike/block。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S2, label: '对手防 / mash / jump / reversal 有不同答案', node: C01, upgrade_evidence: '至少两局内能依据习惯改变 strike/SPD/block 比例。'}
+    - {id: DA02, stage: S1, label: '防守成功不死端', node: D02, upgrade_evidence: '挡住大招会 punish；脱离会回 N02。'}
+    - {id: DA03, stage: S2, label: '能主动降低失效选项频率', node: C04, upgrade_evidence: '同一读法连续失败后会切换计划。'}
+
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '最小整轮先 LAB_STABLE 并尽快 MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '高频基本答案多数 MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: '正帧尊重与常见反制已结构化，SPD尚不绑架学习。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数 MATCH_STABLE；1500 MR只是持续 Reality milestone。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '优化围绕真实高分瓶颈，不让接近—尊重—分流基础退化。'}

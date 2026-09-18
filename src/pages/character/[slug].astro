@@ -1,23 +1,11 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import RolePanel from '../../components/RolePanel.astro';
-import PracticalWorkbench from '../../components/PracticalWorkbench.astro';
-import { CURRENT_CHARACTERS, loadCharacter } from '../../lib/characters';
+import UnifiedCharacterPage from '../../components/UnifiedCharacterPage.astro';
+import { ALL_CHARACTERS, loadCharacter } from '../../lib/characters';
 
 export function getStaticPaths(){
-  return CURRENT_CHARACTERS.map((c) => ({ params: { slug: c.slug } }));
+  return ALL_CHARACTERS.map((c) => ({ params: { slug: c.slug } }));
 }
 const { slug } = Astro.params;
 const character = loadCharacter(slug!);
 ---
-<BaseLayout title={`${character.nameZh} · ${character.nameEn} | SF6 StudyHub`}>
-  <div class="shell">
-    <section class="hero">
-      <div><div class="eyebrow">{character.group} · {character.state}</div><h1>{character.nameZh}</h1><div class="en">{character.nameEn}</div></div>
-      <div class="status">{character.state}</div>
-    </section>
-    <nav class="tabs"><a class="active" href="#role">ROLE</a><a href="#practical">PRACTICAL</a><a href={`${import.meta.env.BASE_URL}`}>角色列表</a></nav>
-    <RolePanel role={character.roleProfile} />
-    <PracticalWorkbench practical={character.practical} />
-  </div>
-</BaseLayout>
+<UnifiedCharacterPage character={character} />

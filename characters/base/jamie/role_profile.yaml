@@ -1,6 +1,6 @@
 schema_version: '1.0'
 character: jamie
-status: SOURCE_CLOSURE_DRAFT
+status: CONTENT_READY
 role_profile:
   identity:
     one_line: '杰米先用正常地面战拿击倒；真正的特色是每次优势都要决定“现在继续压”还是“喝一杯投资未来”。'

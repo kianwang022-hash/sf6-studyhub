@@ -1,0 +1,113 @@
+schema_version: '1.1'
+character: jamie
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+
+progression_policy:
+  principle: 'Whole → Part → Whole；先让正常地面→稳定Arrow Kick击倒→下一Turn跑起来，再把安全喝酒与Drink Level工具逐层加进同一Loop。'
+  score_rule: 'MR/段位是 Reality evidence，不替代确认、击倒、喝酒时机与适应证据。'
+  current_ui: '前台一次只突出一个当前学习阶段；PLAY Hub负责具体Hit / Block / Whiff与Drink选择。'
+
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先证明完全不追Drink Level也能打一整轮：5MP/轻攻击接触→H Arrow Kick稳定击倒→固定下一Turn→回中距离。'
+    add_now:
+      - '5MP、轻攻击和正常走位负责接触；典型跳跃先有稳定反空。'
+      - '轻确认/5MP→H Arrow Kick先稳定，Drink只当安全窗口里的可选奖励。'
+      - 'H Arrow Kick后先固定一个打击答案，不把“喝酒”变成每次击倒的自动脚本。'
+    gate:
+      lab: '基础确认、主反空与H Arrow Kick后一个固定后续稳定。'
+      match: '真人能在不依赖喝酒的情况下出现完整Loop，并能指出断点。'
+    defer: ['+42 L Arrow/Bitter Strikes主线', 'Bakkai', 'Tenshin', 'Lv4工具', 'SA2临时Lv4/资源最大化']
+    hub_focus: [contact, arrow, antiair]
+
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把高频基础答案和第一层Drink收益稳定下来：击倒后能分“继续压”与“安全喝”，不为了升级等级牺牲位置。'
+    add_now:
+      - '学习+42 L Arrow Kick与Bitter Strikes等稳定击倒语义；先固定一套meaty/Oki。'
+      - '击倒后每次先问“继续压更值，还是现在真的安全喝酒”。'
+      - '被防不播放命中路线；挡明显大无敌/大破绽会稳定punish。'
+      - 'DI / 墙撞先认状态再兑现；饮酒不占用对空/地面判断。'
+    gate:
+      match: '主要损失不再反复来自漏反空、漏确认、为了喝酒丢位置、漏确反或DI不处理。'
+    defer: ['Bakkai完整分支', 'Tenshin尊重树', 'Lv4帧差变化', 'SA2资源路线']
+    hub_focus: [arrow, drink, antiair, punish, di]
+
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '加入Bakkai、2MK/Drive资源判断与+42 Oki适应，让每个Drink Level只增加一类真正需要的选择。'
+    add_now:
+      - 'Bakkai解锁后仍从已确认接触进入，不为了“有新招”改变整套neutral。'
+      - '+42起攻对mash / jump / tech / reversal分别调整strike / throw / shimmy / block。'
+      - 'Hit / Block / Whiff与资源决定是否进入Drive路线，不自动烧槽。'
+      - '每升一个Drink Level只新增当前真正有价值的一类工具，其余后置。'
+    gate:
+      match: '能解释这次为什么压、为什么喝、为什么花Drive；等级变化不再让整套打法失控。'
+    defer: ['Tenshin作为主要读人', 'Swagger Hermit Punch', 'SA2临时Lv4', '极限资源优化']
+    hub_focus: [drink, bakkai, arrow, punish, di]
+
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '把Tenshin与Drink Level差异接进已经建立的尊重树；Drink成为回报管理，不是整局KPI。'
+    add_now:
+      - 'Tenshin只在已经建立尊重的近身回合使用；对跳/按多时回strike。'
+      - '同一次击倒按位置、等级、Drive与血量选择继续压、喝、运版、伤害或斩杀。'
+      - '等级变化后只调整受影响的工具/路线，不“重学一个新角色”。'
+      - '复盘开始问“这杯酒换来了什么真实收益，是否值得放弃这次位置/Turn”。'
+    gate:
+      behavior: '五域多数MATCH_STABLE；Drink/Tenshin不破坏基础确认、反空与击倒判断。'
+      reality: '1500 MR只作为跨多个时段的持续Reality milestone。'
+    defer: ['Lv4极限帧差利用', 'SA2复杂临时Lv4脚本', '只为最大数字的高风险路线']
+    hub_focus: [tenshin, drink, arrow, punish, di]
+
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: '把Swagger Hermit Punch、Lv4帧差变化、SA2临时Lv4与资源最大化用在真实高频问题。'
+    add_now:
+      - 'Swagger Hermit Punch、Lv4专属变化、SA2临时Lv4与高资源路线按真实瓶颈加入。'
+      - 'Drink Level、位置、资源与具体帧差条件继续显式conditioned。'
+      - '回放重点转向机会价值：该喝、该压、该杀时是否选了更高收益答案。'
+    gate:
+      behavior: '新增优化建立在正常地面、反空、确认、+42 Oki与Drink时机成熟之上。'
+      reality: '具体高分目标不硬编码；由Kian后续冻结。'
+    hub_focus: [drink, tenshin, punish, di, arrow]
+
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 核心无/低资源确认稳定, node: R01, upgrade_evidence: '训练场双侧稳定；实战命中后不掉路线。'}
+    - {id: EX02, stage: S2, label: 资源路线不误提交, node: T07, upgrade_evidence: '能在 Hit/Block/Whiff 后正确决定是否花 Drive。'}
+    - {id: EX03, stage: S0, label: 反空输入稳定, node: D01, upgrade_evidence: '能在实战把典型跳跃稳定处理，并知道成功后去哪。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 知道远/中/近三段任务, node: N02, upgrade_evidence: '实战能解释当前距离为什么选这个工具。'}
+    - {id: NE02, stage: S0, label: 不被Drink绑架, node: N01, upgrade_evidence: 'S0不依赖喝酒也能打完整回合。'}
+    - {id: NE03, stage: S2, label: 对跳/后退/DI会改地面计划, node: D01, upgrade_evidence: '对手习惯变化后能减少原来的高承诺动作。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: Hit / Block / Whiff 三分流, node: T01, upgrade_evidence: '被防不播放命中连段，挥空不自动取消。'}
+    - {id: CO02, stage: S1, label: 正帧不是无限续压, node: T02, upgrade_evidence: '每个 +frame 接触只做一次清晰选择并继续观察。'}
+    - {id: CO03, stage: S4, label: conditioned 数字知道条件, node: T09, upgrade_evidence: '说得出等级/高度/距离/角落/资源条件，不裸背帧数。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: Starter→Route→Ender→Oki闭环, node: O01, upgrade_evidence: '实战完成核心 Loop 后能接下一 Turn。'}
+    - {id: OF02, stage: S2, label: 路线按目的选, node: T07, upgrade_evidence: '能在稳定/运版/Oki/伤害之间按场面选择。'}
+    - {id: OF03, stage: S3, label: Drink/Tenshin能回核心Loop, node: T03, upgrade_evidence: '招牌机制失败时会reset；成功时能回稳定路线/Oki。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S2, label: 对手 mash / tech / jump / reversal 有不同答案, node: C01, upgrade_evidence: '至少两局内能依据习惯改变 strike/throw/block 比例。'}
+    - {id: DA02, stage: S1, label: 防守成功不死端, node: D02, upgrade_evidence: '挡住大招会punish；脱离会回N02。'}
+    - {id: DA03, stage: S2, label: 能主动降低失效选项频率, node: C04, upgrade_evidence: '同一读法连续失败后会切换计划。'}
+
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '不喝酒也能跑通最小整轮，先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '基础击倒/喝酒时机与高频答案多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: '等级扩展与常见反制已结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；1500 MR只是持续Reality milestone。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '高等级/SA2优化围绕真实瓶颈，不让基础Loop退化。'}

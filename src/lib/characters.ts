@@ -2,32 +2,96 @@ import fs from 'node:fs';
 import path from 'node:path';
 import YAML from 'yaml';
 
-export const CURRENT_CHARACTERS = [
-  { slug: 'ryu', nameZh: '隆', nameEn: 'Ryu', group: 'base', state: 'GOLD_REFERENCE' },
-  { slug: 'jamie', nameZh: '杰米', nameEn: 'Jamie', group: 'base', state: 'GOLD_PAGE_READY' },
-  { slug: 'mai', nameZh: '火舞', nameEn: 'Mai', group: 'year2', state: 'GOLD_PAGE_READY' },
-  { slug: 'zangief', nameZh: '桑吉尔夫', nameEn: 'Zangief', group: 'base', state: 'GOLD_PAGE_READY' },
-  { slug: 'cammy', nameZh: '嘉米', nameEn: 'Cammy', group: 'base', state: 'GOLD_PAGE_READY' }
-] as const;
-
 const ROOT = process.cwd();
+const READY_STATE: Record<string, string> = {
+  ryu: 'GOLD_REFERENCE',
+  jamie: 'GOLD_PAGE_READY',
+  mai: 'GOLD_PAGE_READY',
+  zangief: 'GOLD_PAGE_READY',
+  cammy: 'GOLD_PAGE_READY'
+};
+
+const HERO_DISPLAY: Record<string, { position: string; scale: number }> = {
+  ryu: { position: '58% 45%', scale: 0.97 },
+  jamie: { position: '90% 50%', scale: 1 },
+  cammy: { position: '88% 50%', scale: 1 },
+  mai: { position: '90% 50%', scale: 1 },
+  zangief: { position: '82% 50%', scale: 1 }
+};
+
+const GROUP_LABELS: Record<string, string> = {
+  base: '本体 · BASE ROSTER · 18人',
+  year1: 'YEAR 1 · 4人',
+  year2: 'YEAR 2 · 4人',
+  year3: 'YEAR 3 · 4人',
+  year4: 'YEAR 4 · 1人'
+};
 
 function readYaml(file: string) {
   return YAML.parse(fs.readFileSync(file, 'utf8'));
 }
 
+function readYamlIf(file: string) {
+  return fs.existsSync(file) ? readYaml(file) : null;
+}
+
+function readTextIf(file: string) {
+  return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+}
+
+const rosterDoc = readYaml(path.join(ROOT, 'ROSTER.yaml'));
+
+export const ROSTER_GROUPS = Object.entries(rosterDoc.groups).map(([group, entries]: [string, any]) => ({
+  id: group,
+  label: GROUP_LABELS[group] ?? group,
+  characters: (entries as any[]).map((entry) => ({
+    slug: entry.slug,
+    nameZh: entry.name_zh,
+    nameEn: entry.name_en,
+    group,
+    state: READY_STATE[entry.slug] ?? 'SOURCE_CLOSURE_PENDING'
+  }))
+}));
+
+export const ALL_CHARACTERS = ROSTER_GROUPS.flatMap((group) => group.characters);
+export const CURRENT_CHARACTERS = ALL_CHARACTERS.filter((c) => READY_STATE[c.slug]);
+
 export function loadCharacter(slug: string) {
-  const meta = CURRENT_CHARACTERS.find((c) => c.slug === slug);
-  if (!meta) throw new Error(`Unknown current character: ${slug}`);
+  const meta = ALL_CHARACTERS.find((c) => c.slug === slug);
+  if (!meta) throw new Error(`Unknown SF6 character: ${slug}`);
+
   const dir = path.join(ROOT, 'characters', meta.group, slug);
-  const practical = readYaml(path.join(dir, 'practical.yaml'));
-  let roleProfile: any;
-  if (slug === 'ryu') {
-    const ryuMeta = readYaml(path.join(dir, 'meta.yaml'));
-    roleProfile = ryuMeta.role_profile;
-  } else {
-    const role = readYaml(path.join(dir, 'role_profile.yaml'));
-    roleProfile = role.role_profile;
+  const isReady = Boolean(READY_STATE[slug]);
+  let roleProfile: any = null;
+  let practical: any = null;
+  let progression: any = null;
+
+  if (isReady) {
+    practical = readYaml(path.join(dir, 'practical.yaml'));
+    progression = readYamlIf(path.join(dir, 'grow.yaml'));
+    if (slug === 'ryu') {
+      roleProfile = readYaml(path.join(dir, 'meta.yaml')).role_profile;
+    } else {
+      roleProfile = readYaml(path.join(dir, 'role_profile.yaml')).role_profile;
+    }
   }
-  return { ...meta, roleProfile, practical };
+
+  const hero = HERO_DISPLAY[slug]
+    ? {
+        dark: `${slug}-dark.jpg`,
+        light: `${slug}-light.jpg`,
+        ...HERO_DISPLAY[slug]
+      }
+    : null;
+
+  return {
+    ...meta,
+    isReady,
+    roleProfile,
+    practical,
+    progression,
+    learnMarkdown: readTextIf(path.join(dir, 'learn.md')),
+    referenceMarkdown: readTextIf(path.join(dir, 'reference.md')),
+    hero
+  };
 }

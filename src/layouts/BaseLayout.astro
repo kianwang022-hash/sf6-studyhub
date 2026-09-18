@@ -3,31 +3,68 @@ import '../styles/global.css';
 const { title = 'SF6 StudyHub' } = Astro.props;
 ---
 <!doctype html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
     <title>{title}</title>
   </head>
   <body>
-    <header class="topbar">
-      <a class="brand" href={`${import.meta.env.BASE_URL}`}>SF6 STUDYHUB</a>
-      <div class="top-actions">
-        <button id="theme-toggle" class="small-btn" type="button">LIGHT / DARK</button>
+    <header class="v6-topbar">
+      <nav class="global-tabs" aria-label="切换阅读内容">
+        <button type="button" data-top-tab="learn"><span>◈</span>学习</button>
+        <button type="button" data-top-tab="role" class="active"><span>◉</span>角色</button>
+        <button type="button" data-top-tab="practical"><span>◎</span>实战</button>
+        <button type="button" data-top-tab="reference"><span>▦</span>资料</button>
+      </nav>
+      <div class="reading-tools">
+        <button type="button" id="smaller" aria-label="缩小整个界面">A−</button>
+        <span id="scaleLabel" class="scale-readout">100%</span>
+        <button type="button" id="larger" aria-label="放大整个界面">A＋</button>
+        <button type="button" id="theme-toggle" class="theme-toggle"><span class="theme-icon">◐</span><span class="theme-label">深色</span></button>
+        <button type="button" id="print">打印</button>
       </div>
     </header>
+    <div class="reading-progress" aria-hidden="true"></div>
     <main><slot /></main>
+    <button class="back-top" type="button" aria-label="回到顶部">↑</button>
     <script is:inline>
-      const root = document.documentElement;
-      const button = document.getElementById('theme-toggle');
-      const saved = localStorage.getItem('sf6-theme');
-      if (saved) root.dataset.theme = saved;
-      button?.addEventListener('click', () => {
-        const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-        root.dataset.theme = next;
-        localStorage.setItem('sf6-theme', next);
-      });
+      (() => {
+        const root = document.documentElement;
+        const body = document.body;
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeLabel = themeBtn?.querySelector('.theme-label');
+        const savedTheme = localStorage.getItem('sf6-theme');
+        if (savedTheme) root.dataset.theme = savedTheme;
+        const syncTheme = () => { if (themeLabel) themeLabel.textContent = root.dataset.theme === 'dark' ? '浅色' : '深色'; };
+        syncTheme();
+        themeBtn?.addEventListener('click', () => {
+          root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          localStorage.setItem('sf6-theme', root.dataset.theme);
+          syncTheme();
+        });
+
+        let scale = Number(localStorage.getItem('sf6-scale') || '1');
+        const scaleLabel = document.getElementById('scaleLabel');
+        const applyScale = () => {
+          scale = Math.min(1.18, Math.max(.86, Math.round(scale * 100) / 100));
+          root.style.setProperty('--ui-scale', String(scale));
+          if (scaleLabel) scaleLabel.textContent = `${Math.round(scale * 100)}%`;
+          localStorage.setItem('sf6-scale', String(scale));
+        };
+        applyScale();
+        document.getElementById('smaller')?.addEventListener('click', () => { scale -= .06; applyScale(); });
+        document.getElementById('larger')?.addEventListener('click', () => { scale += .06; applyScale(); });
+        document.getElementById('print')?.addEventListener('click', () => window.print());
+        document.querySelector('.back-top')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        addEventListener('scroll', () => {
+          const max = document.documentElement.scrollHeight - innerHeight;
+          const pct = max > 0 ? Math.min(100, scrollY / max * 100) : 0;
+          const bar = document.querySelector('.reading-progress');
+          if (bar) bar.style.width = `${pct}%`;
+        }, { passive: true });
+      })();
     </script>
   </body>
 </html>

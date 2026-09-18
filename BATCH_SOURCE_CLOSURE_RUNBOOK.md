@@ -66,6 +66,15 @@ Try to obtain, in source-tier order:
 
 Community discussion may suggest candidates but does not establish patch-sensitive facts by itself.
 
+#### Evidence adequacy rule
+
+Tier 2 is **evidence on demand, not a quota**.
+
+- Do not add an old or generic video merely so every character has a Tier 2 link.
+- If current Tier 0 / Tier 1 material directly supports the Character Model claim and route/Oki evidence reproduces the same decision loop, the claim may close without an extra Tier 2 source.
+- If a strategic claim still depends on interpretation beyond what Tier 0 / Tier 1 evidence establishes, add a current expert guide / Training Mode demonstration / high-level VOD, or keep that claim explicitly `provisional`.
+- Batch receipts must state whether Tier 2 was `USED`, `NOT_REQUIRED`, or `NEEDED / GAP`; absence must never be hidden.
+
 ### A3. Required closure outputs
 
 Before route pruning, source enough material to answer:
