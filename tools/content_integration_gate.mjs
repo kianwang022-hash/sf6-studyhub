@@ -28,7 +28,8 @@ const chars = [
   { slug:'jamie', group:'base', normals:18, learn:['安全窗口','Drink Level','H Arrow Kick'], ref:['Bakkai','Tenshin'], practical:['236K','63214'] },
   { slug:'mai', group:'year2', normals:18, learn:['dash +9','Musasabi','stock'], ref:['OD `214P` Ryuuenbu','+41 / +42'], practical:['j.214P','OD 236K','SA2'] },
   { slug:'zangief', group:'base', normals:23, learn:['建立“对手必须防”的尊重','SPD','Lariat'], ref:['SPD 后重置','OD Double Lariat'], practical:['360P','SA3'] },
-  { slug:'cammy', group:'base', normals:18, learn:['M Spiral Arrow','Cannon Strike','Hooligan'], ref:['Cannon Strike','SA3'], practical:['SA1','SA3'] }
+  { slug:'cammy', group:'base', normals:18, learn:['M Spiral Arrow','Cannon Strike','Hooligan'], ref:['Cannon Strike','SA3'], practical:['SA1','SA3'] },
+  { slug:'ken', group:'base', normals:18, learn:['S0｜最小可玩','Quick Dash Tatsu','2MP > 5LK'], ref:['+25','Forward Step Kick'], practical:['Quick Dash','SA3'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -89,4 +90,4 @@ for (const c of chars) {
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 1 content candidate | Learn + Role + Practical + Reference + resolved source registries');
