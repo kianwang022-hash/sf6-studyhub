@@ -1,0 +1,269 @@
+schema_version: '1.0'
+character: luke
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-18'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Luke S0 uses stable Flash Knuckle +36. Perfect timing enters only when it buys a distinct practical result.'
+stages:
+  S0: {label: 最小可玩, short: 'Stable +36 Loop'}
+  S1: {label: 基本功成型, short: 'DDT / Punish / Corner'}
+  S2: {label: 实战结构化, short: '2MK DRC / +7 / DI'}
+  S3: {label: 选择成熟, short: 'Perfect / +64 / Position'}
+  S4: {label: 高分上探, short: 'Safe Jump / SA / Kill'}
+shared_packages:
+  L_FLASH_36:
+    label: 'L Flash Knuckle +36 基础Oki'
+    sequence: 'L Flash Knuckle -> +36 -> immediate Parry Drive Rush'
+    next: 'throw / 2MP / walk-back shimmy / block'
+    verification: verified
+    sources: [SRC05]
+  DDT_12:
+    label: 'DDT +12 hard knockdown'
+    sequence: 'OD Flash Knuckle > DDT -> +12'
+    next: 'throw meaty / walk-back shimmy'
+    verification: verified
+    sources: [SRC05]
+  NO_CHASER_7:
+    label: 'No Chaser whiff +7'
+    sequence: 'M Flash Knuckle > L Flash Knuckle > No Chaser whiff'
+    next: 'point-blank +7 -> 2MP / throw / shimmy'
+    verification: conditioned
+    conditions: [route_spacing]
+    sources: [SRC05]
+  H_FLASH_64:
+    label: 'H Flash +64 高阶setplay'
+    sequence: 'H Flash Knuckle fully charged or airborne hit -> +64'
+    next: 'No Chaser +15 / three dashes +7 / corner safe jump'
+    verification: conditioned
+    conditions: [charge_or_airborne_hit, spacing, corner_for_safe_jump]
+    sources: [SRC05]
+opportunities:
+- id: close
+  title: '2MP｜Luke最重要的稳定接触'
+  stage: S0
+  subtitle: '先把+1接触和+36收尾跑成整轮'
+  rows:
+  - result: WHIFF
+    stage: S0
+    choice: 不补票
+    input: '2MP whiff -> stop'
+    value: {drive: 0}
+    next_loop: '回距离 / 继续看跳'
+    why: '挥空额外recovery；不因为2MP好用就自动再按。'
+    verification: verified
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S0
+    choice: +1重读
+    input: '2MP block (+1) -> 2LP / throw / walk-back shimmy / block'
+    value: {frame: '+1'}
+    next_loop: '看对手是抢、拆、跳还是凹'
+    why: '先学一个清晰正帧选择点，不靠Perfect才有压力。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2MP > 2LP > L Flash Knuckle'
+    value: {drive: 0, kd: '+36'}
+    next_loop_package: L_FLASH_36
+    why: '当前训练顺序第一条；短、稳定，直接进入Luke核心Oki。'
+    verification: verified
+    sources: [SRC05]
+- id: light
+  title: 'Light｜低段小机会复用同一个+36'
+  stage: S0
+  subtitle: '先降低工作记忆，不为小starter追Perfect'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LK > 2LP > L Flash Knuckle'
+    value: {drive: 0, kd: '+36'}
+    next_loop_package: L_FLASH_36
+    why: '低段starter也回同一套+36，先把整轮做成条件反射。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: '2LK / 2LP block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '不确认就不提交Flash Knuckle'
+    why: '先建立命中确认纪律。'
+- id: jump
+  title: 'Jump-in｜大接触也先保稳定'
+  stage: S0
+  subtitle: '不用Perfect也有完整jump-in路线'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 稳定
+    input: 'j.HK > 5LP > 5MP > 5HP > H Flash Knuckle'
+    value: {drive: 0}
+    next_loop: '按H Flash实际落点进入后续 / 重置距离'
+    why: '第一阶段只要可靠，不因为jump-in伤害高就强迫Perfect。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 回普通近身
+    input: 'j.HK block -> 2MP / throw / stop by spacing'
+    value: {state: 'close contact'}
+    next_loop: '回2MP +1或throw判断'
+    why: '跳入被防不是自动combo。'
+- id: meter
+  title: 'OD Flash｜用Drive换简单hard knockdown'
+  stage: S1
+  subtitle: '+12 DDT存在的理由是简单明确，不是更花'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: DDT稳定
+    input: '2LK > 2LP > OD Flash Knuckle > DDT'
+    value: {drive: 3, kd: '+12 hard knockdown'}
+    next_loop_package: DDT_12
+    why: 'Drive换简单throw/shimmy，执行和后续都清楚。'
+    verification: verified
+    sources: [SRC05]
+- id: punish
+  title: 'Punish / Shimmy PC｜先保证确定价值'
+  stage: S1
+  subtitle: '大机会也先有一条稳定答案'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 稳定PC
+    input: '5HP (PC) > M Flash Knuckle > H Rising Uppercut'
+    value: {drive: 0}
+    next_loop: 'H Rising Uppercut -> forward dash -> throw / strike by spacing'
+    why: '骗拆或大破绽先稳定兑现，不为Perfect掉路线。'
+    verification: verified
+    sources: [SRC05]
+  - result: PC
+    stage: S3
+    choice: 高执行+12
+    input: '5HP (PC) > L Flash Knuckle (Perfect) > delayed OD Flash Knuckle > DDT'
+    value: {drive: 3, kd: '+12'}
+    next_loop_package: DDT_12
+    why: '只有Perfect稳定且额外damage值得时才替代简单PC。'
+    verification: conditioned
+    conditions: [perfect_timing]
+    sources: [SRC05]
+- id: 2mk
+  title: '2MK｜S2才加入DRC和+7 setplay'
+  stage: S2
+  subtitle: '低段接触先分Hit / Block / Whiff，再谈高执行'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回Neutral'
+    why: 'Drive只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 分状态
+    input: '未DRC: 接触结束 | 已DRC: 2MP / throw / shimmy / stop'
+    value: {drc_cost: 3}
+    next_loop: '按是否已取消绿冲处理'
+    why: '2MK本体被防-6。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: +7 setplay
+    input: '2MK > DRC > 2MP > 2HP > M Flash Knuckle > L Flash Knuckle > No Chaser whiff'
+    value: {drive: 3, frame: 'point-blank +7'}
+    next_loop_package: NO_CHASER_7
+    why: '这条路线存在的理由是明确+7下一轮，不是因为更长。'
+    verification: verified
+    sources: [SRC05]
+- id: corner
+  title: 'Corner｜L Rising Uppercut与throw loop'
+  stage: S1
+  subtitle: 'hit height和角落条件必须显式保留'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: 轻starter角落
+    input: '2LK > 2LP > L Flash Knuckle > L Rising Uppercut'
+    value: {kd: '+28…31'}
+    next_loop: 'forward dash > 4HK active meaty / throw by actual hit height'
+    why: '角落路线价值在保墙和下一轮；+28…31不是固定单一数字。'
+    verification: conditioned
+    conditions: [corner, airborne_hit_height]
+    sources: [SRC05]
+  - result: THROW
+    stage: S1
+    choice: 前投loop
+    input: 'corner forward throw -> +19 -> walk forward'
+    value: {kd: '+19'}
+    next_loop: 'forward throw / 2MP / shimmy'
+    why: '角落最基础的持续问题，不需要Perfect。'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+- id: perfect
+  title: 'Perfect Flash｜只有买到独立价值才提高执行'
+  stage: S3
+  subtitle: '困难本身不是学习价值'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Year4角落优化
+    input: '5HP > L Flash Knuckle (fully charged) > j.MP > delayed M Flash Knuckle > L Rising Uppercut'
+    value: {kd: '+28…31', state: corner}
+    next_loop: 'dash > 4HK / throw by hit height'
+    why: 'Year4新增连接；只有角落路线价值和执行稳定性都成立时才学。'
+    verification: conditioned
+    conditions: [corner, charge_timing, airborne_hit_height]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: +64高价值
+    input: 'back-to-corner Impaler (PC) > 2HP > M Flash Knuckle (Perfect) > PDR > 5HP > H Flash Knuckle (Perfect)'
+    value: {drive: 2, kd: '+64'}
+    next_loop_package: H_FLASH_64
+    why: '高执行换明显更强setplay；不是日常默认。'
+    verification: conditioned
+    conditions: [back_to_corner, perfect_timing]
+    sources: [SRC05]
+- id: super
+  title: 'SA｜最后才把已有opening现金化'
+  stage: S4
+  subtitle: '不为了Super新增陌生starter'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3 easy
+    input: '5HP > L Flash Knuckle (fully charged) > SA3'
+    value: {sa: 3}
+    next_loop: 'Kill；未击杀按SA3落点重建'
+    why: '当前来源有完整短路线，适合作为第一条SA3现金化。'
+    verification: conditioned
+    conditions: [charge_timing]
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: lethal
+    input: '5HP > DRC > 4HK > 2HP > DRC > 4HK > 2HP > H Flash Knuckle > SA3'
+    value: {drive: 6, sa: 3}
+    next_loop: 'Kill'
+    why: '只有斩杀线明确时才为最大资源路线占工作记忆。'
+    verification: conditioned
+    conditions: [resources, kill_range]
+    sources: [SRC05]
+backend_only:
+- {label: '+36 active-frame 2MP meaty', reason: 'exact contact timing needs Training Mode closure'}
+- {label: 'H Flash +64 -> No Chaser +15 -> 5HK active meaty', reason: 'advanced conditioned setplay; keep S4'}
+- {label: '+64 corner safe jump', reason: 'corner/end-state condition required'}
+- {label: 'duplicate Perfect routes', reason: 'no learner promotion unless they own distinct damage/carry/setplay value'}
