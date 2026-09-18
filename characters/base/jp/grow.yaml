@@ -1,0 +1,115 @@
+schema_version: '1.1'
+character: jp
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先稳定Stribog/Triglav/Torbalan即时remote control，再学第一次earned Departure；完整portal state只在remote ordering稳定后打开。'
+  score_rule: 'Rank/MR是Reality evidence，不替代grounded/airborne、portal active、corner、Drive resource、current Amnesia与exact +42条件。'
+  current_ui: 'S0 remote ordering；S1 first Departure；S2 full portal/current Amnesia；S3 OD/high-budget state；S4 Lovushka。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '稳定三条Stribog confirm、Triglav/Torbalan职责、2HP anti-air与5HK +2 pressure，不需要portal。'
+    add_now:
+      - '2LP > 5LP > L Stribog。'
+      - '5MK > M Stribog。'
+      - '2MP > 5LK > L Stribog。'
+      - 'Triglav打ground/等待。'
+      - '5HP -> L Torbalan remote branch。'
+      - '2HP anti-air。'
+      - '5HK Block +2 -> 2LP。'
+    gate:
+      lab: 'Stribog只在confirm后提交；能分别说出Triglav、Torbalan、Stribog职责。'
+      match: '不会开局机械Departure；能让对手在远处持续应答。'
+    defer: ['Departure', 'portal tree', 'Amnesia route', 'OD Torbalan +25', 'Embrace', 'Lovushka']
+    hub_focus: [light, medium, triglav, torbalan, anti_air, close_pressure]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '第一次从earned airborne hit投资Departure，并把+42 safe jump / corner throw exact state固定。'
+    add_now:
+      - 'airborne 5HP -> Departure +15。'
+      - '空间不足时主动不放Departure。'
+      - 'M Stribog grounded +42 -> safe jump。'
+      - 'exact +42 -> 2MK whiff -> 5HK active meaty。'
+      - 'corner forward throw +23 -> dash +1。'
+    gate:
+      match: '能解释为什么这次有时间放portal；没有时间时会继续remote control。'
+    defer: ['full portal tree', 'OD Departure hybrid', 'Amnesia adaptation', 'OD Torbalan']
+    hub_focus: [first_portal, safejump, corner_throw]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: 'portal active后正式做双位置判断，并加入current Amnesia和remote→portal hybrid route。'
+    add_now:
+      - 'Departure Shadow / Window。'
+      - 'portal low / strike / throw。'
+      - '5HP airborne -> Triglav -> OD Departure +4..+6。'
+      - 'current Year4 Amnesia / OD Amnesia aftermath。'
+      - '一条CDR remote route。'
+      - 'Triglav +44 / OD +53资源差。'
+    gate:
+      match: 'portal分支按对手移动选择，不固定teleport；portal结束会回remote control。'
+    defer: ['OD Torbalan +25', 'Embrace', 'deep corner portal setplay', 'Lovushka']
+    hub_focus: [portal_tree, portal_hybrid, amnesia, drive]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'OD Torbalan、Embrace、corner active-meaty与SA3/CA exact state进入价值比较。'
+    add_now:
+      - 'OD Torbalan Block +25 high-budget state。'
+      - 'Embrace respect cash-in。'
+      - 'corner Torbalan/Stribog active meaty。'
+      - 'deeper Shadow/Window side choice。'
+      - 'SA3 +23 / CA +44 exact-state setplay。'
+    gate:
+      behavior: '资源plus、portal、command grab都保留状态owner；不把大数字泛化。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['Lovushka full trees', 'matchup projectile ordering']
+    hub_focus: [od_torbalan, embrace, portal_tree]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'Lovushka、max portal/OD route、matchup projectile ordering与character-specific Amnesia进入。'
+    add_now:
+      - 'SA2 Lovushka persistent setplay。'
+      - 'max portal/OD route。'
+      - 'matchup Triglav/Torbalan ordering。'
+      - 'portal placement frequency。'
+      - 'character-specific Amnesia / active-frame lab。'
+    gate:
+      behavior: 'Lovushka不会取代S0的remote ordering与S1的earned portal纪律。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, portal_tree, amnesia]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'Stribog confirm稳定', node: light, upgrade_evidence: 'block时能停，不交-10/-8 ender。'}
+    - {id: EX02, stage: S1, label: 'airborne 5HP→Departure稳定', node: first_portal, upgrade_evidence: '只在earned hit后放portal。'}
+    - {id: EX03, stage: S2, label: 'OD Departure hybrid稳定', node: portal_hybrid, upgrade_evidence: 'route/Drive/portal state不串。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'remote threat ordering', node: triglav, upgrade_evidence: 'Triglav/Torbalan/Stribog按行为用，不随机轮。'}
+    - {id: NE02, stage: S1, label: '知道什么时候不放portal', node: first_portal, upgrade_evidence: '空间不足会继续即时控制。'}
+    - {id: NE03, stage: S2, label: 'portal与本体双位置判断', node: portal_tree, upgrade_evidence: '不会portal一出就固定Window。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: '+38/+42 owner分清', node: medium, upgrade_evidence: 'L/M Stribog状态不串。'}
+    - {id: CO02, stage: S2, label: 'remote hit vs portal investment有理由', node: portal_hybrid, upgrade_evidence: '能解释当前为什么花Drive建portal。'}
+    - {id: CO03, stage: S3, label: 'OD +25 / super exact-state分清', node: od_torbalan, upgrade_evidence: '大plus只属于声明资源state。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'Stribog→remote control闭环', node: light, upgrade_evidence: '击倒后继续逼remote应答。'}
+    - {id: OF02, stage: S2, label: 'portal tree→remote reset闭环', node: portal_tree, upgrade_evidence: 'portal结束后会回基本screen control。'}
+    - {id: OF03, stage: S3, label: 'corner/high-budget setplay', node: od_torbalan, upgrade_evidence: '只在exact/resource state执行。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: 'jump→2HP', node: anti_air, upgrade_evidence: '能把对手压回地面remote game。'}
+    - {id: DA02, stage: S2, label: 'Amnesia使用current aftermath', node: amnesia, upgrade_evidence: '不套旧auto follow-up。'}
+    - {id: DA03, stage: S4, label: 'matchup portal/projectile频率调整', node: super, upgrade_evidence: '远程顺序按对手而非固定脚本。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'stable Stribog knockdown→remote ordering先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'earned Departure + exact +42 owner多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'portal双位置状态机/current Amnesia结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；resource/exact-state不泄漏。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'Lovushka / matchup ordering围绕真实高分瓶颈。'}
