@@ -1,0 +1,17 @@
+schema_version: '1.1'
+character: chunli
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Chun-Li', url: 'https://www.streetfighter.com/6/en-us/character/chunli/frame', game_version: current, covers: [frames, damage, cancel_properties, commands]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Chun-Li battle adjustments — 2026-08-03', url: 'https://www.streetfighter.com/6/buckler/ja-jp/battle_change/20260803/chunli', date: '2026-08-03', covers: [version_boundary, serenity_stream, lotus_fist, hundred_lightning_kicks, hazanshu, tensho_kicks]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Chun-Li Frame Data', url: 'https://sf6-lab.net/en/fighters/chunli/frame', freshness: 'official-reference data through 2026-08-27; checked 2026-09-19', covers: [frames, normals, unique_attacks, serenity_stream, specials, supers]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Chun-Li Move List', url: 'https://sf6-lab.net/en/fighters/chunli/moves', freshness: 'checked 2026-09-19', covers: [commands, stance_followups, specials, supers]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Chun-Li Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/chunli/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, serenity_stream_routes, charge_bypass, safe_jump, training_order]}
+- {id: SRC06, tier: 1, title: 'Ultimate Frame Data — Chun-Li', url: 'https://ultimateframedata.com/sf6/chunli', freshness: 'August 2026 patch updates live; checked 2026-09-19', covers: [frames, hitboxes, cancel_properties, stance, specials]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC06, SRC00]
+  numeric_conflict_rule: 'current official-reference / Year4 maintained data overrides pre-August material; grounded-vs-airborne Tensho, safe-jump, active-frame, corner and spacing claims remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; stance entry, charge-bypass route, corner state and exact +45/+46 safe-jump state must remain explicit'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current official-reference frame data and Year4 route/Oki evidence directly close the teaching model'
+  learner_projection_rule: 'stable normal/charge route and one stance-to-SBK proof first; full Serenity Stream high/low/exit pressure tree only after ordinary Oki is stable'
