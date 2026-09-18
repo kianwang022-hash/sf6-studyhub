@@ -45,7 +45,8 @@ const chars = [
   { slug:'blanka', group:'base', normals:18, learn:['S0｜最小可玩','Electric Thunder','Blanka-chan Bomb'], ref:['+42','Blanka-chan Bomb','Lightning Beast'], practical:['Blanka-chan Bomb','SA2'], candidate:true },
   { slug:'vega', group:'year2', normals:18, learn:['S0｜最小可玩','Psycho Mine','cash-in'], ref:['Psycho Mine','OD Crusher','Devil Reverse'], practical:['Psycho Mine','OD Psycho Crusher'], candidate:true },
   { slug:'marisa', group:'base', normals:18, learn:['S0｜最小可玩','Enfold','+42'], ref:['charged 5HP','Phalanx','Enfold'], practical:['Enfold','fully charged'], candidate:true },
-  { slug:'lily', group:'base', normals:18, learn:['S0｜最小可玩','Windclad','Mexican Typhoon'], ref:['Normal vs Windclad Spire','Mexican Typhoon','+52'], practical:['Mexican Typhoon','Windclad H Condor Spire'], candidate:true }
+  { slug:'lily', group:'base', normals:18, learn:['S0｜最小可玩','Windclad','Mexican Typhoon'], ref:['Normal vs Windclad Spire','Mexican Typhoon','+52'], practical:['Mexican Typhoon','Windclad H Condor Spire'], candidate:true },
+  { slug:'manon', group:'base', normals:18, learn:['S0｜最小可玩','Medal','H Rond-point'], ref:['Medal Level','Manège Doré','Throw Aftermath'], practical:['Manège Doré','Medal Level'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -378,35 +379,60 @@ for (const c of chars) {
         const value = row?.value ?? {};
         const stockGain = Number(value?.stock_gain ?? 0);
         const stockSpend = Number(value?.stock_spend ?? 0);
-        if (stage === 'S0') {
-          assert(!/Mexican Typhoon\s*$/i.test(input), 'lily: Mexican Typhoon choice leaked into S0');
-        }
+        if (stage === 'S0') assert(!/Mexican Typhoon\s*$/i.test(input), 'lily: Mexican Typhoon choice leaked into S0');
         const enhancedMove = /Windclad\s+(?:[LMHOD]+\s+)?(?:Condor Spire|Tomahawk Buster|Condor Dive)/i.test(input) || /Windclad stock active/i.test(input);
-        if (enhancedMove || stockSpend > 0) {
-          assert(/windclad_stock/i.test(conditions), 'lily: Windclad move/spend row missing windclad_stock');
-        }
+        if (enhancedMove || stockSpend > 0) assert(/windclad_stock/i.test(conditions), 'lily: Windclad move/spend row missing windclad_stock');
         if (/Mexican Typhoon\s*$/i.test(input)) {
           assert(stage !== 'S0', 'lily: Mexican Typhoon must start after S0');
           assert(/opponent_respect|punish_counter|point_blank/i.test(conditions), 'lily: Mexican Typhoon choice lost respect/punish truth');
         }
         const usesPlus52 = /\+52/.test(JSON.stringify(value)) || /\+52/.test(input);
-        if (usesPlus52 && /Spire/i.test(input + ' ' + String(op.title ?? ''))) {
-          assert(/windclad_stock/i.test(conditions) && /windclad_h_spire_end_state/i.test(conditions), 'lily: +52 safe-jump/Oki row lost Windclad H Spire exact-state truth');
-        }
-        if (stockGain > 0) {
-          assert(/safe_resource_window/i.test(conditions), 'lily: Windclad build row missing safe resource window');
-        }
-        if (stockGain > 1) {
-          assert(stage === 'S3' || stage === 'S4', 'lily: multi-stock Windclad build must remain S3+');
-        }
+        if (usesPlus52 && /Spire/i.test(input + ' ' + String(op.title ?? ''))) assert(/windclad_stock/i.test(conditions) && /windclad_h_spire_end_state/i.test(conditions), 'lily: +52 safe-jump/Oki row lost Windclad H Spire exact-state truth');
+        if (stockGain > 0) assert(/safe_resource_window/i.test(conditions), 'lily: Windclad build row missing safe resource window');
+        if (stockGain > 1) assert(stage === 'S3' || stage === 'S4', 'lily: multi-stock Windclad build must remain S3+');
       }
     }
     assert((practical.opportunities ?? []).some((op) => op.id === 'resource' && op.stage === 'S0'), 'lily: S0 one-stock investment opportunity missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'state_choice' && op.stage === 'S2'), 'lily: S2 hold-vs-spend opportunity missing');
+  }
+  if (c.slug === 'manon') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === '-', 'manon: 2MK must remain non-cancelable');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'manon: inherited 2MK DRC route leaked');
+    assert(/Medal reward escalation.*strike revaluation/i.test(role?.signature_mechanic?.name ?? ''), 'manon: Medal feedback signature owner missing');
+    const manonText = learn + "\n" + reference + "\n" + practicalText;
+    assert(!/(?:guaranteed\s+(?:continued\s+)?throw|throw\s+(?:is\s+)?guaranteed|保证续投|必定续投)/i.test(manonText), 'manon: guaranteed throw-after wording leaked');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const valueText = JSON.stringify(row?.value ?? {});
+        if (stage === 'S0') {
+          assert(!/Manège Doré\s*$/i.test(input), 'manon: command-grab choice leaked into S0');
+          assert(!/medal_level/i.test(valueText), 'manon: Medal Level bookkeeping leaked into S0');
+        }
+        if (/Manège Doré\s*$/i.test(input)) {
+          assert(stage !== 'S0', 'manon: Manège Doré must start after S0');
+          assert(/opponent_respect|point_blank|punish_counter/i.test(conditions), 'manon: Manège Doré choice lost respect/point-blank truth');
+        }
+        if (/Medal Level 4-5/i.test(input) || /medal_level_4_5/i.test(conditions)) {
+          assert(stage === 'S3' || stage === 'S4', 'manon: high-Medal layer must remain S3+');
+        }
+        if (/normal throw or Manège Doré hit -> forward dash/i.test(input)) {
+          assert(/throw_spacing/i.test(conditions), 'manon: throw-after dash lost spacing truth');
+        }
+        if (/damage/i.test(valueText) && /Medal|medal_level/i.test(input + conditions + valueText)) {
+          assert(/medal_level|explicit current level|medal_level_\d/i.test(conditions + valueText), 'manon: Medal-scaled damage missing explicit Level state');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'first_medal' && op.stage === 'S1'), 'manon: S1 first-Medal opportunity missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'medal_behavior' && op.stage === 'S2'), 'manon: S2 Medal-behavior opportunity missing');
   }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 17 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 18 content candidates | Learn + Role + Practical + Reference + resolved source registries');
