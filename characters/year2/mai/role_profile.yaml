@@ -1,6 +1,6 @@
 schema_version: '1.0'
 character: mai
-status: SOURCE_CLOSURE_DRAFT
+status: CONTENT_READY
 role_profile:
   identity:
     one_line: '火舞先靠飞扇和中距离拳脚正常拿机会；真正的特色是把普通命中升级成更好的击倒、位置、安全跳或强化状态。'
