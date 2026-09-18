@@ -35,8 +35,10 @@ try {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
     assert(await page.locator('#heroCharacterSelect option').count() === 31, `${c.slug}: selector lost roster options`);
     assert(await page.locator('#heroCharacterSelect').inputValue() === c.slug, `${c.slug}: selector current value mismatch`);
-    const heroLoaded = await page.locator('.hero-character-light').evaluate((img) => img.complete && img.naturalWidth > 0);
-    assert(heroLoaded, `${c.slug}: accepted hero art missing`);
+    const lightHeroLoaded = await page.locator('.hero-character-light').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(lightHeroLoaded, `${c.slug}: accepted light hero art missing`);
+    const darkHeroLoadedForCharacter = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(darkHeroLoadedForCharacter, `${c.slug}: accepted dark hero art missing`);
 
     await page.locator('[data-top-tab="role"]').click();
     assert(await page.locator('#role:visible').count() === 1, `${c.slug}: Role panel missing`);
@@ -92,7 +94,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | accepted hero | 学习/角色/实战/资料 | 5 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 5 accepted light+dark heroes | 学习/角色/实战/资料 | 5 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
