@@ -1,0 +1,342 @@
+schema_version: '1.0'
+character: alex
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC06
+policy:
+  primary_results: [WHIFF, BLOCK, HIT, READ]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 = ordinary contact + one earned Prowler exit + 4MK strike-first respect bridge. Full Prowler high/low/throw begins S2; +42/Cross Chop S3; max SA S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Stable contact / +2 / one Prowler exit'}
+  S1: {label: 基本功成型, short: 'Respect -> Power Bomb / concrete Oki'}
+  S2: {label: 实战结构化, short: 'Full Prowler branch tree'}
+  S3: {label: 选择成熟, short: 'Damage / side switch / +42 / corner +8'}
+  S4: {label: 高分上探, short: 'SA / Omega Wing / matchup timing'}
+shared_packages:
+  KNEE29:
+    label: 'H Knee +29'
+    sequence: 'H Aerial Knee Smash hit -> KD +29'
+    next: 'midscreen DR pressure or corner dash pressure by exact state'
+    verification: conditioned
+    conditions: [h_knee_end_state]
+    sources: [SRC03, SRC06]
+  ODKNEE27:
+    label: 'OD Knee +27 -> dash +5'
+    sequence: 'OD Aerial Knee Smash hit -> forward dash'
+    next: '5MP / throw / Power Bomb read / block'
+    verification: conditioned
+    conditions: [od_knee_end_state]
+    sources: [SRC06]
+  STOMP2:
+    label: '4MK Block +2 respect bridge'
+    sequence: '4MK block -> +2'
+    next: '5LP / strike first; Power Bomb only after respect'
+    verification: verified
+    sources: [SRC02, SRC03, SRC06]
+  AXE39:
+    label: 'M Flash Axe +39 -> earned Prowler'
+    sequence: 'M Flash Axe confirmed hit -> Prowler'
+    next: 'Heavy Lariat first; later high/low/throw by stage'
+    verification: conditioned
+    conditions: [grounded_hit, earned_prowler_entry]
+    sources: [SRC06]
+  THROW28:
+    label: 'Forward throw +28 -> dash +6'
+    sequence: 'forward throw hit -> forward dash'
+    next: '5MP / throw / delayed read'
+    verification: conditioned
+    conditions: [forward_throw_end_state, throw_spacing]
+    sources: [SRC06]
+  CROSS8:
+    label: 'Corner Flying Cross Chop +8'
+    sequence: 'corner route -> j.MP > Flying Cross Chop -> point-blank +8'
+    next: 'active 4MK / L Power Bomb read / jump response'
+    verification: conditioned
+    conditions: [corner, cross_chop_exact_route]
+    sources: [SRC02, SRC06]
+  DROP42:
+    label: 'Forward-input OD Power Drop +42'
+    sequence: 'turn-around state -> forward-input OD Power Drop -> KD +42'
+    next: 'forward jump / exact-state Oki'
+    verification: conditioned
+    conditions: [turn_around_state, forward_input_od_power_drop]
+    sources: [SRC03, SRC06]
+opportunities:
+- id: light
+  title: 'Light｜先有稳定低段确认'
+  stage: S0
+  subtitle: 'Alex不是开局先猜抓'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '2LK > 2LP > L Flash Axe'
+    value: {drive: 0, kd: 'Hit +4'}
+    next_loop: '回5MP / 4MK / spacing'
+    why: '先建立普通SF6 contact，不为了角色感强行进stance。'
+    verification: verified
+    sources: [SRC06]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '2LK block -> stop / 2LP check / spacing'
+    value: {drive: 0}
+    next_loop: '回ground contact'
+    why: '没确认就不提交不安全route。'
+    verification: verified
+    sources: [SRC03]
+- id: medium
+  title: '5MP｜S0稳定Knee击倒'
+  stage: S0
+  subtitle: 'Year4核心ground contact'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable KD
+    input: '5MP > H Aerial Knee Smash'
+    value: {drive: 0, kd: '+29'}
+    next_loop_package: KNEE29
+    why: '短、稳定、角色感明确；先把一次contact变成下一轮。'
+    verification: verified
+    sources: [SRC03, SRC06]
+- id: anti_air
+  title: 'Anti-air｜先学Aerial Knee Smash'
+  stage: S0
+  subtitle: '跳就是明确答案'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Anti-air
+    input: 'opponent jump -> M Aerial Knee Smash'
+    value: {drive: 0, kd: '+29 family'}
+    next_loop: '落地后回ground pressure'
+    why: '让Alex不靠猜抓也能稳定把对手压回地面。'
+    verification: conditioned
+    conditions: [anti_air_throw_range]
+    sources: [SRC03, SRC06]
+- id: stomp
+  title: '4MK｜Block +2先strike，后Power Bomb'
+  stage: S0
+  subtitle: 'plus不是guaranteed throw'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: Strike first
+    input: '4MK block -> 5LP'
+    value: {frame: '+2'}
+    next_loop_package: STOMP2
+    why: '先让对手真正尊重下一拍，之后command grab才值钱。'
+    verification: verified
+    sources: [SRC02, SRC03, SRC06]
+  - result: READ
+    stage: S1
+    choice: Power Bomb read
+    input: '4MK block + opponent respects -> H Power Bomb'
+    value: {damage: 2500, kd: '+15'}
+    next_loop: 'reset / spacing read; no guaranteed close repeat'
+    why: '这是respect cash-in，不是+2自动保证抓。'
+    verification: conditioned
+    conditions: [opponent_respect, point_blank_read]
+    sources: [SRC03, SRC06]
+- id: prowler_entry
+  title: 'Prowler｜S0只学一个earned出口'
+  stage: S0
+  subtitle: '先懂“怎么安全进去”，不背整棵树'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Earn stance
+    input: '2MP > M Flash Axe hit > Prowler > Heavy Lariat'
+    value: {drive: 0, frame: 'Heavy Lariat block +3'}
+    next_loop: '5MP / strike; later Power Bomb read'
+    why: '先把Prowler理解成contact后的奖励，不是neutral常驻模式。'
+    verification: conditioned
+    conditions: [grounded_hit, earned_prowler_entry]
+    sources: [SRC03, SRC06]
+- id: concrete_oki
+  title: 'Knee / Throw｜S1把下一拍固定清楚'
+  stage: S1
+  subtitle: '先有可复现Oki再扩猜拳'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: OD Knee Oki
+    input: 'OD Aerial Knee Smash hit -> forward dash'
+    value: {drive: 2, kd: '+27 -> dash +5'}
+    next_loop_package: ODKNEE27
+    why: '花Drive换一个清楚的下一拍预算。'
+    verification: conditioned
+    conditions: [od_knee_end_state]
+    sources: [SRC06]
+  - result: HIT
+    stage: S1
+    choice: Throw Oki
+    input: 'forward throw hit -> forward dash'
+    value: {kd: '+28 -> dash +6'}
+    next_loop_package: THROW28
+    why: '把普通throw也接回strike/throw反馈，不靠stance才能玩。'
+    verification: conditioned
+    conditions: [forward_throw_end_state, throw_spacing]
+    sources: [SRC06]
+- id: prowler_tree
+  title: 'Prowler｜S2才打开完整高低投'
+  stage: S2
+  subtitle: '同一个earned entry按对手反应选'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Plus strike
+    input: 'earned Prowler entry -> Heavy Lariat'
+    value: {frame: 'Block +3 / charged +5'}
+    next_loop: '5MP / Power Bomb read'
+    why: '对手愿意站防时，继续用plus strike维持respect。'
+    verification: conditioned
+    conditions: [earned_prowler_entry]
+    sources: [SRC03, SRC06]
+  - result: READ
+    stage: S2
+    choice: Overhead
+    input: 'earned Prowler entry -> Air Stampede'
+    value: {frame: 'Block +2', kd: '+28'}
+    next_loop: '2LP / 2MP / Power Bomb read'
+    why: '惩罚只守低段/蹲防。'
+    verification: conditioned
+    conditions: [earned_prowler_entry]
+    sources: [SRC03, SRC06]
+  - result: READ
+    stage: S2
+    choice: Low risked
+    input: 'earned Prowler entry -> Sweep Combination'
+    value: {frame: 'Block -17 / -20'}
+    next_loop: 'on hit KD; on block opponent punish'
+    why: '低段价值来自打破站防，但代价很高，不能当默认。'
+    verification: conditioned
+    conditions: [earned_prowler_entry, opponent_high_block_read]
+    sources: [SRC03]
+  - result: READ
+    stage: S2
+    choice: Stance throw
+    input: 'earned Prowler entry -> Hyper Takedown'
+    value: {kd: '+32'}
+    next_loop: 'immediate Prowler 6P meaty family'
+    why: '对手被plus/overhead/low压到站防后，throw成为另一层。'
+    verification: conditioned
+    conditions: [earned_prowler_entry, opponent_respect]
+    sources: [SRC03, SRC06]
+- id: sweep_year4
+  title: '2HK｜S2利用Year4命中转Prowler'
+  stage: S2
+  subtitle: '只有hit才进'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Stance entry
+    input: '2HK hit -> Prowler'
+    value: {kd: '+29'}
+    next_loop: 'Prowler branch by current opponent response'
+    why: 'Year4新增命中转stance，让低段knockdown直接进入角色分支。'
+    verification: conditioned
+    conditions: [confirmed_hit, earned_prowler_entry]
+    sources: [SRC02, SRC03, SRC06]
+- id: drive
+  title: 'Drive｜S2一条DRC与一条DI就够'
+  stage: S2
+  subtitle: '不堆combo数量'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: DRC stable
+    input: '5MP > CDR > 2HP > H Flash Chop > 4MK'
+    value: {drive: 3, frame: '4MK pressure bridge'}
+    next_loop_package: STOMP2
+    why: '把Drive转换回已会的+2角色循环。'
+    verification: conditioned
+    conditions: [confirmed_hit]
+    sources: [SRC06]
+  - result: PC
+    stage: S2
+    choice: DI stable
+    input: 'DI Punish Counter > 2HP > M Flash Axe > Prowler 6P > M Aerial Knee Smash'
+    value: {drive: 0, kd: 'knockdown'}
+    next_loop: 'ground pressure / corner carry'
+    why: 'DI只保留一条稳定实战route。'
+    verification: conditioned
+    conditions: [di_punish_counter]
+    sources: [SRC06]
+- id: value_choice
+  title: 'Turn-around｜S3在伤害/位置/Oki间选'
+  stage: S3
+  subtitle: '同一个opening不只看伤害'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Simple drop
+    input: 'H Flash Chop hit -> Power Drop'
+    value: {kd: '+13', side_switch: true}
+    next_loop: 'reset / position read'
+    why: '用较低资源换side switch / damage。'
+    verification: conditioned
+    conditions: [turn_around_state]
+    sources: [SRC03, SRC06]
+  - result: HIT
+    stage: S3
+    choice: Oki budget
+    input: 'H Flash Chop hit -> forward-input OD Power Drop'
+    value: {drive: 2, kd: '+42'}
+    next_loop_package: DROP42
+    why: '花Drive换高预算下一轮，而不是只追raw damage。'
+    verification: conditioned
+    conditions: [turn_around_state, forward_input_od_power_drop]
+    sources: [SRC03, SRC06]
+- id: corner
+  title: 'Corner｜S3才上Flying Cross Chop +8'
+  stage: S3
+  subtitle: 'exact route，不泛化'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Corner +8
+    input: 'corner M Flash Axe > Prowler MP > j.MP > Flying Cross Chop'
+    value: {frame: 'point-blank +8'}
+    next_loop_package: CROSS8
+    why: '把角落conversion换成更强的下一轮choice-denial。'
+    verification: conditioned
+    conditions: [corner, cross_chop_exact_route, earned_prowler_entry]
+    sources: [SRC02, SRC06]
+- id: super
+  title: 'Super｜S4才做最大资源现金化'
+  stage: S4
+  subtitle: '不改变基础循环'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: Omega cashout
+    input: 'turn-around state -> OD Power Drop -> Omega Wing Buster'
+    value: {drive: 2, sa: 2}
+    next_loop: 'cashout / lethal check'
+    why: '高资源分支只在已确认opening上现金化。'
+    verification: conditioned
+    conditions: [turn_around_state, sa_resource, drive_resource]
+    sources: [SRC03, SRC06]
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: 'confirmed high-damage route -> SA3 Final Prison'
+    value: {sa: 3, damage: '4000 base super value'}
+    next_loop: 'round-state / lethal'
+    why: '只在伤害阈值值得时升级，不另造角色模型。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource]
+    sources: [SRC03]
+backend_only:
+- {label: 'raw neutral Prowler', reason: 'violates earned-entry character model'}
+- {label: '4MK +2 -> guaranteed Power Bomb', reason: 'false guarantee; must remain respect/read'}
+- {label: 'generic Power Bomb close Oki', reason: '+15 is not guaranteed close repeat'}
+- {label: 'generic Cross Chop +8', reason: 'corner exact-route condition required'}
+- {label: 'generic Power Drop +42', reason: 'only forward-input OD Power Drop exact state'}
+- {label: 'matchup Dangerous Armbar', reason: 'S4/reference specialized read'}

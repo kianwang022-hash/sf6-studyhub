@@ -1,0 +1,113 @@
+schema_version: '1.1'
+character: alex
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先把稳定contact、4MK +2与一个earned Prowler出口跑通，再逐层打开Power Bomb、完整stance树和高资源setplay。'
+  score_rule: 'Rank/MR是Reality evidence，不替代Prowler entry、respect、corner、active-frame与exact-state条件。'
+  current_ui: 'S0只学一个Prowler出口；Power Bomb read S1；完整高低投树S2；+42/Cross Chop S3；Omega/SA S4。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '跑通light、5MP Knee、anti-air、4MK +2 strike-first，以及一条M Flash Axe→Prowler→Heavy Lariat。'
+    add_now:
+      - '2LK > 2LP > L Flash Axe。'
+      - '5MP > H Aerial Knee Smash。'
+      - 'M Aerial Knee Smash anti-air。'
+      - '4MK Block +2 -> 5LP先造respect。'
+      - '2MP > M Flash Axe hit > Prowler > Heavy Lariat。'
+    gate:
+      lab: '五个动作链都能独立复现，并能说出Prowler为什么不是raw neutral模式。'
+      match: '不会为了角色感机械裸进Prowler或机械抓。'
+    defer: ['完整Prowler高低投树', 'OD Knee +5 Oki', '2HK→Prowler', '+42', 'corner +8', 'SA']
+    hub_focus: [light, medium, anti_air, stomp, prowler_entry]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把strike造respect→Power Bomb read与Knee/throw具体Oki稳定下来。'
+    add_now:
+      - '4MK +2后strike first。'
+      - 'opponent respect后H Power Bomb read。'
+      - 'OD Knee +27 -> dash +5。'
+      - 'forward throw +28 -> dash +6。'
+      - 'M Flash Axe +39 earned Prowler继续只用低复杂度分支。'
+    gate:
+      match: 'Power Bomb不是+2后的固定答案；被jump/backwalk后会回strike/anti-air。'
+    defer: ['完整Prowler低/overhead/throw树', 'DRC', 'DI深分支', '+42']
+    hub_focus: [stomp, concrete_oki, prowler_entry]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '正式打开Prowler高/低/投/plus-strike树，并加入2HK Year4 stance entry、DRC和DI。'
+    add_now:
+      - 'Prowler Heavy Lariat plus strike。'
+      - 'Prowler Air Stampede overhead。'
+      - 'Prowler Sweep high-risk low。'
+      - 'Prowler Hyper Takedown throw。'
+      - '2HK hit -> Prowler。'
+      - '一条5MP DRC与一条DI punish。'
+    gate:
+      match: '能根据对手stand block / crouch / jump / mash选择Prowler答案，而不是随机轮招。'
+    defer: ['charged route深挖', 'corner Cross Chop +8', 'OD Power Drop +42', 'Omega Wing']
+    hub_focus: [prowler_tree, sweep_year4, drive]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '同一opening开始比较damage / side switch / Oki / stance，并加入exact +42与corner +8。'
+    add_now:
+      - 'H Flash Chop -> Power Drop side switch。'
+      - 'forward-input OD Power Drop +42。'
+      - 'corner Flying Cross Chop +8。'
+      - 'charged normal -> Prowler / cashout。'
+      - 'stance branch按位置和对手行为重新定价。'
+    gate:
+      behavior: '能解释为什么这一回合要位置、Oki、stance还是damage。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['Omega Wing最大现金化', 'matchup Armbar', 'max SA lethal']
+    hub_focus: [value_choice, corner, prowler_tree]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'Omega Wing、SA/lethal、active-frame细节与matchup-specific stance read进入。'
+    add_now:
+      - 'Omega Wing Buster高资源现金化。'
+      - 'SA1/SA2/SA3 lethal与墙角route。'
+      - 'Dangerous Armbar projectile/read matchup layer。'
+      - 'active-frame Prowler/4MK/Cross Chop细节。'
+      - 'character-specific hurtbox与spacing lab。'
+    gate:
+      behavior: '高资源与niche setup不让S0/S1的contact、respect和earned-entry纪律退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, value_choice, corner]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '5MP→H Knee稳定', node: medium, upgrade_evidence: '普通contact不掉route。'}
+    - {id: EX02, stage: S0, label: 'M Flash Axe→Prowler→Lariat稳定', node: prowler_entry, upgrade_evidence: '只在hit后进stance。'}
+    - {id: EX03, stage: S3, label: 'OD Power Drop +42 exact route稳定', node: value_choice, upgrade_evidence: 'forward-input state不串错。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '不裸进Prowler', node: prowler_entry, upgrade_evidence: 'neutral先用5MP/2MP拿contact。'}
+    - {id: NE02, stage: S1, label: '+2先strike造respect', node: stomp, upgrade_evidence: 'Power Bomb频率跟对手反应走。'}
+    - {id: NE03, stage: S2, label: '2HK hit才进stance', node: sweep_year4, upgrade_evidence: 'block时不偷Prowler。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'light/5MP确认分清', node: light, upgrade_evidence: '没hit不提交route。'}
+    - {id: CO02, stage: S2, label: 'Prowler分支按防守行为', node: prowler_tree, upgrade_evidence: '能说出overhead/low/throw/plus各自打什么。'}
+    - {id: CO03, stage: S3, label: 'damage/position/Oki有理由', node: value_choice, upgrade_evidence: '同opening选择不是只看伤害。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: '4MK +2 strike-first闭环', node: stomp, upgrade_evidence: 'respect没形成时继续strike。'}
+    - {id: OF02, stage: S1, label: 'strike→Power Bomb反馈闭环', node: stomp, upgrade_evidence: 'jump/backwalk后会回strike/anti-air。'}
+    - {id: OF03, stage: S3, label: 'corner +8 choice-denial loop', node: corner, upgrade_evidence: 'exact Cross Chop state才执行。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: 'jump→Knee anti-air', node: anti_air, upgrade_evidence: '不靠猜抓处理跳。'}
+    - {id: DA02, stage: S2, label: 'Prowler被jump/mash后调整', node: prowler_tree, upgrade_evidence: '回plus strike / anti-air / block。'}
+    - {id: DA03, stage: S4, label: 'Armbar/stance按matchup使用', node: super, upgrade_evidence: '不会把niche read当通用答案。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'stable contact→+2 respect bridge→one earned Prowler exit先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'strike→Power Bomb feedback多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'Prowler tree / 2HK entry / Drive结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；+42/+8不泄漏条件。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'Omega/SA/niche stance围绕真实高分瓶颈。'}
