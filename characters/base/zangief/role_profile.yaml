@@ -1,6 +1,6 @@
 schema_version: '1.0'
 character: zangief
-status: SOURCE_CLOSURE_DRAFT
+status: CONTENT_READY
 role_profile:
   identity:
     one_line: '老桑先用走路和大拳脚让对手不敢乱动；对手愿意站着防以后，360P 高伤指令投才真正成立。'
