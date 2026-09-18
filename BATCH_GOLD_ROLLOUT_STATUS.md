@@ -44,13 +44,13 @@ Judgment states:
 | year3 | C. Viper | `SOURCE_CLOSURE_PENDING` |
 | year3 | Alex | `SOURCE_CLOSURE_PENDING` |
 | year3 | Ingrid | `SOURCE_CLOSURE_PENDING` |
-| year4 | Yasmine | `SOURCE_CLOSURE_PENDING` |
+| year4 | Yasmine | `CONTENT_READY` |
 
 ## Current Gold lane
 
 Five characters now render through the canonical Astro runtime:
 
-Ken, Akuma, Luke, Terry, Sagat, Juri, and Elena are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, and Yasmine are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.

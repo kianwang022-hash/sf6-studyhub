@@ -35,7 +35,8 @@ const chars = [
   { slug:'terry', group:'year2', normals:18, learn:['S0｜最小可玩','Round Wave','OD Quick Burn'], ref:['+33','Round Wave','Triple Geyser'], practical:['OD Quick Burn','SA2'], candidate:true },
   { slug:'sagat', group:'year3', normals:18, learn:['S0｜最小可玩','High Tiger Shot','+42 safe jump'], ref:['+32','+42','Tiger Knee Crush'], practical:['High Tiger Shot','SA2'], candidate:true },
   { slug:'juri', group:'base', normals:18, learn:['S0｜最小可玩','M Fuhajin','stock +1'], ref:['Feng Shui Engine','Boosted Saihasho','stock'], practical:['Go Ohsatsu','Feng Shui Engine'], candidate:true },
-  { slug:'elena', group:'year2', normals:18, learn:['S0｜最小可玩','Lynx Song','Healing'], ref:['+42','Revival Dance','Healing variation'], practical:['Lynx Song','SA2 Healing'], candidate:true }
+  { slug:'elena', group:'year2', normals:18, learn:['S0｜最小可玩','Lynx Song','Healing'], ref:['+42','Revival Dance','Healing variation'], practical:['Lynx Song','SA2 Healing'], candidate:true },
+  { slug:'yasmine', group:'year4', normals:18, learn:['S0｜最小可玩','Bayani','Boosted Alon'], ref:['Bayani','Boosted Alon','Nakatagong Lakas'], practical:['Boosted Alon','SA2'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -133,9 +134,30 @@ for (const c of chars) {
       }
     }
   }
+  if (c.slug === 'yasmine') {
+    assert(/Bayani/i.test(role?.resource?.name ?? ''), 'yasmine: Bayani resource owner missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const spend = row?.value?.bayani_spend;
+        if (stage === 'S0') {
+          assert(!spend || Number(spend) === 0, 'yasmine: S0 must not spend Bayani');
+          assert(!/Boosted Alon/i.test(input), 'yasmine: Boosted Alon leaked into S0');
+        }
+        if (/Boosted Alon/i.test(input)) {
+          const conditions = JSON.stringify(row.conditions ?? []);
+          assert(/bayani|sa2/i.test(conditions) || /Bayani active|SA2 active/i.test(input), 'yasmine: Boosted Alon route missing Bayani/SA2 condition');
+        }
+        if (/SA2|Nakatagong Lakas/i.test(input) || /SA2/i.test(op.title ?? '')) {
+          assert(stage === 'S4', 'yasmine: SA2 persistent Bayani must remain S4');
+        }
+      }
+    }
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 7 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 8 content candidates | Learn + Role + Practical + Reference + resolved source registries');
