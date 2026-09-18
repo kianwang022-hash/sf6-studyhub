@@ -46,7 +46,8 @@ const chars = [
   { slug:'vega', group:'year2', normals:18, learn:['S0｜最小可玩','Psycho Mine','cash-in'], ref:['Psycho Mine','OD Crusher','Devil Reverse'], practical:['Psycho Mine','OD Psycho Crusher'], candidate:true },
   { slug:'marisa', group:'base', normals:18, learn:['S0｜最小可玩','Enfold','+42'], ref:['charged 5HP','Phalanx','Enfold'], practical:['Enfold','fully charged'], candidate:true },
   { slug:'lily', group:'base', normals:18, learn:['S0｜最小可玩','Windclad','Mexican Typhoon'], ref:['Normal vs Windclad Spire','Mexican Typhoon','+52'], practical:['Mexican Typhoon','Windclad H Condor Spire'], candidate:true },
-  { slug:'manon', group:'base', normals:18, learn:['S0｜最小可玩','Medal','H Rond-point'], ref:['Medal Level','Manège Doré','Throw Aftermath'], practical:['Manège Doré','Medal Level'], candidate:true }
+  { slug:'manon', group:'base', normals:18, learn:['S0｜最小可玩','Medal','H Rond-point'], ref:['Medal Level','Manège Doré','Throw Aftermath'], practical:['Manège Doré','Medal Level'], candidate:true },
+  { slug:'alex', group:'year3', normals:18, learn:['S0｜最小可玩','Prowler','4MK'], ref:['+42','Flying Cross Chop','Power Bomb'], practical:['Power Bomb','Prowler','Flying Cross Chop'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -435,9 +436,41 @@ for (const c of chars) {
     assert((practical.opportunities ?? []).some((op) => op.id === 'first_medal' && op.stage === 'S1'), 'manon: S1 first-Medal opportunity missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'medal_behavior' && op.stage === 'S2'), 'manon: S2 Medal-behavior opportunity missing');
   }
+  if (c.slug === 'alex') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === '-', 'alex: 2MK must remain non-cancelable');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'alex: inherited 2MK DRC route leaked');
+    assert(/Earned Prowler entry.*choice-denial/i.test(role?.signature_mechanic?.name ?? ''), 'alex: earned-Prowler signature owner missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        if (stage === 'S0' && /Prowler/i.test(input)) {
+          assert(/Heavy Lariat/i.test(input), 'alex: full Prowler branch leaked into S0');
+          assert(/earned_prowler_entry/i.test(conditions), 'alex: S0 Prowler route missing earned-entry condition');
+        }
+        if (/Air Stampede|Sweep Combination|Hyper Takedown/i.test(input)) {
+          assert(stage === 'S2' || stage === 'S3' || stage === 'S4', 'alex: full Prowler tree must remain S2+');
+          assert(/earned_prowler_entry/i.test(conditions), 'alex: Prowler branch missing earned-entry condition');
+        }
+        if (/Power Bomb\s*$/i.test(input) || /Power Bomb read/i.test(input)) {
+          assert(stage !== 'S0', 'alex: Power Bomb read leaked into S0');
+          assert(/opponent_respect|point_blank_read|punish_counter/i.test(conditions), 'alex: Power Bomb choice lost respect/read truth');
+        }
+        const usesPlus42 = /\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input);
+        if (usesPlus42) assert(/forward_input_od_power_drop/i.test(conditions), 'alex: +42 lost forward-input OD Power Drop exact state');
+        const usesCross8 = /Flying Cross Chop/i.test(input) && /\+8/.test(rowText);
+        if (usesCross8) assert(/corner/i.test(conditions) && /cross_chop_exact_route/i.test(conditions), 'alex: Cross Chop +8 lost corner/exact-route truth');
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'prowler_entry' && op.stage === 'S0'), 'alex: S0 earned Prowler entry missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'prowler_tree' && op.stage === 'S2'), 'alex: S2 full Prowler tree missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 18 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 19 content candidates | Learn + Role + Practical + Reference + resolved source registries');
