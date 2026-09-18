@@ -1,0 +1,111 @@
+schema_version: '1.1'
+character: manon
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让普通Rond-point/Renversé/Oki成立，再逐步引入Medal如何改变未来收益和对手逃抓行为。'
+  score_rule: 'Rank/MR是Reality evidence，不替代Medal Level、spacing、respect和opponent-response判断。'
+  current_ui: 'S0不背Medal伤害表；S1 first Medal；S2-S3行为反馈；S4精确伤害。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通light→H Rond-point、5MP DR→Renversé、anti-air与dash strike/throw/shimmy，不把Medal当主任务。'
+    add_now:
+      - '2LP×2→H Rond-point。'
+      - '5MP→DR→2MP→4HP→M Renversé。'
+      - 'jump-in→Renversé。'
+      - '2HP anti-air。'
+      - 'H Rond-point→dash strike/throw/shimmy。'
+    gate:
+      lab: '基础route和dash Oki稳定。'
+      match: '没有Medal表也能用普通strike/throw完整打回合。'
+    defer: ['主动追Medal', '高Medal伤害表', 'SA Medal math']
+    hub_focus: [light, medium, oki]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '在respect/point-blank机会第一次主动拿Medal，并保留throw-after spacing truth。'
+    add_now:
+      - 'respect后H Manège Doré。'
+      - '被jump/mash时转strike/anti-air。'
+      - 'throw后dash按spacing做strike/throw/shimmy。'
+      - 'reversal punish。'
+      - 'corner strike/throw/shimmy。'
+    gate:
+      match: 'command grab不机械使用；Medal只是未来收益升级。'
+    defer: ['Medal Lv4-5精确表', 'SA cashout']
+    hub_focus: [first_medal, throw_aftermath]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '开始把Medal Lv2-3视为“改变对手行为”的变量，而不是只看伤害。'
+    add_now:
+      - 'st.MK / raw DR / DI route。'
+      - 'OD anti-air→Renversé。'
+      - 'Medal Lv2-3下观察jump/mash频率。'
+      - 'stable damage/Oki vs future Medal reward选择。'
+    gate:
+      match: '能说出高一点Medal为什么让strike更值钱。'
+    defer: ['Lv4-5完整damage math', 'lethal table']
+    hub_focus: [medal_behavior, medium]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'Medal Lv4-5进入高威胁反馈；grab越痛，越会主动惩罚对手逃grab。'
+    add_now:
+      - 'Lv4-5 Manège damage threat。'
+      - 'Renversé Medal scaling。'
+      - 'jump/mash/reversal读法。'
+      - 'corner/Burnout feedback。'
+      - 'selected Medal-aware SA routes。'
+    gate:
+      behavior: '高Medal不会导致更机械command grab。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['完整lethal / CA math']
+    hub_focus: [high_medal, medal_behavior]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA3/CA Medal scaling、resource-heavy anti-air/corner与lethal calculations进入。'
+    add_now:
+      - 'SA3/CA精确Medal伤害。'
+      - 'resource-heavy OD anti-air。'
+      - 'corner/Burnout route。'
+      - 'matchup-specific grab frequency。'
+      - 'lethal calculations。'
+    gate:
+      behavior: '精确damage math不让普通Oki/read退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, high_medal]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'Rond-point/Renversé基础route稳定', node: light, upgrade_evidence: 'light/medium/jump starter都稳定。'}
+    - {id: EX02, stage: S0, label: 'dash Oki稳定', node: oki, upgrade_evidence: 'strike/throw/shimmy输入不混。'}
+    - {id: EX03, stage: S2, label: 'OD anti-air→Renversé稳定', node: medal_behavior, upgrade_evidence: '资源route只在需要时使用。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'Medal不绑架neutral', node: medium, upgrade_evidence: 'position/Oki优先时不追grab。'}
+    - {id: NE02, stage: S2, label: '高Medal会观察escape', node: medal_behavior, upgrade_evidence: 'jump/mash上升会转strike。'}
+    - {id: NE03, stage: S3, label: 'grab频率按Medal/对手调', node: high_medal, upgrade_evidence: '不是Level越高越多抓。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'Rond-point vs Renversé按目的选', node: medium, upgrade_evidence: 'Oki/Medal成长分工清楚。'}
+    - {id: CO02, stage: S1, label: 'command grab带respect/point-blank truth', node: first_medal, upgrade_evidence: '不会空抓。'}
+    - {id: CO03, stage: S3, label: 'Medal-scaled值带Level', node: high_medal, upgrade_evidence: '不会混淆damage表。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'H Rond-point dash Oki闭环', node: oki, upgrade_evidence: '击倒后能接普通下一Turn。'}
+    - {id: OF02, stage: S1, label: 'first Medal feedback闭环', node: first_medal, upgrade_evidence: '抓到后会观察行为变化。'}
+    - {id: OF03, stage: S3, label: 'high-Medal strike/grab闭环', node: high_medal, upgrade_evidence: 'escape行为会改变下一选择。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: 'grab被jump会调整', node: first_medal, upgrade_evidence: '转strike/anti-air。'}
+    - {id: DA02, stage: S2, label: '对手Medal fear会被利用', node: medal_behavior, upgrade_evidence: '不只盯grab命中。'}
+    - {id: DA03, stage: S4, label: 'lethal按Medal/resource调整', node: super, upgrade_evidence: '精确cashout。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'ordinary Rond-point/Renversé/Oki先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'first Medal + respect/read feedback多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'Medal行为反馈结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；高Medal不导致机械grab。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA/lethal/Medal math围绕真实高分瓶颈。'}
