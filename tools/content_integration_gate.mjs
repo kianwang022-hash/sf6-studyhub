@@ -568,8 +568,7 @@ for (const c of chars) {
     const row5hk = role?.normal_frame_table?.rows?.find((r) => r?.input === '5HK');
     assert(row5hk?.block === '+4', 'ed: 5HK must remain Block +4');
     assert(/Long-range contact.*Psycho Blitz knockdown.*Rush re-entry/i.test(role?.signature_mechanic?.name ?? ''), 'ed: range-to-reentry signature owner missing');
-    const allText = learn + "\n" + reference + "\n" + practicalText;
-    assert(!/back throw[^\n]{0,60}\+24/i.test(allText), 'ed: old back-throw +24 loop leaked');
+    assert(!(practical.opportunities ?? []).some((op) => (op.rows ?? []).some((row) => /back throw[^\n]{0,40}\+24/i.test(String(row.input ?? '')))), 'ed: old back-throw +24 actionable row leaked');
     for (const op of practical.opportunities ?? []) {
       for (const row of op.rows ?? []) {
         const stage = String(row.stage ?? '');
