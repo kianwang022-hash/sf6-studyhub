@@ -1,0 +1,103 @@
+schema_version: '1.0'
+character: juri
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Juri先用很完整的地面确认拿M Fuhajin：这一条同时给stock和下一轮；真正的资源决策是之后这颗stock现在花不花。'
+    preferred_range: '中近距离。5MP / 2MP / 2MK和快走速拿接触，命中后优先M Fuhajin把当前回合与未来option一起做大。'
+    win_pattern: '地面接触 -> M Fuhajin -> stock +1 -> forward dash打/投/shimmy -> 下一次opening决定保留还是花stock -> Boosted special放大damage/carry -> 再回Fuhajin/Oki循环。'
+    lose_pattern: '开局先想着攒满stock、stock有了就自动花、把Boosted special当stockless普通招、太早沉迷Feng Shui Engine导致基础地面确认和Oki不稳。'
+  character_model:
+    essence_short: 'Juri的基础combo本身就能一边攒stock一边保住下一轮；真正难点不是“怎么攒”，而是这颗stock什么时候值得花掉。'
+    essence_detail: 'Juri不是“先攒满stock才开始玩”的角色。当前训练顺序最先要求的是5MP > 2MP > M Fuhajin、低段light > M Fuhajin，以及Fuhajin后的forward dash打/投/shimmy。也就是说，她的基础回合本身已经能一边拿稳定击倒/下一轮，一边把stock存起来。相对Jamie，“资源投资”没有那么强的当前回合牺牲感；Juri更常见的核心问题是：已经有stock以后，这次opening要不要马上把它换成Boosted Saihasho / Ankensatsu / Go Ohsatsu的伤害、carry或更复杂后续，还是保留stock让下一个回合更难防。她的速度和5MP block +2让普通地面压力本来就成立，所以stock应该放大已经成立的接触，而不是替代基础确认。到最后才进入Feng Shui Engine，因为SA2改变的是整套cancel/pressure规则，不应该反过来绑架最初的地面骨架。'
+    force_opponent_to:
+    - '尊重5MP block +2与快地面按钮，不敢每次近身都抢。'
+    - '在M Fuhajin后持续处理forward dash的strike / throw / shimmy。'
+    - '看到Juri持有stock以后，必须考虑普通opening会被Boosted special放大。'
+    payoff_after_respect:
+    - '普通throw / shimmy / low更容易成立。'
+    - 'stock可把下一次confirm升级成更高damage/carry。'
+    - 'Go Ohsatsu等stock-spend路线可再接Fuhajin回到stock循环。'
+    - '角落H Tensenrin让普通confirm继续滚成墙角压力。'
+    core_tradeoff: '当前opening立刻花stock放大damage/carry vs 保留stock给未来option space。次级取舍是稳定M Fuhajin回合和OD/多stock/SA2更高复杂度路线之间怎么选。'
+    successful_round:
+    - '5MP / 2MP / light拿稳定contact'
+    - 'M Fuhajin收尾并stock +1'
+    - 'forward dash进入strike / throw / shimmy'
+    - '下一次opening判断是否值得花stock'
+    - '用Boosted special放大值得的机会'
+    - '再用Fuhajin/角落Oki回到基础循环'
+    common_misplays:
+    - '开局先想着攒满stock，基础地面和Oki反而没建立。'
+    - '有stock就立刻花，不问这次花掉买到了什么。'
+    - '把Boosted special当通用招，忘记stock condition。'
+    - '太早沉迷Feng Shui Engine，普通5MP/2MP/2MK回合不稳。'
+    unique_decision: 'Juri新增的是stock spending timing：默认稳定route已经会顺手生stock，真正的角色判断是何时把future option space现金化。'
+    transfer_in:
+    - 'Cammy/标准角色的grounded contact、2MK DRC、strike/throw/shimmy。'
+    - 'anti-air / punish / DI / corner / Oki。'
+    new_skill:
+    - 'stock generation与stock-spend状态识别。'
+    - '同一opening比较稳定Oki vs 花stock damage/carry。'
+    - 'Boosted special只在stock条件满足时进入。'
+    - 'SA2 Feng Shui Engine后置的cancel/pressure系统。'
+    unlearn:
+    - '资源角色一定要牺牲当前回合才能攒资源。'
+    - '有stock就应该马上花。'
+    - 'Boosted special可以脱离stock状态当普通招式背。'
+  glossary:
+  - {term: '214K｜Fuhajin', meaning: 'Juri的stock生成工具。基础M Fuhajin常作为稳定ender，同时给stock并进入下一轮。'}
+  - {term: 'Fuhajin Stock｜风破刃库存', meaning: '由Fuhajin生成；会强化/解锁Saihasho、Ankensatsu、Go Ohsatsu等后续价值。stock不是必须先攒满的任务。'}
+  - {term: '236MK｜Go Ohsatsu', meaning: '花stock换更高路线价值的工具之一。首次学习必须把“需要stock”和“花完买到什么”一起记。'}
+  - {term: '236LK｜Saihasho', meaning: 'stock-spend projectile/route family；Boosted状态和普通状态分开理解。'}
+  - {term: '236HK｜Ankensatsu', meaning: 'stock-spend follow-up/route family；Boosted状态改变命中收益。'}
+  - {term: 'SA2｜Feng Shui Engine', meaning: '改变整套cancel/pressure规则的系统层。它是S4内容，不是Juri入门身份。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '6F / Hit +7 / Block +2 / C；最重要的近身respect与确认。'}
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +5 / Block -2 / C；稳定连接点。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Hit +1 / Block -6 / C；主要低段DRC入口。'}
+  - {input: '214MK', name: 'M Fuhajin', use: '基础ender；stock +1，并接forward-dash Oki。'}
+  - {input: '623P', name: 'Tensenrin', use: '主要反空/伤害ender；OD版6F全无敌反击。'}
+  - {input: '236MK', name: 'Go Ohsatsu', use: '有stock时的damage/carry分支；不是stockless通用招。'}
+  - {input: '236LK / 236HK', name: 'Saihasho / Ankensatsu', use: 'stock-spend option family；普通/Boosted状态必须分开。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Fuhajin stock、Boosted specials、SA2系统由关键工具与Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-7', recovery: '7', hit: '+5', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-7', recovery: '9', hit: '+2', block: '-3', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '6', active: '6-9', recovery: '12', hit: '+7', block: '+2', cancel: 'C', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '5', active: '5-6, 8-10', recovery: '17', hit: '+3', block: '-4', cancel: 'C', damage: '700', note: 'Year4第二段damage提高。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '10', active: '10-12', recovery: '24', hit: '-1', block: '-5', cancel: 'C', damage: '800', note: ''}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '17', active: '17-20', recovery: '19', hit: '+2', block: '-3', cancel: '-', damage: '900', note: 'PC高价值starter。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-6', recovery: '8', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '8', hit: '+3', block: '-1', cancel: '-', damage: '200', note: ''}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-9', recovery: '14', hit: '+5', block: '-2', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '19', hit: '+1', block: '-6', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '8', active: '8-11', recovery: '23', hit: '+3', block: '-11', cancel: 'C', damage: '900', note: ''}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '10', active: '10-12', recovery: '23', hit: 'KD', block: '-11', cancel: '-', damage: '900', note: ''}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '4', active: '4-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '7', active: '7-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '500', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '6', active: '6-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '12', active: '12-17', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '900', note: ''}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  resource:
+    name: 'Fuhajin Stock'
+    input: '214K'
+    gain: 'L/M/H Fuhajin生成stock；基础M Fuhajin路线在正常击倒/Oki循环里自然积累。'
+    changes: 'stock让Saihasho / Ankensatsu / Go Ohsatsu进入Boosted/更高价值状态，并扩大后续route option space。'
+    rule: 'S0先生成不消费；S2开始比较“现在花stock”与“保留未来option”的价值。'
+  key_numbers:
+  - {label: '5MP', value: '6F / Hit +7 / Block +2', decision: '近身respect和基础确认核心。'}
+  - {label: '2MK', value: '8F / Hit +1 / Block -6 / C', decision: '主要DRC低段。'}
+  - {label: 'M Fuhajin', value: '13F / Block -6 / Stock +1', decision: '稳定ender同时把future option做大。'}
+  - {label: 'Boosted Saihasho', value: 'Hit +1 / Block -3', decision: 'stock改变同名special的回合结果。'}
+  - {label: 'Boosted Ankensatsu', value: 'Hit +8 / Block -8', decision: '命中收益提高，但仍不是安全blockstring。'}
+  - {label: 'Corner H Tensenrin', value: 'current 5MP Oki about +5 family', decision: '角落高价值循环；必须保留corner/hit-height条件。'}
+  constraints:
+  - 'Boosted specials必须带stock condition。'
+  - 'M Fuhajin后续先按forward-dash动作结构学，不凭空硬编码固定帧差。'
+  - 'H Tensenrin midscreen Oki受hit height / spacing影响。'
+  - 'SA2 Feng Shui Engine属于late system，不定义S0。'
