@@ -13,26 +13,24 @@ Checked: **2026-09-18**
 
 | Input | Official name | Startup | Active | Recovery | Hit | Block | Cancel | Damage |
 |---|---|---:|---|---|---:|---:|---|---:|
-| 5LP | Standing Light Punch | 5 | current | current | +4 | -3 | C | 300 |
-| 5LK | Standing Light Kick | 7 | current | current | 0 | -4 | C | 400 |
-| 5MP | Standing Medium Punch | 6 | current | current | +6 | +2 | C | 600 |
-| 5MK | Standing Medium Kick | 11 | current | current | +3 | -3 | — | 700 |
-| 5HP | Standing Heavy Punch | 15 | current | current | 0 | -5 | C | 800 |
-| 5HK | Standing Heavy Kick | 10 | current | current | +1 | -5 | C | 900 |
-| 2LP | Crouching Light Punch | 4 | current | current | +5 | -1 | C | 300 |
-| 2LK | Crouching Light Kick | 5 | current | current | +1 | -3 | — | 200 |
-| 2MP | Crouching Medium Punch | 7 | current | current | +4 | -1 | C | 600 |
-| 2MK | Crouching Medium Kick | 9 | current | current | +5 | -2 | — | 600 |
-| 2HP | Crouching Heavy Punch | 11 | current | current | +1 | -5 | C | 800 |
-| 2HK | Crouching Heavy Kick | 11 | current | current | KD | -12 | — | 900 |
-| j.LP | Jumping Light Punch | 4 | current | Landing 3 | — | — | — | 300 |
-| j.LK | Jumping Light Kick | 5 | current | Landing 3 | — | — | — | 300 |
-| j.MP | Jumping Medium Punch | 8 | current | Landing 3 | — | — | — | 700 |
-| j.MK | Jumping Medium Kick | 8 | current | Landing 3 | — | — | — | 700 |
-| j.HP | Jumping Heavy Punch | 10 | current | Landing 3 | — | — | — | 800 |
-| j.HK | Jumping Heavy Kick | 10 | current | Landing 3 | — | — | — | 800 |
-
-Active/recovery cells remain to be copied directly into canonical YAML from current frame source before CONTENT_READY; this inventory does not invent omitted exact values.
+| 5LP | Standing Light Punch | 5 | 5-7 | 11 | +4 | -3 | C | 300 |
+| 5LK | Standing Light Kick | 7 | 7-8 | 15 | 0 | -4 | C | 400 |
+| 5MP | Standing Medium Punch | 6 | 6-9 | 15 | +6 | +2 | — | 600 |
+| 5MK | Standing Medium Kick | 11 | 11-14 | 19 | +3 | -3 | — | 700 |
+| 5HP | Standing Heavy Punch | 15 | 15-18 | 22 | 0 | -5 | — | 800 |
+| 5HK | Standing Heavy Kick | 10 | 10-15 | 21 | +1 | -5 | C | 900 |
+| 2LP | Crouching Light Punch | 4 | 4-5 | 10 | +5 | -1 | C | 300 |
+| 2LK | Crouching Light Kick | 5 | 5-7 | 12 | +1 | -3 | — | 200 |
+| 2MP | Crouching Medium Punch | 7 | 7-9 | 16 | +4 | -1 | C | 600 |
+| 2MK | Crouching Medium Kick | 9 | 9-11 | 18 | +5 | -2 | — | 600 |
+| 2HP | Crouching Heavy Punch | 11 | 11-14 | 21 | +1 | -5 | C | 800 |
+| 2HK | Crouching Heavy Kick | 11 | 11-13 | 26 | KD | -12 | — | 900 |
+| j.LP | Jumping Light Punch | 4 | 4-10 | Landing 3 | — | — | — | 300 |
+| j.LK | Jumping Light Kick | 5 | 5-14 | Landing 3 | — | — | — | 300 |
+| j.MP | Jumping Medium Punch | 8 | 8-12 | Landing 3 | — | — | — | 700 |
+| j.MK | Jumping Medium Kick | 8 | 8-15 | Landing 3 | — | — | — | 700 |
+| j.HP | Jumping Heavy Punch | 10 | 10-15 | Landing 3 | — | — | — | 800 |
+| j.HK | Jumping Heavy Kick | 10 | 10-15 | Landing 3 | — | — | — | 800 |
 
 ## Key current tools
 
@@ -90,7 +88,6 @@ Active/recovery cells remain to be copied directly into canonical YAML from curr
 - H Tiger Knee +42 safe jump requires the matching airborne-hit state.
 - High Tiger Shot should shape movement; source does not support reducing the character to passive full-screen fireball trading.
 - Tiger Nexus follow-ups are separate decisions, not one universal safe string.
-- Exact active/recovery values omitted above must be filled from source before final Role table.
 
 ## Next
 
