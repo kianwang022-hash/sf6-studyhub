@@ -49,7 +49,8 @@ const chars = [
   { slug:'manon', group:'base', normals:18, learn:['S0｜最小可玩','Medal','H Rond-point'], ref:['Medal Level','Manège Doré','Throw Aftermath'], practical:['Manège Doré','Medal Level'], candidate:true },
   { slug:'alex', group:'year3', normals:18, learn:['S0｜最小可玩','Prowler','4MK'], ref:['+42','Flying Cross Chop','Power Bomb'], practical:['Power Bomb','Prowler','Flying Cross Chop'], candidate:true },
   { slug:'chunli', group:'base', normals:18, learn:['S0｜最小可玩','Serenity Stream','Up exit'], ref:['Lotus Fist','+46','charge'], practical:['Serenity Stream','Spinning Bird Kick','safe-jump'], candidate:true },
-  { slug:'aki', group:'year1', normals:18, learn:['S0｜最小可玩','H Serpent Lash','poison'], ref:['+69','Orchid Spring','Drive Parry'], practical:['H Serpent Lash','opponent poisoned','Orchid Spring'], candidate:true }
+  { slug:'aki', group:'year1', normals:18, learn:['S0｜最小可玩','H Serpent Lash','poison'], ref:['+69','Orchid Spring','Drive Parry'], practical:['H Serpent Lash','opponent poisoned','Orchid Spring'], candidate:true },
+  { slug:'ed', group:'year1', normals:18, learn:['S0｜最小可玩','M Psycho Blitz','charged Flicker'], ref:['back throw','Psycho Knuckle','+42'], practical:['M Psycho Blitz','charged L/M Psycho Flicker','Psycho Knuckle'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -563,9 +564,57 @@ for (const c of chars) {
     assert((practical.opportunities ?? []).some((op) => op.id === 'puddle' && op.stage === 'S2'), 'aki: S2 poison-puddle owner missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'exact_setplay' && op.stage === 'S3'), 'aki: S3 exact-setplay owner missing');
   }
+  if (c.slug === 'ed') {
+    const row5hk = role?.normal_frame_table?.rows?.find((r) => r?.input === '5HK');
+    assert(row5hk?.block === '+4', 'ed: 5HK must remain Block +4');
+    assert(/Long-range contact.*Psycho Blitz knockdown.*Rush re-entry/i.test(role?.signature_mechanic?.name ?? ''), 'ed: range-to-reentry signature owner missing');
+    const allText = learn + "\n" + reference + "\n" + practicalText;
+    assert(!/back throw[^\n]{0,60}\+24/i.test(allText), 'ed: old back-throw +24 loop leaked');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+
+        if (stage === 'S0') {
+          assert(!/charged .*Flicker|Psycho Knuckle|Kill Switch|Psycho Spark|Psycho Cannon|SA2/i.test(input), 'ed: advanced charged/carry/projectile/super layer leaked into S0');
+        }
+        if (/5MK.*L Psycho Flicker/i.test(input)) {
+          assert(/confirmed_hit/i.test(conditions), 'ed: 5MK > L Flicker lost confirmed-hit truth');
+        }
+        if (/charged L\/M Psycho Flicker|charged Flicker/i.test(input)) {
+          assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'ed: charged Flicker appears before S1');
+          assert(/charged_flicker/i.test(conditions) && /spacing_check/i.test(conditions), 'ed: charged Flicker +4 lost spacing truth');
+        }
+        const hBlitz42 = /H Psycho Blitz/i.test(input) && /\+42/.test(rowText);
+        if (hBlitz42) {
+          assert(/hitman_h_blitz_exact_state/i.test(conditions), 'ed: H Blitz +42 safe jump lost exact Hitman state');
+        }
+        const hBlitz40 = /ordinary H Psycho Blitz|H Psycho Blitz hit \+40/i.test(input);
+        if (hBlitz40) {
+          assert(/h_blitz_ordinary_end_state/i.test(conditions), 'ed: ordinary H Blitz +40 lost ordinary-state owner');
+        }
+        if (/back throw hit \+17/i.test(input)) {
+          assert(/\+17/.test(rowText), 'ed: current back throw +17 row corrupted');
+        }
+        if (/Psycho Spark/i.test(input) && /Block \+5|block.*\+5/i.test(rowText)) {
+          assert(/corner/i.test(conditions) && /exact_plus38_state/i.test(conditions) && /active_frame_timing/i.test(conditions), 'ed: Spark +5 meaty lost corner +38 exact setup');
+        }
+        if (/Psycho Knuckle/i.test(input)) {
+          assert(stage === 'S3' || stage === 'S4', 'ed: Psycho Knuckle must remain S3+');
+          assert(/psycho_knuckle_lv1|psycho_knuckle_lv2/i.test(conditions), 'ed: Psycho Knuckle lost charge-level condition');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'reentry' && op.stage === 'S0'), 'ed: S0 Blitz Rush re-entry owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'charged_flicker' && op.stage === 'S1'), 'ed: S1 charged-Flicker spacing owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'kill_switch' && op.stage === 'S2'), 'ed: S2 Kill Switch owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'knuckle' && op.stage === 'S3'), 'ed: S3 Psycho Knuckle owner missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 21 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 22 content candidates | Learn + Role + Practical + Reference + resolved source registries');
