@@ -1,0 +1,108 @@
+schema_version: '1.0'
+character: kimberly
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Kimberly先把普通contact换成角落位置；到了墙边以后，Sprint分支和Shuriken Bomb才把下一轮变复杂。'
+    preferred_range: '中近距离。2MP / 5MP / 5MK拿contact，Sprint -> Shadow Slide负责carry；Bomb只在已经赢到角落后放大setplay。'
+    win_pattern: 'ground contact -> L Vagabond或Shadow Slide -> corner carry -> strike / throw / shimmy -> Sprint高低/Stop -> Bomb延迟威胁 -> +42 / SA3继续滚雪球。'
+    lose_pattern: '第一天就一直Sprint/Arc Step、没到角落就强行Bomb、把2MK +1当DRC入口、角落基础没稳就背3-Bomb和SA3花活。'
+  character_model:
+    essence_short: 'Kimberly的核心不是“移动多”或“炸弹多”，而是先把普通opening送进角落，再用Sprint和Bomb把位置优势变成setplay。'
+    essence_detail: 'Kimberly最容易被学成“跑得快、花活多、炸弹多”的角色，但当前Training Order反而把她拆得很清楚：先用light到L Vagabond Edge、2MP/medium到Sprint -> Shadow Slide，把普通contact稳定地换成corner carry；再学Shadow Slide后的strike / throw / shimmy；之后才加入5MK DRC与Sprint的overhead / low / Emergency Stop分支。真正属于Kimberly的高层特色发生在角落：Shadow Slide把人送到墙边后，Shuriken Bomb库存开始把一个普通击倒变成有延迟威胁的setplay，Year 4又把Bomb最大库存提升到3。她因此不是“移动越多越强”，而是先把移动用作位置转换，再用角落Bomb和Sprint读法让对手的防守选择越来越难。SA3的持续伤害/走速buff最后才进入，因为它改变的是已经稳定的角色循环，而不是入门前提。'
+    force_opponent_to:
+    - '先尊重2MP / 5MP的普通近身confirm与5HK block +2。'
+    - '被Sprint -> Shadow Slide不断推向角落时提前处理位置。'
+    - '角落后同时处理Bomb延迟威胁、strike / throw / shimmy与Sprint高低。'
+    - '高阶段还要处理+42 safe jump与SA3强化后的持续压力。'
+    payoff_after_respect:
+    - 'Shadow Slide把普通confirm直接换成corner access。'
+    - '角落throw / strike / shimmy更容易成立。'
+    - 'Bomb把防守时间线变成“现在防本体，稍后还要处理爆炸”。'
+    - '+42 safe jump与SA3 buff进一步放大已经拿到的角落状态。'
+    core_tradeoff: '稳定carry/simple Oki vs 更复杂Sprint/Bomb setplay。Bomb stock有限，要比较现在花一颗扩大角落回合，还是留给下一次更确定的setup。'
+    successful_round:
+    - 'light / 2MP / 5MK拿普通contact'
+    - 'Sprint -> Shadow Slide把人送向角落'
+    - 'dash后strike / throw / shimmy'
+    - '角落基础稳定后加入Sprint overhead / low / Stop'
+    - 'Bomb进入后延长角落选择树'
+    - '高阶段用+42 safe jump和SA3 buff继续滚雪球'
+    common_misplays:
+    - '一开始就一直Sprint/Arc Step，ground confirm反而不稳。'
+    - '没到角落就强行围着Bomb打，浪费资源和注意力。'
+    - '把2MK block +1误当成可取消DRC入口。'
+    - 'SA3一有就机械开，不看当前round价值与资源。'
+    unique_decision: '相对Rashid，Kimberly的移动重点不是改变re-entry角度，而是把opening换成corner；到了角落，再用Bomb和Sprint把位置优势变成setplay。'
+    transfer_in:
+    - 'grounded contact / strike / throw / shimmy。'
+    - 'anti-air / punish / DI / corner Oki。'
+    - '移动必须建立在已确认contact之上的纪律。'
+    new_skill:
+    - 'Sprint follow-up职责分工。'
+    - 'route价值按corner arrival衡量。'
+    - 'Shuriken Bomb有限stock与延迟setplay。'
+    - '+42 safe jump和Bomb/Oki叠层。'
+    - 'SA3持续buff后的round-long调整。'
+    unlearn:
+    - 'mobility等于neutral里一直跑。'
+    - '2MK block +1就应该DRC。'
+    - '有Bomb就应该马上用。'
+    - 'setplay选项越多越应该S0全学。'
+  glossary:
+  - {term: '236K｜Sprint', meaning: 'Kimberly的主要移动hub。只有在已经有contact/spacing理由时才进入；可接Stop、Shadow Slide、Neck Hunter、Arc Step等。'}
+  - {term: '236P｜Vagabond Edge', meaning: '稳定route工具。L版是S0 light ender并留下+3。'}
+  - {term: 'Sprint > Shadow Slide', meaning: '核心carry低段收尾。当前主要价值是把普通contact送向角落和+47一类Oki。'}
+  - {term: 'Shuriken Bomb stock', meaning: '角落setplay资源。Year 4最大库存3；S0不要求使用。'}
+  - {term: 'SA3｜Bushin Ninjastar Cypher', meaning: '后期持续buff：伤害倍率约111%并提高走速；不是入门身份。'}
+  tools:
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +7 / Block -1 / C；最重要的ground confirm之一。'}
+  - {input: '5MK', name: '站中脚', use: '8F可取消；当前主要CDR starter。'}
+  - {input: '2MK', name: '蹲中脚', use: '7F / Hit +5 / Block +1 / non-cancel；是正帧低段，但不是DRC入口。'}
+  - {input: '236LP', name: 'L Vagabond Edge', use: 'S0 light ender；命中后+3，简单继续2LP / throw / shimmy。'}
+  - {input: '236K > Shadow Slide', name: 'Sprint -> Shadow Slide', use: '核心carry/Oki路线；+47 family并把对手送向角落。'}
+  - {input: '236K > Emergency Stop / Neck Hunter', name: 'Sprint options', use: 'S1以后加入Stop throw/shimmy与overhead分支。'}
+  - {input: 'Shuriken Bomb', name: '喷漆炸弹资源', use: 'S2以后角落setplay；库存有限，Year4上限3。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Sprint派生、Vagabond Edge、Bomb与SA由工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-6', recovery: '8', hit: '+5', block: '-2', cancel: 'C', damage: '270', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-7', recovery: '11', hit: '+1', block: '-3', cancel: 'C', damage: '270', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '6', active: '6-8', recovery: '18', hit: '+3', block: '-2', cancel: 'C', damage: '540', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-10', recovery: '18', hit: '+1', block: '-4', cancel: 'C', damage: '540', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '9', active: '9-11', recovery: '20', hit: '+3', block: '-4', cancel: 'C', damage: '630', note: 'PC时+23F。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '12', active: '12-15', recovery: '17', hit: '+7', block: '+2', cancel: '-', damage: '630', note: ''}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-6', recovery: '7', hit: '+4', block: '-1', cancel: 'C', damage: '270', note: ''}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '7', hit: '+4', block: '-2', cancel: '-', damage: '180', note: ''}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-8', recovery: '13', hit: '+7', block: '-1', cancel: 'C', damage: '500', note: '挥空额外+2F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '7', active: '7-9', recovery: '16', hit: '+5', block: '+1', cancel: '-', damage: '540', note: '不可取消，不能套2MK DRC模板。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '8', active: '8-13', recovery: '17', hit: '+3', block: '-2', cancel: 'C', damage: '720', note: '强制站立。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '8', active: '8-10', recovery: '24', hit: 'KD', block: '-10', cancel: '-', damage: '810', note: 'PC hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '270', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '270', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '6', active: '6-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '450', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '540', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '8', active: '8-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '630', note: ''}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '630', note: ''}
+  resource:
+    name: 'Shuriken Bomb Stock'
+    gain: 'Genius at Play增加库存；OD版本当前可快速补到高库存。'
+    spend: 'Shuriken Bomb / Bomb Spread按版本消耗1或2库存。'
+    changes: 'Year4最大库存提升到3，扩大角落combo/setplay/lethal可能性。'
+    rule: 'S0-S1不要求Bomb；S2角落基础稳定后第一次花库存。'
+  key_numbers:
+  - {label: 'L Vagabond Edge', value: '+3', decision: 'S0 light最简单收尾，point-blank继续light/throw/shimmy。'}
+  - {label: 'Shadow Slide', value: '+47 family', decision: '核心carry/Oki；位置/spacing决定下一步。'}
+  - {label: 'H Bushin Senpukyaku', value: '+20', decision: 'light的Oki替代。'}
+  - {label: '5HK', value: '12F / Block +2', decision: '不靠Bomb也能有普通respect。'}
+  - {label: '2MK', value: '7F / Block +1 / non-cancel', decision: '低段正帧，但不是DRC starter。'}
+  - {label: 'OD Sprint > Neck Hunter', value: '+44', decision: '高阶段Sprint Oki。'}
+  - {label: '+42 route', value: 'OD Sprint > Hojin > Hisen -> jump', decision: 'S3 corner safe jump。'}
+  constraints:
+  - '2MK不可取消，不能继承Cammy/Juri/Rashid 2MK DRC。'
+  - 'Bomb库存有限且Year4上限3；S0不花Bomb。'
+  - 'Shadow Slide / Bomb setplay保留corner/spacing条件。'
+  - '+42 safe jump必须是明确OD Sprint/Hojin/Hisen route。'
+  - 'SA3持续buff固定留S4。'
