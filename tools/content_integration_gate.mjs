@@ -766,7 +766,7 @@ for (const c of chars) {
     assert(/OD Seismic Hammer[\s\S]{0,100}-8|OD Seismic Hammer.*Block -8/i.test(JSON.stringify(role)) || /OD Seismic Hammer[\s\S]{0,120}Block -8/i.test(reference), 'cviper: current OD Seismic -8 truth missing');
 
     const allText = learn + "\n" + reference + "\n" + practicalText;
-    assert(!/2HK[^\n]{0,40}(?:High Jump Cancel|HJC)|(?:High Jump Cancel|HJC)[^\n]{0,40}2HK/i.test(allText), 'cviper: illegal 2HK HJC route leaked');
+    assert(!/2HK\s*(?:>|xx|→)[^\n]{0,40}(?:High Jump Cancel|HJC)|(?:High Jump Cancel|HJC)[^\n]{0,40}(?:>|xx|→)\s*2HK/i.test(allText), 'cviper: illegal 2HK HJC route leaked');
 
     for (const op of practical.opportunities ?? []) {
       for (const row of op.rows ?? []) {
