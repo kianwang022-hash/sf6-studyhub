@@ -1,0 +1,108 @@
+schema_version: '1.1'
+character: juri
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让ground contact→M Fuhajin→stock+1→Oki跑成完整回合，再加入stock spending。'
+  score_rule: 'Rank/MR是Reality evidence，不替代确认、stock状态、spend timing和Oki判断。'
+  current_ui: 'S0只生成stock；S2第一次花stock；Feng Shui Engine固定后置到S4。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通5MP/light接触→M Fuhajin→stock+1→forward dash固定strike→下一轮；不要求花stock。'
+    add_now:
+      - '5MP / 2MP / light负责ground contact；正常跳优先Tensenrin。'
+      - '5MP→2MP→M Fuhajin与2LK→2LP→2LP→M Fuhajin。'
+      - 'M Fuhajin后forward dash，先固定5MP/strike。'
+      - '被防的5MP +2只先保留strike / throw。'
+    gate:
+      lab: '两条M Fuhajin确认、主要反空、forward-dash固定strike稳定。'
+      match: '真人里能主动出现完整Loop，并清楚看到stock是在正常回合里自然生成。'
+    defer: ['stock-spend主分支', 'OD Fuhajin', '3-stock chain', '复杂角落', 'SA2 Feng Shui Engine']
+    hub_focus: [medium, light]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把punish、角落H Tensenrin Oki和普通打投稳定下来；stock仍以“有就留”作为默认。'
+    add_now:
+      - '5MP +2固定strike稳定后逐步加入throw / shimmy / block。'
+      - '挡无敌技会走6HP PC→2HP→H Fuhajin→H Tensenrin。'
+      - 'Drive Reversal punish先走2MP PC→M Fuhajin。'
+      - '角落H Tensenrin→5MP约+5 family按hit height/spacing练。'
+      - 'corner forward throw基础循环。'
+    gate:
+      match: '主要损失不再来自漏确认、漏punish、漏角落Oki或为了stock乱改路线。'
+    defer: ['多stock路线', 'OD Fuhajin branch', 'Feng Shui']
+    hub_focus: [punish, corner, medium]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MK DRC加入主循环，并第一次真正比较“保留stock vs 花1 stock放大当前opening”。'
+    add_now:
+      - '2MK DRC按Hit/Block/Whiff正确分流；Hit默认仍回M Fuhajin。'
+      - 'Go Ohsatsu作为第一条1-stock spend路线。'
+      - '花stock以后，在合适路线用L Fuhajin重新生stock。'
+      - 'DI按版中/角落/背墙位置处理，不因为大机会就自动花stock。'
+    gate:
+      match: '能说出这次为什么花stock，或者为什么选择保留；有stock不再等于自动消费。'
+    defer: ['OD+stock复杂树', '3-stock最大路线', 'SA2']
+    hub_focus: [2mk, stock_spend, di, corner]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'OD / 3-stock与H Tensenrin条件进入；同一次opening开始按damage/carry/future stock分流。'
+    add_now:
+      - 'OD Fuhajin先保一条简单H Tensenrin路线，再加入stock branch。'
+      - '3-stock只保留“回M Fuhajin”与“当前damage/Oki”两种独立价值。'
+      - 'Boosted Saihasho / Ankensatsu / Go Ohsatsu首次出现必须带stock condition。'
+      - 'H Tensenrin midscreen/corner Oki按实际hit height / spacing分开。'
+    gate:
+      behavior: 'stock state始终正确；高资源路线不会让基础M Fuhajin loop退化。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['大规模FSE路线库', '低频极限stock优化']
+    hub_focus: [od, three_stock, stock_spend, corner]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA3、Feng Shui Engine和高资源stock/Drive路线进入，但SA2作为独立系统学习。'
+    add_now:
+      - 'SA3从已会的DRC / stock opening现金化。'
+      - 'Feng Shui Engine单独建立cancel/pressure树，不混进普通route。'
+      - 'SA1只有exact route闭合后再加入。'
+      - '回放重点转向stock spend timing和FSE选择，而不是是否把stock花光。'
+    gate:
+      behavior: '高级系统建立在稳定ground loop和资源判断上。'
+      reality: '高分目标由实际目标和持续表现定义。'
+    hub_focus: [super, three_stock, od]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条M Fuhajin确认稳定', node: medium, upgrade_evidence: 'medium与light starter双侧稳定。'}
+    - {id: EX02, stage: S0, label: 'Tensenrin反空稳定', node: medium, upgrade_evidence: '正常跳跃能稳定处理。'}
+    - {id: EX03, stage: S3, label: 'OD/3-stock路线按需稳定', node: od, upgrade_evidence: '只在资源与目的匹配时执行。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '不为stock放弃grounded contact', node: medium, upgrade_evidence: '没有stock也能正常打完整回合。'}
+    - {id: NE02, stage: S0, label: '5MP +2不等于永远向前', node: medium, upgrade_evidence: '会按对手反应strike/throw/stop。'}
+    - {id: NE03, stage: S2, label: 'stock存在不绑架neutral', node: stock_spend, upgrade_evidence: '不会为了找花stock机会乱改spacing。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S1, label: 'Hit/Block/Whiff三分流', node: medium, upgrade_evidence: '被防不播放M Fuhajin命中路线。'}
+    - {id: CO02, stage: S2, label: 'hold vs spend stock', node: stock_spend, upgrade_evidence: '能解释当前opening为何值得/不值得花。'}
+    - {id: CO03, stage: S3, label: 'Boosted状态带stock条件', node: three_stock, upgrade_evidence: '不会把stockless/boosted状态混淆。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'M Fuhajin stock/Oki闭环', node: medium, upgrade_evidence: 'stock+1后forward dash能接下一Turn。'}
+    - {id: OF02, stage: S2, label: 'spend→regain循环', node: stock_spend, upgrade_evidence: '会在合适路线花stock并重新生stock。'}
+    - {id: OF03, stage: S3, label: '角落H Tensenrin条件化Oki', node: corner, upgrade_evidence: '知道+5 family的corner/hit-height条件。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '挡无敌技会punish', node: punish, upgrade_evidence: '确定机会稳定拿stock+Oki。'}
+    - {id: DA02, stage: S2, label: '对手防法改变stock spend价值', node: stock_spend, upgrade_evidence: '不会在对手不给机会时硬花。'}
+    - {id: DA03, stage: S4, label: 'FSE被适应会改变cancel树', node: super, upgrade_evidence: 'SA2不按固定script运行。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'ground contact→M Fuhajin→stock+1→Oki整轮先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '确认、+2 pressure、punish与corner Oki多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'DRC与hold/spend stock决策结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；OD/3-stock不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'FSE与高资源优化围绕真实高分瓶颈。'}
