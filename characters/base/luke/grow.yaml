@@ -1,0 +1,107 @@
+schema_version: '1.1'
+character: luke
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让稳定Flash Knuckle + Oki整轮成立，再提高执行投资。'
+  score_rule: 'Rank/MR是Reality evidence，不替代确认、Oki、资源和执行选择证据。'
+  current_ui: 'Perfect Flash Knuckle不会因为理论最优就提前成为当前任务。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通中距离→2MP/light确认→L Flash +36→PDR固定打击→下一轮，不需要Perfect。'
+    add_now:
+      - 'Sand Blast控中距离，发波后继续看跳。'
+      - '2MP→2LP→L Flash与2LK→2LP→L Flash两条基础确认。'
+      - 'L Flash +36后立即PDR，先固定一个2MP strike。'
+      - '一条稳定jump-in→H Flash路线。'
+    gate:
+      lab: '两条+36确认、主要反空、PDR固定strike稳定。'
+      match: '真人能反复出现完整Loop；断掉时能指出是接触、确认、ender还是Oki。'
+    defer: ['Perfect Flash Knuckle主线', '2MK DRC', '+64', 'active-frame meaty', 'SA优化']
+    hub_focus: [close, light, jump]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把+1接触、DDT、punish和角落基础少漏；仍以稳定路线为默认。'
+    add_now:
+      - '2MP block +1后逐步加入throw / shimmy / block。'
+      - 'OD Flash > DDT +12加入简单hard knockdown。'
+      - '5HP PC稳定punish。'
+      - '角落L Rising Uppercut +28…31与forward throw +19 loop。'
+    gate:
+      match: '主要损失不再来自漏对空、漏确认、漏punish、DDT/Oki和角落基础。'
+    defer: ['复杂Perfect chain', '+64 safe jump', '高资源lethal']
+    hub_focus: [close, meter, punish, corner]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MK DRC、+7 No Chaser、DI/位置开始改变路线；先按end-state选，不按难度选。'
+    add_now:
+      - '2MK DRC加入主循环，Hit/Block/Whiff正确分流。'
+      - 'No Chaser whiff point-blank +7作为第一套结构化DRC Oki。'
+      - 'Drive Reversal / wall-splat / back-to-corner路线按位置加入。'
+      - '比较+36 / +12 / +7 / +28…31，而不是只看damage。'
+    gate:
+      match: '常见opening能解释为什么选这个end-state；Drive不是自动花。'
+    defer: ['+64高执行主线', 'active-frame精确setplay']
+    hub_focus: [2mk, corner, punish]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '基础路线不退化的前提下，Perfect timing只在它买到独立价值时加入。'
+    add_now:
+      - 'Year4角落fully charged L Flash连接按hit height学习。'
+      - '选1-2条Perfect路线分别承担damage/carry/setplay，不横向堆。'
+      - '+64 family只在执行稳定且下一轮价值清楚时使用。'
+      - '掉combo率上升就主动退回L Flash / DDT稳定路线。'
+    gate:
+      behavior: '会解释困难路线买到了什么；执行优化不破坏基础确认/Oki。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['极窄active-frame meaty', '资源全投最大伤害']
+    hub_focus: [perfect, 2mk, corner]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: '收+64 safe jump、active-frame、SA/lethal等高价值优化，但困难本身从不构成学习理由。'
+    add_now:
+      - '+64 -> No Chaser +15 / three dash +7按真实条件优化。'
+      - '角落safe jump与active-frame meaty在Training Mode闭合后加入。'
+      - 'SA1/SA2/SA3和6Drive lethal按血量/资源进入。'
+      - '回放重点是：这次Perfect是否真比稳定路线更值。'
+    gate:
+      behavior: '高执行路线只在真实高价值机会出现，基础Loop不退化。'
+      reality: '高分目标不硬编码，由持续表现定义。'
+    hub_focus: [perfect, super, corner]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条L Flash +36确认稳定', node: close, upgrade_evidence: '2MP与light starter双侧稳定。'}
+    - {id: EX02, stage: S1, label: 'OD Flash > DDT稳定', node: meter, upgrade_evidence: '资源路线不掉且能接下一Turn。'}
+    - {id: EX03, stage: S3, label: 'Perfect timing按需稳定', node: perfect, upgrade_evidence: '只在目标路线需要时使用，失败率可控。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'Sand Blast后继续看跳', node: close, upgrade_evidence: '飞道不锁死注意力。'}
+    - {id: NE02, stage: S0, label: '不靠Perfect也能打整轮', node: close, upgrade_evidence: '稳定基础Loop独立成立。'}
+    - {id: NE03, stage: S3, label: '执行优化不绑架Neutral', node: perfect, upgrade_evidence: '不会为了准备Perfect错过当前距离任务。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S1, label: '2MP +1是真实选择点', node: close, upgrade_evidence: '会在strike/throw/shimmy/stop间选。'}
+    - {id: CO02, stage: S2, label: '同一starter按end-state分流', node: 2mk, upgrade_evidence: '能解释+36/+12/+7/+28…31。'}
+    - {id: CO03, stage: S3, label: 'Perfect不是自动升级', node: perfect, upgrade_evidence: '会比较执行成本和实际收益。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'L Flash +36闭环', node: close, upgrade_evidence: 'PDR后能接下一Turn。'}
+    - {id: OF02, stage: S1, label: 'DDT/角落Oki稳定', node: meter, upgrade_evidence: 'hard KD与corner loop都能跑。'}
+    - {id: OF03, stage: S3, label: '+64等高级end-state按需使用', node: perfect, upgrade_evidence: '高执行买到独立setplay价值。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '挡无敌技会稳定punish', node: punish, upgrade_evidence: '大破绽不丢。'}
+    - {id: DA02, stage: S2, label: '位置改变route选择', node: corner, upgrade_evidence: '中场/角落/背墙不走同一条。'}
+    - {id: DA03, stage: S3, label: '高执行失误会主动降级', node: perfect, upgrade_evidence: '真实比赛掉路线时会回稳定答案。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'L Flash +36整轮先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '确认、+1接触、DDT、punish和角落基础多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'DRC与end-state分流结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；Perfect优化不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '高执行优化围绕真实高价值瓶颈。'}
