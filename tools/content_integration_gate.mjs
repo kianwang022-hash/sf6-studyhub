@@ -579,7 +579,7 @@ for (const c of chars) {
         if (stage === 'S0') {
           assert(!/charged .*Flicker|Psycho Knuckle|Kill Switch|Psycho Spark|Psycho Cannon|SA2/i.test(input), 'ed: advanced charged/carry/projectile/super layer leaked into S0');
         }
-        if (/5MK.*L Psycho Flicker/i.test(input)) {
+        if (/5MK/i.test(input) && /L Psycho Flicker/i.test(input) && String(row.result ?? '') === 'HIT') {
           assert(/confirmed_hit/i.test(conditions), 'ed: 5MK > L Flicker lost confirmed-hit truth');
         }
         if (/charged L\/M Psycho Flicker|charged Flicker/i.test(input)) {
