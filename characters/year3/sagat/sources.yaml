@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: sagat
+accessed: '2026-09-18'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Sagat', url: 'https://www.streetfighter.com/6/en-us/character/sagat/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Sagat Frame Data', url: 'https://sf6-lab.net/en/fighters/sagat/frame', freshness: 'official-reference data checked 2026-09-18', covers: [frames, active, recovery, advantage, cancel, health, damage]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Sagat Move List', url: 'https://sf6-lab.net/en/fighters/sagat/moves', freshness: 'checked 2026-09-18', covers: [normals, unique_attacks, specials, supers, commands, move_names]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Sagat Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/sagat/combo', freshness: 'checked 2026-09-18', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, current_game_plan, tiger_shot, tiger_knee, tiger_uppercut, tiger_nexus, safe_jump]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; Tiger Knee KD, airborne hit height, shot spacing and active-frame setups remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; fireball strategy claims must be supported by the current game-plan/route evidence rather than archetype labels'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Tier0/1 game-plan and route evidence already closes the fireball-to-conversion loop'
+  learner_projection_rule: 'Tiger Shot shapes movement; learner content must connect projectile control to the medium/long-normal conversion and next-loop payoff'
