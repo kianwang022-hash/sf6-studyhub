@@ -285,7 +285,8 @@ for (const c of chars) {
         if (/Oicho/i.test(input)) {
           assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'ehonda: Oicho must start after S0');
         }
-        if (/\+42/.test(rowText)) {
+        const usesPlus42 = /\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input);
+        if (usesPlus42) {
           assert(/teppo_first_hit/i.test(conditions) || /Teppo Triple Slap first hit/i.test(input), 'ehonda: +42 lost Teppo first-hit truth');
         }
         if (/Sumo Spirit/i.test(input) || /Sumo Spirit/i.test(op.title ?? '')) {
