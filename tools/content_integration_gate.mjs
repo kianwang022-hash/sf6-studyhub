@@ -33,7 +33,8 @@ const chars = [
   { slug:'akuma', group:'year1', normals:18, learn:['S0｜最小可玩','+30','Demon Raid'], ref:['+37 family','Demon Raid','Shun Goku Satsu'], practical:['Demon Raid','SA3'], candidate:true },
   { slug:'luke', group:'base', normals:18, learn:['S0｜最小可玩','L Flash Knuckle','Perfect Flash Knuckle'], ref:['+36','+64','Perfect Flash Knuckle'], practical:['DDT','SA3'], candidate:true },
   { slug:'terry', group:'year2', normals:18, learn:['S0｜最小可玩','Round Wave','OD Quick Burn'], ref:['+33','Round Wave','Triple Geyser'], practical:['OD Quick Burn','SA2'], candidate:true },
-  { slug:'sagat', group:'year3', normals:18, learn:['S0｜最小可玩','High Tiger Shot','+42 safe jump'], ref:['+32','+42','Tiger Knee Crush'], practical:['High Tiger Shot','SA2'], candidate:true }
+  { slug:'sagat', group:'year3', normals:18, learn:['S0｜最小可玩','High Tiger Shot','+42 safe jump'], ref:['+32','+42','Tiger Knee Crush'], practical:['High Tiger Shot','SA2'], candidate:true },
+  { slug:'juri', group:'base', normals:18, learn:['S0｜最小可玩','M Fuhajin','stock +1'], ref:['Feng Shui Engine','Boosted Saihasho','stock'], practical:['Go Ohsatsu','Feng Shui Engine'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -95,9 +96,30 @@ for (const c of chars) {
     assert(/airborne|空中命中|airborne_hit/i.test(practicalText), 'sagat: +42 safe jump lost airborne-hit condition');
     assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'sagat: inherited 2MK DRC route leaked');
   }
+  if (c.slug === 'juri') {
+    assert(/Fuhajin Stock/i.test(role?.resource?.name ?? ''), 'juri: Fuhajin stock resource owner missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const spend = row?.value?.stock_spend;
+        if (stage === 'S0') {
+          assert(!spend || Number(spend) === 0, 'juri: S0 must not spend stock');
+          assert(!/Boosted\s+(?:Saihasho|Ankensatsu|Go Ohsatsu)/i.test(input), 'juri: Boosted special leaked into S0');
+        }
+        if (spend && Number(spend) > 0) {
+          const conditions = JSON.stringify(row.conditions ?? []);
+          assert(/stock/i.test(conditions) || /stock/i.test(input) || /Stock/i.test(op.title ?? ''), 'juri: stock-spend route missing stock condition');
+        }
+        if (/SA2|Feng Shui Engine/i.test(input)) {
+          assert(stage === 'S4', 'juri: Feng Shui Engine must remain S4');
+        }
+      }
+    }
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 5 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 6 content candidates | Learn + Role + Practical + Reference + resolved source registries');
