@@ -40,7 +40,8 @@ const chars = [
   { slug:'rashid', group:'year1', normals:18, learn:['S0｜最小可玩','M Spinning Mixer','Air Current'], ref:['+31','+42','Ysaar'], practical:['Air Current','Ysaar'], candidate:true },
   { slug:'kimberly', group:'base', normals:18, learn:['S0｜最小可玩','Shadow Slide','Bomb'], ref:['Shuriken Bomb','+42','SA3'], practical:['Shuriken Bomb','SA3'], candidate:true },
   { slug:'guile', group:'base', normals:18, learn:['S0｜最小可玩','Sonic Boom','charge'], ref:['OD Sonic Blade','+42','Solid Puncher'], practical:['OD Sonic Blade','Solid Puncher'], candidate:true },
-  { slug:'deejay', group:'base', normals:18, learn:['S0｜最小可玩','Air Slasher','Jus Cool'], ref:['OD Machine Gun Uppercut','+52','Waning Moon'], practical:['Jus Cool','Sunrise Festival'], candidate:true }
+  { slug:'deejay', group:'base', normals:18, learn:['S0｜最小可玩','Air Slasher','Jus Cool'], ref:['OD Machine Gun Uppercut','+52','Waning Moon'], practical:['Jus Cool','Sunrise Festival'], candidate:true },
+  { slug:'ehonda', group:'base', normals:18, learn:['S0｜最小可玩','Oicho','Sumo Spirit'], ref:['+42','Oicho','OD Teppo'], practical:['Oicho','Sumo Spirit'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -265,9 +266,40 @@ for (const c of chars) {
     }
     assert((practical.opportunities ?? []).some((op) => op.id === 'rhythm' && op.stage === 'S0'), 'deejay: S0 fake/real rhythm opportunity missing');
   }
+  if (c.slug === 'ehonda') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === 'conditional', 'ehonda: 2MK must remain Spirit-only conditional cancel');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'ehonda: inherited 2MK DRC route leaked');
+    assert(/respect.*Oicho/i.test(role?.signature_mechanic?.name ?? ''), 'ehonda: respect-to-Oicho owner missing');
+    assert(!/Oicho[^\n]{0,80}(guaranteed|保证|必定|必抓)/i.test(learn + "\n" + reference + "\n" + practicalText), 'ehonda: guaranteed Oicho wording leaked');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        if (stage === 'S0') {
+          assert(!/Oicho/i.test(input), 'ehonda: Oicho input leaked into S0');
+        }
+        if (/Oicho/i.test(input)) {
+          assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'ehonda: Oicho must start after S0');
+        }
+        if (/\+42/.test(rowText)) {
+          assert(/teppo_first_hit/i.test(conditions) || /Teppo Triple Slap first hit/i.test(input), 'ehonda: +42 lost Teppo first-hit truth');
+        }
+        if (/Sumo Spirit/i.test(input) || /Sumo Spirit/i.test(op.title ?? '')) {
+          assert(stage === 'S3' || stage === 'S4', 'ehonda: Sumo Spirit must remain S3+');
+        }
+        if (/OD Teppo/i.test(input) || /OD Teppo/i.test(op.title ?? '')) {
+          assert(stage === 'S3' || stage === 'S4', 'ehonda: OD Teppo +3 must remain S3+');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'charge' && op.stage === 'S0'), 'ehonda: S0 charge opportunity missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 12 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 13 content candidates | Learn + Role + Practical + Reference + resolved source registries');
