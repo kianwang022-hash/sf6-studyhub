@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: akuma
+accessed: '2026-09-18'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Akuma', url: 'https://www.streetfighter.com/6/en-us/character/gouki_akuma/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Akuma Frame Data', url: 'https://sf6-lab.net/en/fighters/gouki_akuma/frame', freshness: 'official-reference data checked 2026-09-18', covers: [frames, active, recovery, advantage, cancel, health, damage]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Akuma Move List', url: 'https://sf6-lab.net/en/fighters/gouki_akuma/moves', freshness: 'checked 2026-09-18', covers: [normals, unique_attacks, specials, supers, commands, move_names]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Akuma Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/gouki_akuma/combo', freshness: 'updated 2026-08-31; checked 2026-09-18', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, training_order, current_game_plan, key_frames, demon_raid, charged_fireball]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; spacing, airborne state, charge level and active-frame differences remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; incomplete high-damage route fragments remain backend-only'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Tier0/1 route and setplay evidence already closes the strategic model; add current expert evidence later only if interpretation exceeds structured sources'
+  learner_projection_rule: 'option density does not mean early exposure; Demon Raid / teleport / charged-fireball layers are staged after the stable ground loop'
