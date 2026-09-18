@@ -1,0 +1,108 @@
+schema_version: '1.0'
+character: lily
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Lily先花时间拿Windclad，再用Windclad Condor Spire把原本-8的高风险进场变成正帧；对手开始尊重这次进场后，5F Mexican Typhoon才真正变成高价值威胁。'
+    preferred_range: '中距离用5MK/2MK/长拳脚找contact或资源窗口；安全时拿1层Windclad，之后用Windclad Spire进场，再做strike/throw/command-grab。'
+    win_pattern: 'safe Wind window -> gain Windclad -> Windclad Spire plus entry -> strike creates respect -> Mexican Typhoon -> opponent jumps/backwalks -> strike/anti-air/safe jump gets stronger -> rebuild stock when worth it。'
+    lose_pattern: '机械攒满3层、没Windclad也把Spire当安全进场、有stock就立刻花、plus entry第一拍总Typhoon、把+52泛化到所有Spire。'
+  character_model:
+    essence_short: 'Lily先投资Windclad，再把资源换成正帧Spire进场；plus entry建立respect后，Mexican Typhoon才进入高收益猜拳。'
+    essence_detail: 'Windclad的真正价值是改写Condor Spire的风险结构：normal Spire被防-8，Windclad L/M/H变成+1，OD变成+2，同时命中后的Oki上升到+47/+49/+52/+56。资源本身要用Condor Wind的长动作去换，因此并不是越多越好。Lily的基础循环应该先学一层Windclad和一次强化Spire，让学习者亲眼看到同一进场从危险变成正帧；等对手开始尊重这次正帧进场，5F Mexican Typhoon才真正成为command-grab回报。'
+    force_opponent_to:
+    - '尊重Windclad Spire后的正帧接触。'
+    - '不能把每次Condor Wind都当免费资源窗口。'
+    - '在+47到+56击倒后处理strike/throw/safe-jump。'
+    - '对手越愿意block，Mexican Typhoon越强。'
+    payoff_after_respect:
+    - 'Mexican Typhoon 5F高伤command grab开始成立。'
+    - 'Windclad H Spire两dash后+10继续strike/throw。'
+    - '+52 exact-state可以进入safe jump。'
+    - '对手为躲command grab跳/后退后，anti-air和meaty strike再次变强。'
+    core_tradeoff: '现在继续当前压力 vs 花时间投资Windclad；有stock以后再决定现在花还是保留未来plus entry。'
+    successful_round:
+    - '找安全Condor Wind窗口拿1层Windclad'
+    - '用Windclad Spire进场'
+    - '先用strike建立respect'
+    - '对手开始站防后加入Mexican Typhoon'
+    - '对手跳/退以后回strike/anti-air'
+    - 'stock耗尽后重新判断是否值得投资'
+    common_misplays:
+    - '有距离就机械攒到3层。'
+    - '没Windclad时把normal Spire当安全pressure。'
+    - '有stock就立即花，不看位置和对手。'
+    - 'plus entry第一拍总是Mexican Typhoon。'
+    - '把+52 safe jump泛化到所有Spire。'
+    unique_decision: 'Lily新增的是investment-backed command-grab loop：先用时间/空间换Windclad，再用资源改变进场安全性，最后把respect兑换成Mexican Typhoon。'
+    transfer_in:
+    - 'Marisa/Honda的respect -> command-grab反馈。'
+    - 'grounded spacing / anti-air / strike-throw-shimmy。'
+    - 'CDR / punish / corner / Oki。'
+    new_skill:
+    - 'Windclad stock investment timing。'
+    - 'normal vs Windclad Spire风险差异。'
+    - 'hold vs spend stock。'
+    - '+47/+49/+52/+56 Oki budget。'
+    - 'Mexican Typhoon after plus entry。'
+    unlearn:
+    - '资源应该有空就攒满。'
+    - 'command grab是角色第一层。'
+    - 'Condor Spire始终安全。'
+    - '更多Windclad永远优于当前压力。'
+  glossary:
+  - {term: '214P｜Condor Wind', meaning: '资源建立工具。Year4有attack版本与hold取stock版本；长按约46/71/90F对应1/2/3层。'}
+  - {term: '236K｜Condor Spire', meaning: '进场/route工具。normal被防-8；Windclad L/M/H被防+1，OD +2。'}
+  - {term: 'Windclad Stock', meaning: '最多3层；强化Spire、Tomahawk、Dive等。获取有真实时间/空间成本。'}
+  - {term: '623P｜Tomahawk Buster', meaning: '主要anti-air/route工具；Windclad版本启动更快。'}
+  - {term: '360P｜Mexican Typhoon', meaning: '5F高伤command grab。S1以后在plus-entry respect成立时使用。'}
+  tools:
+  - {input: '5LK', name: '站轻脚', use: '4F / Hit +5 / Block -1 / C；基础close starter。'}
+  - {input: '5MK', name: '站中脚', use: '7F / Hit +2 / Block -1 / C；ground contact。'}
+  - {input: '2MK', name: '蹲中脚', use: '9F / Hit +1 / Block -5 / C；可取消低段。'}
+  - {input: '214P', name: 'Condor Wind', use: '资源投资；S0只需要学1层。'}
+  - {input: '236K', name: 'Condor Spire', use: 'normal -8；Windclad后转为plus entry。'}
+  - {input: '360P', name: 'Mexican Typhoon', use: 'S1才进入；先有respect再抓。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Windclad、Condor系列、Mexican Typhoon和SA由关键工具/Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-7', recovery: '8', hit: '+6', block: '-1', cancel: 'C', damage: '350', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '4', active: '4-6', recovery: '8', hit: '+5', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '9', active: '9-12', recovery: '17', hit: '+1', block: '-4', cancel: '-', damage: '800', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '7', active: '7-9', recovery: '15', hit: '+2', block: '-1', cancel: 'C', damage: '600', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '10', active: '10-12', recovery: '22', hit: '0', block: '-5', cancel: 'C', damage: '900', note: ''}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '14', active: '14-17', recovery: '21', hit: '+1', block: '-5', cancel: '-', damage: '1000', note: ''}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '6', active: '6-8', recovery: '8', hit: '+6', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '12', hit: '+2', block: '-2', cancel: '-', damage: '200', note: ''}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '8', active: '8-10', recovery: '18', hit: '+1', block: '-3', cancel: 'SA', damage: '700', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '9', active: '9-11', recovery: '18', hit: '+1', block: '-5', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '10', active: '10-15 / 10-11,12-15', recovery: '22', hit: '0', block: '-2', cancel: 'C', damage: '1000', note: '反空/route核心。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '11', active: '11-20 / 11-12,19-20', recovery: '24', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: ''}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '9', active: '9-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '700', note: ''}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '8', active: '8-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '10', active: '10-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '11', active: '11-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  resource:
+    name: 'Windclad Stock'
+    gain: 'Condor Wind hold约46/71/90F可获得1/2/3层。'
+    spend: 'Windclad Condor Spire / Tomahawk / Dive等强化动作消耗对应stock。'
+    changes: 'normal Spire block -8；Windclad L/M/H +1，OD +2；Oki升到+47/+49/+52/+56。'
+    rule: 'S0只要求1层投资；S2正式学hold vs spend；多stock S3+。'
+  signature_mechanic:
+    name: 'Windclad investment -> plus entry -> Mexican Typhoon respect loop'
+    rule: '先用安全窗口投资Windclad，把Spire变成plus entry；strike建立respect后才用5F Mexican Typhoon。'
+  key_numbers:
+  - {label: 'Normal Spire', value: 'Block -8', decision: '无Windclad不能当safe entry。'}
+  - {label: 'Windclad L/M/H Spire', value: 'Block +1', decision: '资源把进场风险改写。'}
+  - {label: 'Windclad OD Spire', value: 'Block +2', decision: '更强plus entry。'}
+  - {label: 'Windclad H Spire', value: 'KD +52', decision: 'S2 exact-state safe jump / two dash +10。'}
+  - {label: 'Mexican Typhoon', value: '5F / 2000-2800', decision: 'S1以后respect cash-in。'}
+  constraints:
+  - 'Windclad值必须带windclad_stock。'
+  - 'normal Spire -8不能被Windclad版本覆盖。'
+  - 'Mexican Typhoon不进S0。'
+  - '+52 safe jump必须绑定Windclad H Spire exact state。'

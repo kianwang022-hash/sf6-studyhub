@@ -44,7 +44,8 @@ const chars = [
   { slug:'ehonda', group:'base', normals:18, learn:['S0｜最小可玩','Oicho','Sumo Spirit'], ref:['+42','Oicho','OD Teppo'], practical:['Oicho','Sumo Spirit'], candidate:true },
   { slug:'blanka', group:'base', normals:18, learn:['S0｜最小可玩','Electric Thunder','Blanka-chan Bomb'], ref:['+42','Blanka-chan Bomb','Lightning Beast'], practical:['Blanka-chan Bomb','SA2'], candidate:true },
   { slug:'vega', group:'year2', normals:18, learn:['S0｜最小可玩','Psycho Mine','cash-in'], ref:['Psycho Mine','OD Crusher','Devil Reverse'], practical:['Psycho Mine','OD Psycho Crusher'], candidate:true },
-  { slug:'marisa', group:'base', normals:18, learn:['S0｜最小可玩','Enfold','+42'], ref:['charged 5HP','Phalanx','Enfold'], practical:['Enfold','fully charged'], candidate:true }
+  { slug:'marisa', group:'base', normals:18, learn:['S0｜最小可玩','Enfold','+42'], ref:['charged 5HP','Phalanx','Enfold'], practical:['Enfold','fully charged'], candidate:true },
+  { slug:'lily', group:'base', normals:18, learn:['S0｜最小可玩','Windclad','Mexican Typhoon'], ref:['Normal vs Windclad Spire','Mexican Typhoon','+52'], practical:['Mexican Typhoon','Windclad H Condor Spire'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -353,7 +354,6 @@ for (const c of chars) {
         const stage = String(row.stage ?? '');
         const input = String(row.input ?? '');
         const conditions = JSON.stringify(row.conditions ?? []);
-        const rowText = JSON.stringify(row);
         if (stage === 'S0') assert(!/Enfold/i.test(input), 'marisa: Enfold leaked into S0');
         if (/Enfold/i.test(input)) {
           assert(stage !== 'S0', 'marisa: Enfold must start after S0');
@@ -361,18 +361,52 @@ for (const c of chars) {
         }
         const usesPlus42 = /\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input);
         if (usesPlus42) assert(/phalanx_ender/i.test(conditions) || /Phalanx ender/i.test(input), 'marisa: +42 lost Phalanx ender truth');
-        if (/fully charged|charged 5HP|charged 4HP|charged .*Gladius/i.test(input)) {
-          assert(/full_charge/i.test(conditions), 'marisa: charged row lost full-charge truth');
+        if (/fully charged|charged 5HP|charged 4HP|charged .*Gladius/i.test(input)) assert(/full_charge/i.test(conditions), 'marisa: charged row lost full-charge truth');
+        if (/Scutum/i.test(input) || /Scutum/i.test(op.title ?? '')) assert(stage === 'S3' || stage === 'S4', 'marisa: Scutum must remain S3+');
+      }
+    }
+  }
+  if (c.slug === 'lily') {
+    assert(/Windclad Stock/i.test(role?.resource?.name ?? ''), 'lily: Windclad resource owner missing');
+    assert(/Windclad investment.*Mexican Typhoon/i.test(role?.signature_mechanic?.name ?? ''), 'lily: investment-to-Typhoon signature owner missing');
+    assert(/Normal Spire[\s\S]{0,120}Block -8|normal Spire -8/i.test(JSON.stringify(role)), 'lily: normal Spire unsafe truth missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const value = row?.value ?? {};
+        const stockGain = Number(value?.stock_gain ?? 0);
+        const stockSpend = Number(value?.stock_spend ?? 0);
+        if (stage === 'S0') {
+          assert(!/Mexican Typhoon\s*$/i.test(input), 'lily: Mexican Typhoon choice leaked into S0');
         }
-        if (/Scutum/i.test(input) || /Scutum/i.test(op.title ?? '')) {
-          assert(stage === 'S3' || stage === 'S4', 'marisa: Scutum must remain S3+');
+        const enhancedMove = /Windclad\s+(?:[LMHOD]+\s+)?(?:Condor Spire|Tomahawk Buster|Condor Dive)/i.test(input) || /Windclad stock active/i.test(input);
+        if (enhancedMove || stockSpend > 0) {
+          assert(/windclad_stock/i.test(conditions), 'lily: Windclad move/spend row missing windclad_stock');
+        }
+        if (/Mexican Typhoon\s*$/i.test(input)) {
+          assert(stage !== 'S0', 'lily: Mexican Typhoon must start after S0');
+          assert(/opponent_respect|punish_counter|point_blank/i.test(conditions), 'lily: Mexican Typhoon choice lost respect/punish truth');
+        }
+        const usesPlus52 = /\+52/.test(JSON.stringify(value)) || /\+52/.test(input);
+        if (usesPlus52 && /Spire/i.test(input + ' ' + String(op.title ?? ''))) {
+          assert(/windclad_stock/i.test(conditions) && /windclad_h_spire_end_state/i.test(conditions), 'lily: +52 safe-jump/Oki row lost Windclad H Spire exact-state truth');
+        }
+        if (stockGain > 0) {
+          assert(/safe_resource_window/i.test(conditions), 'lily: Windclad build row missing safe resource window');
+        }
+        if (stockGain > 1) {
+          assert(stage === 'S3' || stage === 'S4', 'lily: multi-stock Windclad build must remain S3+');
         }
       }
     }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'resource' && op.stage === 'S0'), 'lily: S0 one-stock investment opportunity missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'state_choice' && op.stage === 'S2'), 'lily: S2 hold-vs-spend opportunity missing');
   }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 16 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 17 content candidates | Learn + Role + Practical + Reference + resolved source registries');
