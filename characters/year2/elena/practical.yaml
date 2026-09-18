@@ -1,0 +1,286 @@
+schema_version: '1.0'
+character: elena
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Elena S0 is stable ground contact -> Scythe/Rhino knockdown. Lynx Song first appears in S1; SA2 Healing remains S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Ground Contact -> Knockdown'}
+  S1: {label: 基本功成型, short: 'First Lynx Mix / Punish / Corner'}
+  S2: {label: 实战结构化, short: 'CDR / Full Mix Hub / +41'}
+  S3: {label: 选择成熟, short: '+42 Safe Jump / Advanced Lynx'}
+  S4: {label: 高分上探, short: 'SA2 Healing / SA / Active-frame'}
+shared_packages:
+  SCYTHE34:
+    label: 'L Spinning Scythe +34基础Oki'
+    sequence: 'L Spinning Scythe -> +34'
+    next: 'dash / simple strike / throw by position'
+    verification: verified
+    sources: [SRC05]
+  RHINO39:
+    label: 'M Rhino Horn +39'
+    sequence: 'M Rhino Horn grounded hit -> +39'
+    next: 'S1: L Lynx Song -> Mallet Smash OR simple dash Oki'
+    verification: conditioned
+    conditions: [grounded_hit, spacing]
+    sources: [SRC05]
+  SCYTHE42:
+    label: 'M Spinning Scythe +42'
+    sequence: 'M Spinning Scythe grounded hit -> +42'
+    next: 'midscreen two dashes +2 OR corner immediate j.HP safe jump'
+    verification: conditioned
+    conditions: [grounded_hit, corner_for_safe_jump]
+    sources: [SRC05]
+  LYNX_HUB:
+    label: 'Lynx Song mix hub'
+    sequence: 'earned setup -> Lynx Song'
+    next: 'Mallet Smash overhead / 2MK low / throw / Lynx Whirl shimmy'
+    verification: conditioned
+    conditions: [earned_setup]
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜最小可玩先只学L Scythe +34'
+  stage: S0
+  subtitle: '稳定击倒先于mix'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LP x2 > L Spinning Scythe'
+    value: {drive: 0, kd: '+34'}
+    next_loop_package: SCYTHE34
+    why: '最低认知负担的Elena起点：小命中先换清楚Oki。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: '2LP block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '回5MK / spacing'
+    why: '不确认就不把Scythe播到防御上。'
+- id: low
+  title: '2MK｜Year4更安全，但不是DRC入口'
+  stage: S0
+  subtitle: '低段命中接2LP再回L Scythe'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2MK > 2LP > L Spinning Scythe'
+    value: {drive: 0, kd: '+34'}
+    next_loop_package: SCYTHE34
+    why: '保留Year4低段价值，同时不伪造取消属性。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 接触结束
+    input: '2MK block (-3) -> stop / defend / spacing reset'
+    value: {frame: '-3'}
+    next_loop: '回5MK / walk / anti-air'
+    why: 'Year4更安全不等于还在你的回合。'
+    verification: verified
+    sources: [SRC03]
+- id: medium
+  title: '5MK / 5MP｜普通地面先把respect做出来'
+  stage: S0
+  subtitle: '5MK +1先建立近身，再学更复杂Lynx'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: 5MK +1
+    input: '5MK block (+1) -> 2LP / throw / walk-back shimmy / block'
+    value: {frame: '+1'}
+    next_loop: '看对手抢、拆、跳或凹'
+    why: 'Elena不靠Healing或Lynx才能有普通压力。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S0
+    choice: M Rhino
+    input: '5MP > MP > M Rhino Horn'
+    value: {drive: 0, kd: '+39 grounded'}
+    next_loop_package: RHINO39
+    why: '第一条medium ender；后面才把+39转换成Lynx mix。'
+    verification: conditioned
+    conditions: [grounded_hit]
+    sources: [SRC05]
+- id: lynx
+  title: 'Lynx Song｜S1才第一次打开mix hub'
+  stage: S1
+  subtitle: '先overhead / low / throw三选，shimmy再加入'
+  rows:
+  - result: READ
+    stage: S1
+    choice: Overhead
+    input: 'M Rhino Horn grounded hit -> L Lynx Song > Mallet Smash'
+    value: {state: 'active-frame setup'}
+    next_loop: 'hit -> continue | block -> respect actual frame / reset'
+    why: '第一条真正Elena-specific的高段选择。'
+    verification: conditioned
+    conditions: [grounded_rhino, timing]
+    sources: [SRC05]
+  - result: READ
+    stage: S1
+    choice: Low
+    input: 'earned Lynx Song setup -> 2MK'
+    value: {state: 'low'}
+    next_loop: 'hit -> Scythe/Rhino confirm | block -> stop'
+    why: 'overhead成立后，low才成为真正互补问题。'
+    verification: conditioned
+    conditions: [earned_setup]
+    sources: [SRC05]
+  - result: READ
+    stage: S1
+    choice: Throw
+    input: 'earned Lynx Song setup -> throw'
+    value: {state: 'throw'}
+    next_loop: '按throw落点继续 / corner loop'
+    why: '惩罚只会站着防overhead/low的对手。'
+    verification: conditioned
+    conditions: [earned_setup]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Shimmy
+    input: 'earned Lynx Song setup -> Lynx Whirl > walk-back shimmy'
+    value: {state: 'throw-tech bait'}
+    next_loop: 'PC punish / reset'
+    why: '等对手真的开始拆投后再加入第四个分支。'
+    verification: conditioned
+    conditions: [earned_setup, defensive_habit]
+    sources: [SRC05]
+- id: cdr
+  title: '2MP CDR｜S2才加入高资源carry'
+  stage: S2
+  subtitle: 'Sagat之后再次提醒：本角色DR入口不是2MK'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MP whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回spacing'
+    why: 'Drive只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 已DRC才继续
+    input: '2MP > DRC > 5MK block'
+    value: {drc_cost: 3}
+    next_loop: '5MK +1 -> strike / throw / shimmy'
+    why: 'CDR后才把资源换成更强近身。'
+    verification: conditioned
+    conditions: [drc_committed]
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: Carry
+    input: '2MP > DRC > 5MK > 2HP > H Spinning Scythe > M Rhino Horn'
+    value: {drive: 3, carry: high}
+    next_loop_package: RHINO39
+    why: 'S2开始按位置选择Scythe/Rhino end state。'
+    verification: verified
+    sources: [SRC05]
+- id: plus41
+  title: '+41｜高级Lynx setplay只在明确路线后进入'
+  stage: S2
+  subtitle: '不是看到Lynx就自动+41'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: +41 setup
+    input: 'OD Spinning Scythe > DR 2MP > L Lynx Song > Harvest Circle'
+    value: {drive: 'OD + DR', kd: '+41'}
+    next_loop: 'M Lynx Song active / dash +21 / conditioned 6F safe jump'
+    why: '高资源换明确setplay预算；只在这条实际路线里记+41。'
+    verification: conditioned
+    conditions: [exact_route, timing]
+    sources: [SRC05]
+- id: corner
+  title: 'Corner｜+42 safe jump是S3优化'
+  stage: S3
+  subtitle: '只属于corner M Spinning Scythe grounded hit'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Safe Jump
+    input: 'corner M Spinning Scythe grounded hit -> +42 -> immediate forward jump HP'
+    value: {kd: '+42', state: 'safe jump'}
+    next_loop_package: SCYTHE42
+    why: '条件完整时才把+42记成safe-jump入口。'
+    verification: conditioned
+    conditions: [corner, grounded_hit]
+    sources: [SRC05]
+  - result: THROW
+    stage: S1
+    choice: Forward throw
+    input: 'corner forward throw -> +24 -> forward dash'
+    value: {frame: 'after dash +4'}
+    next_loop: 'throw / 5MK / 2LP / shimmy'
+    why: '先有最简单墙角循环，再加safe jump。'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+- id: punish
+  title: 'Punish｜稳定大确反先于mix花活'
+  stage: S1
+  subtitle: '先保证punish，再决定是否转Lynx'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 稳定
+    input: '5MK (PC) > 2HP > H Spinning Scythe > M Rhino Horn'
+    value: {drive: 0}
+    next_loop_package: RHINO39
+    why: '挡住大无敌技后先拿稳定高价值。'
+    verification: verified
+    sources: [SRC05]
+  - result: PC
+    stage: S2
+    choice: Lynx分支
+    input: '5MK (PC) > 2HP > Lynx Song > Harvest Circle > H Scratch Wheel'
+    value: {state: 'mix / damage'}
+    next_loop: '按Scratch Wheel落点 / corner位置继续'
+    why: '只有基础punish稳定后，才用更复杂分支换不同结果。'
+    verification: conditioned
+    conditions: [followup_timing]
+    sources: [SRC05]
+- id: super
+  title: 'SA2｜S4才比较伤害和Healing'
+  stage: S4
+  subtitle: 'Healing是后期资源选择，不是角色入门身份'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: Damage
+    input: 'confirmed route > SA2 normal'
+    value: {sa: 2, damage: 2800, kd: '+25'}
+    next_loop: 'DR 5HK active-frame / current Oki'
+    why: '血量与局面支持时，正常分支拿伤害和Oki。'
+    verification: conditioned
+    conditions: [sa2_confirm]
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: Healing
+    input: 'confirmed route > SA2 Healing variation'
+    value: {sa: 2, heal: 1600, drive_restore: true}
+    next_loop: '按source +1 Oki family重建距离'
+    why: '当恢复生命/Drive的长期收益高于当前伤害时再选。'
+    verification: conditioned
+    conditions: [healing_variation, current_health, drive_state]
+    sources: [SRC05]
+backend_only:
+- {label: 'anti-air 2HP -> OD Rhino -> SA2', reason: 'hit-height conditioned; keep backend until learner stage needs it'}
+- {label: 'airborne Scythe -> Lynx Whirl frame families', reason: 'height/follow-up timing conditioned'}
+- {label: 'SA1 +42 corner safe jump', reason: 'S4 optimization; does not replace core Elena loop'}
+- {label: 'active-frame Mallet / 5MK / 6MK exact timing', reason: 'exact setup condition required'}
