@@ -1,0 +1,109 @@
+schema_version: '1.0'
+character: blanka
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Blanka先用普通地面、Electric Thunder和charge Rolling拿击倒；真正的角色特色是赢到角落后放Blanka-chan Bomb，让延迟爆炸和本体高低投同时成为问题。'
+    preferred_range: '中近距离。4MK +2、light、2MP先拿contact；Thunder负责基础Oki，Rolling/Vertical提供charge路线；Bomb只在已经赢到corner/setup后进入。'
+    win_pattern: 'ground contact -> Electric Thunder +39 / Rolling ender -> simple Oki -> corner -> Bomb placement/activation -> OD Thunder overhead-low-throw -> advanced movement -> Lightning Beast。'
+    lose_pattern: 'Rolling当neutral自动突进、没到角落就硬放Bomb、+42条件没确认就safe jump、4MK因为+2就无限挥、基础Thunder/Oki没稳就围着SA2玩。'
+  character_model:
+    essence_short: 'Blanka的基础是Thunder/charge knockdown；Bomb不是入门资源，而是赢到角落以后把“本体 + 延迟对象”叠成第二时间轴。'
+    essence_detail: 'Blanka不是“球来球去的charge怪角色”。他确实要学会在普通动作里保存Rolling / Vertical Rolling的charge，但当前最实用的早期回合其实很普通：5LK或2LK确认到Electric Thunder，4MK +2 / 2MP接Thunder或Rolling，命中后拿+39、+42等清楚Oki。真正属于Blanka的高层特色发生在角落：Wild Lift / corner route把Blanka-chan Bomb放到场上，Bomb需要Electric Thunder等攻击激活，于是对手不仅要防你本人，还要计算一个延迟的第二威胁。Current Game Plan正是ground contact -> corner -> Bomb -> OD Electric Thunder -> overhead / low / throw。成熟Blanka不是一直Roll，而是先用稳定contact赢位置，再在角落把Bomb、OD Thunder、高低投和safe jump叠成setplay。SA2 Lightning Beast最后再把Rolling家族变成持续系统层。'
+    force_opponent_to:
+    - '尊重4MK block +2和Electric Thunder Oki。'
+    - '不能完全忽略Rolling / Vertical charge威胁。'
+    - '到角落后同时处理Blanka本体和延迟Bomb。'
+    - 'OD Electric Thunder后处理overhead / low / throw。'
+    - 'SA2阶段还要处理Rolling Cannon follow-up。'
+    payoff_after_respect:
+    - 'throw / low / overhead更容易成立。'
+    - '+39/+42让Hop、dash、safe jump有清楚预算。'
+    - 'Bomb把防守从只看本体变成“本体 + 延迟爆炸”。'
+    - 'OD Thunder +4让高低/throw更可信。'
+    - 'Lightning Beast进一步增加Rolling follow-up。'
+    core_tradeoff: '稳定Thunder/Oki vs 更复杂Rolling/Bomb setplay。先赢角落，再问Bomb是否值得；没有位置/setup时硬放Bomb或硬Roll只是增加风险。'
+    successful_round:
+    - '5LK/2LK/4MK/2MP拿ground contact'
+    - 'Thunder或Rolling拿击倒'
+    - '+39/+42跑简单Oki'
+    - '把对手推到corner'
+    - 'Bomb进入后叠加OD Thunder / high-low-throw'
+    - 'S4用Lightning Beast扩系统'
+    common_misplays:
+    - '把Rolling当neutral自动突进，忽略巨大block风险。'
+    - '没到角落就围着Bomb打。'
+    - '+42条件没确认就safe jump。'
+    - '太早学Lightning Beast整套。'
+    - '因为4MK +2就无限挥，忽略Year4 whiff recovery变大。'
+    unique_decision: 'Blanka真正新增的是延迟对象时间轴：Bomb必须先被放置/激活，本体再围绕爆炸时机组织高低投，而不是单纯把一个资源立即消费。'
+    transfer_in:
+    - 'charge storage。'
+    - 'grounded contact / strike / throw / shimmy。'
+    - 'anti-air / punish / CDR / corner Oki。'
+    new_skill:
+    - 'Rolling/Vertical charge availability。'
+    - 'Electric Thunder +39 Oki。'
+    - '+42 Vertical Rolling safe jump。'
+    - 'Bomb placement + activation timing。'
+    - 'OD Thunder high/low/throw around object。'
+    - 'Lightning Beast late install。'
+    unlearn:
+    - 'charge角色的主要任务是一直用charge move。'
+    - 'mobility special被防也无所谓。'
+    - 'Bomb存在就自动产生mix。'
+    - 'SA2应该尽早围着它练。'
+  glossary:
+  - {term: '214P｜Electric Thunder', meaning: 'S0基础非charge ender；当前+39 Oki。按住可进入charged interaction。'}
+  - {term: '[4]6P｜Rolling Attack', meaning: 'charge travel/damage工具；被防很危险，不能当neutral autopilot。'}
+  - {term: '[2]8K｜Vertical Rolling Attack', meaning: 'charge anti-air/ender。M/H current +42 family。'}
+  - {term: '22P｜Blanka-chan Bomb', meaning: '后置场上对象，需要setup和激活；主要放大corner state。'}
+  - {term: '4MK｜Wild Edge', meaning: '9F / Hit +8 / Block +2 / C；Year4 whiff recovery增加到16F。'}
+  - {term: 'SA2｜Lightning Beast', meaning: '后期install，改变Rolling家族并开放Rolling Cannon。'}
+  tools:
+  - {input: '5LK', name: '站轻脚', use: '4F / Hit +5 / Block -2 / C；S0 light starter。'}
+  - {input: '4MK', name: 'Wild Edge', use: '9F / Block +2；强respect，但挥空更容易被差返。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Block -5 / C；当前CDR低段入口之一。'}
+  - {input: '214P', name: 'Electric Thunder', use: '基础ender / +39 Oki；不需要charge。'}
+  - {input: '[2]8K', name: 'Vertical Rolling', use: 'anti-air/ender；M/H +42必须按exact route。'}
+  - {input: '[4]6P', name: 'Rolling Attack', use: 'travel/damage；被防巨大负帧，主要从confirm/读法使用。'}
+  - {input: '22P', name: 'Blanka-chan Bomb', use: 'S2以后角落object setplay；不进S0。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Neutral Jump HP、charge specials、Bomb与SA由关键工具/Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-7', recovery: '10', hit: '+3', block: '-3', cancel: 'C', damage: '300', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '4', active: '4-7', recovery: '7', hit: '+5', block: '-2', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '9', active: '9-11', recovery: '15', hit: '+3', block: '-4', cancel: 'SA', damage: '700', note: 'Year4 startup 10F->9F。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-10', recovery: '17', hit: '+5', block: '-2', cancel: 'C', damage: '600', note: '挥空额外+3F recovery。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '10', active: '10-16', recovery: '22', hit: '+3', block: '-3', cancel: 'C', damage: '800', note: '强制站立。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '7', active: '7-15', recovery: '18', hit: '+6', block: '-4', cancel: '-', damage: '800', note: 'CH/Drive Counter可进入Coward Crouch。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '6', active: '6-8', recovery: '8', hit: '+5', block: '-2', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '10', hit: '+3', block: '-3', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '9', active: '9-13', recovery: '16', hit: '-1', block: '-5', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '16', hit: '+5', block: '-5', cancel: 'C', damage: '500', note: '挥空额外+2F recovery。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '15', active: '15-19', recovery: '20', hit: '0', block: '-5', cancel: '-', damage: '900', note: 'CH/Drive Counter可进入Coward Crouch。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '11', active: '11-14', recovery: '23', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: 'PC可进入Coward Crouch。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-8', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '7', active: '7-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '700', note: '空中命中可进Coward Crouch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中命中可进Coward Crouch。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '11', active: '11-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Earned corner object setplay'
+    rule: '先用Thunder/Rolling赢到Oki和corner，再放Bomb并用Electric Thunder激活延迟威胁；对象setplay不是S0入口。'
+  key_numbers:
+  - {label: 'Electric Thunder', value: 'KD +39', decision: 'S0基础Oki：dash+20 / two dash+1 / Hop+11。'}
+  - {label: 'M/H Vertical Rolling', value: 'KD +42', decision: 'S1 safe jump，exact state必带。'}
+  - {label: '4MK', value: '9F / Block +2', decision: '强ground respect；注意Year4 whiff recovery。'}
+  - {label: 'OD Electric Thunder', value: 'Block +4', decision: 'S2高低/throw pressure。'}
+  - {label: 'Forward throw', value: '+30', decision: 'Hop+3 / DR pressure。'}
+  - {label: 'OD Wild Hunt', value: '+64', decision: 'S3高Oki预算。'}
+  constraints:
+  - 'Bomb不进S0/S1必修。'
+  - 'Rolling/Vertical blocked risk不能被mobility叙述抹掉。'
+  - '+42必须绑定M/H Vertical exact state。'
+  - 'Bomb必须带corner/setup/activation条件。'
+  - 'Lightning Beast固定S4。'
