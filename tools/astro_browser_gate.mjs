@@ -16,7 +16,12 @@ const chars = [
   { slug:'akuma', normals:18, learn:'同一个 opening 可以买不同的 Oki 时间预算', ref:'Shun Goku Satsu', practical:['L Tatsu > 2HK','Demon Raid','charged Gou Hadoken'] },
   { slug:'luke', normals:18, learn:'不靠 Perfect，也能在真人里打出完整 Luke', ref:'Perfect Flash Knuckle', practical:['2MP > 2LP > L Flash Knuckle','OD Flash Knuckle > DDT','+64'] },
   { slug:'terry', normals:18, learn:'Burning Knuckle买位置', ref:'Round Wave', practical:['2LK > 2LP > M Burning Knuckle','2LK > 2LP > H Rising Tackle','OD Quick Burn'] },
-  { slug:'sagat', normals:18, learn:'Tiger Shot → 对手反应', ref:'H Tiger Knee airborne +42', practical:['236MP -> watch jump / walk / crouch / parry','5MP > 2LP > M Tiger Uppercut','H Tiger Knee Crush airborne hit -> +42'] }
+  { slug:'sagat', normals:18, learn:'Tiger Shot → 对手反应', ref:'H Tiger Knee airborne +42', practical:['236MP -> watch jump / walk / crouch / parry','5MP > 2LP > M Tiger Uppercut','H Tiger Knee Crush airborne hit -> +42'] },
+  { slug:'juri', normals:18, learn:'M Fuhajin → stock +1', ref:'Feng Shui Engine', practical:['5MP > 2MP > M Fuhajin','5MP > 2MP > Go Ohsatsu','SA2 activation'] },
+  { slug:'elena', normals:18, learn:'Lynx Song', ref:'Healing', practical:['2LP x2 > L Spinning Scythe','5MP > MP > M Rhino Horn','Healing'] },
+  { slug:'yasmine', normals:18, learn:'Bayani', ref:'Nakatagong Lakas', practical:['2LP > 5LP/LP > M Daloy ng Tubig > Alon','Boosted Alon','SA2'] },
+  { slug:'rashid', normals:18, learn:'Air Current', ref:'Ysaar', practical:['2LK > 5LP > 5LP > M Spinning Mixer','2MP > 5LK > L Eagle Spike','Ysaar'] },
+  { slug:'kimberly', normals:18, learn:'Shadow Slide', ref:'Shuriken Bomb', practical:['2LP > 2LP > 2LP > L Vagabond Edge','2MP > 5MP > 5HP > Sprint > Shadow Slide','Shuriken Bomb'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -78,6 +83,36 @@ try {
       assert(roleText.includes('2MK不可取消'), 'sagat: non-cancelable 2MK constraint missing');
       assert(roleText.includes('airborne') && roleText.includes('+42'), 'sagat: airborne-only +42 truth missing');
     }
+    if (c.slug === 'juri') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Fuhajin Stock'), 'juri: stock resource owner missing');
+      assert(roleText.includes('S0先生成不消费'), 'juri: S0 generate-without-spend rule missing');
+      assert(roleText.includes('Feng Shui Engine属于late system'), 'juri: late FSE boundary missing');
+    }
+    if (c.slug === 'elena') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Earned Lynx Song mix hub + late SA2 Healing choice'), 'elena: earned Lynx/Healing signature missing');
+      assert(roleText.includes('2MK不可取消'), 'elena: non-cancelable 2MK constraint missing');
+      assert(roleText.includes('M Spinning Scythe +42 safe jump是corner-specific'), 'elena: corner-only +42 truth missing');
+    }
+    if (c.slug === 'yasmine') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Bayani Mode'), 'yasmine: Bayani resource owner missing');
+      assert(roleText.includes('S0只学取得'), 'yasmine: S0 acquire-only rule missing');
+      assert(roleText.includes('Boosted Alon必须有Bayani或SA2 persistent state'), 'yasmine: Boosted Alon state boundary missing');
+    }
+    if (c.slug === 'rashid') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Earned mobility + Air Current re-entry'), 'rashid: earned-mobility signature missing');
+      assert(roleText.includes('Boosted special必须有Air Current状态'), 'rashid: Boosted Air Current condition missing');
+      assert(roleText.includes('+42 jump-in属于Boosted Mixer'), 'rashid: +42 Boosted-only truth missing');
+    }
+    if (c.slug === 'kimberly') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Shuriken Bomb Stock'), 'kimberly: Bomb resource owner missing');
+      assert(roleText.includes('S0-S1不要求Bomb'), 'kimberly: Bomb defer rule missing');
+      assert(roleText.includes('2MK不可取消'), 'kimberly: non-cancelable 2MK constraint missing');
+    }
 
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
@@ -121,6 +156,42 @@ try {
       assert(!s0Text.includes('H Tiger Knee Crush airborne hit -> +42'), 'sagat: S3 +42 safe jump leaked into S0');
       assert(!s0Text.includes('2MP > CDR'), 'sagat: S2 cancel-drive layer leaked into S0');
     }
+    if (c.slug === 'juri') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('5MP > 2MP > M Fuhajin'), 'juri: S0 M Fuhajin stock loop missing');
+      assert(s0Text.includes('2LK > 2LP > 2LP > M Fuhajin'), 'juri: S0 light stock loop missing');
+      assert(!s0Text.includes('5MP > 2MP > Go Ohsatsu'), 'juri: S2 stock spend leaked into S0');
+      assert(!s0Text.includes('SA2 activation'), 'juri: S4 Feng Shui Engine leaked into S0');
+    }
+    if (c.slug === 'elena') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP x2 > L Spinning Scythe'), 'elena: S0 stable Scythe route missing');
+      assert(s0Text.includes('2MK > 2LP > L Spinning Scythe'), 'elena: S0 low route missing');
+      assert(s0Text.includes('5MP > MP > M Rhino Horn'), 'elena: S0 Rhino route missing');
+      assert(!s0Text.includes('Lynx Song'), 'elena: earned Lynx mix leaked into S0');
+      assert(!s0Text.includes('Healing'), 'elena: S4 Healing leaked into S0');
+    }
+    if (c.slug === 'yasmine') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP > 5LP/LP > M Daloy ng Tubig > Alon'), 'yasmine: S0 Bayani acquire route missing');
+      assert(s0Text.includes('2MP > H Daloy ng Tubig > Alon'), 'yasmine: S0 +44 Bayani acquire route missing');
+      assert(!s0Text.includes('Boosted Alon'), 'yasmine: Boosted spend leaked into S0');
+      assert(!s0Text.includes('Nakatagong Lakas'), 'yasmine: S4 SA2 install leaked into S0');
+    }
+    if (c.slug === 'rashid') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LK > 5LP > 5LP > M Spinning Mixer'), 'rashid: S0 Mixer loop missing');
+      assert(s0Text.includes('2MP > 5LK > L Eagle Spike'), 'rashid: S0 carry route missing');
+      assert(!s0Text.includes('Air Current Boosted'), 'rashid: Boosted route leaked into S0');
+      assert(!s0Text.includes('Ysaar'), 'rashid: S4 Ysaar leaked into S0');
+    }
+    if (c.slug === 'kimberly') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP > 2LP > 2LP > L Vagabond Edge'), 'kimberly: S0 light route missing');
+      assert(s0Text.includes('2MP > 5MP > 5HP > Sprint > Shadow Slide'), 'kimberly: S0 carry identity route missing');
+      assert(!s0Text.includes('Shuriken Bomb'), 'kimberly: Bomb spend leaked into S0');
+      assert(!s0Text.includes('+42'), 'kimberly: late exact +42 setplay leaked into S0');
+    }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
     for (const token of c.practical) assert(practicalText.includes(token), `${c.slug}: practical marker missing ${token}`);
@@ -142,57 +213,21 @@ try {
   assert(page.url().includes('/character/jamie/'), 'real 31-character selector navigation failed');
   assert(await page.locator('#heroCharacterSelect').inputValue() === 'jamie', 'selector did not land on Jamie');
 
-  await page.goto(`${BASE}/character/juri/#role`, { waitUntil:'networkidle' });
+  await page.goto(`${BASE}/character/guile/#role`, { waitUntil:'networkidle' });
   assert((await page.locator('[data-panel="role"]').innerText()).includes('GOLD PAGE QA PENDING'), 'CONTENT_READY roster shell must not masquerade as Gold content');
 
-  await page.goto(`${BASE}/character/jamie/#role`, { waitUntil:'networkidle' });
-  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'light', 'v6 default/saved test theme should start light');
-  await page.locator('#theme-toggle').click();
-  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'dark theme toggle failed');
-  const darkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
-  assert(darkHeroLoaded, 'dark hero art missing');
-  await page.screenshot({ path:`${SHOTS}/jamie-v6-dark.png`, fullPage:false });
-  await page.locator('#theme-toggle').click();
-
-  await page.goto(`${BASE}/character/ken/#role`, { waitUntil:'networkidle' });
-  await page.locator('#theme-toggle').click();
-  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'ken: dark theme toggle failed');
-  const kenDarkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
-  assert(kenDarkHeroLoaded, 'ken: dark hero art missing');
-  await page.screenshot({ path:`${SHOTS}/ken-v6-dark.png`, fullPage:false });
-  await page.locator('#theme-toggle').click();
-
-  await page.goto(`${BASE}/character/akuma/#role`, { waitUntil:'networkidle' });
-  await page.locator('#theme-toggle').click();
-  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'akuma: dark theme toggle failed');
-  const akumaDarkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
-  assert(akumaDarkHeroLoaded, 'akuma: dark hero art missing');
-  await page.screenshot({ path:`${SHOTS}/akuma-v6-dark.png`, fullPage:false });
-  await page.locator('#theme-toggle').click();
-
-  await page.goto(`${BASE}/character/luke/#role`, { waitUntil:'networkidle' });
-  await page.locator('#theme-toggle').click();
-  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'luke: dark theme toggle failed');
-  const lukeDarkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
-  assert(lukeDarkHeroLoaded, 'luke: dark hero art missing');
-  await page.screenshot({ path:`${SHOTS}/luke-v6-dark.png`, fullPage:false });
-  await page.locator('#theme-toggle').click();
-
-  await page.goto(`${BASE}/character/terry/#role`, { waitUntil:'networkidle' });
-  await page.locator('#theme-toggle').click();
-  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'terry: dark theme toggle failed');
-  const terryDarkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
-  assert(terryDarkHeroLoaded, 'terry: dark hero art missing');
-  await page.screenshot({ path:`${SHOTS}/terry-v6-dark.png`, fullPage:false });
-  await page.locator('#theme-toggle').click();
-
-  await page.goto(`${BASE}/character/sagat/#role`, { waitUntil:'networkidle' });
-  await page.locator('#theme-toggle').click();
-  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'sagat: dark theme toggle failed');
-  const sagatDarkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
-  assert(sagatDarkHeroLoaded, 'sagat: dark hero art missing');
-  await page.screenshot({ path:`${SHOTS}/sagat-v6-dark.png`, fullPage:false });
-  await page.locator('#theme-toggle').click();
+  for (const c of chars) {
+    await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
+    if (await page.evaluate(() => document.documentElement.dataset.theme) !== 'light') {
+      await page.locator('#theme-toggle').click();
+    }
+    await page.locator('#theme-toggle').click();
+    assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', `${c.slug}: dark theme toggle failed`);
+    const darkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(darkHeroLoaded, `${c.slug}: dark hero art missing`);
+    await page.screenshot({ path:`${SHOTS}/${c.slug}-v6-dark.png`, fullPage:false });
+    await page.locator('#theme-toggle').click();
+  }
 
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
@@ -203,7 +238,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 10 accepted light+dark heroes | 学习/角色/实战/资料 | 10 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 15 accepted light+dark heroes | 学习/角色/实战/资料 | 15 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
