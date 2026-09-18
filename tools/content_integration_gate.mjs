@@ -34,7 +34,8 @@ const chars = [
   { slug:'luke', group:'base', normals:18, learn:['S0｜最小可玩','L Flash Knuckle','Perfect Flash Knuckle'], ref:['+36','+64','Perfect Flash Knuckle'], practical:['DDT','SA3'], candidate:true },
   { slug:'terry', group:'year2', normals:18, learn:['S0｜最小可玩','Round Wave','OD Quick Burn'], ref:['+33','Round Wave','Triple Geyser'], practical:['OD Quick Burn','SA2'], candidate:true },
   { slug:'sagat', group:'year3', normals:18, learn:['S0｜最小可玩','High Tiger Shot','+42 safe jump'], ref:['+32','+42','Tiger Knee Crush'], practical:['High Tiger Shot','SA2'], candidate:true },
-  { slug:'juri', group:'base', normals:18, learn:['S0｜最小可玩','M Fuhajin','stock +1'], ref:['Feng Shui Engine','Boosted Saihasho','stock'], practical:['Go Ohsatsu','Feng Shui Engine'], candidate:true }
+  { slug:'juri', group:'base', normals:18, learn:['S0｜最小可玩','M Fuhajin','stock +1'], ref:['Feng Shui Engine','Boosted Saihasho','stock'], practical:['Go Ohsatsu','Feng Shui Engine'], candidate:true },
+  { slug:'elena', group:'year2', normals:18, learn:['S0｜最小可玩','Lynx Song','Healing'], ref:['+42','Revival Dance','Healing variation'], practical:['Lynx Song','SA2 Healing'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -117,9 +118,24 @@ for (const c of chars) {
       }
     }
   }
+  if (c.slug === 'elena') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === '-', 'elena: 2MK must remain non-cancelable');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'elena: inherited 2MK DRC route leaked');
+    assert(/corner[\s\S]{0,120}M Spinning Scythe[\s\S]{0,120}\+42/i.test(practicalText) || /M Spinning Scythe[\s\S]{0,120}\+42[\s\S]{0,120}corner/i.test(practicalText), 'elena: +42 safe jump lost corner M Scythe condition');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        if (/Healing|SA2 Healing/i.test(input) || /Healing/i.test(op.title ?? '')) {
+          assert(stage === 'S4', 'elena: SA2 Healing must remain S4');
+        }
+      }
+    }
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 6 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 7 content candidates | Learn + Role + Practical + Reference + resolved source registries');
