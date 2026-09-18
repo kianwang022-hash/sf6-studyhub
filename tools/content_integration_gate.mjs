@@ -42,7 +42,8 @@ const chars = [
   { slug:'guile', group:'base', normals:18, learn:['S0｜最小可玩','Sonic Boom','charge'], ref:['OD Sonic Blade','+42','Solid Puncher'], practical:['OD Sonic Blade','Solid Puncher'], candidate:true },
   { slug:'deejay', group:'base', normals:18, learn:['S0｜最小可玩','Air Slasher','Jus Cool'], ref:['OD Machine Gun Uppercut','+52','Waning Moon'], practical:['Jus Cool','Sunrise Festival'], candidate:true },
   { slug:'ehonda', group:'base', normals:18, learn:['S0｜最小可玩','Oicho','Sumo Spirit'], ref:['+42','Oicho','OD Teppo'], practical:['Oicho','Sumo Spirit'], candidate:true },
-  { slug:'blanka', group:'base', normals:18, learn:['S0｜最小可玩','Electric Thunder','Blanka-chan Bomb'], ref:['+42','Blanka-chan Bomb','Lightning Beast'], practical:['Blanka-chan Bomb','SA2'], candidate:true }
+  { slug:'blanka', group:'base', normals:18, learn:['S0｜最小可玩','Electric Thunder','Blanka-chan Bomb'], ref:['+42','Blanka-chan Bomb','Lightning Beast'], practical:['Blanka-chan Bomb','SA2'], candidate:true },
+  { slug:'vega', group:'year2', normals:18, learn:['S0｜最小可玩','Psycho Mine','cash-in'], ref:['Psycho Mine','OD Crusher','Devil Reverse'], practical:['Psycho Mine','OD Psycho Crusher'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -315,9 +316,43 @@ for (const c of chars) {
     }
     assert((practical.opportunities ?? []).some((op) => op.id === 'charge' && op.stage === 'S0'), 'blanka: S0 charge opportunity missing');
   }
+  if (c.slug === 'vega') {
+    assert(/Psycho Mine/i.test(role?.resource?.name ?? ''), 'vega: Psycho Mine resource owner missing');
+    assert(/opponent-side Psycho Mine state/i.test(role?.signature_mechanic?.name ?? ''), 'vega: Mine-state signature owner missing');
+    const roleText = JSON.stringify(role);
+    assert(/normal L\/M Crusher|Normal L\/M Crusher|Block -20/i.test(roleText), 'vega: normal Crusher unsafe truth missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        const spend = Number(row?.value?.mine_spend ?? 0);
+        if (stage === 'S0') {
+          assert(spend === 0, 'vega: S0 must not cash Psycho Mine');
+          assert(!/Psycho Mine active/.test(input), 'vega: Mine cash-in leaked into S0');
+        }
+        if (/Psycho Mine active/.test(input) || spend > 0) {
+          assert(/psycho_mine_active/i.test(conditions), 'vega: Mine-enhanced row missing psycho_mine_active');
+        }
+        const usesMinePlus = /\+(?:42|49|82)/.test(JSON.stringify(row?.value ?? {})) || /\+(?:42|49|82)/.test(input);
+        if (usesMinePlus && /Backfist|Crusher/.test(input)) {
+          assert(/psycho_mine_active/i.test(conditions), 'vega: Mine Oki value lost Mine-state truth');
+        }
+        if (/Devil Reverse/i.test(input)) {
+          assert(/landing_height/i.test(conditions), 'vega: Devil Reverse lost height condition');
+        }
+        if (/OD Psycho Crusher/i.test(input) || /OD Crusher/i.test(op.title ?? '')) {
+          assert(stage === 'S3' || stage === 'S4', 'vega: OD Crusher high-resource cash-in must remain S3+');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'plant' && op.stage === 'S0'), 'vega: S0 Mine-plant opportunity missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'state_choice' && op.stage === 'S2'), 'vega: S2 hold-vs-detonate opportunity missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 14 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 15 content candidates | Learn + Role + Practical + Reference + resolved source registries');
