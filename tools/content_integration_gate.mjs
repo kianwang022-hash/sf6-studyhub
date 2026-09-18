@@ -38,7 +38,8 @@ const chars = [
   { slug:'elena', group:'year2', normals:18, learn:['S0｜最小可玩','Lynx Song','Healing'], ref:['+42','Revival Dance','Healing variation'], practical:['Lynx Song','SA2 Healing'], candidate:true },
   { slug:'yasmine', group:'year4', normals:18, learn:['S0｜最小可玩','Bayani','Boosted Alon'], ref:['Bayani','Boosted Alon','Nakatagong Lakas'], practical:['Boosted Alon','SA2'], candidate:true },
   { slug:'rashid', group:'year1', normals:18, learn:['S0｜最小可玩','M Spinning Mixer','Air Current'], ref:['+31','+42','Ysaar'], practical:['Air Current','Ysaar'], candidate:true },
-  { slug:'kimberly', group:'base', normals:18, learn:['S0｜最小可玩','Shadow Slide','Bomb'], ref:['Shuriken Bomb','+42','SA3'], practical:['Shuriken Bomb','SA3'], candidate:true }
+  { slug:'kimberly', group:'base', normals:18, learn:['S0｜最小可玩','Shadow Slide','Bomb'], ref:['Shuriken Bomb','+42','SA3'], practical:['Shuriken Bomb','SA3'], candidate:true },
+  { slug:'guile', group:'base', normals:18, learn:['S0｜最小可玩','Sonic Boom','charge'], ref:['OD Sonic Blade','+42','Solid Puncher'], practical:['OD Sonic Blade','Solid Puncher'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -211,9 +212,33 @@ for (const c of chars) {
       }
     }
   }
+  if (c.slug === 'guile') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === '-', 'guile: 2MK must remain non-cancelable');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'guile: inherited 2MK DRC route leaked');
+    assert(/Charge availability/i.test(role?.signature_mechanic?.name ?? ''), 'guile: charge availability owner missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        if (stage === 'S0') {
+          assert(!/Sonic Blade|Sonic Cross/i.test(input), 'guile: Blade/Cross leaked into S0');
+        }
+        if (/Somersault/i.test(input) && /\+42/.test(rowText)) {
+          assert(/hit_height/i.test(conditions), 'guile: +42 Somersault lost hit-height condition');
+        }
+        if (/Solid Puncher|SA2/i.test(input) || /Solid Puncher|SA2/i.test(op.title ?? '')) {
+          assert(stage === 'S4', 'guile: Solid Puncher must remain S4');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'charge' && op.stage === 'S0'), 'guile: S0 charge opportunity missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 10 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 11 content candidates | Learn + Role + Practical + Reference + resolved source registries');
