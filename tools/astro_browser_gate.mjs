@@ -114,7 +114,7 @@ try {
   assert(page.url().includes('/character/jamie/'), 'real 31-character selector navigation failed');
   assert(await page.locator('#heroCharacterSelect').inputValue() === 'jamie', 'selector did not land on Jamie');
 
-  await page.goto(`${BASE}/character/luke/#role`, { waitUntil:'networkidle' });
+  await page.goto(`${BASE}/character/terry/#role`, { waitUntil:'networkidle' });
   assert((await page.locator('[data-panel="role"]').innerText()).includes('GOLD PAGE QA PENDING'), 'CONTENT_READY roster shell must not masquerade as Gold content');
 
   await page.goto(`${BASE}/character/jamie/#role`, { waitUntil:'networkidle' });
