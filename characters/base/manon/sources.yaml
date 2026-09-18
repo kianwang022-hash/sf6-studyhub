@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: manon
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Manon', url: 'https://www.streetfighter.com/6/en-us/character/manon/frame', game_version: current, covers: [frames, damage, cancel_properties, medal_scaling]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Manon Frame Data', url: 'https://sf6-lab.net/en/fighters/manon/frame', freshness: 'official-reference data through 2026-08-27; checked 2026-09-19', covers: [frames, medal_scaling, manege_dore, renverse, rond_point]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Manon Move List', url: 'https://sf6-lab.net/en/fighters/manon/moves', freshness: 'checked 2026-09-19', covers: [normals, unique_attacks, specials, supers]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Manon Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/manon/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, medal_level, training_priorities, renverse, rond_point, throw_setplay]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official-reference data overrides secondary/local; throw-after dash spacing, Rond-point Oki, airborne-hit state and Medal-level damage remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; Medal Level must remain explicit for scaled throw/SA values and incomplete ellipsis source routes stay backend-only'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Year4 frame/route/Medal evidence closes the model'
+  learner_projection_rule: 'stable strike/Rond-point/Renversé loop first; Medal value becomes a future-reward modifier; command-grab emphasis increases only after ordinary Oki is stable'
