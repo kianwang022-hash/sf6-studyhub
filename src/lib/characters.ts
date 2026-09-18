@@ -78,8 +78,8 @@ export function loadCharacter(slug: string) {
 
   const hero = HERO_DISPLAY[slug]
     ? {
-        dark: `${slug}-dark.webp`,
-        light: `${slug}-light.webp`,
+        dark: `${slug}-dark.jpg`,
+        light: `${slug}-light.jpg`,
         ...HERO_DISPLAY[slug]
       }
     : null;

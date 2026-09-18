@@ -1,0 +1,1475 @@
+{
+  "source_file": "SF6_StudyHub_Ryu_角色实战统一_v5(1).html",
+  "source_sha256": "8e2ac584a68629471523ab073c2b45ed8ec0f8200e7cd94eb8dc3923b9cd32b3",
+  "source_size_bytes": 37281440,
+  "embedded_image_references": 112,
+  "assets": [
+    {
+      "kind": "hero",
+      "character": "ryu",
+      "theme": "dark",
+      "path": "public/hero/ryu-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 100377,
+      "sha256": "3903edd016043a2250c6926393ef996698575faf1ed04833632f94ce9df6f251",
+      "dimensions": [
+        558,
+        590
+      ],
+      "alt": "Ryu · Street Fighter 6 StudyHub hero visual"
+    },
+    {
+      "kind": "hero",
+      "character": "ryu",
+      "theme": "light",
+      "path": "public/hero/ryu-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 98185,
+      "sha256": "b3639d2c710d9b0a90267d6f7a680573673ffbe62938bcd874056b18ef9dd5fe",
+      "dimensions": [
+        558,
+        590
+      ],
+      "alt": "Ryu · Street Fighter 6 StudyHub hero visual"
+    },
+    {
+      "kind": "hero",
+      "character": "cammy",
+      "theme": "dark",
+      "path": "public/hero/cammy-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 325843,
+      "sha256": "d433cca061688303bf7a4ed02e8fe3c5916de305715bf2fa9f70ba939a1df25f",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "cammy",
+      "theme": "light",
+      "path": "public/hero/cammy-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 412242,
+      "sha256": "cb8617faf5e96128e9641f34436e8b11023ff56b37668c74ec5b1b2ec954264f",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "juri",
+      "theme": "dark",
+      "path": "public/hero/juri-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 491951,
+      "sha256": "fcc42669cd577f60e7ced7cf11b6eb880423656d9b281ffa1e957c4b6735f736",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "juri",
+      "theme": "light",
+      "path": "public/hero/juri-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 430367,
+      "sha256": "db13c3c3433ac81f50e7348eac87b5df59a6fe0a4ece558ee5ef3b76e883edf6",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "mai",
+      "theme": "dark",
+      "path": "public/hero/mai-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 504429,
+      "sha256": "23d4f259ce65ca7106d4c8c3a8f741122c18d2afdfd7b95f89704ea2eea583f0",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "mai",
+      "theme": "light",
+      "path": "public/hero/mai-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 387405,
+      "sha256": "f179f9a0865fa417a7ec17d042c0e4819ded58616343a46b061335e008678265",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "jamie",
+      "theme": "dark",
+      "path": "public/hero/jamie-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 388789,
+      "sha256": "81067b1dcfe9010f070fa836fcb665749ca1186184ecd6f374b2a8df98e59176",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "jamie",
+      "theme": "light",
+      "path": "public/hero/jamie-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 375683,
+      "sha256": "2c5b7e3eb039d9c2ebdc7c3a0660b1d5a1e16f5f14163f36c81fc4ba5dc0ba20",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "zangief",
+      "theme": "dark",
+      "path": "public/hero/zangief-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 413198,
+      "sha256": "09f9e7e41d2b340a8bb28fb1ca1c532cf93152b83332681d15f08926806ce9cf",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "zangief",
+      "theme": "light",
+      "path": "public/hero/zangief-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 474060,
+      "sha256": "d32a84597dee3f5ca1bac8b2370eac74966e7c5d02653ff709f5fe0f9162f764",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "chunli",
+      "theme": "dark",
+      "path": "public/hero/chunli-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 333433,
+      "sha256": "dfee58f2f39843efd3bc539c2a3c11c61554dd5b868bea460a3ea08fb0cf5cd1",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "chunli",
+      "theme": "light",
+      "path": "public/hero/chunli-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 380060,
+      "sha256": "6f98e37131bddc62833e5ccb83a160525bc285d94a587cc6c9b0481ccb7b9f28",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "lily",
+      "theme": "dark",
+      "path": "public/hero/lily-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 402204,
+      "sha256": "11e7d514abd188c52c85f300ea6eac4003b5c13a32084623d28aba63f778b442",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "lily",
+      "theme": "light",
+      "path": "public/hero/lily-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 382428,
+      "sha256": "0ab11d574a3a39d4b78e07e94a270781e848ce0612ccef92a9b5568dbb4bbcc2",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "manon",
+      "theme": "dark",
+      "path": "public/hero/manon-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 280431,
+      "sha256": "67215d547ff5bef7c0ebc61cea7d9fcb0b6421c9a03f5a617b42f542e9c66537",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "manon",
+      "theme": "light",
+      "path": "public/hero/manon-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 370891,
+      "sha256": "5f0b027c281e198c2460084683a251e6a3691bb5467175456bdea724786d964a",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "marisa",
+      "theme": "dark",
+      "path": "public/hero/marisa-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 299560,
+      "sha256": "a8b00eeeff87aea05f5e9c4401c4d96b3adb743cc50dc6ff99fa6760cce0ed28",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "marisa",
+      "theme": "light",
+      "path": "public/hero/marisa-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 441440,
+      "sha256": "244a724b810251816ed273cea5e44853474a252036e5bc2b642f8182c4c7c774",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "vega",
+      "theme": "dark",
+      "path": "public/hero/vega-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 271259,
+      "sha256": "fb2a4a37be0dfbbcaef882ff3c2f220a9c3d36b73ae09fc768bee24036b4857b",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "vega",
+      "theme": "light",
+      "path": "public/hero/vega-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 289522,
+      "sha256": "2d7dbfc47af16b5cbad1e9da591eb9315fc4c0e190a366c42dd77014b526eecf",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "elena",
+      "theme": "dark",
+      "path": "public/hero/elena-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 290752,
+      "sha256": "0191c7c553b99aa03af80c5785dd47b8ee02c2f16e0f4b2731e853262f1248d1",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "elena",
+      "theme": "light",
+      "path": "public/hero/elena-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 223853,
+      "sha256": "5ce41fec4b78f64f1ca1a4a93f9a45e3aaf560fdb8fb0dba7d4418f1eb359ae7",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "kimberly",
+      "theme": "dark",
+      "path": "public/hero/kimberly-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 320020,
+      "sha256": "c0e481903fbda65ced787c34b2ccd512417522b3061f264cb4f7c4247e4f4f8a",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "kimberly",
+      "theme": "light",
+      "path": "public/hero/kimberly-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 367754,
+      "sha256": "6c29a3a87cc2da27fa6f4089d358adf6d90995c88d046abf59599d5d892a7c02",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "luke",
+      "theme": "dark",
+      "path": "public/hero/luke-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 217634,
+      "sha256": "c403b2b603385407aba6f4bc54460c9e6f9e001acdd2c478c3fc2938a6b81ffa",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "luke",
+      "theme": "light",
+      "path": "public/hero/luke-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 195835,
+      "sha256": "b2be7682c3a923a375c605befbdbdb30b4f58fb8bb6fe0cc24eb220b96887642",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "guile",
+      "theme": "dark",
+      "path": "public/hero/guile-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 226828,
+      "sha256": "45113e23f0b9118cdcb22df18e0238548986be6d4c5114f1bead5f110e95f128",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "guile",
+      "theme": "light",
+      "path": "public/hero/guile-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 178781,
+      "sha256": "58c855bf77176676b6d238fe3c39d57546458eac0423a537cf21692d515d9a0b",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "ken",
+      "theme": "dark",
+      "path": "public/hero/ken-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 217837,
+      "sha256": "0eeaf3edbc815cd43e4bef95fa3e350784ca1ea63806c9eaad61f41933ca7261",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "ken",
+      "theme": "light",
+      "path": "public/hero/ken-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 216364,
+      "sha256": "d7c788dbe60e4c0a640e8739bc400e14324a1ecf8a25147e437282e56a3f58d5",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "blanka",
+      "theme": "dark",
+      "path": "public/hero/blanka-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 268075,
+      "sha256": "618e49aa83ba28955efd846f25e8a63b010b10e9f26f1391a3395cf3ab0674f4",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "blanka",
+      "theme": "light",
+      "path": "public/hero/blanka-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 281447,
+      "sha256": "7559aad478c2f209f48a7a4c763658746e462a3460bcae017977a13fc4a6cba9",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "dhalsim",
+      "theme": "dark",
+      "path": "public/hero/dhalsim-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 241664,
+      "sha256": "4d47a1765637b20d39b8e0495c382f7eeffa4a20fc96b16d6543b641a0d59f89",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "dhalsim",
+      "theme": "light",
+      "path": "public/hero/dhalsim-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 231553,
+      "sha256": "630d685ebe2cf78ea3cfe404ac870c3a42df1477c93ecc32d73f85c9ee53f105",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "ehonda",
+      "theme": "dark",
+      "path": "public/hero/ehonda-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 286330,
+      "sha256": "131caf0614478d688b4b0657fcb58888e729fc14bbd65d1ab82b04223aebf0ad",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "ehonda",
+      "theme": "light",
+      "path": "public/hero/ehonda-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 239905,
+      "sha256": "27accdb22ba9d139345826e3adb7977eba9961e41d002c0a08f25deffd0ff17f",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "deejay",
+      "theme": "dark",
+      "path": "public/hero/deejay-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 269060,
+      "sha256": "766aeadd2cefd0d832b13bf2dd626af88ab89ce35a90ea6dc9c62b3dcb90a289",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "deejay",
+      "theme": "light",
+      "path": "public/hero/deejay-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 256756,
+      "sha256": "6a71a020ce94c3f3b489b076986f544b04f41f241c8e92e80aff38942ab7ee93",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "jp",
+      "theme": "dark",
+      "path": "public/hero/jp-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 223231,
+      "sha256": "1f523cb10e9ce97dd1eb369fff3c75b071ec9aee9a77a3080f3729e672c95fe5",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "jp",
+      "theme": "light",
+      "path": "public/hero/jp-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 218976,
+      "sha256": "6149cd3e2fbe6b0ec49b48211ce68d52937489bad5e040ec83f857eb0f360d9a",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "terry",
+      "theme": "dark",
+      "path": "public/hero/terry-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 357463,
+      "sha256": "d7764021fd483f5cbc4159e93ed6c1879e9ef5bd53981381a50cba709dfb7b4f",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "terry",
+      "theme": "light",
+      "path": "public/hero/terry-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 433873,
+      "sha256": "5535138c58c02cf973137fcc21f39911f917fad430d6c1739f44a7170be06af7",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "rashid",
+      "theme": "dark",
+      "path": "public/hero/rashid-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 305387,
+      "sha256": "b627736ad4003826bd9edf6e27ff8248f1feb406653a02a22de161a384dc1613",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "rashid",
+      "theme": "light",
+      "path": "public/hero/rashid-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 313312,
+      "sha256": "2cbce2b6f83e81144f74008a4caaaab600a06f4cf37821fb4fddce3913ffb060",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "aki",
+      "theme": "dark",
+      "path": "public/hero/aki-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 212037,
+      "sha256": "36a7b626c17edc548b593ef06e7b820efe4ff760c0455c4b8b16d89161ce20c7",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "aki",
+      "theme": "light",
+      "path": "public/hero/aki-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 298771,
+      "sha256": "26cc5f234276ddb102e8484f03b5c35b652c7ba794ef435baafdf71134fbdf91",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "ed",
+      "theme": "dark",
+      "path": "public/hero/ed-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 319984,
+      "sha256": "2868cd1359829f1695b465e7a907978a3f4555116e27b4f2d5119ead0855bac3",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "ed",
+      "theme": "light",
+      "path": "public/hero/ed-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 322323,
+      "sha256": "81c6a1363e6f44ea22d6527e5a17e768f33c7d1f3ed0a36220178b3f1c70078a",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "akuma",
+      "theme": "dark",
+      "path": "public/hero/akuma-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 302391,
+      "sha256": "06ff4efe6458e0ec7a87921fb550b2fd220a2db24b6728ce4b18b0792571b3c5",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "akuma",
+      "theme": "light",
+      "path": "public/hero/akuma-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 329367,
+      "sha256": "27b6219d42ce2ffb8f6f63b315f1319585e9d2eba061b6b45663b67207661f4e",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "sagat",
+      "theme": "dark",
+      "path": "public/hero/sagat-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 340451,
+      "sha256": "2f3434b6ff9d60b5fc7607adefa1709b8609ab61c7a734e11c099aeb48ab6af0",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "sagat",
+      "theme": "light",
+      "path": "public/hero/sagat-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 297601,
+      "sha256": "acfde5b36fd4a1404f3fd760a949c56fa215c1641193dcf0cf42f8717ca2b62c",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "cviper",
+      "theme": "dark",
+      "path": "public/hero/cviper-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 225949,
+      "sha256": "23f8206a53f4db1b07d184ba530f0e97257f09ac46c7544a12225759dba29014",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "cviper",
+      "theme": "light",
+      "path": "public/hero/cviper-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 298941,
+      "sha256": "2d23769c584e1ef00ea04f5dcadbfba87972ab7b1f48d8862851d0e89a5bee22",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "alex",
+      "theme": "dark",
+      "path": "public/hero/alex-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 314301,
+      "sha256": "65314bd8a94ebd681c2ee3ddb4802c815ec52cfdbcdc4929e14415d8c142f80c",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "alex",
+      "theme": "light",
+      "path": "public/hero/alex-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 269274,
+      "sha256": "d4ce370f1bcc34a4aafea552bf80b062a6e6d72486c714647596c1dd207f2608",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "ingrid",
+      "theme": "dark",
+      "path": "public/hero/ingrid-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 261860,
+      "sha256": "4fa3c646a38200e4cf629af683e248b5a9b1617d02935c648a967d4178792b51",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "ingrid",
+      "theme": "light",
+      "path": "public/hero/ingrid-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 176762,
+      "sha256": "02dff15564e937e2e3a91ace81d0e6be8fc2f9c771b61c2bbf9dea044d7760ef",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "yasmine",
+      "theme": "dark",
+      "path": "public/hero/yasmine-dark.jpg",
+      "mime": "image/jpeg",
+      "bytes": 547735,
+      "sha256": "05c8e2d5c8f2ffa63fa52ebe76588aed1ba2b0a1b9f86e09fc0bc4f653ff6139",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "hero",
+      "character": "yasmine",
+      "theme": "light",
+      "path": "public/hero/yasmine-light.jpg",
+      "mime": "image/jpeg",
+      "bytes": 510803,
+      "sha256": "03531b3b594227086d7cbb7d5fe0ea3369afd864c8d28a881d520b05915b92f4",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "alt": ""
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D01.svg",
+      "mime": "image/svg+xml",
+      "bytes": 3309,
+      "sha256": "bc41450cd9c083ee2ad30dd03b38f0a00424c1d62ba2a49e0e861b4b60652a13",
+      "dimensions": null,
+      "alt": "D01 整局与整回合地图",
+      "caption": "概念图解 D01 整局与整回合地图 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D02.svg",
+      "mime": "image/svg+xml",
+      "bytes": 3790,
+      "sha256": "51e729da5ea61cd1ebe005eaebbff27a0a9fa53ca99c8edc56efc57c4ee4b6dc",
+      "dimensions": null,
+      "alt": "D02 数字记谱与波动输入",
+      "caption": "概念图解 D02 数字记谱与波动输入 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E01.jpg",
+      "mime": "image/jpeg",
+      "bytes": 279795,
+      "sha256": "700f32dae290f70086536a37a0aa58a574ffe1b839a906bc18abf9209353d7c9",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E01 方向轨迹与按键叠加，S02 11:08",
+      "caption": "原片证据 E01 方向轨迹与按键叠加，S02 11:08 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E02.jpg",
+      "mime": "image/jpeg",
+      "bytes": 80270,
+      "sha256": "b8b02b2d9a9a00fafee51802075474f135bb0a4e18f084ae16af2dfe0e5252b5",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E02 作者的键位设置例，不是RTU配置证明，S02 02:31",
+      "caption": "原片证据 E02 作者的键位设置例，不是RTU配置证明，S02 02:31 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E03.jpg",
+      "mime": "image/jpeg",
+      "bytes": 129353,
+      "sha256": "c3bce74bda5689861df02332b02607273b8a2aab45d56b68d24125ba7d6fe226",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E03 同屏的头顶计时与底部帧条，S04 04:46",
+      "caption": "原片证据 E03 同屏的头顶计时与底部帧条，S04 04:46 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D06.svg",
+      "mime": "image/svg+xml",
+      "bytes": 3041,
+      "sha256": "a22062315ddbf4a21b425640cf7151e67c78843af783c1cba28c22a6e8296812",
+      "dimensions": null,
+      "alt": "D06 有利帧与后续选择",
+      "caption": "概念图解 D06 有利帧与后续选择 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D03.svg",
+      "mime": "image/svg+xml",
+      "bytes": 3048,
+      "sha256": "a80b97ed1a9d8d9f405fac3d9aaefe73753430adcda7b2919bf3a770151b47ea",
+      "dimensions": null,
+      "alt": "D03 目押与取消对照",
+      "caption": "概念图解 D03 目押与取消对照 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E04.jpg",
+      "mime": "image/jpeg",
+      "bytes": 154670,
+      "sha256": "56b05f99ee8f34759c2ee0d5900fa2653a237f653e1267743c1062e04c652f03",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E04 取消后不再等待普通技原有全部恢复，S04 07:22",
+      "caption": "原片证据 E04 取消后不再等待普通技原有全部恢复，S04 07:22 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D04.svg",
+      "mime": "image/svg+xml",
+      "bytes": 2680,
+      "sha256": "36402d257c5d52e7609531d584c2d2c67a517ede0fbdb2aea8f5cca3557538a6",
+      "dimensions": null,
+      "alt": "D04 结果确认的三个层级",
+      "caption": "概念图解 D04 结果确认的三个层级 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D11.svg",
+      "mime": "image/svg+xml",
+      "bytes": 3336,
+      "sha256": "10194ce695b9dd1b801b053f8f0464833d3160c0af80b8c393c89fb7126548dc",
+      "dimensions": null,
+      "alt": "D11 从连接到真人的迁移",
+      "caption": "概念图解 D11 从连接到真人的迁移 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E05.jpg",
+      "mime": "image/jpeg",
+      "bytes": 243133,
+      "sha256": "969c79acfa077bfe7d8c4edd6bcb0ec1786d4300e6646e0093e86ecaa8742a98",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E05 上方六格Drive与下方SA，S03 01:35",
+      "caption": "原片证据 E05 上方六格Drive与下方SA，S03 01:35 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D05.svg",
+      "mime": "image/svg+xml",
+      "bytes": 3573,
+      "sha256": "12e48c93d0b99b2958b0f2b91163a7b6f7186a6eb44e145b1e1b70e3c9cbee91",
+      "dimensions": null,
+      "alt": "D05 Drive共享预算",
+      "caption": "概念图解 D05 Drive共享预算 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E06.jpg",
+      "mime": "image/jpeg",
+      "bytes": 55616,
+      "sha256": "dc7bb0474a2924deb544bffc5740d045d55ebf377cfeae7f13424cc496b90577",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E06 作者的最速DR输入示意，S03 12:10",
+      "caption": "原片证据 E06 作者的最速DR输入示意，S03 12:10 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D07.svg",
+      "mime": "image/svg+xml",
+      "bytes": 3341,
+      "sha256": "aa33821bae85de6433bf54e78bae402ee2f07fdc8f28442df9433b0251453e80",
+      "dimensions": null,
+      "alt": "D07 延迟拆三种结果",
+      "caption": "概念图解 D07 延迟拆三种结果 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D08.svg",
+      "mime": "image/svg+xml",
+      "bytes": 2731,
+      "sha256": "13c4c518efba92552f17f56e0aac7c1774c52872d240a401ab854e2f7af971e7",
+      "dimensions": null,
+      "alt": "D08 对空限时流程",
+      "caption": "概念图解 D08 对空限时流程 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E07.jpg",
+      "mime": "image/jpeg",
+      "bytes": 144685,
+      "sha256": "1c540768380617af9a4f3c56ed88407ed19c4a7597baf2971a1c378438f94b09",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E07 原视频的攻击／受击框可视化，S08 02:18",
+      "caption": "原片证据 E07 原视频的攻击／受击框可视化，S08 02:18 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E08.jpg",
+      "mime": "image/jpeg",
+      "bytes": 133784,
+      "sha256": "012ae3e6a95959f22f79249b1641110d3a7d2f735bb6129500e4f147881bf1fa",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E08 手部镜头与输入履历需一起看，S08 06:53",
+      "caption": "原片证据 E08 手部镜头与输入履历需一起看，S08 06:53 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E09.jpg",
+      "mime": "image/jpeg",
+      "bytes": 125923,
+      "sha256": "88b7b8acedc830af7d26789c639ccde957ac268421ebeb0a6711fa5aa3ec5652",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E09 物理按法与游戏实际收到636的对照，S08 08:49",
+      "caption": "原片证据 E09 物理按法与游戏实际收到636的对照，S08 08:49 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D09.svg",
+      "mime": "image/svg+xml",
+      "bytes": 2005,
+      "sha256": "c94badbb5fb8bf56efa22284b524d8c5bce6e0a166ed85bd7675bb6057cfdd62",
+      "dimensions": null,
+      "alt": "D09 对空的空间判断",
+      "caption": "概念图解 D09 对空的空间判断 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E10.jpg",
+      "mime": "image/jpeg",
+      "bytes": 134943,
+      "sha256": "17e8aa51e992371e998dd2da6317a21f18706df178cc7336ec6b21605df21cf5",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E10 作者将对空拆成三步，S09 01:43",
+      "caption": "原片证据 E10 作者将对空拆成三步，S09 01:43 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E11.jpg",
+      "mime": "image/jpeg",
+      "bytes": 77190,
+      "sha256": "21ef07d3f22f876e636b8869133e562134f2a919b4f8dfc42fc005812a87598f",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E11 加入移动录制，S09 03:45",
+      "caption": "原片证据 E11 加入移动录制，S09 03:45 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E12.jpg",
+      "mime": "image/jpeg",
+      "bytes": 131700,
+      "sha256": "b6c7243eb123dfa4f7df1e1f31fb264b2e501760dd654721b0fc616b7d91d2e1",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E12 共同前置之后的不同动作，S09 05:44",
+      "caption": "原片证据 E12 共同前置之后的不同动作，S09 05:44 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E13.jpg",
+      "mime": "image/jpeg",
+      "bytes": 88723,
+      "sha256": "a69e61d027cda34fba0841dc3a1faee5798fdd0e9a4e81b07e0da78eacfe402c",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E13 保存状态与重复播放，S09 08:13",
+      "caption": "原片证据 E13 保存状态与重复播放，S09 08:13 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E14.jpg",
+      "mime": "image/jpeg",
+      "bytes": 129451,
+      "sha256": "717d3982d55cc3ff7e6c362ab3767b7c6c55ee5e1f6ef4ca1bd1c9c99bb51338",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E14 跳攻击的实际接触时点，S10 03:40",
+      "caption": "原片证据 E14 跳攻击的实际接触时点，S10 03:40 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E15.jpg",
+      "mime": "image/jpeg",
+      "bytes": 126873,
+      "sha256": "10957ab6e1f44488369e7ea8678495e41eeefadc001c21bed3c377d07d1a2181",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E15 裸DR接触示范，S10 05:41",
+      "caption": "原片证据 E15 裸DR接触示范，S10 05:41 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E16.jpg",
+      "mime": "image/jpeg",
+      "bytes": 154596,
+      "sha256": "17dc0bb74a387d3b6af81dd21ebadff1860bb09de44f7bd6f76cd0f734a8c713",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E16 作者原图的三要素关系，S11 06:08",
+      "caption": "原片证据 E16 作者原图的三要素关系，S11 06:08 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D10.svg",
+      "mime": "image/svg+xml",
+      "bytes": 2496,
+      "sha256": "ac442696d502691118047766edf1eb19dd492172e51635abac25e3459cef51b2",
+      "dimensions": null,
+      "alt": "D10 立回三要素与各自取舍",
+      "caption": "概念图解 D10 立回三要素与各自取舍 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E17.jpg",
+      "mime": "image/jpeg",
+      "bytes": 138946,
+      "sha256": "a20c6c2311bd4ac254144d65fa6599aebf98f88fd63dac0a237cb2fda4dcab0c",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E17 作者的“不知道干什么就蹲防”，S11 10:45",
+      "caption": "原片证据 E17 作者的“不知道干什么就蹲防”，S11 10:45 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_evidence",
+      "path": "source-assets/fundamentals/evidence/E18.jpg",
+      "mime": "image/jpeg",
+      "bytes": 128091,
+      "sha256": "26553f998884f12a76133cc23c3198df987e3240fe885776c5573ba3d19ba148",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "alt": "E18 作者的录像观察问题，S11 08:21",
+      "caption": "原片证据 E18 作者的录像观察问题，S11 08:21 · 点图放大"
+    },
+    {
+      "kind": "fundamentals_diagram",
+      "path": "source-assets/fundamentals/diagrams/D12.svg",
+      "mime": "image/svg+xml",
+      "bytes": 2309,
+      "sha256": "9cc063e10a51bc427b841fb8176aebc06169fc9bfd62aaf8747cc34865502921",
+      "dimensions": null,
+      "alt": "D12 通用基础与隆专精的分层衔接",
+      "caption": "概念图解 D12 通用基础与隆专精的分层衔接 · 点图放大"
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E01.jpg",
+      "mime": "image/jpeg",
+      "bytes": 250244,
+      "sha256": "6c689023eb466121d454bcb9043c9f86184d5a909f8ec19fd20d6d4998096849",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E01｜U01 00:37：1510样例的轻攻击起手顺序，详见R01。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E02.jpg",
+      "mime": "image/jpeg",
+      "bytes": 243949,
+      "sha256": "61fee8cae28387eac84234eb9bb29f58af4d11d332ee69d2038a96a48e23d3fe",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E02｜U01 01:27：中驴踢与蓄电，详见R05。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E03.jpg",
+      "mime": "image/jpeg",
+      "bytes": 220746,
+      "sha256": "070cfdc588025ecb091a86f0ca9e0c96dfaaef152661ee3c4e76057d9ec1eb07",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E03｜U01 01:51：版边3383结果必须连同完整前置看，详见R07。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E04.jpg",
+      "mime": "image/jpeg",
+      "bytes": 236727,
+      "sha256": "56cf5c60d1d1e71e7d68cbb980d881a593c6b01e391f195386cf1c2e99ad8f95",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E04｜U01 02:39：2MK取消绿冲的推版支，详见R08。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E05.jpg",
+      "mime": "image/jpeg",
+      "bytes": 192582,
+      "sha256": "a13ea3e09b935f37eb113e8f7e564ae7e0734f07a5fee093b21aa2d64791b66f",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E05｜U01 02:48：2MK取消绿冲的伤害支，详见R09。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E06.jpg",
+      "mime": "image/jpeg",
+      "bytes": 258598,
+      "sha256": "e0bb6754d9f3ce6344b35d84ba330effb3ab1a8c7d0138c2fda50038bd469411",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E06｜U03 00:05.5：DI首击800，区别于打防撞墙零伤害入口。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E07.jpg",
+      "mime": "image/jpeg",
+      "bytes": 232099,
+      "sha256": "6ac96613e329ce85b7b9d818bc78cdff402cbc9137e6982100a1ad5fd246b674",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E07｜U04 01:24：PC重波掌→空中OD龙卷→SA1的4350样例。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E08.jpg",
+      "mime": "image/jpeg",
+      "bytes": 251993,
+      "sha256": "d364e30ac19f1b74f0980397a6d41cc7766f2fc2fae8e53a9a94dfb51292f387",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E08｜M03 03:42：跳入带PC条件，不能当普通跳入伤害。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E09.jpg",
+      "mime": "image/jpeg",
+      "bytes": 270391,
+      "sha256": "77f42b4faefaca7cf5ae4bc16d21dec2c44f33e1a5c6625beea7db099cb032b7",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E09｜M04 02:26：迸晕后先蓄电，HUD已有DI伤害。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E10.jpg",
+      "mime": "image/jpeg",
+      "bytes": 243864,
+      "sha256": "24cceecb8d8ba520e16adb185521572506479bd121514a2e07ad1b0041b84de2",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E10｜M04 02:27：此处跳入用j.HP，详见R27。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E11.jpg",
+      "mime": "image/jpeg",
+      "bytes": 245467,
+      "sha256": "d2589c79d7885d0d7feb11aacebe0a50f8304a06a8f74293880cb2bb80a9bfa5",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E11｜U05 01:43：带电重波掌演示定位；不把所有强化分支合成同一串。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E12.jpg",
+      "mime": "image/jpeg",
+      "bytes": 272548,
+      "sha256": "b62c32d48e9aa13140a30c0cb6c3b33dda3deb981ec06396865a70eff9ab17e2",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E12｜D03 04:30：中段造成300伤害且显示+4，因此“打防+4”不是此帧的正确解释。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E13.jpg",
+      "mime": "image/jpeg",
+      "bytes": 282621,
+      "sha256": "1cff2edfc270da870acb5deb3cb4ff5a9a18599600bff0120d2010ff6df434ec",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E13｜T01 01:20：输入履历为5MP取消轻波掌；作者称最速版连防，延迟对照在其后。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E14.jpg",
+      "mime": "image/jpeg",
+      "bytes": 201044,
+      "sha256": "052ce9d9d3c68600c30c52ad2055d28bad6dd5307f01b88530907e536e7eada2",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E14｜F02 00:12：已开启录像权重5、5、2、1、2、2；第七条关闭。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E15.jpg",
+      "mime": "image/jpeg",
+      "bytes": 259444,
+      "sha256": "581f95d7ccf0a26b0a877dc5a708736685b3708f40d3dd51538568a23a9453f8",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E15｜T02 07:43：2500是指定演示的HUD总值，不是任意黄血必死规则。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E16.jpg",
+      "mime": "image/jpeg",
+      "bytes": 164589,
+      "sha256": "7906569939108ccc81232d6a72b10af40b0f0cde22a6a168baea9a5f28ab247f",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E16｜T00 04:28：反击设置与动作录像属于不同菜单；测试需先确认触发有效。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E17.jpg",
+      "mime": "image/jpeg",
+      "bytes": 281594,
+      "sha256": "34b53c16540bf0d8ded33a6a69ea9e0c34306c2aa7861210827f7483f8aafc4d",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E17｜F05 03:40附近：围绕对手预测延迟波掌而Parry的适应说明。",
+      "caption": ""
+    },
+    {
+      "kind": "ryu_evidence",
+      "path": "source-assets/ryu/evidence/E18.jpg",
+      "mime": "image/jpeg",
+      "bytes": 303240,
+      "sha256": "66e0af36c192c07bb1ab00d2e3b2c7ddbf3b75c8cf64489640a4c8475a395033",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "alt": "E18｜F05 06:04：复读前重拳也会被对手后撤/调整处理，成功策略并非无反制。",
+      "caption": ""
+    }
+  ],
+  "unique_asset_count": 110,
+  "hero_count": 62,
+  "nonhero_count": 48,
+  "duplicate_reference_count": 2,
+  "breakdown": {
+    "hero": 62,
+    "fundamentals_diagrams": 12,
+    "fundamentals_evidence": 18,
+    "ryu_evidence": 18,
+    "other": 0
+  }
+}
