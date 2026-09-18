@@ -1,0 +1,251 @@
+schema_version: '1.0'
+character: vega
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 plants Mine but does not require detonation. S1 first cash-in; S2 hold-vs-detonate; high-resource Mine/air routes later.'
+stages:
+  S0: {label: 最小可玩, short: 'Plant Mine / Basic Charge'}
+  S1: {label: 基本功成型, short: 'First Mine Cash-in / +42'}
+  S2: {label: 实战结构化, short: 'Hold vs Detonate / DRC'}
+  S3: {label: 选择成熟, short: 'OD Crusher / Air Mine Pressure'}
+  S4: {label: 高分上探, short: 'High Resource / SA / Matchup'}
+shared_packages:
+  PLANT31:
+    label: 'H Backfist normal +31'
+    sequence: 'normal-state H Backfist hit -> Mine planted -> +31'
+    next: 'Drive Rush low / 5MP / 6HP overhead / throw / shimmy'
+    verification: verified
+    sources: [SRC05]
+  MINE42:
+    label: 'Mine L/M Backfist +42'
+    sequence: 'Psycho Mine active -> L/M Backfist hit -> detonate -> +42'
+    next: 'immediate forward jump HP safe jump'
+    verification: conditioned
+    conditions: [psycho_mine_active]
+    sources: [SRC03, SRC05]
+  MINE_CRUSHER:
+    label: 'Mine Crusher plus pressure'
+    sequence: 'Psycho Mine active + back charge -> Psycho Crusher'
+    next: 'L/M block +6 / H +5 / OD +10 -> strike / throw / shimmy'
+    verification: conditioned
+    conditions: [psycho_mine_active, back_charge_ready]
+    sources: [SRC03, SRC05]
+opportunities:
+- id: plant
+  title: 'Psycho Mine｜S0只学种，不要求马上爆'
+  stage: S0
+  subtitle: '状态存在本身已经有价值'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Light plant
+    input: '2LP or 2LK > 5LK > L Backfist Combo'
+    value: {mine_gain: 1, kd: '+21'}
+    next_loop: 'notice Mine active -> simple strike/throw/spacing'
+    why: '第一条角色身份路线：普通命中改变下一次special的风险结构。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S0
+    choice: Medium plant
+    input: '5MP > 2MP > M Backfist Combo'
+    value: {mine_gain: 1, kd: '+20'}
+    next_loop: 'keep Mine active; do not auto-detonate'
+    why: 'S0目标是认识Mine状态，而不是马上消费。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Do not autopilot
+    input: 'normal Backfist block -> stop / defend'
+    value: {frame: 'unsafe'}
+    next_loop: 'reset neutral / rebuild opportunity'
+    why: '“能植Mine”不代表normal Backfist被防安全。'
+    verification: verified
+    sources: [SRC03]
+- id: charge
+  title: 'Psycho Crusher｜无Mine时是高风险charge工具'
+  stage: S0
+  subtitle: '先学normal truth，再学Mine rewrite'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Charge route
+    input: '2LK > 2LP > 5LP > L Psycho Crusher Attack'
+    value: {kd: '+24'}
+    next_loop: 'rebuild back charge / simple Oki'
+    why: '第一条charge路线；只从确认使用。'
+    verification: conditioned
+    conditions: [back_charge_ready]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Unsafe truth
+    input: 'normal L/M Psycho Crusher block'
+    value: {frame: '-20'}
+    next_loop: 'opponent punish'
+    why: '没有Mine时绝不能把Crusher当safe pressure。'
+    verification: verified
+    sources: [SRC03]
+- id: normal_oki
+  title: 'H Backfist｜S0/S1清楚+31 Oki'
+  stage: S0
+  subtitle: '先有普通回合，再cash Mine'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: DR Oki
+    input: '5MP > 2MP > OD Double Knee Press > H Backfist Combo'
+    value: {drive: 2, mine_gain: 1, kd: '+31'}
+    next_loop_package: PLANT31
+    why: '稳定plant + Oki，给Mine状态一个真正的下一Turn。'
+    verification: verified
+    sources: [SRC05]
+- id: first_cash
+  title: 'Mine cash-in｜S1第一次把状态兑现'
+  stage: S1
+  subtitle: '先学一条+42'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Mine Backfist +42
+    input: 'Psycho Mine active -> L Backfist Combo hit'
+    value: {mine_spend: 1, kd: '+42'}
+    next_loop_package: MINE42
+    why: '第一次完成plant -> cash-in -> reset。'
+    verification: conditioned
+    conditions: [psycho_mine_active]
+    sources: [SRC03, SRC05]
+  - result: BLOCK
+    stage: S1
+    choice: Mine Crusher +6
+    input: 'Psycho Mine active + back charge -> M Psycho Crusher Attack block'
+    value: {mine_spend: 1, frame: '+6'}
+    next_loop_package: MINE_CRUSHER
+    why: '同一Crusher从-20变+6，Mine真正改变的是风险结构。'
+    verification: conditioned
+    conditions: [psycho_mine_active, back_charge_ready]
+    sources: [SRC03]
+- id: drive
+  title: '2MK DRC｜S2才加入结构化转换'
+  stage: S2
+  subtitle: '先plant，再决定Mine什么时候花'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: Stop
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: 'reset spacing'
+    why: 'Drive只为真实contact付费。'
+  - result: BLOCK
+    stage: S2
+    choice: DRC committed
+    input: '2MK > DRC > 5MP block'
+    value: {drive: 3, frame: '+4 family'}
+    next_loop: 'throw / frame trap / shimmy / Mine threat'
+    why: '高优势接触里继续观察Mine是否值得cash。'
+    verification: conditioned
+    conditions: [drc_committed]
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Plant H Backfist
+    input: '2MK > CDR > 5MP > 2HP > H Backfist Combo'
+    value: {drive: 3, mine_gain: 1, kd: '+31'}
+    next_loop_package: PLANT31
+    why: 'S2仍然允许优先plant，不强迫马上爆Mine。'
+    verification: verified
+    sources: [SRC05]
+- id: state_choice
+  title: 'Mine active｜S2正式学“爆还是留”'
+  stage: S2
+  subtitle: '状态本身就是威胁'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Hold Mine
+    input: 'Psycho Mine active -> do not detonate yet'
+    value: {mine_spend: 0, state: 'future threat remains'}
+    next_loop: '5HP/4HK/throw/low while opponent respects future Mine special'
+    why: 'Mine存在会改变对手敢不敢punish/按键，所以“留着”是合法策略。'
+    verification: conditioned
+    conditions: [psycho_mine_active]
+    sources: [SRC06]
+  - result: READ
+    stage: S2
+    choice: Detonate now
+    input: 'Psycho Mine active + back charge -> H Psycho Crusher Attack'
+    value: {mine_spend: 1, frame_on_block: '+5', kd: '+46'}
+    next_loop: 'strike / throw / shimmy / safe-jump by hit state'
+    why: '当前opening值得时，把未来威胁现金化。'
+    verification: conditioned
+    conditions: [psycho_mine_active, back_charge_ready]
+    sources: [SRC03, SRC05]
+- id: air
+  title: 'Shadow Rise / Devil Reverse｜S3才进入air Mine pressure'
+  stage: S3
+  subtitle: 'height和Mine状态必须同时正确'
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: Normal Devil Reverse
+    input: 'Shadow Rise > Devil Reverse block'
+    value: {frame: '+2~+8 by height'}
+    next_loop: 'throw / low / spacing read'
+    why: '落点高度决定实际plus。'
+    verification: conditioned
+    conditions: [down_charge_ready, landing_height]
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S3
+    choice: Mine Devil Reverse
+    input: 'Psycho Mine active -> Shadow Rise > Devil Reverse block'
+    value: {mine_spend: 1, frame: '+22~+28 by height'}
+    next_loop: 'strong strike / throw / low'
+    why: 'Mine把空中special也变成另一种风险状态。'
+    verification: conditioned
+    conditions: [psycho_mine_active, down_charge_ready, landing_height]
+    sources: [SRC03]
+- id: od_crusher
+  title: 'OD Crusher｜S3高资源Mine cash-in'
+  stage: S3
+  subtitle: 'up to +82只属于Mine+charge+Drive状态'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Max Oki
+    input: 'Psycho Mine active + back charge -> OD Psycho Crusher Attack'
+    value: {drive: 2, mine_spend: 1, kd: 'up to +82', frame_on_block: '+10'}
+    next_loop: 'meaty / throw / shimmy / air pressure'
+    why: '三种状态都正确时才进入极高预算。'
+    verification: conditioned
+    conditions: [psycho_mine_active, back_charge_ready, drive_available]
+    sources: [SRC03, SRC05]
+- id: super
+  title: 'Super｜S4才做Mine/charge高资源cashout'
+  stage: S4
+  subtitle: '不改变plant-hold-cash核心'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3 easy
+    input: '5MP > 2MP > M Backfist Combo > SA3'
+    value: {sa: 3}
+    next_loop: 'kill / position reset'
+    why: '从已会的Mine plant route直接现金化。'
+    verification: verified
+    sources: [SRC05]
+backend_only:
+- {label: 'OD Crusher + Shadow Rise SA3 max route', reason: 'Mine + two charge axes + resource stack; S4 optimization'}
+- {label: 'corner Mine cash-in/replant loop', reason: 'active-frame + Mine + charge state complexity'}
+- {label: 'generic Mine special safety', reason: 'normal and Mine variants must remain separate'}
+- {label: 'fixed Devil Reverse plus value', reason: 'height-conditioned'}

@@ -1,0 +1,112 @@
+schema_version: '1.0'
+character: vega
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Bison先用Backfist把Psycho Mine种到对手身上；Mine存在后，同一个Crusher/Backfist/Devil Reverse会变成完全不同的风险收益状态。'
+    preferred_range: '中近距离。5MP/2MP/2MK先拿contact，Backfist负责植Mine；Mine存在后再决定现在cash-in还是让状态继续威慑。'
+    win_pattern: 'ground contact -> Backfist植Mine -> +31/DR Oki -> Mine威慑 -> Mine-enhanced Backfist/Crusher/Devil Reverse cash-in -> +42/+49/+82 or plus pressure -> detonate -> replant later。'
+    lose_pattern: '没Mine时把Crusher当安全进场、有Mine就马上爆、忘记Crusher/Shadow Rise还需要charge、把normal/Mine版本混成一套、过早围着air/high-resource routes打。'
+  character_model:
+    essence_short: 'Bison真正的新技能是双状态管理：自己有没有charge、对手身上有没有Mine；同一个special会因为Mine状态而从大负帧变成正帧/高Oki。'
+    essence_detail: 'M. Bison是Charge章最后一个很好的转折点：他确实需要保存Psycho Crusher / Shadow Rise的charge，但真正的新技能是“对手身上的状态”。没有Mine时，Psycho Crusher和Backfist被防都非常危险；一旦Backfist命中把Mine植入，对手下一次面对这些special时风险结构直接改变，例如L/M Crusher从block -20变成+6，H Backfist从-15变成+9，OD Crusher从-3变成+10。Mine因此不是多一点伤害的被动buff，而是让同一个special在下一个回合变成另一种招。当前Game Plan也支持这个循环：普通contact -> Backfist植Mine -> H Backfist +31 / DR Oki -> overhead/low/throw/shimmy -> Mine-enhanced Crusher/Backfist兑现 -> +42/+49/+82等大Oki或正帧pressure -> detonation后重新回普通状态。成熟Bison不是有Mine就马上爆，而是知道Mine存在本身就能让对手更怕special；如果当前pressure不需要马上兑现，可以让状态继续影响对手决策。反过来，没有Mine时也不能把Crusher当安全进场。charge和Mine要同时被追踪。'
+    force_opponent_to:
+    - '尊重5HP block +1与4HK block +1的普通正帧接触。'
+    - 'normal Backfist命中后开始处理下一次special可能引爆Mine的威胁。'
+    - 'Mine存在时，不敢把Crusher/Backfist/Devil Reverse按普通负帧special处理。'
+    - '+42/+49等大预算后继续处理overhead / low / throw / shimmy。'
+    payoff_after_respect:
+    - 'Mine存在本身就让对手更难放心按normal punish。'
+    - 'Mine Crusher/Backfist可从大负帧变成+5~+10。'
+    - 'Mine Backfist/Crusher进入+42以上safe-jump/pressure预算。'
+    - 'Devil Reverse在Mine状态下变成极高plus值空中pressure。'
+    - '对手为了等Mine或躲detonation僵住后，throw/low/shimmy更强。'
+    core_tradeoff: '现在引爆Mine兑现plus/damage/Oki vs 继续保留Mine作为未来威胁；同时还要判断charge是否够，Crusher cash-in并不是随时可用。'
+    successful_round:
+    - '5MP/2MP/light拿contact'
+    - 'Backfist结束combo并植Mine'
+    - '普通+31/DR Oki继续高低投'
+    - '对手开始尊重Mine special'
+    - '选择Mine Backfist / Crusher / Devil Reverse cash-in'
+    - 'detonation后回normal route重新植Mine'
+    common_misplays:
+    - '没Mine时把Crusher当安全pressure。'
+    - 'normal Backfist被防还以为因为会种Mine就安全。'
+    - '有Mine就立即引爆，不看Mine威慑价值。'
+    - '忘记Crusher/Shadow Rise还需要charge。'
+    - '把+42当普通Backfist/Crusher通用结果。'
+    unique_decision: 'Bison新增的是“对手状态 + 自己charge”双状态管理：同一个special的意义会随Mine有无彻底改变。'
+    transfer_in:
+    - 'Guile/Dee Jay/Honda的charge availability纪律。'
+    - 'grounded contact / DRC / strike-throw-shimmy。'
+    - 'punish / corner / Oki。'
+    new_skill:
+    - 'Psycho Mine植入 / 保留 / 引爆循环。'
+    - 'normal vs Mine-enhanced move truth。'
+    - 'hold Mine vs detonate Mine。'
+    - 'simultaneous Mine + charge tracking。'
+    - 'state-aware air pressure。'
+    unlearn:
+    - 'special帧差是固定属性。'
+    - '有状态就应该马上消费。'
+    - 'charge是唯一需要追踪的状态。'
+    - 'normal和Mine版本可以合并成一个learner row。'
+  glossary:
+  - {term: 'Psycho Mine', meaning: 'Backfist命中后植到对手身上的状态；会自爆，也可被Backfist/Crusher/Devil Reverse触发。'}
+  - {term: '[4]6P｜Psycho Crusher', meaning: 'charge cash-in工具。normal版本被防很危险；Mine版本可直接变成+5~+10。'}
+  - {term: '214P｜Backfist Combo', meaning: 'normal命中用于植Mine；Mine存在时会引爆并进入+42/+49等高Oki。'}
+  - {term: '22K｜Shadow Rise', meaning: 'down-charge空中入口，后续Head Press/Devil Reverse；Mine状态会改变Devil Reverse风险。'}
+  - {term: '236K｜Double Knee Press', meaning: 'non-charge route/pressure工具，用来在没charge或不想cash Mine时继续普通回合。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '8F / Hit +6 / Block 0 / C；稳定ground confirm。'}
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +5 / Block -1 / C；主要confirm。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Hit -2 / Block -6 / C；主要DRC low。'}
+  - {input: '214P', name: 'Backfist Combo', use: 'S0默认Mine植入工具；normal block仍大负帧。'}
+  - {input: '[4]6P', name: 'Psycho Crusher', use: 'Mine cash-in核心charge special；无Mine时不可当safe pressure。'}
+  - {input: '4HK', name: 'Evil Knee', use: '10F / Hit +4 / Block +1 / C；普通正帧接触。'}
+  - {input: '5HP', name: '站重拳', use: '19F / Hit +5 / Block +1；Year4正帧重拳。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Mine、Crusher、Backfist、Shadow Rise与SA由关键工具/Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-6', recovery: '11', hit: '+4', block: '-3', cancel: 'C', damage: '300', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '4', active: '4-5', recovery: '10', hit: '+3', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '8', active: '8-10', recovery: '15', hit: '+6', block: '0', cancel: 'C', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '10', active: '10-12', recovery: '17', hit: '+2', block: '-3', cancel: '-', damage: '700', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '19', active: '19-21', recovery: '17', hit: '+5', block: '+1', cancel: 'SA', damage: '1000', note: 'Year4 Hit +4->+5。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '13', active: '13-16', recovery: '19', hit: '+6', block: '-2', cancel: '-', damage: '900', note: 'PC可进入高价值route。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '10', hit: '+4', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '10', hit: '+4', block: '-2', cancel: '-', damage: '200', note: ''}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-8', recovery: '14', hit: '+5', block: '-1', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '19', hit: '-2', block: '-6', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '10', active: '10-15', recovery: '21', hit: '0', block: '-9', cancel: 'C', damage: '900', note: 'anti-air/route。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '11', active: '11-13', recovery: '26', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: ''}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-8', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: ''}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  resource:
+    name: 'Psycho Mine'
+    gain: 'normal Backfist Combo命中植入。'
+    spend: 'Mine-enhanced Backfist / Psycho Crusher / Devil Reverse hit/block触发爆炸并消费Mine。'
+    changes: '同一special的block/Oki truth会彻底改变；Mine存在本身也会改变对手防守。'
+    rule: 'S0只学植Mine；S1第一次cash-in；S2正式学hold vs detonate。'
+  signature_mechanic:
+    name: 'Charge + opponent-side Psycho Mine state'
+    rule: '同时追踪自己的charge availability与对手Mine状态；Mine版本special必须和normal版本分开学习。'
+  key_numbers:
+  - {label: 'H Backfist normal', value: '+31', decision: '第一套清楚Mine plant/Oki预算。'}
+  - {label: 'Mine L/M Backfist', value: '+42 / Block +9', decision: 'S1第一套Mine cash-in + safe jump。'}
+  - {label: 'Normal L/M Crusher', value: 'Block -20', decision: '无Mine时不可当safe pressure。'}
+  - {label: 'Mine L/M Crusher', value: 'Block +6 / KD +42', decision: 'S1/S2状态cash-in。'}
+  - {label: 'Mine H Backfist', value: 'Block +9 / KD +49', decision: 'S2更高Oki预算。'}
+  - {label: 'Mine OD Crusher', value: 'Block +10 / up to +82', decision: 'S3 high-resource cash-in。'}
+  constraints:
+  - 'Mine-enhanced值必须有psycho_mine_active。'
+  - 'normal Backfist/Crusher仍然unsafe。'
+  - '+42不属于normal Backfist/Crusher。'
+  - 'Crusher需要back charge；Shadow Rise需要down charge。'
+  - 'Devil Reverse帧差随高度变化。'
