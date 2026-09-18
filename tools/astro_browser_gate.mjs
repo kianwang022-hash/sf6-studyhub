@@ -68,8 +68,10 @@ try {
   }
 
   await page.goto(`${BASE}/character/ryu/#role`, { waitUntil:'networkidle' });
-  await page.locator('#heroCharacterSelect').selectOption('jamie');
-  await page.waitForLoadState('networkidle');
+  await Promise.all([
+    page.waitForURL('**/character/jamie/**', { waitUntil:'networkidle' }),
+    page.locator('#heroCharacterSelect').selectOption('jamie')
+  ]);
   assert(page.url().includes('/character/jamie/'), 'real 31-character selector navigation failed');
   assert(await page.locator('#heroCharacterSelect').inputValue() === 'jamie', 'selector did not land on Jamie');
 
