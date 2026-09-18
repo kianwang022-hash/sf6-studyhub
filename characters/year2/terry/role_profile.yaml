@@ -1,0 +1,102 @@
+schema_version: '1.0'
+character: terry
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Terry先用普通接触把人送进Burning Knuckle的运角/Oki，再让Round Wave、Power Charge、Quick Burn等强必杀按职责一棒接一棒地延续回合。'
+    preferred_range: '中近距离。Power Wave和中拳脚控节奏；命中后优先M Burning Knuckle把人推向角落，再用角落throw / Round Wave继续逼防守。'
+    win_pattern: '地面接触 -> M Burning Knuckle carry/Oki -> dash打/投/shimmy -> 角落前投循环 -> Round Wave plus pressure -> Power Charge/Quick Burn转换 -> SA现金化。'
+    lose_pattern: '把强必杀机械串成一条、把Round Wave +5当中立免费进场、把Burning Knuckle KD记成固定数字、基础打投没稳就追OD Quick Burn shimmy。'
+  character_model:
+    essence_short: 'Terry的核心不是“必杀很多”，而是给每个强必杀分配明确职责：Burning Knuckle买位置，Rising Tackle买伤害，Round Wave买压力，Power Charge/Quick Burn把已有机会继续放大。'
+    essence_detail: 'Terry很像标准角色，但他的特色不是“也有飞道和升龙”，而是强必杀技之间能形成非常清楚的接力。基础层先靠2MP、2MK、5HP和Power Wave拿接触，命中后M Burning Knuckle常常同时买到运角和+30…42一类的起攻预算；到了角落，forward throw循环和Round Wave的+5 block状态继续逼对手站住。Year 4又强化了Round Wave的实战作用，并让OD Quick Burn在命中后留下+33，能直接制造shimmy。真正成熟的Terry不是见到特殊技就全部连起来，而是根据距离和位置决定这次应该用Burning Knuckle运角、Rising Tackle收伤害、Round Wave延长压力，还是用Power Charge / Quick Burn把已有机会继续放大。很多数字都受spacing和active-frame影响，所以“强必杀多”不是无脑连按的许可，而是更多明确职责可选。'
+    force_opponent_to:
+    - '尊重5HP block +1与2MP / 2MK的普通近身接触。'
+    - '被M Burning Knuckle不断推向角落时提前处理位置。'
+    - '角落里不能只靠后走逃离，因为earned Round Wave能制造block +5。'
+    - '在OD Quick Burn +33和角落forward throw后持续处理shimmy / throw / strike。'
+    payoff_after_respect:
+    - 'throw / 2MP / shimmy更容易成立。'
+    - 'Burning Knuckle把小命中转成更好的屏幕位置。'
+    - '角落forward throw与Round Wave meaty形成持续墙角问题。'
+    - 'Power Charge / Quick Burn / SA2把已经成立的opening继续放大。'
+    core_tradeoff: '稳定special ender / carry / Oki vs 更长special relay带来的额外damage与资源投入。其次是spacing：Burning Knuckle的击倒预算不是固定值。'
+    successful_round:
+    - 'Power Wave / normals控中距离'
+    - '2MP / 2MK / light拿接触'
+    - 'M Burning Knuckle把人送向角落'
+    - 'dash后strike / throw / shimmy'
+    - '角落forward throw / Round Wave继续逼防守'
+    - '命中后用Power Charge / Quick Burn / SA2现金化'
+    common_misplays:
+    - '把所有强必杀当成一条自动special chain，不看spacing和block状态。'
+    - '看到Round Wave +5就中立裸放，忘记29F startup和它需要先赚时间。'
+    - '把M Burning Knuckle记成固定+多少，忽略+30…42随spacing变化。'
+    - '基础打投没建立就过早追OD Quick Burn +33 shimmy。'
+    unique_decision: '相对Ryu/Ken/Luke，Terry新增的是“这次contact该交给哪个special接棒”：Burning Knuckle买carry/Oki，Rising Tackle买稳定伤害，Round Wave买plus pressure，Power Charge/Quick Burn买更长转换。'
+    transfer_in:
+    - 'projectile / anti-air / 2MK DRC。'
+    - 'strike / throw / shimmy。'
+    - 'knockdown -> Oki / corner / punish / DI / SA。'
+    new_skill:
+    - 'special-role mapping：每个强必杀承担不同end-state职责。'
+    - 'spacing-dependent Burning Knuckle Oki。'
+    - 'earned Round Wave +5 pressure。'
+    - 'OD Quick Burn +33 shimmy和Power Charge route extension。'
+    unlearn:
+    - '强必杀很多就等于可以机械连成一串。'
+    - 'plus-frame move可以不靠setup随便扔。'
+    - '一个固定KD数字能描述所有Burning Knuckle落点。'
+  glossary:
+  - {term: '214MP/HP｜Burning Knuckle', meaning: 'Terry最重要的carry/Oki ender之一。M/H命中后的时间预算受spacing影响，不能记成固定+多少。'}
+  - {term: '236HP｜Round Wave', meaning: '29F慢启动、Hit +8 / Block +5的低段特殊飞道/压力工具。强在“赚到时间后”延长回合，不是中立免费+5。'}
+  - {term: '236K｜Power Charge', meaning: '路线延长器。H/OD命中后还能继续特殊技取消，用于把已确认opening继续放大。'}
+  - {term: '214LP｜Quick Burn', meaning: '10F特殊技；Year4普通版Hit +3，OD版1600并留下+33，可进入shimmy。'}
+  - {term: '623P｜Rising Tackle', meaning: '主要反空/伤害ender。H版常见+27；OD版全无敌防守反击。'}
+  tools:
+  - {input: '5HP', name: '站重拳', use: '9F / Hit +2 / Block +1 / C；最清楚的普通近身respect与combo入口之一。'}
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +5 / Block -1 / C；稳定确认。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Block -6 / C；主要低段DRC入口。'}
+  - {input: '236LP/MP', name: 'Power Wave', use: '标准中距离飞道控制。'}
+  - {input: '214MP', name: 'M Burning Knuckle', use: '基础carry/Oki ender；KD预算约+30…42，必须看spacing。'}
+  - {input: '623P', name: 'Rising Tackle', use: '反空 / 伤害ender；和Burning Knuckle形成第一层角色分工。'}
+  - {input: '236HP', name: 'Round Wave', use: 'Year4重要plus-pressure工具；29F / Hit +8 / Block +5，后置到已赚时间的setup。'}
+  - {input: '214LP / OD', name: 'Quick Burn', use: '路线连接；OD命中+33可制造Year4 shimmy。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Unique、special variants与SA由工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '7', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-6', recovery: '12', hit: '+2', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '7', active: '7-9', recovery: '16', hit: '+2', block: '-3', cancel: 'C', damage: '700', note: 'Year4前方hurtbox扩大，挥空更易被差返。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '9', active: '9-11', recovery: '18', hit: '+5', block: '-2', cancel: '-', damage: '700', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '9', active: '9-12', recovery: '18', hit: '+2', block: '+1', cancel: 'C', damage: '800', note: '被防时recovery减少2F。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '12', active: '12-15', recovery: '21', hit: '+1', block: '-4', cancel: '-', damage: '900', note: 'PC crumple +18。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-6', recovery: '8', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '11', hit: '+3', block: '-2', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-9', recovery: '13', hit: '+5', block: '-1', cancel: 'C', damage: '600', note: '挥空额外+2F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '19', hit: '-2', block: '-6', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '8', active: '8-13', recovery: '22', hit: '+1', block: '-4', cancel: 'C', damage: '800', note: '强制站立。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '10', active: '10-12', recovery: '24', hit: 'KD', block: '-11', cancel: '-', damage: '900', note: 'PC更长hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中CH/PC可slam knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Special-role relay'
+    rule: '先明确每个special承担的结果，再按位置/资源把它们接力；不是把所有强必杀机械串成同一条。'
+  key_numbers:
+  - {label: '5HP', value: '9F / Hit +2 / Block +1', decision: '第一套普通respect点。'}
+  - {label: 'M Burning Knuckle', value: 'KD约+30…42', decision: 'carry/Oki核心，但spacing决定实际预算。'}
+  - {label: 'Round Wave', value: '29F / Hit +8 / Block +5', decision: '强plus-pressure必须先赚到setup时间。'}
+  - {label: 'OD Quick Burn', value: '1600 / KD +33', decision: 'Year4 shimmy package，后置到基础打投稳定。'}
+  - {label: 'Forward throw', value: '+22', decision: '角落dash后+3，形成throw/strike/read。'}
+  - {label: 'H Crack Shoot', value: '+43', decision: '高阶段setplay budget；保留spacing条件。'}
+  constraints:
+  - 'Burning Knuckle KD advantage随spacing变化。'
+  - 'Round Wave +5必须与29F startup和setup一起理解。'
+  - 'OD Quick Burn +33 shimmy需要实际spacing/timing。'
+  - 'active-frame Round Wave / 2MP / 5HP meaty在exact timing闭合前保持conditioned。'

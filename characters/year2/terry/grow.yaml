@@ -1,0 +1,108 @@
+schema_version: '1.1'
+character: terry
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让Power Wave / Rising Tackle / Burning Knuckle各自职责成立，再把special接力长起来。'
+  score_rule: 'Rank/MR是Reality evidence，不替代确认、spacing、Oki与special-role判断。'
+  current_ui: 'Round Wave +5、OD Quick Burn +33和SA2不会因为强就提前抢S0。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通Power Wave控场→Rising Tackle反空→light/2MP确认→M Burning Knuckle carry/Oki→dash固定strike。'
+    add_now:
+      - 'Power Wave负责中距离；发波后继续看跳。'
+      - '典型跳跃优先Rising Tackle。'
+      - '2LK→2LP→M Burning Knuckle与2MP→5LK→M Burning Knuckle两条基础carry确认。'
+      - 'M Burning Knuckle后按spacing前冲，先固定一个2MP/strike答案。'
+      - '需要直接伤害时用light→H Rising Tackle。'
+    gate:
+      lab: '两条Burning Knuckle确认、反空、BK后固定strike稳定。'
+      match: '真人能完整出现控场→接触→carry/Oki→下一Turn，并知道BK spacing会改变后续。'
+    defer: ['2MK DRC', 'Round Wave主线', 'OD Quick Burn shimmy', '复杂Power Charge relay', 'SA2 Geyser']
+    hub_focus: [light, close]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把5HP +1、punish、角落前投和第一套墙角special relay稳定下来。'
+    add_now:
+      - '5HP block +1后逐步加入throw / shimmy / block。'
+      - '挡无敌技和5HK PC有稳定punish。'
+      - '角落forward throw +22→dash +3。'
+      - '角落只先保留一条Power Charge→Round Wave→Rising Tackle路线。'
+    gate:
+      match: '主要损失不再来自漏对空、漏确认、漏punish、BK Oki和角落基础。'
+    defer: ['Round Wave频繁主线', 'OD Quick Burn +33', 'H Crack Shoot +43', 'SA2完整树']
+    hub_focus: [punish, corner, close]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: 'DRC和special relay开始按end-state分流；Round Wave只在赚到时间时作为+5 pressure。'
+    add_now:
+      - '2MK DRC加入主循环；Hit/Block/Whiff正确分流。'
+      - 'Power Charge / Crack Shoot / Quick Burn relay按确认使用，不自动串。'
+      - 'Round Wave 29F / block +5作为earned pressure加入。'
+      - 'DI先保一条稳定Rising Tackle结果，再按资源升级。'
+    gate:
+      match: '能说出这次special为什么接棒：carry、damage、plus pressure或资源转换。'
+    defer: ['OD Quick Burn Year4 shimmy', 'active-frame meaty', 'SA2多段cashout']
+    hub_focus: [2mk, round_wave, di]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'spacing和对手习惯开始决定BK / Round Wave / OD Quick Burn频率；Year4 +33 shimmy进入。'
+    add_now:
+      - 'M/H Burning Knuckle的KD预算按spacing处理，不背固定数字。'
+      - 'OD Quick Burn +33只在基础打投已建立后做shimmy。'
+      - '角落Round Wave / 2MP active-frame setup按Training Mode条件加入。'
+      - 'H Crack Shoot +43只在实际高频setplay需要时加入。'
+    gate:
+      behavior: 'special relay被针对后会降频；不会把强必杀机械串完。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['极窄active-frame', 'SA2最大资源树', 'CA高级setplay']
+    hub_focus: [od_quick_burn, round_wave, corner]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA2/SA3/CA、active-frame和高资源corner relay进入，但每条都要有独立价值。'
+    add_now:
+      - 'SA2 Twin/Triple Geyser从已会的OD Quick Burn / DI机会现金化。'
+      - 'Round Wave / 5HP / 2MP active-frame meaty精确闭合后加入。'
+      - 'SA3 +22 / CA +37后setplay按spacing优化。'
+      - '回放重点转向special ender是否选对，而不是是否用了更多special。'
+    gate:
+      behavior: '高资源/高条件路线不破坏基础special-role mapping。'
+      reality: '高分目标由实际目标和持续表现定义。'
+    hub_focus: [super, od_quick_burn, round_wave]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条M Burning Knuckle确认稳定', node: light, upgrade_evidence: 'light与2MP starter双侧稳定。'}
+    - {id: EX02, stage: S0, label: 'Rising Tackle反空稳定', node: close, upgrade_evidence: '典型跳跃能稳定处理。'}
+    - {id: EX03, stage: S2, label: 'special relay不误提交', node: 2mk, upgrade_evidence: '只在确认成立时继续Power Charge/Crack Shoot/Quick Burn。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'Power Wave后继续看跳', node: close, upgrade_evidence: '飞道不锁死注意力。'}
+    - {id: NE02, stage: S0, label: 'Burning Knuckle不是neutral自动突进', node: light, upgrade_evidence: '主要从确认/明确spacing使用。'}
+    - {id: NE03, stage: S2, label: 'Round Wave只在earned setup出现', node: round_wave, upgrade_evidence: '不会裸放29F只为了+5。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S1, label: '5HP +1是真实选择点', node: close, upgrade_evidence: '会在strike/throw/shimmy/stop间选。'}
+    - {id: CO02, stage: S2, label: 'special按end-state分工', node: 2mk, upgrade_evidence: '能解释BK/RT/Round Wave/Power Charge用途。'}
+    - {id: CO03, stage: S3, label: 'BK帧差带spacing条件', node: od_quick_burn, upgrade_evidence: '不再背固定KD数字。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'M BK→dash Oki闭环', node: light, upgrade_evidence: '命中后能接下一Turn。'}
+    - {id: OF02, stage: S1, label: '角落throw loop稳定', node: corner, upgrade_evidence: '+22→dash+3能形成选择树。'}
+    - {id: OF03, stage: S3, label: 'Round Wave / OD QB二层回核心Loop', node: od_quick_burn, upgrade_evidence: '高级setplay成功后仍回打投/read。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '挡无敌技会punish', node: punish, upgrade_evidence: '确定机会不丢。'}
+    - {id: DA02, stage: S2, label: '对手后走/抢按改变Round Wave频率', node: round_wave, upgrade_evidence: '根据真实反应调整。'}
+    - {id: DA03, stage: S3, label: 'OD QB shimmy失效会降频', node: od_quick_burn, upgrade_evidence: '对手不tech时不继续机械shimmy。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'Power Wave/RT/BK角色分工与核心Loop先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '确认、+1接触、punish和角落throw多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'DRC与special relay按end-state结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；spacing/Year4 shimmy不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '高资源优化围绕真实高价值瓶颈。'}
