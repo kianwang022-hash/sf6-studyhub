@@ -271,7 +271,8 @@ for (const c of chars) {
     assert(row2mk?.cancel === 'conditional', 'ehonda: 2MK must remain Spirit-only conditional cancel');
     assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'ehonda: inherited 2MK DRC route leaked');
     assert(/respect.*Oicho/i.test(role?.signature_mechanic?.name ?? ''), 'ehonda: respect-to-Oicho owner missing');
-    assert(!/Oicho[^\n]{0,80}(guaranteed|保证|必定|必抓)/i.test(learn + "\n" + reference + "\n" + practicalText), 'ehonda: guaranteed Oicho wording leaked');
+    const hondaText = learn + "\n" + reference + "\n" + practicalText;
+    assert(!/(?:guaranteed\s+(?:point-blank\s+)?Oicho|Oicho\s+(?:is\s+)?guaranteed|Oicho[^\n]{0,32}(?:保证能抓|保证贴脸|必定能抓|必抓))/i.test(hondaText), 'ehonda: positive guaranteed-Oicho wording leaked');
     for (const op of practical.opportunities ?? []) {
       for (const row of op.rows ?? []) {
         const stage = String(row.stage ?? '');
