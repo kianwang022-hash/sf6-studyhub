@@ -1,0 +1,121 @@
+schema_version: '1.0'
+character: ingrid
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Ingrid先用Sun Shot和普通confirm拿Sun Rise击倒，0 stock也能跑完整回合；安全时才投资1层Sun Shot Stock，让未来Sun Flare从负帧工具升级成正帧pressure与更高route上限。'
+    preferred_range: '中距离用Sun Shot、5MP/2MP/2MK找contact；命中先收进Sun Rise，击倒后再判断继续pressure还是拿stock。'
+    win_pattern: 'projectile/normal contact -> Sun Rise knockdown -> zero-stock strike/throw/shimmy -> safe window builds 1 stock -> Lv2 Sun Flare plus turn -> later hold/spend or 2-stock cashout -> exact setplay / SA。'
+    lose_pattern: '开局机械攒满stock、0 stock强行Sun Flare pressure、把M Sun Rise固定记成一个帧数、把OD Lv3大plus脱离2-stock状态、stock一有就乱花。'
+  character_model:
+    essence_short: '先用0-stock Sun Rise循环赢回合；安全时拿1 stock，让未来Sun Flare变成plus turn，再逐层升级到2-stock现金化。'
+    essence_detail: 'Ingrid不是“先攒满资源才开始玩”的角色。当前Year4入门路线先用2LK、5MP、2MP确认到M Sun Rise，击倒后直接做throw、2MP、shimmy；0 stock已经有完整回合。Sun Shot Stock真正改变的是未来回合质量：0-stock Sun Flare Lv1被防仍是负帧，1 stock Lv2开始Block +4，2 stock Lv3更强，2 stock OD Lv3甚至可以形成Block +9..+13与Hit +87以上的大预算。stock本身约需要47F安全时间去建立，因此每次资源动作都在问：现在继续pressure更值，还是把这段时间投资成未来更强的plus special / combo / SA。成熟Ingrid不会机械攒满，也不会有stock就立刻花，而是让Sun Shot、normal、Sun Rise基础循环一直成立，再用stock放大值得放大的opening。'
+    force_opponent_to:
+    - '处理Sun Shot掩护下的ground approach。'
+    - 'Sun Rise击倒后处理low / strike / throw / shimmy。'
+    - '长安全窗口里允许Ingrid拿stock后，未来必须尊重更强Sun Flare。'
+    - '1 stock Lv2被防后处理真正的plus pressure。'
+    - '2 stock / OD Lv3状态下不能继续用0-stock风险模型。'
+    create_respect_with:
+    - '2LK > 5LP > 5LK > M Sun Rise。'
+    - '5MP > 5MK > M Sun Rise。'
+    - '2MP > 5LK > M Sun Rise。'
+    - 'Sun Shot控制走地。'
+    - 'selected M Sun Rise Oki -> throw / 2MP / shimmy。'
+    - 'DR 2HP Block +3与DR 5HK +2。'
+    payoff_after_respect:
+    - '安全窗口拿1 Sun Shot Stock。'
+    - '1 stock Sun Flare Lv2 Block +4或更高，资源直接换成plus turn。'
+    - '2 stock Lv3 / OD Lv3提供更大的block/hit budget。'
+    - 'stock route可以换damage、corner carry或SA2。'
+    - '对手急着阻止stock/plus special时，普通strike与projectile重新升值。'
+    core_tradeoff: '继续当前zero-stock Oki/pressure，还是花约47F建立stock提高未来Sun Flare与route价值；stock是future-turn amplifier，不是必须优先完成的任务。'
+    successful_round:
+    - 'Sun Shot / normal拿contact'
+    - 'confirm到M Sun Rise并跑ordinary Oki'
+    - '观察是否有真实safe resource window'
+    - '有窗口时只拿1 stock'
+    - '下一次值得的opening用Lv2 Sun Flare换plus turn'
+    - '更长窗口/更大opening才进入2-stock OD Lv3或SA cashout'
+    common_misplays:
+    - '开局就机械攒2 stock。'
+    - '0 stock把Sun Flare Lv1当plus pressure。'
+    - '把M Sun Rise固定记成+38或+40。'
+    - '把OD Lv3 +9..+13 / +87泛化到低stock。'
+    - '有stock就立即花，不看位置和当前pressure。'
+    unique_decision: 'Ingrid新增的是future-turn amplification：先赢得安全时间，再把时间换成stock；stock直接提高Sun Flare block advantage和route上限。'
+    transfer_in:
+    - 'projectile control / anti-air。'
+    - 'normal confirm -> knockdown。'
+    - 'strike / throw / shimmy。'
+    - 'resource-window纪律。'
+    new_skill:
+    - 'zero-stock base loop vs stock investment。'
+    - 'stock_level_1 / stock_level_2状态识别。'
+    - 'Sun Rise route/height-dependent Oki。'
+    - 'stock spend后的plus-pressure反馈。'
+    - 'hold vs spend stock。'
+    - 'high-stock SA/route后置现金化。'
+    unlearn:
+    - '资源角色必须先攒满。'
+    - '所有Sun Flare都plus。'
+    - 'M Sun Rise只有一个固定Oki数字。'
+    - '有stock就应该马上花。'
+    - 'OD Lv3大plus可以脱离2-stock owner。'
+  glossary:
+  - {term: 'Sun Shot Stock', meaning: '通过约47F的安全资源动作建立；最多进入更高stock层，强化Sun Flare/Solar Burst与部分SA。'}
+  - {term: '214P｜Sun Flare', meaning: 'stock-dependent special。Lv1 0-stock仍负帧；Lv2需1 stock并开始plus；Lv3需2 stock。'}
+  - {term: '236K｜Sun Rise', meaning: '主要confirmed ender。后续帧数依route/hit height变化，不能记成固定+38。'}
+  - {term: '236P｜Sun Shot', meaning: 'projectile-control owner；Year4 H airborne-hit route得到更新。'}
+  - {term: '22K｜Sun Veil', meaning: '防守/反击special；普通/OD aftermath不同，S3后学习exact state。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '6F / Hit +1 / Block 0 / C；基础contact。'}
+  - {input: '5MK', name: '站中脚', use: '8F / Hit +4 / Block -3 / C；Year4 Hit +4。'}
+  - {input: '2MP', name: '蹲中拳', use: '7F / Hit +6 / Block -1 / C；稳定confirm。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Hit +1 / Block -6 / C；Drive low starter。'}
+  - {input: '236MK', name: 'M Sun Rise', use: '13F / Block -23；confirmed ender，Oki依route/height。'}
+  - {input: '214P hold', name: 'Sun Flare stock build', use: '约47F建立1 stock；只在safe resource window。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；unique normals、stock levels、Sun Shot/Flare/Rise、Veil、Vanishing Sun与SA由工具/Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '7', hit: '+5', block: '-1', cancel: 'C', damage: '300', note: 'chain-cancelable。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-7', recovery: '11', hit: '+3', block: '-3', cancel: 'C', damage: '300', note: 'Year4 Hit +3。'}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '6', active: '6-10', recovery: '13', hit: '+1', block: '0', cancel: 'C', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-11', recovery: '16', hit: '+4', block: '-3', cancel: 'C', damage: '700', note: 'Year4 Hit +4。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '12', active: '12-15', recovery: '20', hit: '+3', block: '-5', cancel: '-', damage: '900', note: 'PC +23。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '9', active: '9-17 / 9-13,15-17', recovery: '19', hit: '+4', block: '-2', cancel: 'SA', damage: '800', note: 'airborne hit ground bounce。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '9', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: 'chain-cancelable。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '10', hit: '+3', block: '-2', cancel: '-', damage: '200', note: 'chain-cancelable。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '7', active: '7-10', recovery: '12', hit: '+6', block: '-1', cancel: 'C', damage: '600', note: 'whiff额外+3F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-10', recovery: '19', hit: '+1', block: '-6', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '12', active: '12-14', recovery: '20', hit: '+1', block: '-1', cancel: 'C', damage: '800', note: ''}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '10', active: '10-12', recovery: '25', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: 'PC longer/hard KD。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-11', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '600', note: 'airborne launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '8', active: '8-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'CH/PC slam。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '12', active: '12-18', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'airborne launch。'}
+  resource:
+    name: 'Sun Shot Stock'
+    gain: 'safe L Sun Flare hold约47F可建立1 stock；更长hold可继续资源行为。'
+    spend: 'Sun Flare / Solar Burst的Lv2消耗1 stock，Lv3消耗2 stock；部分SA也与stock level关联。'
+    changes: 'Lv1 zero-stock仍负帧；Lv2开始Block +4；Lv3 +5；OD Lv3可达+9或更高并提供巨大hit budget。'
+    rule: 'S0只学安全拿1 stock；S1第一次花1 stock；2-stock与OD Lv3 S2+。'
+  signature_mechanic:
+    name: 'Zero-stock base loop -> safe stock investment -> future Sun Flare plus-turn amplification'
+    rule: '先用普通Sun Rise/Oki赢回合；只有安全窗口才把时间换成stock，stock再把未来Sun Flare和route质量抬高。'
+  key_numbers:
+  - {label: 'Sun Flare Lv1', value: 'Block -4', decision: '0 stock不是plus pressure。'}
+  - {label: 'Sun Flare Lv2', value: 'Block +4 or more', decision: '1 stock第一次把资源换成plus turn。'}
+  - {label: 'Sun Flare Lv3', value: 'Block +5 or more', decision: '2 stock才成立。'}
+  - {label: 'OD Sun Flare Lv3', value: 'Block +9..+13 / Hit +87+', decision: '2 stock + OD high-budget state。'}
+  - {label: 'stock build', value: 'about 47F for 1 stock', decision: '必须有safe resource window。'}
+  constraints:
+  - 'M Sun Rise aftermath必须带route/hit-height owner。'
+  - 'Sun Rise learner routes必须confirmed；L/M/H被防极危险。'
+  - 'Sun Flare plus值必须带stock_level。'
+  - 'OD Lv3大plus必须带stock_level_2 + OD/resource。'
+  - 'stock gain必须带safe_resource_window。'
