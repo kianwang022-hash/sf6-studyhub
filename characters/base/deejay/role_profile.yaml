@@ -1,0 +1,108 @@
+schema_version: '1.0'
+character: deejay
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Dee Jay会存charge，但真正强点是用真/假Air Slasher、+2接触、Sobat和Jus Cool打乱节奏，再用Jackknife/OD MGU把一次猜错放大。'
+    preferred_range: '中近距离先用5MP +2、2MP、Air Slasher真/假和步行节奏制造犹豫；拿到contact后优先Sobat/Jackknife稳定收尾，再逐层打开Jus Cool。'
+    win_pattern: 'charge背景可用 -> 真/假Air Slasher或5MP +2制造respect -> Sobat/throw/shimmy -> 对手开始猜节奏 -> Jus Cool高低/overhead/starter -> H Jackknife +42或OD MGU +52 -> repeat。'
+    lose_pattern: '把角色打成Guile只会真飞道、Jus Cool一有就乱猜、没down charge时假装有Jackknife、把所有H Jackknife都记成+42、太早围着SA2练节奏。'
+  character_model:
+    essence_short: 'Dee Jay的核心不是“保住charge”，而是让对手猜不准下一拍是charge招、fake、non-charge special还是Jus Cool；respect稳定后再用高回报收尾。'
+    essence_detail: 'Dee Jay和Guile共享“在普通动作里后台存charge”的基本功，但用途完全不同。Guile靠Boom/Somersault形成横纵双轴控制；Dee Jay则可以在有charge时选择真Air Slasher，也可以用L Air Slasher做fake，甚至完全不依赖charge，转而用Quick Sobat、Machine Gun Uppercut或Jus Cool继续回合。因此对手真正难处理的不是某一招，而是节奏：这次后退是在存Air Slasher，还是准备fake？5MP block +2以后会继续2LP、throw、walk-back shimmy，还是突然Jus Cool？当前Game Plan也从Drive Rush / 5MP接触一路进入H Jackknife或OD MGU，再回到strike / throw / shimmy / Jus Cool。Dee Jay成熟度不在“招式多”，而在于先用稳定+2/+6 contact让对手尊重，再在对手开始猜节奏时打开Jus Cool和fake层；猜对了再用H Jackknife +42或OD MGU +52把收益放大。'
+    force_opponent_to:
+    - '尊重5MP block +2与DR 5MP +6，不敢近身每次都抢。'
+    - '不能把后退/蓄力简单读成真实Air Slasher，因为L版是fake。'
+    - 'H Double Rolling Sobat命中+2后继续处理strike / throw / shimmy。'
+    - 'Jus Cool进入后必须区分low / overhead / combo-starter三个不同分支。'
+    payoff_after_respect:
+    - 'throw和walk-back shimmy更容易成立。'
+    - 'H Double Sobat +2把普通命中继续变成下一次猜。'
+    - 'H Jackknife grounded +42进入safe jump。'
+    - 'OD MGU +52双前冲后+14，给巨大Oki预算。'
+    - 'Jus Cool能利用已经建立的respect去打低/overhead/starter。'
+    core_tradeoff: '保charge维持Air Slasher/Jackknife资格 vs 主动打破charge节奏，用non-charge Sobat/MGU/Jus Cool抢拍。成熟Dee Jay不是永远charge，也不是永远fake。'
+    successful_round:
+    - '在普通防守/移动里存charge'
+    - '真/假Air Slasher或5MP +2制造节奏不确定'
+    - 'Sobat hit +2 / throw / shimmy建立respect'
+    - '对手开始站住后再加入Jus Cool'
+    - '命中后用H Jackknife +42或OD MGU +52放大'
+    - '再回到真/假/throw/shimmy节奏'
+    common_misplays:
+    - '打成Guile，只会后退发真Air Slasher。'
+    - '没有respect就直接Jus Cool猜拳。'
+    - '没down charge时假装随时有Jackknife。'
+    - '把H Jackknife任何命中都当+42。'
+    - '太早练SA2 Sunrise Festival，基础Sobat/Oki没稳。'
+    unique_decision: 'Dee Jay新增的是rhythm deception：charge既是special资格，也是让对手猜真假、停顿、突然前进的节奏资源。'
+    transfer_in:
+    - 'Guile的charge storage基本功。'
+    - 'projectile / anti-air / strike-throw-shimmy。'
+    - 'punish / corner / knockdown -> Oki。'
+    new_skill:
+    - 'L Air Slasher fake与real projectile节奏区分。'
+    - 'charge与non-charge route交替。'
+    - '5MP +2 / DR 5MP +6后的pressure节奏。'
+    - 'Jus Cool low / overhead / combo-starter分支。'
+    - '+42 Jackknife与+52 OD MGU高预算Oki。'
+    unlearn:
+    - 'charge角色一定主要靠charge move输出。'
+    - 'fake越多越难猜，所以越多越好。'
+    - 'Jus Cool是一条统一安全mix。'
+    - '所有H Jackknife命中都等于+42。'
+  glossary:
+  - {term: '[4]6P｜Air Slasher', meaning: 'M/H是真飞道；L版是fake动作。charge不仅提供飞道资格，也能制造真假节奏。'}
+  - {term: '[2]8K｜Jackknife Maximum', meaning: 'charge反空/ender。H版grounded hit可进入+42；条件不能省。'}
+  - {term: '236K｜Rolling Sobat', meaning: 'non-charge route/pressure工具。Quick Sobat常给+34；H Double Sobat命中后+2。'}
+  - {term: '214P｜Machine Gun Uppercut', meaning: 'non-charge高回报ender。OD版Year4当前+52，双dash后+14。'}
+  - {term: '214K｜Jus Cool', meaning: '后置节奏hub。LK=Funky Slicer low，MK=Waning Moon overhead，HK=Maximum Strike combo-starter。'}
+  - {term: 'SA2｜Sunrise Festival', meaning: '高阶段节奏/执行系统，不是S0主线。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '7F / Hit +5 / Block +2；S0最重要respect点。'}
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +5 / Block -1 / C；稳定confirm。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Block -6 / non-cancel / KD；不是DRC入口。'}
+  - {input: '[4]6LP', name: 'L Air Slasher fake', use: 'fake projectile；用来改变对手对charge节奏的判断。'}
+  - {input: '[4]6MP/HP', name: 'M/H Air Slasher', use: '真实charge飞道；和fake共同构成节奏层。'}
+  - {input: '[2]8HK', name: 'H Jackknife', use: '5F高价值ender/anti-air；grounded hit才进入+42。'}
+  - {input: '236LK', name: 'Quick Rolling Sobat', use: 'S0稳定non-charge ender；+34 family。'}
+  - {input: '214K', name: 'Jus Cool', use: 'S2以后earned mix hub；follow-up必须分开学。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Air Slasher、Jackknife、Sobat、MGU、Jus Cool与SA由关键工具/Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '6', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-6', recovery: '12', hit: '+2', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '7', active: '7-9', recovery: '13', hit: '+5', block: '+2', cancel: '-', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '9', active: '9-11', recovery: '16', hit: '+6', block: '-1', cancel: '-', damage: '600', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '9', active: '9-14', recovery: '18', hit: '+3', block: '-4', cancel: 'C', damage: '800', note: ''}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '12', active: '12-14', recovery: '22', hit: '+1', block: '-5', cancel: '-', damage: '800', note: 'PC可进入高价值route。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '5', active: '5-7', recovery: '8', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-6', recovery: '10', hit: '+2', block: '-2', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-9', recovery: '14', hit: '+5', block: '-1', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '8', active: '8-11', recovery: '19', hit: 'KD', block: '-6', cancel: '-', damage: '700', note: '不可取消。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '8', active: '8-9', recovery: '20', hit: '+6', block: '-2', cancel: '-', damage: '800', note: ''}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '14', active: '14-23', recovery: '15', hit: 'KD', block: '-11', cancel: '-', damage: '900', note: ''}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '4', active: '4-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '6', active: '6-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '8', active: '8-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Charge + rhythm deception'
+    rule: 'charge保留Air Slasher/Jackknife资格，但Dee Jay会用fake projectile与non-charge Sobat/MGU/Jus Cool打破对手对charge节奏的预测。'
+  key_numbers:
+  - {label: '5MP', value: '7F / Hit +5 / Block +2', decision: 'S0建立respect的主接触。'}
+  - {label: 'DR 5MP', value: 'Block +6', decision: 'S2高优势pressure入口。'}
+  - {label: 'H Double Sobat', value: 'hit +2', decision: 'S0/S1下一次strike/throw/shimmy交接。'}
+  - {label: 'Quick Sobat', value: '+34', decision: '基础Oki / DR pressure。'}
+  - {label: 'H Jackknife', value: 'grounded +42', decision: 'S1/S2 safe jump；grounded-hit条件必带。'}
+  - {label: 'OD MGU', value: '+52 -> two dashes +14', decision: 'S3高Oki预算。'}
+  constraints:
+  - '2MK不可取消，不能继承2MK DRC。'
+  - 'L Air Slasher是fake，不能当真实飞道。'
+  - 'H Jackknife +42必须grounded hit。'
+  - 'Jus Cool follow-up必须分别表达low/overhead/starter。'
+  - 'SA2 Sunrise Festival固定留S4。'

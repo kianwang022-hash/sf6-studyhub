@@ -1,0 +1,267 @@
+schema_version: '1.0'
+character: deejay
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 is charge/fake distinction + stable Sobat/+2 pressure. Jus Cool starts in S2; OD MGU +52 in S3; Sunrise Festival in S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Fake/Real / +2 Pressure'}
+  S1: {label: 基本功成型, short: 'Sobat Oki / Jackknife +42'}
+  S2: {label: 实战结构化, short: 'DR +6 / Jus Cool'}
+  S3: {label: 选择成熟, short: 'OD MGU +52 / Rhythm'}
+  S4: {label: 高分上探, short: 'Sunrise Festival / SA / Burnout'}
+shared_packages:
+  SOBAT34:
+    label: 'Quick Rolling Sobat +34'
+    sequence: 'Quick Rolling Sobat -> +34'
+    next: 'DR 6MK block +5 / DR 5MP block +6 / throw'
+    verification: verified
+    sources: [SRC05]
+  H_SOBAT_PLUS2:
+    label: 'H Double Rolling Sobat hit +2'
+    sequence: 'H Double Rolling Sobat hit -> +2'
+    next: '2LP / 2MP / throw / walk-back shimmy'
+    verification: verified
+    sources: [SRC05]
+  JACK42:
+    label: 'H Jackknife grounded +42'
+    sequence: 'H Jackknife Maximum grounded hit -> +42'
+    next: 'immediate forward jump attack safe jump OR two dashes +4'
+    verification: conditioned
+    conditions: [grounded_hit]
+    sources: [SRC05]
+  ODMGU52:
+    label: 'OD MGU +52'
+    sequence: 'OD Machine Gun Uppercut -> +52 -> two forward dashes'
+    next: 'point-blank +14 -> strike / throw / delayed throw / shimmy / Jus Cool / block'
+    verification: verified
+    sources: [SRC05]
+opportunities:
+- id: rhythm
+  title: 'Air Slasher｜S0先分清真/假'
+  stage: S0
+  subtitle: 'charge不等于每次都要发真飞道'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Fake
+    input: '[4]6LP L Air Slasher fake'
+    value: {state: 'fake projectile'}
+    next_loop: 'walk / 5MP / throw / keep anti-air read'
+    why: '让对手不能把后退蓄力自动读成真实projectile。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S0
+    choice: Real
+    input: '[4]6MP/HP Air Slasher'
+    value: {state: 'real projectile'}
+    next_loop: 'rebuild back/down charge / anti-air / spacing'
+    why: '真飞道与fake共同形成节奏，不是各自独立套路。'
+    verification: conditioned
+    conditions: [back_charge_ready]
+    sources: [SRC03]
+- id: light
+  title: 'Light｜最简单non-charge ender'
+  stage: S0
+  subtitle: '不靠charge也能完成回合'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Quick Sobat
+    input: '5LP > 2LP > Quick Rolling Sobat'
+    value: {drive: 0, kd: '+34'}
+    next_loop_package: SOBAT34
+    why: '第一条证明Dee Jay不是只能靠charge move。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: 'light block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '回5MP / fake-real rhythm'
+    why: '不要把不安全Sobat提交到防御上。'
+- id: medium
+  title: '5MP｜+2是S0核心respect'
+  stage: S0
+  subtitle: '先有respect，再有Jus Cool'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: +2
+    input: '5MP block (+2) -> 2LP / throw / walk-back shimmy / block'
+    value: {frame: '+2'}
+    next_loop: '观察mash / tech / backwalk'
+    why: '当前最清楚的基础pressure点。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S0
+    choice: +2 handoff
+    input: '5MP > 5LK > H Double Rolling Sobat'
+    value: {frame: 'hit +2'}
+    next_loop_package: H_SOBAT_PLUS2
+    why: '命中后继续一个简单strike/throw/shimmy循环。'
+    verification: verified
+    sources: [SRC05]
+- id: antiair
+  title: 'Jackknife｜charge反空必须保住'
+  stage: S0
+  subtitle: 'fake/real节奏不能牺牲反空'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Jackknife
+    input: 'opponent jump -> [2]8K Jackknife Maximum'
+    value: {state: 'anti-air / knockdown'}
+    next_loop: 'rebuild charge / position read'
+    why: '让对手不能靠跳跃绕过你的Air Slasher节奏。'
+    verification: conditioned
+    conditions: [down_charge_ready]
+    sources: [SRC03, SRC05]
+- id: oki
+  title: 'H Jackknife｜S1才学grounded +42'
+  stage: S1
+  subtitle: '不是所有命中都+42'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Safe Jump
+    input: 'H Jackknife Maximum grounded hit -> +42 -> immediate forward jump attack'
+    value: {kd: '+42'}
+    next_loop_package: JACK42
+    why: '第一套高价值safe jump，但必须保留grounded-hit条件。'
+    verification: conditioned
+    conditions: [grounded_hit]
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Midscreen +4
+    input: 'H Jackknife Maximum grounded hit -> two forward dashes'
+    value: {frame: '+4'}
+    next_loop: '2MP / throw / shimmy / later Jus Cool'
+    why: '不用跳也能进入简单地面Oki。'
+    verification: conditioned
+    conditions: [grounded_hit]
+    sources: [SRC05]
+- id: throw
+  title: 'Forward throw｜+34直接回DR压力'
+  stage: S1
+  subtitle: '基础打投和charge节奏连起来'
+  rows:
+  - result: THROW
+    stage: S1
+    choice: DR pressure
+    input: 'forward throw -> +34 -> forward dash > Drive Rush'
+    value: {kd: '+34'}
+    next_loop: 'DR 5MP / throw / later Jus Cool'
+    why: '对手开始尊重5MP +2后，throw的下一轮变得很清楚。'
+    verification: verified
+    sources: [SRC05]
+- id: drive
+  title: 'DR 5MP｜S2 +6才打开更深节奏'
+  stage: S2
+  subtitle: '高优势先于复杂mix'
+  rows:
+  - result: BLOCK
+    stage: S2
+    choice: +6
+    input: 'Drive Rush > 5MP block (+6)'
+    value: {frame: '+6'}
+    next_loop: 'throw / 5MP / 2MP / walk-back shimmy'
+    why: 'Jus Cool之前先建立最强基础respect。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: H Jackknife route
+    input: '5MP > 5LK > CDR > 2LP > 2HP > 2MP > H Jackknife Maximum'
+    value: {drive: 3, kd: '+42 grounded family'}
+    next_loop_package: JACK42
+    why: '把Drive接回已经熟悉的safe-jump end state。'
+    verification: conditioned
+    conditions: [grounded_hit]
+    sources: [SRC05]
+- id: jus_cool
+  title: 'Jus Cool｜S2才打开三分支'
+  stage: S2
+  subtitle: 'low / overhead / starter分别学'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Low
+    input: 'Jus Cool > LK Funky Slicer'
+    value: {state: 'low', block: '-3'}
+    next_loop: 'hit confirm / block stop / rhythm reset'
+    why: '针对只站防或等throw的对手。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S2
+    choice: Overhead
+    input: 'Jus Cool > MK Waning Moon'
+    value: {state: 'overhead', block: '+1'}
+    next_loop: 'throw / 2LP / rhythm read'
+    why: '与low互补，同时保留Year4当前throw互动。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S2
+    choice: Starter
+    input: 'Jus Cool > HK Maximum Strike'
+    value: {state: 'combo starter', block: '-10'}
+    next_loop: 'hit -> combo | block -> punish risk'
+    why: '它不是安全pressure，而是高回报命中分支。'
+    verification: verified
+    sources: [SRC03, SRC05]
+- id: od_mgu
+  title: 'OD MGU｜S3才加入+52大预算'
+  stage: S3
+  subtitle: 'Year4高价值，不抢S0'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: +52
+    input: 'OD Machine Gun Uppercut hit -> +52 -> two forward dashes'
+    value: {drive: 2, frame: 'point-blank +14'}
+    next_loop_package: ODMGU52
+    why: 'Year4从+23提升到+52，真正值得作为成熟阶段独立Oki选择。'
+    verification: verified
+    sources: [SRC05]
+- id: super
+  title: 'SA2｜S4才进入Sunrise Festival'
+  stage: S4
+  subtitle: '高执行节奏系统，不是基础角色身份'
+  rows:
+  - result: ACTIVE
+    stage: S4
+    choice: Sunrise Festival
+    input: 'SA2 Sunrise Festival activation / rhythm sequence'
+    value: {sa: 2, state: 'timing/execution system'}
+    next_loop: '按当前hit/spacing继续cashout'
+    why: '基础fake/+2/Jus Cool稳定后才有意义。'
+    verification: conditioned
+    conditions: [sa2_active]
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: '5MP > 5LK > Quick Rolling Sobat > SA3'
+    value: {sa: 3}
+    next_loop: 'Kill / position reset'
+    why: '从已会路线直接现金化。'
+    verification: verified
+    sources: [SRC05]
+backend_only:
+- {label: 'reversal extension with ellipsis', reason: 'source incomplete; no reconstruction'}
+- {label: 'burnout route with ellipsis', reason: 'source incomplete'}
+- {label: 'corner max OD chain', reason: 'S4 resource-heavy optimization'}
+- {label: 'generic Jus Cool safety', reason: 'follow-ups have different truth'}
