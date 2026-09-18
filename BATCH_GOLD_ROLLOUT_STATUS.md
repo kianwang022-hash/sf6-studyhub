@@ -32,7 +32,7 @@ Judgment states:
 | base | Zangief | `GOLD_PAGE_READY` |
 | base | Lily | `SOURCE_CLOSURE_PENDING` |
 | base | Cammy | `GOLD_PAGE_READY` |
-| year1 | Rashid | `SOURCE_CLOSURE_PENDING` |
+| year1 | Rashid | `CONTENT_READY` |
 | year1 | A.K.I. | `SOURCE_CLOSURE_PENDING` |
 | year1 | Ed | `SOURCE_CLOSURE_PENDING` |
 | year1 | Akuma | `CONTENT_READY` |
@@ -50,7 +50,7 @@ Judgment states:
 
 Five characters now render through the canonical Astro runtime:
 
-Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, and Yasmine are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, and Yasmine, and Rashid are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.

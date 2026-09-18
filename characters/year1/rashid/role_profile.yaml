@@ -1,0 +1,104 @@
+schema_version: '1.0'
+character: rashid
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Rashid先用很快、很正常的地面确认拿击倒；稳定以后，再用Arabian Cyclone和Air Current把下一次re-entry变成更多角度。'
+    preferred_range: '中近距离。5MP / 2MP / 2MK和light先拿接触；M Mixer负责稳定Oki，Eagle Spike负责carry，风和移动后置。'
+    win_pattern: 'ground contact -> M Mixer +31 / Eagle Spike carry -> strike / throw / low -> 对手适应固定Oki -> Arabian Cyclone / Air Current改变re-entry角度 -> +42 jump-in -> S4 Ysaar。'
+    lose_pattern: '第一天就乱跑乱飞、把Boosted招式当普通状态、把Eagle Spike击倒数字当固定值、基础确认没稳就围着Ysaar玩。'
+  character_model:
+    essence_short: '先把普通地面和固定Oki打稳，再用风与移动改变“下一次怎么回来”；Rashid的自由来自有理由地增加re-entry角度，不是一直乱动。'
+    essence_detail: 'Rashid看起来像最应该一上来就学跑墙、旋风、空中变化的角色，但当前资料给出的基础路线非常朴素：2LK / 5LP确认到M Spinning Mixer，2MP接L Eagle Spike，2MK取消绿冲，再把M Mixer的+31或Eagle Spike的运角/Oki接回下一轮。这说明他的第一层仍然是普通SF6：快按钮拿接触、确认、击倒、打投。真正属于Rashid的第二层才是“重新进入的角度变多”。Arabian Cyclone、Wing Stroke、Rolling Assault、Arabian Skyhigh与Air Current会让Spinning Mixer / Eagle Spike等熟悉工具得到强化，+42、+44以及不同的空中进场开始出现。成熟的Rashid不是一直乱飞，而是先让对手适应普通地面和固定Oki，再用风和移动改变下一次接近的方向；如果这些变化没在针对真实防守，就应该退回稳定地面循环。最后的SA2 Ysaar更像把整个屏幕临时变成Rashid的系统层，不应该抢走入门主线。'
+    force_opponent_to:
+    - '先尊重5MP / 2MP block +1与4F light，不敢近身每次都抢。'
+    - '被M Mixer / Eagle Spike击倒后持续处理strike / throw / low。'
+    - '基础Oki稳定后，还要处理Air Current强化后的+42 jump-in与Arabian Cyclone移动分支。'
+    - 'SA2阶段必须同时处理Ysaar和Rashid本体。'
+    payoff_after_respect:
+    - '普通throw / delayed strike / low更容易成立。'
+    - 'Eagle Spike把一次接触换成carry与Run Oki。'
+    - 'Air Current Boosted Mixer把熟悉ender升级成+42 re-entry。'
+    - 'Nail / Rolling Assault +44与Cyclone分支增加overhead / throw / low角度。'
+    core_tradeoff: '稳定地面/固定Oki vs 更高波动的移动和Air Current层。额外角度只有真的针对对手防守时才值得打开。'
+    successful_round:
+    - '快light / 2MP / 2MK拿ground contact'
+    - 'M Mixer或Eagle Spike拿击倒/位置'
+    - '跑固定strike / throw / low'
+    - '对手适应后再加入Arabian Cyclone'
+    - 'S3用Air Current +42改变re-entry'
+    - 'S4用Ysaar放大整个屏幕压力'
+    common_misplays:
+    - '因为角色会跑会飞就第一天乱开移动。'
+    - '把Air Current Boosted路线当普通状态路线。'
+    - '把Eagle Spike的KD区间背成固定数字。'
+    - '太早围着Ysaar练花式，基础ground loop没成立。'
+    unique_decision: '相对Cammy，Rashid不只是“更快回来”，而是能用风和移动改变re-entry的角度与special性质；关键是何时打开这层自由度。'
+    transfer_in:
+    - 'grounded contact、2MK DRC、strike / throw / shimmy。'
+    - 'anti-air / punish / DI / corner Oki。'
+    new_skill:
+    - 'Air Current状态识别与Boosted special条件。'
+    - 'Eagle Spike spacing-dependent Oki。'
+    - 'Arabian Cyclone -> Wing Stroke / Rolling Assault分支。'
+    - '+42/+44条件化re-entry。'
+    - 'Ysaar作为后期screen-control system。'
+    unlearn:
+    - 'mobility character就应该一直移动。'
+    - 'Boosted special可以脱离Air Current当普通招背。'
+    - '更复杂re-entry永远比固定Oki更好。'
+  glossary:
+  - {term: '236P｜Spinning Mixer', meaning: 'Rashid的核心旋风技。M版是S0稳定ender并给+31；Air Current强化后性能会变化。'}
+  - {term: '214K｜Eagle Spike', meaning: 'carry/Oki工具。L/M/H命中后的时间预算受spacing与命中状态影响，不能背一个固定数字。'}
+  - {term: '236K｜Whirlwind Shot', meaning: '制造风与节奏的special；蓄力版本后置，用来进入更深Air Current层。'}
+  - {term: '214P｜Arabian Cyclone', meaning: '移动/setplay hub，可接Wing Stroke、Rolling Assault等派生；S2后再系统加入。'}
+  - {term: 'Air Current', meaning: '气流状态会强化Spinning Mixer、Eagle Spike等招式。Boosted路线必须显式带状态。'}
+  - {term: 'SA2｜Ysaar', meaning: '后期屏幕控制系统；旋风与本体一起制造overhead / low / throw，不是S0 combo ender。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '6F / Hit +5 / Block +1 / C；最干净的近身respect之一。'}
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +4 / Block +1 / C；稳定confirm。'}
+  - {input: '2MK', name: '蹲中脚', use: '7F / Hit -1 / Block -5 / C；S2主要DRC入口。'}
+  - {input: '236MP', name: 'M Spinning Mixer', use: 'S0稳定ender；当前+31，先用它建立基础Oki。'}
+  - {input: '214LK', name: 'L Eagle Spike', use: 'carry替代；击倒/Oki按spacing判断。'}
+  - {input: '214P', name: 'Arabian Cyclone', use: 'S2移动/setplay hub；不要第一天当neutral自动入口。'}
+  - {input: 'Air Current + 236P', name: 'Boosted Spinning Mixer', use: 'S3状态强化；M/OD Boosted Mixer可进入+42 family。'}
+  - {input: '214214K', name: 'Ysaar', use: 'S4屏幕系统；本体与旋风共同mix。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Run、Cyclone派生、Air Current Boosted specials与SA由关键工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-5', recovery: '9', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '4', active: '4-6', recovery: '10', hit: '+3', block: '-1', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '6', active: '6-8', recovery: '14', hit: '+5', block: '+1', cancel: 'C', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-10', recovery: '17', hit: '+6', block: '-3', cancel: '-', damage: '600', note: '挥空额外+2F recovery。'}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '9', active: '9-11', recovery: '21', hit: '+1', block: '-4', cancel: 'C', damage: '800', note: ''}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '13', active: '13-20', recovery: '18', hit: '-1', block: '-5', cancel: '-', damage: '800', note: '空中命中launch；PC launch。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '5', active: '5-7', recovery: '7', hit: '+5', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '8', hit: '+3', block: '-1', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '6', active: '6-9', recovery: '13', hit: '+4', block: '+1', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '7', active: '7-9', recovery: '18', hit: '-1', block: '-5', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '12', active: '12-14', recovery: '21', hit: '+5', block: '-4', cancel: 'SA', damage: '900', note: 'Year4 block由-6改善到-4；挥空额外+2F。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '9', active: '9-11', recovery: '24', hit: 'KD', block: '-11', cancel: '-', damage: '900', note: 'PC hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-8', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '9', active: '9-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '600', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '8', active: '8-16 / 8-10,14-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '二段active；空中命中slam。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '可接Wing Stroke / Skyhigh等空中派生。'}
+  signature_mechanic:
+    name: 'Earned mobility + Air Current re-entry'
+    rule: '稳定Mixer/Eagle Spike回合先成立；Arabian Cyclone与Air Current只在真实防守习惯出现后增加re-entry角度。'
+  key_numbers:
+  - {label: 'M Spinning Mixer', value: 'KD +31', decision: 'S0基础Oki：DR后继续strike/throw。'}
+  - {label: 'Air Current Boosted M/OD Mixer', value: 'KD +42', decision: 'S3才进入jump-in/safe-jump family。'}
+  - {label: 'L/M/H Eagle Spike', value: '+30…42 / +56…68 / +52…64', decision: 'carry/Oki预算强但spacing-dependent。'}
+  - {label: '5MP / 2MP', value: '6F / Block +1', decision: '不靠风也能建立普通打投。'}
+  - {label: 'Nail / Rolling Assault', value: '+44 family', decision: 'S2/S3 movement分支的高Oki结果。'}
+  - {label: 'Forward throw', value: '+27', decision: 'dash后按spacing进入DR strike / throw。'}
+  constraints:
+  - 'Boosted special必须有Air Current状态。'
+  - 'Eagle Spike KD优势随spacing/命中状态变化。'
+  - '+42 jump-in属于Boosted Mixer，不属于normal M Mixer。'
+  - 'Arabian Cyclone active-frame setplay必须带实际setup。'
+  - 'Ysaar固定留S4。'
