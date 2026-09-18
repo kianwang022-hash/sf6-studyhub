@@ -1,0 +1,317 @@
+schema_version: '1.0'
+character: juri
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-18'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Juri S0 generates stock through M Fuhajin without requiring stock spend. First spend decision enters S2; OD/3-stock/Feng Shui are later.'
+stages:
+  S0: {label: 最小可玩, short: 'Ground Hit -> M Fuhajin -> Stock'}
+  S1: {label: 基本功成型, short: 'Punish / Corner / Tensenrin'}
+  S2: {label: 实战结构化, short: '2MK DRC / First Stock Spend'}
+  S3: {label: 选择成熟, short: 'OD / 3 Stock / Spend Timing'}
+  S4: {label: 高分上探, short: 'SA / Feng Shui Engine'}
+shared_packages:
+  M_FUHAJIN_LOOP:
+    label: 'M Fuhajin 基础stock循环'
+    sequence: 'M Fuhajin -> stock +1 -> forward dash'
+    next: '5MP / 2MP / throw / walk-back shimmy'
+    verification: verified
+    sources: [SRC05]
+  CORNER_TENSENRIN:
+    label: 'Corner H Tensenrin Year4 Oki'
+    sequence: 'corner H Tensenrin -> 5MP'
+    next: 'about +5 family -> throw / 2MP / shimmy / overhead'
+    verification: conditioned
+    conditions: [corner, hit_height, spacing]
+    sources: [SRC05]
+  SPEND_REGAIN:
+    label: 'Spend -> regain stock loop'
+    sequence: 'Go Ohsatsu stock spend -> L Fuhajin'
+    next: 'regain stock -> forward -> strike / throw'
+    verification: conditioned
+    conditions: [stock_state, route_spacing]
+    sources: [SRC05]
+opportunities:
+- id: medium
+  title: '5MP｜Juri最重要的基础接触'
+  stage: S0
+  subtitle: '命中拿stock，被防+2继续打投'
+  rows:
+  - result: WHIFF
+    stage: S0
+    choice: 不补票
+    input: '5MP whiff -> stop'
+    value: {drive: 0}
+    next_loop: '回走位 / 看对手前进'
+    why: '快按钮也不能自动连播。'
+  - result: BLOCK
+    stage: S0
+    choice: +2选择点
+    input: '5MP block (+2) -> 2LP / throw / walk-back shimmy / block'
+    value: {frame: '+2'}
+    next_loop: '继续观察mash / tech / jump / reversal'
+    why: 'stock还没参与，普通地面pressure已经成立。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '5MP > 2MP > M Fuhajin'
+    value: {drive: 0, stock_gain: 1}
+    next_loop_package: M_FUHAJIN_LOOP
+    why: '同时保住当前下一轮并增加future option，是Juri最核心的基础路线。'
+    verification: verified
+    sources: [SRC05]
+- id: light
+  title: 'Light｜小命中也先回同一个stock/Oki循环'
+  stage: S0
+  subtitle: '不因为starter小就换一套资源逻辑'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LK > 2LP > 2LP > M Fuhajin'
+    value: {drive: 0, stock_gain: 1}
+    next_loop_package: M_FUHAJIN_LOOP
+    why: '低段light也复用同一套stock + Oki，降低工作记忆。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: '2LK / 2LP block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '不确认就不提交Fuhajin'
+    why: '先建立命中确认纪律。'
+- id: punish
+  title: 'Punish｜先把确定机会换成stock + Tensenrin Oki'
+  stage: S1
+  subtitle: '大确反先稳定，再考虑多stock路线'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 挡无敌后稳定
+    input: '6HP (PC) > 2HP > H Fuhajin > H Tensenrin'
+    value: {drive: 0, stock_gain: 1}
+    next_loop: '按H Tensenrin实际spacing / hit height进入meaty或dash判断'
+    why: '确定大机会先拿伤害、stock和下一轮。'
+    verification: verified
+    sources: [SRC05]
+  - result: PC
+    stage: S1
+    choice: Drive Reversal简单
+    input: '2MP (PC) > M Fuhajin'
+    value: {drive: 0, stock_gain: 1}
+    next_loop_package: M_FUHAJIN_LOOP
+    why: '小punish不需要强行升级复杂路线。'
+    verification: verified
+    sources: [SRC05]
+- id: corner
+  title: 'Corner｜H Tensenrin +5 family 是第一套墙角资源循环'
+  stage: S1
+  subtitle: '先会保墙和下一轮，再花stock'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: 角落稳定
+    input: 'corner route > H Fuhajin > H Tensenrin'
+    value: {stock_gain: 1, state: corner}
+    next_loop_package: CORNER_TENSENRIN
+    why: '角落先把H Tensenrin后的5MP / throw / shimmy练稳。'
+    verification: conditioned
+    conditions: [corner, hit_height, spacing]
+    sources: [SRC05]
+  - result: THROW
+    stage: S1
+    choice: 前投继续
+    input: 'corner forward throw -> dash'
+    value: {state: corner}
+    next_loop: '5MP / throw / walk-back shimmy'
+    why: '资源角色也先把普通墙角打投练稳。'
+    verification: conditioned
+    conditions: [corner]
+    sources: [SRC05]
+- id: 2mk
+  title: '2MK｜S2才把DRC接进stock循环'
+  stage: S2
+  subtitle: 'Hit / Block / Whiff分流后，仍优先回M Fuhajin'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回走位 / 中距离'
+    why: 'Drive只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 分状态
+    input: '未DRC: 接触结束 | 已DRC: 5MP / throw / shimmy / stop'
+    value: {drc_cost: 3}
+    next_loop: '按是否已经取消绿冲处理'
+    why: '2MK本体被防-6。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: 稳定
+    input: '2MK > DRC > 5MP > 2MP > M Fuhajin'
+    value: {drive: 3, stock_gain: 1}
+    next_loop_package: M_FUHAJIN_LOOP
+    why: '先复用最熟的stock/Oki，不因为花Drive就自动花stock。'
+    verification: verified
+    sources: [SRC05]
+- id: stock_spend
+  title: 'Stock Spend｜第一次真正问“现在花不花”'
+  stage: S2
+  subtitle: '有stock不等于必须花'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: 保留stock
+    input: '5MP > 2MP > M Fuhajin'
+    value: {stock_gain: 1, stock_spend: 0}
+    next_loop_package: M_FUHAJIN_LOOP
+    why: '如果当前伤害/位置已经够好，就继续积累future option。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: 花1 stock
+    input: '5MP > 2MP > Go Ohsatsu'
+    value: {stock_spend: 1}
+    next_loop: '按当前route value / spacing继续；可在合适路线接L Fuhajin重新生stock'
+    why: '只有这次opening值得damage/carry升级时才花。'
+    verification: conditioned
+    conditions: [stock_at_least_1]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: 花后再生
+    input: 'Go Ohsatsu > L Fuhajin'
+    value: {stock_spend: 1, stock_gain: 1}
+    next_loop_package: SPEND_REGAIN
+    why: '成熟的资源循环不是只会花，而是知道什么时候把route接回stock economy。'
+    verification: conditioned
+    conditions: [stock_state, route_connects]
+    sources: [SRC05]
+- id: di
+  title: 'DI｜位置不同仍然先回资源/Oki主线'
+  stage: S2
+  subtitle: '简单稳定优先于最长stock combo'
+  rows:
+  - result: DI_PC
+    stage: S2
+    choice: 版中Easy
+    input: 'DI (PC) > 5MP > 2MP > M Fuhajin'
+    value: {stock_gain: 1}
+    next_loop_package: M_FUHAJIN_LOOP
+    why: '大机会也可以用最熟路线收口，不必自动花stock。'
+    verification: verified
+    sources: [SRC05]
+  - result: WALL_SPLAT
+    stage: S2
+    choice: 角落稳定
+    input: 'DI wall splat > 6HP > 2HP > H Fuhajin > H Tensenrin'
+    value: {stock_gain: 1, state: corner}
+    next_loop_package: CORNER_TENSENRIN
+    why: '墙已经拿到，优先保墙和下一轮。'
+    verification: conditioned
+    conditions: [corner_wall_splat]
+    sources: [SRC05]
+  - result: DI_PC_BACK_TO_CORNER
+    stage: S3
+    choice: 修位置
+    input: 'DI (PC) > j.HP > 5MP > 2MP > M Fuhajin'
+    value: {stock_gain: 1, state: 'position recovery'}
+    next_loop_package: M_FUHAJIN_LOOP
+    why: '背墙时先修位置，再回资源循环。'
+    verification: conditioned
+    conditions: [back_to_corner]
+    sources: [SRC05]
+- id: od
+  title: 'OD Fuhajin｜S3才把Drive和stock一起放大'
+  stage: S3
+  subtitle: '先选简单OD路线，再选stock branch'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: 简单
+    input: '5MP > 2MP > OD Fuhajin > 6MP > H Tensenrin'
+    value: {drive: 2}
+    next_loop: '按Tensenrin实际spacing进入Oki'
+    why: '先有一条清晰OD路线，不横向堆stock分支。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: Stock branch
+    input: '5MP > 2MP > OD Fuhajin > 6MP > Go Ohsatsu > Ankensatsu'
+    value: {drive: 2, stock_spend: 'conditioned'}
+    next_loop: '按剩余stock / corner / spacing重建'
+    why: '只有额外route value值得时才同时花Drive和stock。'
+    verification: conditioned
+    conditions: [stock_state]
+    sources: [SRC05]
+- id: three_stock
+  title: '3 Stock｜只保留真正不同的高价值结果'
+  stage: S3
+  subtitle: '不是把所有Boosted special串完'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: 回stock循环
+    input: '5MP > 2MP > Go Ohsatsu hit 1 > Saihasho > Ankensatsu > 6MP > M Fuhajin'
+    value: {stock_spend: 3, stock_gain: 1}
+    next_loop_package: M_FUHAJIN_LOOP
+    why: '高资源路线结束后重新生成stock，形成下一轮。'
+    verification: conditioned
+    conditions: [three_stock, hit_timing]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: Damage/Oki
+    input: '5MP > 2MP > Go Ohsatsu hit 1 > Saihasho > Ankensatsu > 6MP > H Tensenrin'
+    value: {stock_spend: 3}
+    next_loop: '按Tensenrin落点进入Oki'
+    why: '需要当前damage/Oki时才选择不回M Fuhajin。'
+    verification: conditioned
+    conditions: [three_stock, hit_timing]
+    sources: [SRC05]
+- id: super
+  title: 'SA｜最后才让Feng Shui Engine改变整套规则'
+  stage: S4
+  subtitle: 'SA2是系统层，不是第一条combo'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: 'DRC > 2HP > 5MP > 2MP > Go Ohsatsu > SA3'
+    value: {sa: 3, stock_spend: 1, drive: 3}
+    next_loop: 'Kill；未击杀按SA3落点重建'
+    why: '从已经会的DRC/stock opening现金化。'
+    verification: conditioned
+    conditions: [stock_at_least_1, sa_resource]
+    sources: [SRC05]
+  - result: SYSTEM
+    stage: S4
+    choice: Feng Shui Engine
+    input: 'SA2 activation -> character-specific cancel / pressure system'
+    value: {sa: 2, state: 'Feng Shui Engine'}
+    next_loop: '按FSE专属cancel树与对手防守继续'
+    why: '它改变的是整个cancel规则，所以最后单独学，不和S0基础route混在一起。'
+    verification: conditioned
+    conditions: [sa2_active]
+    sources: [SRC05]
+backend_only:
+- {label: 'SA1 low-variation route', reason: 'current source contains ambiguous low-variation token; do not reconstruct from memory'}
+- {label: 'universal H Tensenrin midscreen frame', reason: 'hit height and spacing change the result'}
+- {label: 'Boosted specials without stock state', reason: 'state-invalid learner content'}
+- {label: 'large FSE string library', reason: 'SA2 is a late system; compile separately when S4 becomes active'}
