@@ -1,0 +1,110 @@
+schema_version: '1.1'
+character: kimberly
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先把simple ender和corner carry跑成整轮，再加Sprint mix，Bomb只在角落基础稳定后进入。'
+  score_rule: 'Rank/MR是Reality evidence，不替代确认、corner carry、Bomb库存与setplay判断。'
+  current_ui: '2MK不可作为DRC；Bomb不进S0；SA3固定S4。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通light→L Vagabond与2MP→Sprint→Shadow Slide carry→简单Oki，不需要Bomb。'
+    add_now:
+      - '2LP×3→L Vagabond作为light默认。'
+      - '2MP→5MP→5HP→Sprint→Shadow Slide作为角色carry主线。'
+      - 'Shadow Slide后双dash只保留一个strike与throw。'
+      - '2MK +1只作为ground respect，不当DRC。'
+      - '主要反空/Bushin Senpukyaku职责稳定。'
+    gate:
+      lab: 'light确认、Shadow Slide carry、简单Oki和反空稳定。'
+      match: '真人能把普通contact送到角落，不靠Bomb也能打完整回合。'
+    defer: ['Sprint完整mix', '5MK DRC', 'Bomb', '+42 safe jump', 'SA3 buff']
+    hub_focus: [light, carry, ground]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '第一次打开Sprint三分支，并补punish、+20 Oki和基础corner。'
+    add_now:
+      - 'Sprint > Neck Hunter overhead。'
+      - 'Sprint > Shadow Slide low/carry。'
+      - 'Sprint > Emergency Stop -> throw / shimmy。'
+      - 'H Bushin Senpukyaku +20 forward-dash Oki。'
+      - '挡无敌技有稳定meterless punish。'
+    gate:
+      match: 'Sprint只在有spacing/contact理由时使用；不会neutral里机械跑。'
+    defer: ['Arc Step完整树', 'Bomb主线', '+42', 'SA3']
+    hub_focus: [sprint, punish, carry]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '5MK DRC和第一颗Bomb进入；理解carry先赢角落，Bomb再放大角落。'
+    add_now:
+      - '5MK DRC Hit/Block/Whiff正确分流。'
+      - '角落DI/Bomb setplay第一次进入。'
+      - 'OD Sprint > Hojin > L Bomb jump mix。'
+      - '按库存决定现在花Bomb还是留给下一次。'
+      - '中场/角落DI按位置选择。'
+    gate:
+      match: 'Bomb不会在没赢到setup时乱花；库存状态和位置都正确。'
+    defer: ['3-stock高级setplay', '+42 safe jump', 'SA3']
+    hub_focus: [5mk, bomb, corner]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '+42 safe jump、Arc Step与多Bomb setplay进入，但每条都必须有独立价值。'
+    add_now:
+      - 'OD Sprint > Hojin > Hisen +42 safe jump。'
+      - 'selected Arc Step route按spacing加入。'
+      - '2-stock/3-stock Bomb只保留distinct-value分支。'
+      - 'Bomb vs no-Bomb corner Oki按对手/库存/round价值选择。'
+    gate:
+      behavior: '复杂setplay失败会回Shadow Slide/Sprint基础，不横向堆花活。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['SA3长期buff优化', 'Burnout lethal完整树']
+    hub_focus: [safe_jump, bomb, sprint]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA3持续buff、SA1/SA2、3-Bomb lethal/Burnout进入，但核心仍是position→setplay。'
+    add_now:
+      - 'SA3后111% damage/走速buff纳入route和neutral选择。'
+      - 'SA1/SA2从已会starter现金化。'
+      - '3-Bomb / Burnout / lethal只在round context需要时加入。'
+      - '回放重点是Bomb和位置价值，而不是combo长度。'
+    gate:
+      behavior: '持续buff不会让基础确认、corner carry、库存判断退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, bomb, safe_jump]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'L Vagabond light确认稳定', node: light, upgrade_evidence: '实战小命中不掉。'}
+    - {id: EX02, stage: S0, label: 'Shadow Slide carry稳定', node: carry, upgrade_evidence: '普通contact能送向corner。'}
+    - {id: EX03, stage: S3, label: '+42 safe jump稳定', node: safe_jump, upgrade_evidence: '只在exact route执行。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '不靠Sprint乱跑也能ground', node: ground, upgrade_evidence: '2MP/5MK/light骨架成立。'}
+    - {id: NE02, stage: S1, label: 'Sprint有明确目的', node: sprint, upgrade_evidence: 'overhead/low/Stop来自读法或spacing。'}
+    - {id: NE03, stage: S2, label: 'Bomb不绑架neutral', node: bomb, upgrade_evidence: '角落/setup外不机械花库存。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: '2MK +1但non-cancel', node: ground, upgrade_evidence: '不会提交非法2MK DRC。'}
+    - {id: CO02, stage: S2, label: '5MK才是主要DRC starter', node: 5mk, upgrade_evidence: 'Hit/Block/Whiff正确分流。'}
+    - {id: CO03, stage: S3, label: 'Bomb花费有位置/库存理由', node: bomb, upgrade_evidence: '能说出这颗Bomb买到了什么。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'Shadow Slide→simple Oki闭环', node: carry, upgrade_evidence: 'corner carry后能接下一Turn。'}
+    - {id: OF02, stage: S1, label: 'Sprint三分支闭环', node: sprint, upgrade_evidence: '高/低/Stop按对手行为选择。'}
+    - {id: OF03, stage: S3, label: 'Bomb/+42回核心Loop', node: safe_jump, upgrade_evidence: 'setplay结束后仍回hit/block/read。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '挡无敌技会punish', node: punish, upgrade_evidence: '确定机会不丢。'}
+    - {id: DA02, stage: S2, label: '对手防Sprint会调整Stop/throw频率', node: sprint, upgrade_evidence: '不会机械高低二选。'}
+    - {id: DA03, stage: S4, label: 'SA3后会重估round plan', node: super, upgrade_evidence: 'buff影响route/走速但不让基础崩掉。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'simple ender→corner carry→Oki先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'Sprint三分支、punish、+20 Oki多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: '5MK DRC与第一层Bomb setplay结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；多Bomb/+42不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA3和高资源setplay围绕真实高分瓶颈。'}

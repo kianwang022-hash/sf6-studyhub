@@ -1,0 +1,255 @@
+schema_version: '1.0'
+character: kimberly
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 teaches simple L Vagabond and Shadow Slide carry. Bomb enters only after corner fundamentals; +42 and SA3 are late.'
+stages:
+  S0: {label: 最小可玩, short: 'Simple Ender / Corner Carry'}
+  S1: {label: 基本功成型, short: 'Sprint Mix / Punish / Oki'}
+  S2: {label: 实战结构化, short: '5MK DRC / First Bomb'}
+  S3: {label: 选择成熟, short: '+42 / Multi-Bomb / Arc Step'}
+  S4: {label: 高分上探, short: 'SA3 Buff / Lethal / Burnout'}
+shared_packages:
+  VAGABOND3:
+    label: 'L Vagabond +3'
+    sequence: 'L Vagabond Edge -> +3'
+    next: '2LP / throw / shimmy'
+    verification: verified
+    sources: [SRC05]
+  SLIDE47:
+    label: 'Shadow Slide +47 carry/Oki'
+    sequence: 'Sprint > Shadow Slide -> +47'
+    next: 'two forward dashes -> 5HK / throw / shimmy by spacing'
+    verification: conditioned
+    conditions: [shadow_slide_spacing, screen_position]
+    sources: [SRC05]
+  BOMB_CORNER:
+    label: 'Corner Shuriken Bomb setplay'
+    sequence: 'corner route -> Shuriken Bomb'
+    next: 'strike / low / throw / safe jump / reversal-bait by stock/setup'
+    verification: conditioned
+    conditions: [corner, bomb_stock, setup_timing]
+    sources: [SRC05]
+  SAFE42:
+    label: 'OD Sprint route +42 safe jump'
+    sequence: 'OD Sprint > Bushin Hojin Kick > Hisen Kick -> +42'
+    next: 'immediate forward jump j.HP'
+    verification: conditioned
+    conditions: [corner, exact_route]
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜先有最简单+3回合'
+  stage: S0
+  subtitle: '先练confirm，不需要Bomb'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 默认稳定
+    input: '2LP > 2LP > 2LP > L Vagabond Edge'
+    value: {drive: 0, kd: '+3'}
+    next_loop_package: VAGABOND3
+    why: '最小light确认，point-blank继续light/throw/shimmy。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: '2LP block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '回2MP / 5MK工作区'
+    why: '不确认就不提交不安全必杀。'
+- id: carry
+  title: '2MP｜S0核心是把contact送到角落'
+  stage: S0
+  subtitle: 'Shadow Slide存在的理由是位置，不是路线长度'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Corner carry
+    input: '2MP > 5MP > 5HP > Sprint > Shadow Slide'
+    value: {drive: 0, carry: high, kd: '+47 family'}
+    next_loop_package: SLIDE47
+    why: 'Kimberly第一条角色身份路线：普通contact直接买位置。'
+    verification: conditioned
+    conditions: [shadow_slide_spacing, screen_position]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 不进Sprint命中路线
+    input: '2MP block (-1) -> stop / spacing / throw-read'
+    value: {frame: '-1'}
+    next_loop: '回ground read'
+    why: 'carry路线只从真实命中提交。'
+    verification: verified
+    sources: [SRC03]
+- id: ground
+  title: '2MK / 5HK｜正帧不等于DRC'
+  stage: S0
+  subtitle: 'Kimberly的2MK不可取消'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: 2MK +1
+    input: '2MK block (+1) -> 2LP / throw / delayed strike / stop'
+    value: {frame: '+1'}
+    next_loop: '近身观察'
+    why: '低段正帧有价值，但不能凭空变成2MK DRC。'
+    verification: verified
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S1
+    choice: 5HK +2
+    input: '5HK block (+2) -> 2LP / throw / walk-back shimmy'
+    value: {frame: '+2'}
+    next_loop: '建立普通respect'
+    why: '不靠Bomb也能有正帧打投。'
+    verification: verified
+    sources: [SRC03]
+- id: sprint
+  title: 'Sprint｜S1才第一次打开高/低/Stop'
+  stage: S1
+  subtitle: '先三分支，不一次学Arc Step全家桶'
+  rows:
+  - result: READ
+    stage: S1
+    choice: Overhead
+    input: 'Sprint > Neck Hunter'
+    value: {state: 'overhead', block: '-3'}
+    next_loop: 'hit -> confirm / block -> stop by spacing'
+    why: '对只会蹲防或盯Shadow Slide的对手加入上段。'
+    verification: conditioned
+    conditions: [sprint_spacing]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S1
+    choice: Low
+    input: 'Sprint > Shadow Slide'
+    value: {state: 'low / carry'}
+    next_loop_package: SLIDE47
+    why: '与overhead互补，并继续Kimberly的corner-carry主线。'
+    verification: conditioned
+    conditions: [shadow_slide_spacing, screen_position]
+    sources: [SRC05]
+  - result: READ
+    stage: S1
+    choice: Stop / Throw
+    input: 'Sprint > Emergency Stop -> throw'
+    value: {state: 'throw'}
+    next_loop: 'throw result / shimmy / reset'
+    why: '惩罚只会防overhead/low的对手。'
+    verification: conditioned
+    conditions: [sprint_spacing, opponent_respect]
+    sources: [SRC05]
+- id: 5mk
+  title: '5MK｜S2才加入真正DRC'
+  stage: S2
+  subtitle: '不要把2MK +1误当Drive入口'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '5MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回spacing'
+    why: 'Drive只为真实contact付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 已DRC才继续
+    input: '5MK > DRC > 2HP block'
+    value: {drc_cost: 3}
+    next_loop: 'strike / throw / stop'
+    why: 'Kimberly的DRC入口是5MK，不是2MK。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S2
+    choice: Carry
+    input: '5MK > DRC > 2HP > Sprint > Emergency Stop > 2MP > 2MP > 5MP > 5HP > Sprint > Shadow Slide'
+    value: {drive: 3, carry: high}
+    next_loop_package: SLIDE47
+    why: '花Drive换更完整corner carry/Oki。'
+    verification: verified
+    sources: [SRC05]
+- id: punish
+  title: 'Punish｜先稳定大确反'
+  stage: S1
+  subtitle: 'Bomb和花式都后置'
+  rows:
+  - result: PC
+    stage: S1
+    choice: Meterless
+    input: '5HP (PC) > H Vagabond Edge > j.MP > Aerial Bushin Senpukyaku'
+    value: {drive: 0}
+    next_loop: '按落点 / corner继续'
+    why: '挡住无敌技后先拿稳定高价值。'
+    verification: conditioned
+    conditions: [punish_counter, aerial_state]
+    sources: [SRC05]
+- id: bomb
+  title: 'Shuriken Bomb｜S2角落基础稳定后第一次花库存'
+  stage: S2
+  subtitle: 'Bomb放大角落，不负责把你送进角落'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Corner setplay
+    input: 'corner DI wall splat > 2HP > M Vagabond Edge > 5MP whiff > Shuriken Bomb Spread'
+    value: {bomb_stock_spend: 2, state: 'corner setplay'}
+    next_loop_package: BOMB_CORNER
+    why: '已经赢到墙角后，才花库存延长对手的防守时间线。'
+    verification: conditioned
+    conditions: [corner, bomb_stock_2, setup_timing]
+    sources: [SRC05]
+  - result: SETUP
+    stage: S2
+    choice: Jump mix
+    input: 'corner OD Sprint > Bushin Hojin Kick > L Shuriken Bomb'
+    value: {drive: 2, bomb_stock_spend: 1}
+    next_loop: 'immediate forward jump -> j.LK overhead / low / throw'
+    why: 'Bomb提供延迟威胁，本体再做高低投。'
+    verification: conditioned
+    conditions: [corner, bomb_stock_1, exact_route]
+    sources: [SRC05]
+- id: safe_jump
+  title: '+42｜S3才加入精确safe jump'
+  stage: S3
+  subtitle: '只属于明确OD Sprint route'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Safe Jump
+    input: 'corner OD Sprint > Bushin Hojin Kick > Hisen Kick -> +42 -> immediate forward jump j.HP'
+    value: {drive: 2, kd: '+42'}
+    next_loop_package: SAFE42
+    why: '条件完整时才把+42当safe-jump入口。'
+    verification: conditioned
+    conditions: [corner, exact_route]
+    sources: [SRC05]
+- id: super
+  title: 'SA3｜S4才把持续buff加入整轮'
+  stage: S4
+  subtitle: 'buff改变后半局，不替代基本carry'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: Install
+    input: '2LP > 2LP > 2LP > L Vagabond Edge > SA3'
+    value: {sa: 3, state: '111% damage + increased walk speed'}
+    next_loop: '按SA3落点继续；后续所有路线重新评估damage/movement'
+    why: '只有基础角色循环稳定后，持续buff才有清晰价值。'
+    verification: verified
+    sources: [SRC03, SRC05]
+backend_only:
+- {label: '3-Bomb lethal / Burnout tree', reason: 'S4 only; high resource and setup complexity'}
+- {label: 'full Arc Step tree', reason: 'only promote branches with distinct practical value'}
+- {label: 'Bomb outside corner/setup', reason: 'does not own S0 identity and wastes resource/cognitive load'}
+- {label: 'SA3 buff optimization table', reason: 'late round-long layer, separate from base routes'}

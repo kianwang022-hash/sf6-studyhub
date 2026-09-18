@@ -37,7 +37,8 @@ const chars = [
   { slug:'juri', group:'base', normals:18, learn:['S0｜最小可玩','M Fuhajin','stock +1'], ref:['Feng Shui Engine','Boosted Saihasho','stock'], practical:['Go Ohsatsu','Feng Shui Engine'], candidate:true },
   { slug:'elena', group:'year2', normals:18, learn:['S0｜最小可玩','Lynx Song','Healing'], ref:['+42','Revival Dance','Healing variation'], practical:['Lynx Song','SA2 Healing'], candidate:true },
   { slug:'yasmine', group:'year4', normals:18, learn:['S0｜最小可玩','Bayani','Boosted Alon'], ref:['Bayani','Boosted Alon','Nakatagong Lakas'], practical:['Boosted Alon','SA2'], candidate:true },
-  { slug:'rashid', group:'year1', normals:18, learn:['S0｜最小可玩','M Spinning Mixer','Air Current'], ref:['+31','+42','Ysaar'], practical:['Air Current','Ysaar'], candidate:true }
+  { slug:'rashid', group:'year1', normals:18, learn:['S0｜最小可玩','M Spinning Mixer','Air Current'], ref:['+31','+42','Ysaar'], practical:['Air Current','Ysaar'], candidate:true },
+  { slug:'kimberly', group:'base', normals:18, learn:['S0｜最小可玩','Shadow Slide','Bomb'], ref:['Shuriken Bomb','+42','SA3'], practical:['Shuriken Bomb','SA3'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -182,9 +183,37 @@ for (const c of chars) {
       }
     }
   }
+  if (c.slug === 'kimberly') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === '-', 'kimberly: 2MK must remain non-cancelable');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'kimberly: inherited 2MK DRC route leaked');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        const stockSpend = Number(row?.value?.bomb_stock_spend ?? 0);
+        if (stage === 'S0') {
+          assert(stockSpend === 0, 'kimberly: S0 must not spend Bomb stock');
+          assert(!/Shuriken Bomb|Bomb Spread/i.test(input), 'kimberly: Bomb leaked into S0');
+        }
+        if (/Shuriken Bomb|Bomb Spread/i.test(input) || stockSpend > 0) {
+          assert(/bomb_stock|stock/i.test(conditions) || /bomb_stock/i.test(rowText), 'kimberly: Bomb row missing stock condition');
+          assert(/corner|setup/i.test(conditions) || /corner|setup/i.test(rowText), 'kimberly: Bomb row missing corner/setup condition');
+        }
+        if (/\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input)) {
+          assert(/OD Sprint/i.test(input) && /Hojin/i.test(input) && /Hisen/i.test(input), 'kimberly: +42 safe jump lost exact OD Sprint/Hojin/Hisen route');
+        }
+        if (/SA3|Ninjastar Cypher/i.test(input) || /SA3/i.test(op.title ?? '')) {
+          assert(stage === 'S4', 'kimberly: SA3 install must remain S4');
+        }
+      }
+    }
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 9 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 10 content candidates | Learn + Role + Practical + Reference + resolved source registries');
