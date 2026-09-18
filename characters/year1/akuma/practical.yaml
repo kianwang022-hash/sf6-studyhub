@@ -1,0 +1,293 @@
+schema_version: '1.0'
+character: akuma
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-18'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'Akuma S0 is stable shoto first. The first Akuma-specific decision is choosing between +30 stable Oki and +37 larger Oki budget; Demon Raid/charged fireball are later option-density layers.'
+stages:
+  S0: {label: 最小可玩, short: 'Shoto Loop / +30 vs +37'}
+  S1: {label: 基本功成型, short: '+Frame / Punish / Oki'}
+  S2: {label: 实战结构化, short: '2MK DRC / DI / Meter'}
+  S3: {label: 选择成熟, short: 'Demon Raid / Charged Fireball'}
+  S4: {label: 高分上探, short: 'Ashura / Active-frame / SGS'}
+shared_packages:
+  DP30_LOOP:
+    label: 'H Gou Shoryuken +30 基础起攻'
+    sequence: 'H Gou Shoryuken -> KD +30 -> 5MK whiff'
+    next: '约 +4 -> 2LP / 2MP / throw / walk-back shimmy'
+    verification: verified
+    sources: [SRC05]
+  TATSU_SWEEP_37:
+    label: 'L Tatsu -> 2HK +37 family'
+    sequence: 'L Tatsu > 2HK -> +37'
+    next: '按位置选择 strike / throw / shimmy；角落可接 conditioned fireball / active-frame setup'
+    verification: verified
+    sources: [SRC05]
+  TATSU41:
+    label: 'M Tatsu +41 family'
+    sequence: 'M Tatsu -> +41'
+    next: 'two forward dashes -> about +3 OR conditioned Demon Raid setplay'
+    verification: verified
+    sources: [SRC05]
+  ADAMANT47:
+    label: 'H Adamant Flame +47 family'
+    sequence: 'H Adamant Flame -> +47'
+    next: 'H Demon Raid / charged-fireball setplay by condition'
+    verification: conditioned
+    conditions: [followup, spacing]
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜先学最稳定的豪鬼回合'
+  stage: S0
+  subtitle: '同一个轻攻击 starter 只保留两个真正不同的 end-state'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 稳定 +30
+    input: '2LP > 2LP > 5LK > H Gou Shoryuken'
+    value: {drive: 0, kd: '+30'}
+    next_loop_package: DP30_LOOP
+    why: '最短、最稳，直接练豪鬼基础 strike / throw / shimmy。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S0
+    choice: 更大Oki预算
+    input: '2LP > 2LP > 5LK > L Tatsu > 2HK'
+    value: {drive: 0, kd: '+37'}
+    next_loop_package: TATSU_SWEEP_37
+    why: '第一条豪鬼式分流：同一个小命中可以主动换更多起攻时间，而不是只选伤害。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 停 / 重读
+    input: '2LP / 5LK block -> stop / throw-read / walk'
+    value: {drive: 0}
+    next_loop: '回近身观察'
+    why: '先建立确认纪律，不自动把 H DP 或 Tatsu 播到防御上。'
+- id: ground
+  title: '2MP / 5MP｜稳定地面先于百鬼'
+  stage: S0
+  subtitle: '先让普通 shoto 接触成立，再打开额外 option'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 2MP稳定
+    input: '2MP > 2MP > H Gou Shoryuken'
+    value: {drive: 0, kd: '+30'}
+    next_loop_package: DP30_LOOP
+    why: '普通中拳确认就能完整跑 shoto Loop。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S1
+    choice: 5MP +1
+    input: '5MP block (+1) -> strike / throw / shimmy / stop'
+    value: {frame: '+1'}
+    next_loop: '看对手是按、拆、跳还是凹'
+    why: '豪鬼不需要先靠 gimmick 才能建立 respect。'
+    verification: verified
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S1
+    choice: 5HK +3
+    input: '5HK block (+3) -> 2LP / 2MP / throw'
+    value: {frame: '+3'}
+    next_loop: '继续近身选择，但保留 spacing / multi-hit 判断'
+    why: '高价值正帧工具，但不能把复杂接触压成单一固定数字。'
+    verification: conditioned
+    conditions: [contact_sequence, spacing]
+    sources: [SRC03, SRC05]
+- id: punish
+  title: 'Punish｜9000血更要把确定机会兑现干净'
+  stage: S1
+  subtitle: '不靠花式，先把4F/6F/大无敌确反练稳'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 4F
+    input: '2LP (PC) > 5HP > H Adamant Flame'
+    value: {drive: 0, kd: '+47'}
+    next_loop_package: ADAMANT47
+    why: '小确反也能直接换到很大的下一轮预算。'
+    verification: verified
+    sources: [SRC05]
+  - result: PC
+    stage: S1
+    choice: 6F
+    input: '2MP (PC) > 5HP > H Adamant Flame'
+    value: {drive: 0, kd: '+47'}
+    next_loop_package: ADAMANT47
+    why: '把确定惩罚变成强 setplay，而不是追求难路线。'
+    verification: verified
+    sources: [SRC05]
+  - result: PC
+    stage: S1
+    choice: 挡无敌后稳定
+    input: '5HK (PC) > 2HP > H Adamant Flame'
+    value: {drive: 0, kd: '+47'}
+    next_loop_package: ADAMANT47
+    why: '大破绽先保证确定高价值。'
+    verification: verified
+    sources: [SRC05]
+- id: 2mk
+  title: '2MK｜DRC之后才进入更深分流'
+  stage: S2
+  subtitle: '同一个低段可以选稳定DP或更大Oki预算'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回Neutral'
+    why: 'Drive只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 已DRC才继续
+    input: '未DRC: 接触结束 | 已DRC: 2LP / throw / shimmy / stop'
+    value: {drc_cost: 3}
+    next_loop: '按是否已取消绿冲继续'
+    why: '2MK本体被防 -6。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: 稳定DP
+    input: '2MK > DRC > 5HP > 5MK > H Gou Shoryuken'
+    value: {drive: 3, kd: '+30'}
+    next_loop_package: DP30_LOOP
+    why: '先复用最熟的 +30 Oki，不因为花了Drive就强行复杂化。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Oki
+    input: '2MK > DRC > 5HP > 5MK > L Tatsu > 2HK'
+    value: {drive: 3, kd: '+37'}
+    next_loop_package: TATSU_SWEEP_37
+    why: '需要更大起攻预算时才偏离稳定DP。'
+    verification: verified
+    sources: [SRC05]
+- id: di
+  title: 'DI｜先拿角落状态，再谈花式'
+  stage: S2
+  subtitle: '墙撞路线只保留一个稳定和一个meter分支'
+  rows:
+  - result: WALL_SPLAT
+    stage: S2
+    choice: 稳定
+    input: 'DI wall splat > 2HP > Gou Hadoken > H Tatsu'
+    value: {state: corner, kd: 'about +31'}
+    next_loop: '5MK whiff -> about +5 -> strike / throw / shimmy'
+    why: '角落已经到手，先把墙和下一轮保住。'
+    verification: conditioned
+    conditions: [corner_wall_splat]
+    sources: [SRC05]
+  - result: WALL_SPLAT
+    stage: S3
+    choice: OD扩展
+    input: 'DI wall splat > 2HP > OD Adamant Flame > H Tatsu'
+    value: {drive: 2, kd: 'about +35'}
+    next_loop: '按角落 spacing 继续 setplay'
+    why: '只有资源和角落收益都值得时才花OD。'
+    verification: conditioned
+    conditions: [corner, approximate_frame]
+    sources: [SRC05]
+- id: signature
+  title: 'Demon Raid｜百鬼是针对防守习惯的option family'
+  stage: S3
+  subtitle: '不学“百鬼=正帧”，只学具体派生和落点'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Low Slash
+    input: 'Demon Raid > Demon Low Slash'
+    value: {startup: '8F follow-up', block: '+2'}
+    next_loop: 'strike / throw / shimmy by actual spacing'
+    why: '低段派生有明确用途，但仍然要先有百鬼进场的理由。'
+    verification: conditioned
+    conditions: [raid_timing, spacing]
+    sources: [SRC03]
+  - result: READ
+    stage: S3
+    choice: Guillotine
+    input: 'Demon Raid > Demon Guillotine'
+    value: {block: '+1~+10 by height'}
+    next_loop: '只有实际落点有利时继续近身选择'
+    why: '高度改变帧差，不能背成固定正帧。'
+    verification: conditioned
+    conditions: [landing_height]
+    sources: [SRC03]
+  - result: READ
+    stage: S3
+    choice: Blade Kick
+    input: 'Demon Raid > Demon Blade Kick'
+    value: {block: '-4~+5 by height'}
+    next_loop: '负帧时收手；合格落点才继续'
+    why: '用同一招训练条件化判断，而不是记万能规则。'
+    verification: conditioned
+    conditions: [landing_height, spacing]
+    sources: [SRC03]
+- id: charged_fireball
+  title: 'Charged Gou Hadoken｜蓄波只在有时间预算时出现'
+  stage: S3
+  subtitle: '不是普通Neutral火球的替代，而是setplay层'
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: Lv2 / OD普通正帧
+    input: 'charged Gou Hadoken Lv2 / OD block -> +2'
+    value: {frame: '+2'}
+    next_loop: '按spacing进入2MP / throw / stop'
+    why: '用较短蓄力改变回合，但仍需先拿到安全时间。'
+    verification: verified
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S4
+    choice: meaty满蓄
+    input: 'fully charged Gou Hadoken meaty -> block -> forward dash'
+    value: {frame: '+2 or more in source setup'}
+    next_loop: '2MP / throw / Perfect-Parry read'
+    why: '这是setplay，不是任何满蓄火球都自动成立。'
+    verification: conditioned
+    conditions: [charge_time, meaty, spacing]
+    sources: [SRC05]
+- id: super
+  title: 'SA / Shun Goku Satsu｜最后才把已有机会现金化'
+  stage: S4
+  subtitle: '不为了Super新增一套完全陌生starter'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA3 easy
+    input: '2HP > H Adamant Flame > SA3'
+    value: {sa: 3}
+    next_loop: 'Kill；未击杀按SA3落点重新进场'
+    why: '短、明确，适合作为第一条SA3现金化。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: Shun Goku Satsu
+    input: '2LP > 2LP > 5LK > L Adamant Flame > Shun Goku Satsu'
+    value: {ca: true}
+    next_loop: 'Kill'
+    why: '只在CA可用和斩杀条件明确时进入。'
+    verification: conditioned
+    conditions: [CA_available]
+    sources: [SRC05]
+backend_only:
+- {label: '2MP CDR unspecified ender family', reason: 'source leaves ender as option slot; learner surface must choose one concrete purpose first'}
+- {label: '6HP PC unspecified ender family', reason: 'PC/spacing and final ender must be closed before learner projection'}
+- {label: 'active-frame 5HP meaty packages', reason: 'exact timing remains conditioned and belongs late'}
+- {label: 'OD Adamant +63 -> Ashura +12', reason: 'advanced setplay; retain backend until S4'}

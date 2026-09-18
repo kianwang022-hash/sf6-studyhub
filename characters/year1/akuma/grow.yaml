@@ -1,0 +1,108 @@
+schema_version: '1.1'
+character: akuma
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先稳定shoto整轮，再逐层打开豪鬼额外option。招多不是学习顺序。'
+  score_rule: 'Rank/MR是Reality evidence，不替代对空、确认、Oki和option频率判断。'
+  current_ui: '前台一次只突出当前阶段；百鬼/蓄波/瞬移不会因为Reference存在就提前进入主线。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通普通火球/反空→稳定确认→+30起攻，并学会在+30和+37之间做第一种豪鬼式end-state选择。'
+    add_now:
+      - 'Gou Hadoken控中距离；发波后继续看跳。'
+      - '典型跳跃优先Gou Shoryuken；普通地面对空兜底。'
+      - '2LP×2→5LK→H Shoryuken 与 2MP×2→H Shoryuken。'
+      - 'H Shoryuken +30→5MK whiff→约+4，先固定一个strike。'
+      - 'L Tatsu→2HK +37作为第一条更大Oki预算分流。'
+    gate:
+      lab: '两条基础确认、反空、+30与+37两种end-state稳定。'
+      match: '真人能完整跑shoto Loop，并能解释这次为什么选+30还是+37。'
+    defer: ['Demon Raid主线', 'charged fireball主线', 'Ashura', 'OD Adamant高级setplay', 'Shun Goku Satsu', 'active-frame角落meaty']
+    hub_focus: [light, ground]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把正帧接触、Oki、大确反和基础角落价值稳定下来，但仍不靠百鬼硬开局面。'
+    add_now:
+      - '5MP block +1进入strike/throw/shimmy。'
+      - '5HK +3只在理解multi-hit/spacing后加入。'
+      - '4F/6F punish和挡无敌技后的H Adamant +47稳定。'
+      - '+30固定strike稳定后逐步加入throw/shimmy/block。'
+    gate:
+      match: '主要损失不再来自漏对空、漏确认、漏punish、基础Oki或乱按百鬼。'
+    defer: ['Demon Raid多派生', 'full-charge fireball', 'Ashura setplay', '高资源SA优化']
+    hub_focus: [ground, punish]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MK DRC、DI与meter开始改变end-state；同一个opening按+30/+32/+37和位置分流。'
+    add_now:
+      - '2MK DRC加入主循环；Hit/Block/Whiff正确分流。'
+      - 'OD Tatsu→M Shoryuken +32作为meter分支。'
+      - 'DI墙撞先拿稳定+31，再按资源决定是否OD扩展。'
+      - 'Year4 6HP PC和角落OD Adamant只按真实条件加入。'
+    gate:
+      match: '能说清资源为什么花、选择哪个Oki budget、何时停止复杂化。'
+    defer: ['Demon Raid完整树', 'Ashura高级setplay', 'Shun Goku Satsu setup']
+    hub_focus: [2mk, di, punish]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '稳定shoto不退化的前提下，开始按对手习惯打开Demon Raid、air fireball与charged fireball。'
+    add_now:
+      - 'Demon Raid只按具体follow-up/高度学习，不背统一正帧。'
+      - 'charged Gou Hadoken Lv2/OD +2只在有安全时间预算时使用。'
+      - 'air fireball作为改变对空节奏的读法，而不是每次跳都发。'
+      - 'H Adamant +47后setplay只保留一两个经过验证的高价值分支。'
+    gate:
+      behavior: '额外option失败会降频；5MP/2MP/火球/升龙等基础骨架仍稳定。'
+      reality: '1500 MR只作持续Reality milestone，不替代行为证据。'
+    defer: ['极窄active-frame meaty', 'Shun Goku Satsu point-blank setup', '高资源最大伤害树']
+    hub_focus: [signature, charged_fireball, 2mk]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: '优化option频率和已赢机会的兑现：Ashura、满蓄火球、active-frame、SA/SGS只在条件完全闭合时进入。'
+    add_now:
+      - 'fully charged Gou Hadoken meaty作为conditioned setplay。'
+      - 'OD Adamant +63→Ashura +12等高级包只在真实高频问题出现时加入。'
+      - 'Shun Goku Satsu combo / point-blank setup按跳/无敌/前走等反制一起学。'
+      - '回放重点转向：是不是用了不值得的option，而不是“招没用全”。'
+    gate:
+      behavior: '高级option建立在稳定shoto和风险预算之上。'
+      reality: '高分目标不硬编码，由实际目标和持续表现定义。'
+    hub_focus: [super, signature, charged_fireball]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条基础确认稳定', node: light, upgrade_evidence: 'light与2MP确认双侧稳定。'}
+    - {id: EX02, stage: S0, label: '+30/+37两种end-state稳定', node: light, upgrade_evidence: '能按目的选择并完成。'}
+    - {id: EX03, stage: S2, label: '2MK DRC不误提交', node: 2mk, upgrade_evidence: 'Hit/Block/Whiff正确分流。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '地面火球后继续看跳', node: ground, upgrade_evidence: 'Gou Hadoken不会锁死注意力。'}
+    - {id: NE02, stage: S1, label: '不靠百鬼也能打完整回合', node: ground, upgrade_evidence: '基础shoto骨架独立成立。'}
+    - {id: NE03, stage: S3, label: '空波/百鬼/蓄波按读法出现', node: signature, upgrade_evidence: '额外option有明确目标且被针对后会降频。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S1, label: '5MP +1是真实选择点', node: ground, upgrade_evidence: '会在strike/throw/shimmy/stop间选择。'}
+    - {id: CO02, stage: S2, label: '同一starter按Oki budget分流', node: 2mk, upgrade_evidence: '能解释+30/+32/+37差异。'}
+    - {id: CO03, stage: S3, label: '百鬼帧差带高度/派生条件', node: signature, upgrade_evidence: '不再说“百鬼都正帧”。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: '+30 Oki闭环', node: light, upgrade_evidence: 'H DP后能接下一Turn。'}
+    - {id: OF02, stage: S0, label: '+37 Oki分流', node: light, upgrade_evidence: '知道更大时间预算的用途。'}
+    - {id: OF03, stage: S3, label: 'option layer回到核心Loop', node: signature, upgrade_evidence: '百鬼/蓄波成功后能回strike/throw/Oki，失败后会reset。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: '挡无敌技会稳定确反', node: punish, upgrade_evidence: '确定机会不丢。'}
+    - {id: DA02, stage: S3, label: 'Perfect Parry/抢按出现会调低option', node: signature, upgrade_evidence: '对手适应后会缩回基础。'}
+    - {id: DA03, stage: S3, label: '9000血影响风险预算', node: signature, upgrade_evidence: '不会为很小收益反复高承诺。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '基础shoto整轮与+30/+37分流先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '对空、确认、正帧、punish和Oki多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: '资源与Oki budget分流结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；额外option不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '优化围绕真实高分瓶颈和option频率。'}
