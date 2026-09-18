@@ -1,0 +1,418 @@
+schema_version: '1.0'
+character: ingrid
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT, PC, READ]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 = complete zero-stock Sun Rise loop plus one safe one-stock build. First stock spend S1; 2-stock/OD Lv3 S2; exact setplay/Veil S3; SA2 S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Zero-stock Sun Rise / one safe stock build'}
+  S1: {label: 基本功成型, short: 'First Lv2 spend / plus pressure'}
+  S2: {label: 实战结构化, short: 'Hold vs spend / 2-stock OD Lv3 / Drive'}
+  S3: {label: 选择成熟, short: 'Exact setplay / corner / Sun Veil'}
+  S4: {label: 高分上探, short: 'SA2 / lethal / max stock routes'}
+shared_packages:
+  RISE_BASE:
+    label: 'Selected M Sun Rise ordinary Oki'
+    sequence: 'declared grounded M Sun Rise route -> about +38 -> forward dash'
+    next: 'about +18 -> 2MP / throw / shimmy'
+    verification: conditioned
+    conditions: [selected_m_sun_rise_route, hit_height_verified]
+    sources: [SRC05]
+  STOCK1:
+    label: 'One-stock investment'
+    sequence: 'safe resource window -> hold L Sun Flare about 47F'
+    next: 'gain 1 Sun Shot Stock -> preserve until a valuable spend'
+    verification: conditioned
+    conditions: [safe_resource_window]
+    sources: [SRC03, SRC05]
+  FLARE2:
+    label: 'One-stock Sun Flare Lv2'
+    sequence: 'stock_level_1 -> Sun Flare Lv2'
+    next: 'Block +4+ -> strike / throw / shimmy'
+    verification: conditioned
+    conditions: [stock_level_1]
+    sources: [SRC03, SRC05]
+  FLARE3:
+    label: 'Two-stock Sun Flare Lv3'
+    sequence: 'stock_level_2 -> Sun Flare Lv3'
+    next: 'Block +5+ / larger hit budget'
+    verification: conditioned
+    conditions: [stock_level_2]
+    sources: [SRC03, SRC05]
+  ODFLARE3:
+    label: 'Two-stock OD Sun Flare Lv3'
+    sequence: 'stock_level_2 + Drive -> OD Sun Flare Lv3'
+    next: 'Block +9..+13 / Hit +87+ family -> high-budget pressure or route'
+    verification: conditioned
+    conditions: [stock_level_2, drive_resource, od_sun_flare_lv3]
+    sources: [SRC03, SRC05]
+  TC44:
+    label: '4MK>HP +44'
+    sequence: '4MK > HP exact target-combo end state -> +44'
+    next: 'two forward dashes -> +4 -> throw / 2MP / shimmy'
+    verification: conditioned
+    conditions: [tc_4mk_hp_plus44]
+    sources: [SRC05]
+  HKPC45:
+    label: '2HK PC +45'
+    sequence: '2HK Punish Counter -> +45'
+    next: 'two forward dashes -> +5 -> throw / 2MP / shimmy'
+    verification: conditioned
+    conditions: [two_hk_punish_counter]
+    sources: [SRC05]
+  THROW21:
+    label: 'Corner forward throw +21'
+    sequence: 'corner forward throw -> +21'
+    next: 'dash +1 OR M Sun Shot active meaty'
+    verification: conditioned
+    conditions: [corner, forward_throw_end_state]
+    sources: [SRC05]
+opportunities:
+- id: low
+  title: 'Low｜S0 zero-stock稳定route'
+  stage: S0
+  subtitle: '没stock也能打一整局'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '2LK > 5LP > 5LK > M Sun Rise'
+    value: {stock_spend: 0, oki: 'route-dependent selected state'}
+    next_loop_package: RISE_BASE
+    why: '最低复杂度低段confirm，证明资源不是入场券。'
+    verification: conditioned
+    conditions: [confirmed_hit, selected_m_sun_rise_route, hit_height_verified]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '2LK block -> 5LP check / stop'
+    value: {stock_spend: 0}
+    next_loop: '5MP / spacing / throw-read'
+    why: 'M Sun Rise被防-23，没确认绝不提交。'
+    verification: verified
+    sources: [SRC03]
+- id: medium
+  title: '5MP｜S0第二条zero-stock route'
+  stage: S0
+  subtitle: '基础回合不依赖资源'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '5MP > 5MK > M Sun Rise'
+    value: {stock_spend: 0}
+    next_loop_package: RISE_BASE
+    why: '把普通contact收回同一个Sun Rise/Oki owner。'
+    verification: conditioned
+    conditions: [confirmed_hit, selected_m_sun_rise_route, hit_height_verified]
+    sources: [SRC05]
+- id: rise_oki
+  title: 'M Sun Rise｜S0只学一个声明Oki owner'
+  stage: S0
+  subtitle: '不是所有M Sun Rise都固定+38'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Strike
+    input: 'selected M Sun Rise route -> about +38 -> forward dash -> 2MP'
+    value: {frame: 'about +18 after dash'}
+    next_loop: 'hit confirm / block -> throw-shimmy feedback'
+    why: '先建立一个可复现普通Oki，同时保留route/height条件。'
+    verification: conditioned
+    conditions: [selected_m_sun_rise_route, hit_height_verified]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Throw
+    input: 'selected M Sun Rise route -> about +38 -> forward dash -> throw'
+    value: {frame: 'about +18 after dash'}
+    next_loop: 'tech/jump -> shimmy/anti-air next time'
+    why: 'zero-stock strike/throw已经足以形成完整回合。'
+    verification: conditioned
+    conditions: [selected_m_sun_rise_route, hit_height_verified, opponent_respect]
+    sources: [SRC05]
+- id: projectile
+  title: 'Sun Shot｜S0基础控地'
+  stage: S0
+  subtitle: '为normal contact服务'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Projectile
+    input: 'Sun Shot spacing -> walk / 5MP / 2MP / anti-air read'
+    value: {stock_spend: 0}
+    next_loop: 'ground contact -> M Sun Rise'
+    why: 'projectile的任务是让对手进入你的ground confirm，不另造zoner身份。'
+    verification: conditioned
+    conditions: [sun_shot_spacing]
+    sources: [SRC03, SRC05]
+- id: anti_air
+  title: 'Anti-air｜S0先用2HP'
+  stage: S0
+  subtitle: 'H Sun Shot airborne conversion后置'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Anti-air
+    input: 'opponent jump -> 2HP'
+    value: {purpose: 'anti-air / reset'}
+    next_loop: 'Sun Shot / spacing / later air conversion'
+    why: '先有稳定反空，不要求Year4 airborne route。'
+    verification: conditioned
+    conditions: [anti_air_hit]
+    sources: [SRC03]
+- id: resource
+  title: 'Stock｜S0只学安全拿1层'
+  stage: S0
+  subtitle: '不要求花，也不追2层'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Build one
+    input: 'safe resource window -> hold L Sun Flare about 47F'
+    value: {stock_gain: 1, stock_level_after: 1}
+    next_loop_package: STOCK1
+    why: '资源身份从第一天可见，但动作有真实时间成本。'
+    verification: conditioned
+    conditions: [safe_resource_window]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S0
+    choice: Skip build
+    input: 'current pressure is valuable -> do not build stock'
+    value: {stock_gain: 0}
+    next_loop: 'continue Sun Rise Oki / neutral'
+    why: '不拿资源也可以是正确答案。'
+    verification: conditioned
+    conditions: [current_pressure_more_valuable]
+    sources: [SRC05]
+- id: first_spend
+  title: '1 stock｜S1第一次花资源'
+  stage: S1
+  subtitle: 'Lv2把未来回合变plus'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Lv2 cash
+    input: 'stock_level_1 -> confirmed 2HP > Sun Flare Lv2'
+    value: {stock_spend: 1, stock_level_after: 0, hit_state: '+68 or more family'}
+    next_loop: 'large Oki budget / reset to zero-stock loop'
+    why: '第一次清楚看到stock不只是伤害，而是改变后续预算。'
+    verification: conditioned
+    conditions: [stock_level_1, confirmed_hit, sun_flare_lv2_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S1
+    choice: Plus pressure
+    input: 'stock_level_1 -> Sun Flare Lv2 blocked'
+    value: {stock_spend: 1, frame: '+4 or more'}
+    next_loop_package: FLARE2
+    why: '1 stock最直接买到的是一个真正plus turn。'
+    verification: conditioned
+    conditions: [stock_level_1, sun_flare_lv2_state, spacing_check]
+    sources: [SRC03, SRC05]
+- id: stock_choice
+  title: 'Stock active｜S2正式学hold vs spend'
+  stage: S2
+  subtitle: '资源不是自动现金化'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Hold
+    input: 'stock_level_1 active -> keep stock and play zero-stock ground loop'
+    value: {stock_spend: 0}
+    next_loop: 'preserve future Lv2 / build second stock if safe'
+    why: '当前opening不值得花时，未来plus turn本身就有价值。'
+    verification: conditioned
+    conditions: [stock_level_1]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Build second
+    input: 'stock_level_1 + very safe resource window -> build to stock_level_2'
+    value: {stock_gain: 1, stock_level_after: 2}
+    next_loop: 'Lv3 / OD Lv3 / high-value route'
+    why: '只有更长安全窗口才追第二层。'
+    verification: conditioned
+    conditions: [stock_level_1, very_safe_resource_window]
+    sources: [SRC03, SRC05]
+- id: two_stock
+  title: '2 stock｜S2 high-budget Sun Flare'
+  stage: S2
+  subtitle: 'Lv3 / OD Lv3才在这里'
+  rows:
+  - result: BLOCK
+    stage: S2
+    choice: Lv3
+    input: 'stock_level_2 -> Sun Flare Lv3 blocked'
+    value: {stock_spend: 2, frame: '+5 or more'}
+    next_loop_package: FLARE3
+    why: '普通Lv3已经提高pressure，但要付两层stock。'
+    verification: conditioned
+    conditions: [stock_level_2, sun_flare_lv3_state, spacing_check]
+    sources: [SRC03, SRC05]
+  - result: BLOCK
+    stage: S2
+    choice: OD Lv3
+    input: 'stock_level_2 + Drive -> OD Sun Flare Lv3 blocked'
+    value: {stock_spend: 2, drive: 2, frame: '+9..+13'}
+    next_loop_package: ODFLARE3
+    why: '最大plus值只属于2-stock OD状态。'
+    verification: conditioned
+    conditions: [stock_level_2, drive_resource, od_sun_flare_lv3, spacing_check]
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S2
+    choice: OD Lv3 hit
+    input: 'stock_level_2 + Drive -> OD Sun Flare Lv3 hit'
+    value: {stock_spend: 2, drive: 2, hit_state: '+87 or more'}
+    next_loop_package: ODFLARE3
+    why: '大hit budget同样必须带2-stock owner。'
+    verification: conditioned
+    conditions: [stock_level_2, drive_resource, od_sun_flare_lv3, exact_hit_state]
+    sources: [SRC03, SRC05]
+- id: h_sun_shot
+  title: 'H Sun Shot｜S2加入Year4 airborne route'
+  stage: S2
+  subtitle: '只在airborne hit'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Air conversion
+    input: 'H Sun Shot airborne hit -> Drive Rush > 5MP>6MK TC > M Sun Rise'
+    value: {drive: 1}
+    next_loop: 'route-dependent Sun Rise Oki'
+    why: 'Year4强化的projectile conversion，状态明确后再学。'
+    verification: conditioned
+    conditions: [h_sun_shot_airborne_hit, drive_resource, selected_m_sun_rise_route]
+    sources: [SRC05]
+- id: drive
+  title: 'Drive｜S2保留一条CDR'
+  stage: S2
+  subtitle: '最后回资源/knockdown owner'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: CDR
+    input: '2MP > CDR > 2HP > H Sun Rise > L Solar Burst'
+    value: {drive: 3, end_state: '+50 family'}
+    next_loop: 'two dashes +10 / stock choice'
+    why: 'Drive opening最后仍回Ingrid的Oki与资源判断。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, h_sun_rise_solar_burst_plus50]
+    sources: [SRC05]
+- id: exact_setplay
+  title: 'Exact state｜S3才背+44/+45'
+  stage: S3
+  subtitle: '每个数字有唯一owner'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: TC +44
+    input: '4MK > HP exact hit -> +44 -> forward dash x2'
+    value: {frame: '+4 after two dashes'}
+    next_loop_package: TC44
+    why: 'target-combo exact state，不泛化到普通knockdown。'
+    verification: conditioned
+    conditions: [tc_4mk_hp_plus44]
+    sources: [SRC05]
+  - result: PC
+    stage: S3
+    choice: Sweep +45
+    input: '2HK Punish Counter -> +45 -> forward dash x2'
+    value: {frame: '+5 after two dashes'}
+    next_loop_package: HKPC45
+    why: '只有Punish Counter才有这组预算。'
+    verification: conditioned
+    conditions: [two_hk_punish_counter]
+    sources: [SRC05]
+- id: corner
+  title: 'Corner throw｜S3 active-meaty层'
+  stage: S3
+  subtitle: 'corner-only'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Dash
+    input: 'corner forward throw +21 -> forward dash 20F'
+    value: {frame: '+1'}
+    next_loop_package: THROW21
+    why: '当前corner throw loop owner。'
+    verification: conditioned
+    conditions: [corner, forward_throw_end_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: Sun Shot meaty
+    input: 'corner forward throw -> M Sun Shot active meaty'
+    value: {frame: 'about Hit +10 / Block +6'}
+    next_loop: '2MP / throw / shimmy'
+    why: '大plus来自corner active timing，不是raw Sun Shot。'
+    verification: conditioned
+    conditions: [corner, forward_throw_end_state, m_sun_shot_active_meaty]
+    sources: [SRC05]
+- id: sun_veil
+  title: 'Sun Veil｜S3防守转进攻'
+  stage: S3
+  subtitle: '普通+23 / OD +52分开'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Normal
+    input: 'Sun Veil succeeds -> current +23 aftermath'
+    value: {kd: '+23'}
+    next_loop: 'ground pressure / resource decision'
+    why: '防守成功后回普通状态，不与OD混。'
+    verification: conditioned
+    conditions: [sun_veil_success_state]
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S3
+    choice: OD
+    input: 'OD Sun Veil succeeds -> current +52 aftermath'
+    value: {drive: 2, kd: '+52'}
+    next_loop: 'high-budget Oki / stock decision'
+    why: 'OD的+52是独立高资源state。'
+    verification: conditioned
+    conditions: [od_sun_veil_success_state, drive_resource]
+    sources: [SRC03, SRC05]
+- id: super
+  title: 'Super｜S4才进入SA2高stock路线'
+  stage: S4
+  subtitle: '不把资源大招当入门门槛'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA2
+    input: 'confirmed resource route -> SA2 Order of the Sun'
+    value: {sa: 2, state: 'resource-dependent multi-route'}
+    next_loop: 'stock-level-specific continuation / corner carry'
+    why: '只有stock economy稳定后，SA2多层route才有学习价值。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource, sa2_route_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: 'confirmed high-value route -> SA3 Cosmic Ray'
+    value: {sa: 3, kd: '+30'}
+    next_loop: 'round-state / lethal'
+    why: '稳定cashout，不改变stock主线。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource]
+    sources: [SRC03, SRC05]
+backend_only:
+- {label: 'mechanical two-stock farming in S0', reason: 'zero-stock loop is already complete'}
+- {label: 'generic M Sun Rise +38/+40', reason: 'route/hit-height owner required'}
+- {label: 'generic Sun Flare plus frames', reason: 'stock level required'}
+- {label: 'OD Lv3 +9/+87 without two stock', reason: 'stock_level_2 + resource required'}
+- {label: 'generic active-meaty Sun Shot values', reason: 'exact predecessor/corner timing required'}
+- {label: 'SA2 before S4', reason: 'advanced stock/super route'}
