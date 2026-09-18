@@ -21,7 +21,7 @@ Judgment states:
 | base | Guile | `SOURCE_CLOSURE_PENDING` |
 | base | Kimberly | `SOURCE_CLOSURE_PENDING` |
 | base | Juri | `SOURCE_CLOSURE_PENDING` |
-| base | Ken | `SOURCE_CLOSURE_PENDING` |
+| base | Ken | `CONTENT_READY` |
 | base | Blanka | `SOURCE_CLOSURE_PENDING` |
 | base | Dhalsim | `SOURCE_CLOSURE_PENDING` |
 | base | E. Honda | `SOURCE_CLOSURE_PENDING` |
@@ -49,6 +49,8 @@ Judgment states:
 ## Current Gold lane
 
 Five characters now render through the canonical Astro runtime:
+
+Ken is separately **CONTENT_READY** at the semantic layer and is intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
