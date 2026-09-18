@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: kimberly
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Kimberly', url: 'https://www.streetfighter.com/6/en-us/character/kimberly/frame', game_version: current, covers: [frames, damage, invulnerability, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Kimberly Frame Data', url: 'https://sf6-lab.net/en/fighters/kimberly/frame', freshness: 'official-reference data checked 2026-09-19', covers: [frames, active, recovery, advantage, cancel, health, shuriken_stock]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Kimberly Move List', url: 'https://sf6-lab.net/en/fighters/kimberly/moves', freshness: 'checked 2026-09-19', covers: [normals, sprint, vagabond_edge, hidden_variable, shuriken_bomb, supers, commands]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Kimberly Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/kimberly/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, setplay, training_order, sprint, shadow_slide, shuriken_bomb, safe_jump, sa3_install]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official data overrides secondary/local; Sprint spacing, Shadow Slide arrival, bomb timing, active-frame timing and corner state remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; Shuriken Bomb stock and corner/setup conditions must remain explicit'
+  tier2_rule: 'NOT_REQUIRED for Phase A because the current structured Training Order and setplay guide directly establish the role of Sprint, corner carry and Bomb'
+  learner_projection_rule: 'ground contact and corner carry first; Sprint options second; Shuriken Bomb after corner fundamentals; SA3 install late'
