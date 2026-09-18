@@ -53,7 +53,8 @@ const chars = [
   { slug:'ed', group:'year1', normals:18, learn:['S0｜最小可玩','M Psycho Blitz','charged Flicker'], ref:['back throw','Psycho Knuckle','+42'], practical:['M Psycho Blitz','charged L/M Psycho Flicker','Psycho Knuckle'], candidate:true },
   { slug:'jp', group:'base', normals:18, learn:['S0｜最小可玩','Departure','M Stribog'], ref:['+42','OD Amnesia','Lovushka'], practical:['Departure','M Stribog','OD Torbalan'], candidate:true },
   { slug:'ingrid', group:'year3', normals:18, learn:['S0｜最小可玩','Sun Shot Stock','Sun Flare Lv2'], ref:['OD Lv3','+44','Sun Veil'], practical:['stock_level_1','OD Sun Flare Lv3','Sun Veil'], candidate:true },
-  { slug:'cviper', group:'year3', normals:18, learn:['S0｜最小可玩','High Jump Cancel','H Thunder Dash'], ref:['+45','SA1 Limit Decoupler','OD Seismic Hammer'], practical:['High Jump Cancel','Double Burn','Seismic Hammer'], candidate:true }
+  { slug:'cviper', group:'year3', normals:18, learn:['S0｜最小可玩','High Jump Cancel','H Thunder Dash'], ref:['+45','SA1 Limit Decoupler','OD Seismic Hammer'], practical:['High Jump Cancel','Double Burn','Seismic Hammer'], candidate:true },
+  { slug:'dhalsim', group:'base', normals:18, learn:['S0｜最小可玩','point-blank','Yoga Arch'], ref:['+37','delayed projectile','Yoga Float'], practical:['P Yoga Teleport (Forward)','Yoga Arch','corner H Yoga Blast > L Yoga Blast'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -828,9 +829,82 @@ for (const c of chars) {
     assert((practical.opportunities ?? []).some((op) => op.id === 'exact_setplay' && op.stage === 'S3'), 'cviper: S3 exact-state owner missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'super' && op.stage === 'S4'), 'cviper: S4 SA1 owner missing');
   }
+  if (c.slug === 'dhalsim') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    const row2hk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2HK');
+    assert(row2mk?.cancel === '-', 'dhalsim: 2MK baseline must remain non-cancelable');
+    assert(row2hk?.cancel === '-', 'dhalsim: 2HK baseline must remain non-cancelable');
+    assert(/Range geometry.*earned knockdown.*covered Teleport proximity conversion/i.test(role?.signature_mechanic?.name ?? ''), 'dhalsim: geometry-to-proximity signature owner missing');
+    assert(/late contact|late-active|late active/i.test(JSON.stringify(role)) && /spacing/i.test(JSON.stringify(role)), 'dhalsim: long-limb spacing/contact-timing truth missing');
+
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const numericClaimText = input + ' ' + JSON.stringify(row?.value ?? {});
+
+        if (stage === 'S0' && /Yoga Float|Yoga Comet|Yoga Arch/i.test(input)) {
+          assert(false, 'dhalsim: Float/Comet/Arch advanced geometry leaked into S0');
+        }
+
+        if (stage === 'S0' && /Yoga Teleport/i.test(input)) {
+          assert(op.id === 'teleport_identity', 'dhalsim: multiple/raw Teleport branches leaked into S0');
+          assert(/m_yoga_blast_plus42/i.test(conditions) && /immediate_forward_p_teleport/i.test(conditions) && /teleport_covered_by_knockdown/i.test(conditions), 'dhalsim: S0 Teleport lost covered M Blast owner');
+        }
+
+        if (/Yoga Teleport/i.test(input) && /\+3/.test(numericClaimText)) {
+          assert(/m_yoga_blast_plus42/i.test(conditions) && /immediate_forward_p_teleport/i.test(conditions), 'dhalsim: Teleport +3 lost exact M Blast route owner');
+        }
+
+        if (/Yoga Arch/i.test(input) && /\+29|\+27/.test(numericClaimText)) {
+          assert(/non_point_blank/i.test(conditions) && /delayed_projectile_contact/i.test(conditions), 'dhalsim: Yoga Arch effective plus lost delayed-contact owner');
+          assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'dhalsim: delayed Arch layer appears before S1');
+        }
+
+        if (/Yoga Float/i.test(input)) {
+          assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'dhalsim: Yoga Float must remain S1+');
+          assert(/height_verified|earned_mobility_state/i.test(conditions), 'dhalsim: Float route lost height/earned-state owner');
+        }
+
+        if (/Yoga Comet/i.test(input)) {
+          assert(stage === 'S2' || stage === 'S3' || stage === 'S4', 'dhalsim: Yoga Comet chain must remain S2+');
+          assert(/year4_projectile_chain/i.test(conditions) && /od_projectile_state/i.test(conditions), 'dhalsim: Year4 projectile chain lost OD/state owner');
+        }
+
+        if (/\+37/.test(numericClaimText) && /Yoga Blast|corner/i.test(input + ' ' + String(op.title ?? ''))) {
+          assert(/corner/i.test(conditions) && /corner_h_blast_l_blast/i.test(conditions), 'dhalsim: corner +37 lost exact H Blast -> L Blast owner');
+        }
+
+        if (/H Yoga Flame active-meaty/i.test(input) || (/Yoga Flame/i.test(input) && /\+11/.test(numericClaimText))) {
+          assert(/corner/i.test(conditions) && /active_frame_timing/i.test(conditions) && /exact_meaty_setup/i.test(conditions), 'dhalsim: active H Flame plus lost corner/timing owner');
+        }
+
+        if (/2MK contacts on later active frames/i.test(input)) {
+          assert(stage === 'S3', 'dhalsim: long-limb late-contact optimization must remain S3');
+          assert(/late_active_contact/i.test(conditions) && /spacing_verified/i.test(conditions), 'dhalsim: late 2MK lost spacing/contact owner');
+        }
+
+        if (/2HK hits on later active frames/i.test(input)) {
+          assert(stage === 'S3', 'dhalsim: 2HK late-contact optimization must remain S3');
+          assert(/late_active_contact/i.test(conditions) && /spacing_verified/i.test(conditions) && /two_hk_exact_contact/i.test(conditions), 'dhalsim: late 2HK lost exact contact owner');
+        }
+
+        if (/OD Yoga Flame/i.test(input) && /\+51/.test(numericClaimText)) {
+          assert(/od_yoga_flame_end_state/i.test(conditions) && /drive_resource/i.test(conditions), 'dhalsim: OD Flame +51 lost OD/resource owner');
+        }
+      }
+    }
+
+    assert((practical.opportunities ?? []).some((op) => op.id === 'teleport_identity' && op.stage === 'S0'), 'dhalsim: S0 earned Teleport identity route missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'arch' && op.stage === 'S1'), 'dhalsim: S1 delayed Yoga Arch owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'year4_chain' && op.stage === 'S2'), 'dhalsim: S2 Year4 projectile chain missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'late_contact' && op.stage === 'S3'), 'dhalsim: S3 late-contact owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'super' && op.stage === 'S4'), 'dhalsim: S4 advanced geometry owner missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 25 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 26 content candidates | Learn + Role + Practical + Reference + resolved source registries');

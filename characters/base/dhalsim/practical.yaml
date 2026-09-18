@@ -1,0 +1,403 @@
+schema_version: '1.0'
+character: dhalsim
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT, READ]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 = range geometry + two anti-air lanes + simple M Flame close confirm + exactly one M Blast→forward Teleport +3 conversion. Float/Arch tree S1; Year4 projectile chain/corner S2; exact spacing/setplay S3.'
+stages:
+  S0: {label: 最小可玩, short: 'Range geometry / anti-air lanes / one earned Teleport'}
+  S1: {label: 基本功成型, short: 'Arch delay / throw +31 / first Float'}
+  S2: {label: 实战结构化, short: 'Year4 projectile chain / corner +37 / mobility tree'}
+  S3: {label: 选择成熟, short: 'Late-contact frames / active meaty / +51'}
+  S4: {label: 高分上探, short: 'SA / matchup geometry / advanced Float-Teleport'}
+shared_packages:
+  FLAME33:
+    label: 'M Yoga Flame +33'
+    sequence: 'confirmed M Yoga Flame hit -> +33'
+    next: 'close pressure / spacing reset by screen position'
+    verification: conditioned
+    conditions: [m_yoga_flame_end_state]
+    sources: [SRC05, SRC06]
+  BLAST42_TELE3:
+    label: 'M Yoga Blast +42 -> forward P Teleport +3'
+    sequence: 'confirmed M Yoga Blast +42 -> immediate P Yoga Teleport (Forward)'
+    next: 'point-blank +3 -> 5LP / 4MK / throw / block'
+    verification: conditioned
+    conditions: [m_yoga_blast_plus42, immediate_forward_p_teleport, teleport_covered_by_knockdown]
+    sources: [SRC05]
+  THROW31:
+    label: 'Forward throw +31'
+    sequence: 'forward throw hit -> +31'
+    next: 'Drive Rush 2MK / close pressure'
+    verification: conditioned
+    conditions: [forward_throw_end_state]
+    sources: [SRC05]
+  ARCH_DELAY:
+    label: 'Yoga Arch delayed projectile geometry'
+    sequence: 'non-point-blank Yoga Arch -> Dhalsim recovers -> projectile descends later'
+    next: 'effective hit/block pressure while walking or controlling another lane'
+    verification: conditioned
+    conditions: [non_point_blank, delayed_projectile_contact]
+    sources: [SRC06]
+  FLAME45:
+    label: 'H Yoga Flame +45'
+    sequence: 'confirmed H Yoga Flame hit -> +45'
+    next: 'higher-budget meaty / position pressure'
+    verification: conditioned
+    conditions: [h_yoga_flame_end_state]
+    sources: [SRC05, SRC06]
+  ODFLAME51:
+    label: 'OD Yoga Flame +51'
+    sequence: 'confirmed OD Yoga Flame hit -> +51'
+    next: 'sweep / SA / high-budget Oki by route'
+    verification: conditioned
+    conditions: [od_yoga_flame_end_state, drive_resource]
+    sources: [SRC05, SRC06]
+  CORNER37:
+    label: 'Corner H Blast -> L Blast +37'
+    sequence: 'corner 4MK > H Yoga Blast > L Yoga Blast'
+    next: 'point-blank / shimmy / L Fire setplay'
+    verification: conditioned
+    conditions: [corner, corner_h_blast_l_blast]
+    sources: [SRC05]
+  YEAR4_CHAIN:
+    label: 'Year4 OD projectile chain'
+    sequence: 'OD Yoga Fire/Arch -> complementary projectile -> Yoga Comet'
+    next: 'geometry pressure / forward movement / DR'
+    verification: conditioned
+    conditions: [year4_projectile_chain, od_projectile_state]
+    sources: [SRC05]
+opportunities:
+- id: geometry
+  title: 'Range｜S0先学几何，不先学combo树'
+  stage: S0
+  subtitle: '长肢不是普通footsie按钮'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Mid lane
+    input: 'use 5MP at long-mid spacing -> observe walk / jump / DI response'
+    value: {purpose: 'range probe'}
+    next_loop: 'jump -> anti-air lane; walk -> 2MK/Yoga Fire; wait -> projectile geometry'
+    why: '先让对手的接近方式变得可预测，而不是只追hit。'
+    verification: conditioned
+    conditions: [spacing_control, whiff_risk_visible]
+    sources: [SRC03, SRC06]
+  - result: READ
+    stage: S0
+    choice: Low lane
+    input: 'use 2MK with spacing -> track early vs late active contact'
+    value: {frame: 'baseline -10 block; practical late contact may improve materially'}
+    next_loop: 'late contact -> continue geometry; early block -> respect turn / reset'
+    why: 'Dhalsim必须从第一天知道长active normal的实战frame会随接触时机变化。'
+    verification: conditioned
+    conditions: [spacing_control, late_active_contact]
+    sources: [SRC03, SRC06]
+- id: fire
+  title: 'Yoga Fire｜S0逼接近路线'
+  stage: S0
+  subtitle: '不是为了原地无限发波'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Projectile
+    input: 'Yoga Fire at controlled spacing'
+    value: {purpose: 'force jump / walk / wait'}
+    next_loop: 'jump -> 4MP/5HK; walk -> long limb; wait -> reposition'
+    why: '火球价值是塑造下一步，而不是单独拿伤害。'
+    verification: conditioned
+    conditions: [projectile_spacing]
+    sources: [SRC03, SRC05]
+- id: anti_air
+  title: 'Anti-air｜S0按jump lane分两档'
+  stage: S0
+  subtitle: '不是一个万能反空键'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Close/steep
+    input: 'opponent close/steep jump -> 4MP Yoga Uppercut'
+    value: {purpose: 'close anti-air'}
+    next_loop: 'knockdown/reset -> rebuild range or later conversion'
+    why: '近角度用更快的close owner。'
+    verification: conditioned
+    conditions: [close_jump_lane, anti_air_hit]
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S0
+    choice: Far lane
+    input: 'opponent farther jump -> 5HK'
+    value: {purpose: 'far anti-air launch'}
+    next_loop: 'airborne knockdown -> spacing / later conversion'
+    why: '长距离jump lane由更远的5HK负责。'
+    verification: conditioned
+    conditions: [far_jump_lane, airborne_hit]
+    sources: [SRC03, SRC06]
+- id: close_confirm
+  title: 'Close｜S0稳定M Flame'
+  stage: S0
+  subtitle: '近身也有简单完整route'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '4MK Divine Kick > M Yoga Flame'
+    value: {kd: '+33'}
+    next_loop_package: FLAME33
+    why: '证明Dhalsim不靠Float/Teleport也有基础close confirm。'
+    verification: conditioned
+    conditions: [confirmed_hit, m_yoga_flame_end_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '4MK block 0 -> do not raw M Yoga Flame'
+    value: {frame: '0'}
+    next_loop: 'throw-read / block / reset spacing'
+    why: 'Yoga Flame raw block是负帧；没有确认就不提交。'
+    verification: verified
+    sources: [SRC03]
+- id: teleport_identity
+  title: 'Teleport｜S0只学一次earned进场'
+  stage: S0
+  subtitle: 'raw Teleport不自带+3'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Remote-to-close
+    input: '2LP > CDR > 5LP > 4MP > M Yoga Blast hit +42 -> immediate P Yoga Teleport (Forward)'
+    value: {drive: 3, frame: 'point-blank +3 after covered Teleport'}
+    next_loop_package: BLAST42_TELE3
+    why: '最小完整角色身份：远/中距离conversion直接变成close turn。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, m_yoga_blast_plus42, immediate_forward_p_teleport, teleport_covered_by_knockdown]
+    sources: [SRC05]
+- id: arch
+  title: 'Yoga Arch｜S1加入延迟几何'
+  stage: S1
+  subtitle: '有效plus来自projectile晚到'
+  rows:
+  - result: READ
+    stage: S1
+    choice: Delayed cover
+    input: 'Yoga Arch outside point-blank -> recover before projectile descends'
+    value: {frame: 'effective about +29 hit / +27 block family after recovery'}
+    next_loop_package: ARCH_DELAY
+    why: '这是“同屏两个时间轴”的第一课：人先恢复，弹后命中。'
+    verification: conditioned
+    conditions: [non_point_blank, delayed_projectile_contact]
+    sources: [SRC06]
+- id: throw
+  title: 'Forward throw｜S1普通close Oki'
+  stage: S1
+  subtitle: '+31'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: DR pressure
+    input: 'forward throw hit +31 -> Drive Rush > 2MK'
+    value: {drive: 1, frame: 'active-contact block about +5 family'}
+    next_loop_package: THROW31
+    why: 'earned close turn可以继续用普通strike/throw，不必每次Teleport花活。'
+    verification: conditioned
+    conditions: [forward_throw_end_state, drive_resource, active_frame_timing]
+    sources: [SRC05]
+- id: float
+  title: 'Yoga Float｜S1第一次增加空中维度'
+  stage: S1
+  subtitle: '只学一条basic route'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Basic Float
+    input: 'Aerial Yoga Float > j.HP > 1HP Nirvana Punch > M Yoga Flame'
+    value: {kd: '+33'}
+    next_loop_package: FLAME33
+    why: '先把Float当一个明确starter，不铺开cross-up/Drill/Comet整树。'
+    verification: conditioned
+    conditions: [aerial_float_state, height_verified, confirmed_hit]
+    sources: [SRC05]
+- id: flame45
+  title: 'H Flame｜S1换更大Oki预算'
+  stage: S1
+  subtitle: '+45 exact end state'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Bigger Oki
+    input: '2MP > CDR > 4MK > H Yoga Flame'
+    value: {drive: 3, kd: '+45'}
+    next_loop_package: FLAME45
+    why: '用Drive把close opening换成更大knockdown budget。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, h_yoga_flame_end_state]
+    sources: [SRC05]
+- id: year4_chain
+  title: 'Year4 projectile chain｜S2才组合Fire/Arch/Comet'
+  stage: S2
+  subtitle: '先会单个几何，再学叠层'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Fire first
+    input: 'OD Yoga Fire -> Yoga Arch -> Yoga Comet'
+    value: {drive: 2, purpose: 'projectile-chain geometry'}
+    next_loop_package: YEAR4_CHAIN
+    why: 'Year4新增可组合route；S2才让多个projectile共享一回合。'
+    verification: conditioned
+    conditions: [year4_projectile_chain, od_projectile_state, air_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Arch first
+    input: 'OD Yoga Arch -> Yoga Fire -> Yoga Comet'
+    value: {drive: 2, purpose: 'alternate projectile-chain geometry'}
+    next_loop_package: YEAR4_CHAIN
+    why: '第二种轨迹顺序，按对手位置选。'
+    verification: conditioned
+    conditions: [year4_projectile_chain, od_projectile_state, air_state]
+    sources: [SRC05]
+- id: corner37
+  title: 'Corner｜S2 exact +37 setplay'
+  stage: S2
+  subtitle: '只属于H Blast -> L Blast'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Setplay
+    input: 'corner 4MK > H Yoga Blast > L Yoga Blast'
+    value: {kd: '+37'}
+    next_loop_package: CORNER37
+    why: '把远距/反空工具在角落编译成真正setplay。'
+    verification: conditioned
+    conditions: [corner, corner_h_blast_l_blast]
+    sources: [SRC05]
+- id: od_flame
+  title: 'OD Flame｜S2/S3高资源+51'
+  stage: S2
+  subtitle: '不和H Flame +45混'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Resource
+    input: 'confirmed OD Yoga Flame hit'
+    value: {drive: 2, kd: '+51'}
+    next_loop_package: ODFLAME51
+    why: '更大预算来自独立OD state，不是H Flame升级标签。'
+    verification: conditioned
+    conditions: [confirmed_hit, od_yoga_flame_end_state, drive_resource]
+    sources: [SRC05, SRC06]
+- id: late_contact
+  title: 'Long limb｜S3正式优化late contact'
+  stage: S3
+  subtitle: '固定表不是完整实战frame'
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: Late 2MK
+    input: '2MK contacts on later active frames at long spacing'
+    value: {frame: 'practical baseline-to-positive range; UFD block up to about +2'}
+    next_loop: 'continue long-range control only if contact timing supports it'
+    why: '这里才正式把active-frame timing当优化对象，而不是S0背范围。'
+    verification: conditioned
+    conditions: [late_active_contact, spacing_verified, training_mode_check]
+    sources: [SRC06]
+  - result: HIT
+    stage: S3
+    choice: Late 2HK
+    input: '2HK hits on later active frames at long spacing'
+    value: {kd: '+22..+37 practical family'}
+    next_loop: 'choose spacing reset or earned mobility by exact state'
+    why: '同一长slide的knockdown预算会随contact timing改变。'
+    verification: conditioned
+    conditions: [late_active_contact, spacing_verified, two_hk_exact_contact]
+    sources: [SRC06]
+- id: corner_setplay
+  title: 'Corner +37｜S3打开完整setplay'
+  stage: S3
+  subtitle: 'point-blank / shimmy / projectile cover'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Point-blank
+    input: 'corner H Yoga Blast > L Yoga Blast +37 -> close action'
+    value: {frame: 'about +4 point-blank family'}
+    next_loop: '4MK / throw / block'
+    why: 'exact +37 route才能拥有这套close budget。'
+    verification: conditioned
+    conditions: [corner, corner_h_blast_l_blast, exact_plus37_setplay]
+    sources: [SRC05]
+  - result: READ
+    stage: S3
+    choice: Shimmy
+    input: 'corner H Yoga Blast > L Yoga Blast +37 -> 2MK whiff'
+    value: {frame: 'about +7 shimmy budget'}
+    next_loop: 'walk-back / long button punish'
+    why: '用Dhalsim自己的长slide做timing tool。'
+    verification: conditioned
+    conditions: [corner, corner_h_blast_l_blast, shimmy_timing]
+    sources: [SRC05]
+  - result: READ
+    stage: S3
+    choice: Fire cover
+    input: 'corner H Yoga Blast > L Yoga Blast +37 -> 5LP whiff -> L Yoga Fire'
+    value: {frame: 'projectile block about +3 family'}
+    next_loop: 'jump-in / strike / throw by response'
+    why: '近身turn再次接回projectile geometry。'
+    verification: conditioned
+    conditions: [corner, corner_h_blast_l_blast, delayed_projectile_contact]
+    sources: [SRC05]
+- id: active_flame
+  title: 'Active Flame｜S3才学大plus meaty'
+  stage: S3
+  subtitle: 'raw H Flame仍-4'
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: Active meaty
+    input: 'declared corner setup -> H Yoga Flame active-meaty block'
+    value: {frame: 'about +11 family in declared timing'}
+    next_loop: '4MK / throw / delayed strike'
+    why: 'plus来自active timing，不是H Flame本体突然变安全。'
+    verification: conditioned
+    conditions: [corner, h_yoga_flame_end_state, active_frame_timing, exact_meaty_setup]
+    sources: [SRC05]
+- id: super
+  title: 'Super / advanced geometry｜S4'
+  stage: S4
+  subtitle: '最后才把全套空中/传送展开'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA cashout
+    input: 'confirmed OD Yoga Flame route -> SA1 or confirmed close route -> SA3'
+    value: {sa: '1 or 3 by route'}
+    next_loop: 'round-state / lethal / position'
+    why: 'super只在已确认opening与资源价值值得时cashout。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource]
+    sources: [SRC05]
+  - result: READ
+    stage: S4
+    choice: Advanced mobility
+    input: 'earned knockdown/projectile cover -> Float / Drill / Teleport cross-up by matchup'
+    value: {purpose: 'matchup geometry'}
+    next_loop: 'close cashout or reset range'
+    why: '高级移动围绕真实matchup问题，而不是固定flowchart。'
+    verification: conditioned
+    conditions: [earned_mobility_state, height_verified, spacing_verified, matchup_specific]
+    sources: [SRC05, SRC06]
+backend_only:
+- {label: 'raw forward Teleport +3', reason: 'false; +3 belongs to covered M Blast route'}
+- {label: 'full Float/Teleport tree in S0', reason: 'mobility overload'}
+- {label: 'generic Yoga Arch +27/+29', reason: 'delayed non-point-blank projectile contact required'}
+- {label: 'generic long-limb positive frames', reason: 'late active contact / spacing required'}
+- {label: 'generic corner +37', reason: 'H Blast -> L Blast exact route required'}
+- {label: 'raw H Yoga Flame +11', reason: 'active-meaty corner setup required'}

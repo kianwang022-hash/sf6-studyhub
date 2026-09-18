@@ -1,0 +1,112 @@
+schema_version: '1.1'
+character: dhalsim
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先重建range geometry与lane anti-air，再用一条covered Teleport证明“远距控制可以现金化成贴身turn”；Float/Comet/setplay逐层后置。'
+  score_rule: 'Rank/MR是Reality evidence，不替代spacing、late-active contact、projectile travel、corner与exact setup条件。'
+  current_ui: 'S0 range + one earned Teleport；S1 Arch/throw/Float；S2 Year4 chain/corner；S3 late-contact/active setplay；S4 SA与matchup geometry。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '理解长肢/火球几何、两条anti-air lane、一个close confirm，以及一条M Blast→forward Teleport +3身份路线。'
+    add_now:
+      - '5MP / 2MK按spacing控制ground lane。'
+      - 'Yoga Fire逼jump / walk / wait。'
+      - '4MP处理close/steep jump；5HK处理far jump。'
+      - '4MK > M Yoga Flame +33。'
+      - 'M Yoga Blast +42 -> immediate forward P Teleport -> point-blank +3。'
+    gate:
+      lab: '能复现close confirm和Teleport identity route；知道raw Teleport没有+3。'
+      match: '拿到knockdown后会判断是否值得进场，而不是固定后退或固定Teleport。'
+    defer: ['Yoga Arch delayed plus', 'Yoga Float', 'Year4 Comet chain', 'corner +37', 'late-contact optimization', 'SA']
+    hub_focus: [geometry, fire, anti_air, close_confirm, teleport_identity]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '加入Yoga Arch延迟几何、forward throw +31、第一条Aerial Float和H Flame +45。'
+    add_now:
+      - 'Yoga Arch non-point-blank delayed contact。'
+      - 'forward throw +31 -> DR 2MK。'
+      - 'Aerial Float > j.HP > 1HP > M Yoga Flame。'
+      - '2MP CDR > 4MK > H Yoga Flame +45。'
+      - 'L/M/H Yoga Blast end-state差异。'
+    gate:
+      match: 'Arch的plus来自projectile晚到；Float不会取代ground control。'
+    defer: ['Year4 OD projectile chain', 'corner +37 full setplay', 'active H Flame', 'spacing max']
+    hub_focus: [arch, throw, float, flame45]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '把projectile geometry与position/resource结合：Year4 chain、corner +37、OD Flame与earned mobility分支进入。'
+    add_now:
+      - 'OD Yoga Fire -> Yoga Arch -> Yoga Comet。'
+      - 'OD Yoga Arch -> Yoga Fire -> Yoga Comet。'
+      - 'corner 4MK > H Blast > L Blast +37。'
+      - 'confirmed OD Yoga Flame +51。'
+      - 'earned knockdown后的Teleport / Float branch choice。'
+    gate:
+      match: '多projectile与mobility只在它们控制了不同lane/位置时使用。'
+    defer: ['late-contact frame optimization', 'corner active-meaty H Flame', 'advanced cross-up']
+    hub_focus: [year4_chain, corner37, od_flame]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: '正式优化late active contact、corner +37细分、active H Flame与spacing-covered mobility。'
+    add_now:
+      - '2MK late contact practical frame range。'
+      - '2HK late contact knockdown range。'
+      - 'corner +37 point-blank / shimmy / Fire cover。'
+      - 'corner active H Yoga Flame plus setup。'
+      - 'projectile cover -> Teleport/Float exact timing。'
+    gate:
+      behavior: '能把baseline frame与practical late-contact frame分开；所有plus state都有owner。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['matchup-specific Drill/Comet heights', 'full Teleport cross-up lab']
+    hub_focus: [late_contact, corner_setplay, active_flame]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA cashout、matchup projectile geometry、advanced Float/Drill/Comet与Teleport cross-up进入。'
+    add_now:
+      - 'SA1 / SA3 cashout。'
+      - 'matchup-specific Yoga Fire / Arch cadence。'
+      - 'advanced Float / Drill / Comet heights。'
+      - 'Teleport cross-up / side-switch lab。'
+      - 'Burnout corner sequences。'
+    gate:
+      behavior: '高级mobility不让range geometry与earned-entry纪律退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, late_contact, corner_setplay]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '4MK→M Flame稳定', node: close_confirm, upgrade_evidence: 'close contact能稳定转+33。'}
+    - {id: EX02, stage: S0, label: 'M Blast→forward Teleport稳定', node: teleport_identity, upgrade_evidence: '只有+42 covered state才进。'}
+    - {id: EX03, stage: S2, label: 'Year4 projectile chain稳定', node: year4_chain, upgrade_evidence: 'OD state/air route不串。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '长肢按lane/spacing使用', node: geometry, upgrade_evidence: '不把reach当safety。'}
+    - {id: NE02, stage: S0, label: 'Yoga Fire逼接近选择', node: fire, upgrade_evidence: '发波后知道等jump/walk/wait。'}
+    - {id: NE03, stage: S3, label: 'late-contact frame意识', node: late_contact, upgrade_evidence: '同一2MK会按接触时机调整下一步。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'anti-air按lane选4MP/5HK', node: anti_air, upgrade_evidence: '不强求一个万能反空键。'}
+    - {id: CO02, stage: S1, label: 'Arch raw frame vs delayed contact分清', node: arch, upgrade_evidence: '知道plus来自弹晚到。'}
+    - {id: CO03, stage: S3, label: '+37/+45/+51 owner分清', node: corner_setplay, upgrade_evidence: '数字不跨route。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'earned Teleport +3闭环', node: teleport_identity, upgrade_evidence: '贴身turn结束后能回range。'}
+    - {id: OF02, stage: S1, label: 'throw +31普通close loop', node: throw, upgrade_evidence: '不靠Teleport也能继续pressure。'}
+    - {id: OF03, stage: S3, label: 'corner +37 setplay闭环', node: corner_setplay, upgrade_evidence: 'point-blank/shimmy/projectile cover按反应选。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: 'jump lane反空稳定', node: anti_air, upgrade_evidence: 'close/far jump不串。'}
+    - {id: DA02, stage: S2, label: '对手硬冲projectile会换lane/Teleport timing', node: year4_chain, upgrade_evidence: '不机械projectile循环。'}
+    - {id: DA03, stage: S4, label: 'matchup geometry调整', node: super, upgrade_evidence: '高级Float/Teleport有具体对手理由。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'range geometry→lane anti-air/close confirm→one earned Teleport conversion先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'Arch/throw/Float/H Flame多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'projectile+position/resource结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；spacing/exact-state不泄漏。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA / matchup geometry围绕真实高分瓶颈。'}
