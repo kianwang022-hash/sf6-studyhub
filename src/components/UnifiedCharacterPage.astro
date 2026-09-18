@@ -20,7 +20,7 @@ const { character } = Astro.props;
       {character.isReady ? (
         <LearningPanel character={character} />
       ) : (
-        <div class="pending-panel"><div class="pending-kicker">LEARNING PENDING</div><h2>{character.nameZh} · 学习主线待 Source Closure</h2><p>角色仍可从固定的 31 人选择器进入，但不会把旧学习材料伪装成当前验收内容。</p></div>
+        <div class="pending-panel"><div class="pending-kicker">GOLD PAGE QA PENDING</div><h2>{character.nameZh} · 学习内容已闭环 · Gold 页面待验收</h2><p>角色语义内容已经验收；当前只是在等待 Astro Gold 页面投影与浏览器/视觉 QA。</p></div>
       )}
     </section>
 
@@ -28,7 +28,7 @@ const { character } = Astro.props;
       {character.isReady ? (
         <RolePanel role={character.roleProfile} />
       ) : (
-        <div class="pending-panel"><div class="pending-kicker">SOURCE CLOSURE PENDING</div><h2>{character.nameZh} · 角色资料尚未进入当前 Gold 批次</h2><p>选角与页面壳保留；不会用旧角色页冒充已验收内容。</p></div>
+        <div class="pending-panel"><div class="pending-kicker">GOLD PAGE QA PENDING</div><h2>{character.nameZh} · 角色内容已验收 · Gold 页面待投影</h2><p>当前 canonical 内容已是 CONTENT_READY；在 Gold 页面 QA 通过前，不把它冒充成正式前台。</p></div>
       )}
     </section>
 
@@ -36,7 +36,7 @@ const { character } = Astro.props;
       {character.isReady ? (
         <PracticalWorkbench practical={character.practical} />
       ) : (
-        <div class="pending-panel"><div class="pending-kicker">PRACTICAL PENDING</div><h2>{character.nameZh} · 实战 Hub 待 Source Closure</h2><p>后续批量推进时会按同一个 S0–S4 / Opportunity Hub / 四列表格合同接入。</p></div>
+        <div class="pending-panel"><div class="pending-kicker">GOLD PAGE QA PENDING</div><h2>{character.nameZh} · 实战内容已闭环 · Gold 页面待验收</h2><p>当前 Practical 语义资产已经验收；待共享 Gold runtime 投影与浏览器 QA 通过后开放。</p></div>
       )}
     </section>
 
@@ -44,7 +44,7 @@ const { character } = Astro.props;
       {character.isReady ? (
         <MarkdownPanel markdown={character.referenceMarkdown} kind="reference" title={`${character.nameZh} 资料库`} />
       ) : (
-        <div class="pending-panel"><div class="pending-kicker">REFERENCE PENDING</div><h2>{character.nameZh} · 当前资料库待 Source Closure</h2><p>Reference 只展示当前已验收内容，不把 legacy 资料直接投到前台。</p></div>
+        <div class="pending-panel"><div class="pending-kicker">GOLD PAGE QA PENDING</div><h2>{character.nameZh} · 资料内容已闭环 · Gold 页面待验收</h2><p>Reference 已有 current canonical 内容；在 Gold 页面 QA 通过前保持前台折叠。</p></div>
       )}
     </section>
   </div>

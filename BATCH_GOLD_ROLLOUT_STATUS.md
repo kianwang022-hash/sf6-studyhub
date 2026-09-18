@@ -21,7 +21,7 @@ Judgment states:
 | base | Guile | `CONTENT_READY` |
 | base | Kimberly | `CONTENT_READY` |
 | base | Juri | `CONTENT_READY` |
-| base | Ken | `CONTENT_READY` |
+| base | Ken | `GOLD_PAGE_READY` |
 | base | Blanka | `CONTENT_READY` |
 | base | Dhalsim | `CONTENT_READY` |
 | base | E. Honda | `CONTENT_READY` |
@@ -48,11 +48,12 @@ Judgment states:
 
 ## Current Gold lane
 
-Five characters now render through the canonical Astro runtime:
+Six characters now render through the canonical Astro runtime:
 
-Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
+- Ken — ordinary shoto contact -> choose end-state -> Quick Dash Tatsu carry / +25 dash +6 / corner setplay; H Dragonlash +1 remains tied to 28F startup.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
 - Mai — ordinary projectile/ground skeleton first; resource/state upgrades are explained before Stock / Boosted shorthand.
 - Zangief — S0 contains the strike -> respect -> `360P` feedback loop; SPD aftermath remains re-approach/read rather than fake guaranteed close Oki.
@@ -103,8 +104,9 @@ Visual artifact: **`sf6-visual-qa`** from run `35171931415`.
 - `receipts/mai_GOLD_PAGE_READY.md`
 - `receipts/zangief_GOLD_PAGE_READY.md`
 - `receipts/cammy_GOLD_PAGE_READY.md`
+- `receipts/ken_GOLD_PAGE_READY.md`
 
-These four characters are now formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
+Jamie, Mai, Zangief, Cammy, and Ken are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
 
 ## Public deployment state
 
