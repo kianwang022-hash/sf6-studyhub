@@ -1,0 +1,110 @@
+schema_version: '1.1'
+character: ehonda
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让charge+Hands/Dash/Smash→strike Oki成立，再把Oicho作为respect后的第二分支，Spirit/OD pressure最后加入。'
+  score_rule: 'Rank/MR是Reality evidence，不替代charge、respect、Oicho与trigger条件判断。'
+  current_ui: 'S0不要求Oicho；+42 S2；Spirit/OD Teppo S3。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通charge后台保存、light→Hands、5MP→Sumo Dash→Teppo、Sumo Smash→strike Oki。'
+    add_now:
+      - 'Headbutt/Smash charge在防守/normal里保存。'
+      - '2LP×2→L Hands。'
+      - '5MP→Sumo Dash→Teppo。'
+      - 'H Sumo Smash +23→dash +4，只先strike。'
+      - '5MP block +1建立普通respect。'
+    gate:
+      lab: 'charge、Hands、Dash route、Smash strike Oki稳定。'
+      match: '击倒后先打strike，不会立刻乱Oicho。'
+    defer: ['Oicho主线', '+42 safe jump', 'Sumo Spirit', 'OD Teppo +3', '高资源SA']
+    hub_focus: [charge, light, ground, smash]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '对手开始尊重strike后，第一次加入Oicho，并建立strike/Oicho/shimmy反馈循环。'
+    add_now:
+      - 'Smash dash +4后Oicho。'
+      - '对手跳/tech后用5HK / walk-back惩罚。'
+      - '6HK PC→M Headbutt→dash +4。'
+      - '稳定reversal punish。'
+    gate:
+      match: 'Oicho只在respect/read下出现；不会把command grab当guaranteed Oki。'
+    defer: ['+42', 'OD Teppo', 'Spirit']
+    hub_focus: [smash, punish]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '5MP CDR、Taiho与Teppo +42进入；同一opening按launcher/Oki/safe jump分流。'
+    add_now:
+      - '5MP CDR→Taiho。'
+      - 'Taiho→Sumo Smash +23。'
+      - 'Teppo first hit +42 safe jump。'
+      - 'DI stable route。'
+      - 'DR 5MK +4 block pressure。'
+    gate:
+      match: '能解释为什么选Teppo/Taiho/Smash，而不是只走最长route。'
+    defer: ['Sumo Spirit pressure', '+40 corner tree', 'OD Teppo +3']
+    hub_focus: [drive, safe_jump, smash]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'Spirit、OD Teppo、+40/+41 corner packages进入，但每个都带状态/trigger。'
+    add_now:
+      - 'Sumo Spirit启动成本与Hands 0/+1 pressure。'
+      - 'OD Teppo first hit +3 point-blank。'
+      - 'selected +40 corner active-frame。'
+      - 'selected +41 Teppo ender safe jump/two-dash。'
+      - 'Oicho频率按jump/backwalk/read调整。'
+    gate:
+      behavior: 'Spirit/OD plus状态不会脱离state使用；Oicho被跳会降低频率。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['最大资源Spirit/SA树']
+    hub_focus: [spirit, od_teppo, safe_jump]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'Spirit高资源、SA、corner/lethal与matchup-specific Oicho/charge频率进入。'
+    add_now:
+      - 'Spirit high-resource combo。'
+      - 'SA1/SA2/SA3/CA按已有starter现金化。'
+      - '高资源corner/DI routes。'
+      - 'matchup-specific Headbutt/Smash/Oicho频率。'
+    gate:
+      behavior: '高阶优化不让charge/respect/Oicho基本因果链退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, spirit, od_teppo]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'charge在normal/防守里保存', node: charge, upgrade_evidence: 'Headbutt/Smash availability判断正确。'}
+    - {id: EX02, stage: S0, label: 'Hands/Dash基础route稳定', node: light, upgrade_evidence: '两条starter实战不掉。'}
+    - {id: EX03, stage: S2, label: 'Teppo +42 exact state稳定', node: safe_jump, upgrade_evidence: '只在first-hit状态执行。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'charge不等于自动Headbutt', node: charge, upgrade_evidence: 'special频率有spacing/read理由。'}
+    - {id: NE02, stage: S1, label: 'respect先于Oicho', node: smash, upgrade_evidence: 'command grab不是第一拍。'}
+    - {id: NE03, stage: S3, label: 'Spirit机会成本可控', node: spirit, upgrade_evidence: '没有安全窗口就不硬启动。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: '5MP +1基础分流', node: ground, upgrade_evidence: 'strike/throw/stop正确。'}
+    - {id: CO02, stage: S1, label: 'strike vs Oicho按respect选', node: smash, upgrade_evidence: '对手跳/backwalk后会调整。'}
+    - {id: CO03, stage: S3, label: 'OD Teppo/Spirit plus带state', node: od_teppo, upgrade_evidence: '不会泛化plus。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'Smash +23→strike闭环', node: smash, upgrade_evidence: 'dash+4后能接下一Turn。'}
+    - {id: OF02, stage: S1, label: 'strike/Oicho/shimmy闭环', node: smash, upgrade_evidence: '三者按防守反馈互相增强。'}
+    - {id: OF03, stage: S3, label: 'Spirit/OD pressure回核心Loop', node: spirit, upgrade_evidence: 'plus升级后仍回respect判断。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: 'Oicho被jump/backwalk会调整', node: smash, upgrade_evidence: '会转strike/shimmy。'}
+    - {id: DA02, stage: S2, label: '对手反safe-jump/Parry会调route', node: safe_jump, upgrade_evidence: '不机械+42。'}
+    - {id: DA03, stage: S4, label: 'matchup charge/Oicho频率调整', node: super, upgrade_evidence: '特殊威胁按对手改变。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'charge→Hands/Dash/Smash→strike Oki先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'respect→Oicho反馈循环与punish多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'CDR/Taiho/+42分流结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；Spirit/OD plus不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: '高资源优化围绕真实高分瓶颈。'}
