@@ -1,0 +1,104 @@
+schema_version: '1.0'
+character: sagat
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Sagat用Tiger Shot限制对手怎么动，再用长中拳脚和Tiger Uppercut抓那个被迫的移动；真正收益是把空间控制换成高价值击倒和下一轮。'
+    preferred_range: '中远距离先用High Tiger Shot改变前走/跳跃节奏；对手进入长拳脚范围后，用5MP、2MP、5MK、6HK占位并兑现。'
+    win_pattern: 'Tiger Shot塑造移动 -> 继续看跳 -> 5MP/2MP/5MK抓反应 -> Uppercut/Knee击倒 -> +2打投或safe-jump -> 再决定继续发波还是站normal位置。'
+    lose_pattern: '机械连发火球不看跳、对手已经进长拳脚距离仍继续发波、把Tiger Knee帧差背成固定值、把所有H Knee命中都当+42 safe jump。'
+  character_model:
+    essence_short: 'Sagat的火球不是终点，而是用来限制对手“怎么走”；真正的角色循环是火球逼反应 → 长拳脚抓反应 → Uppercut/Knee击倒 → 高价值下一轮。'
+    essence_detail: 'Sagat确实比前面的标准角色更重视fireball，但如果把他理解成“站最远一直扔波”就会学歪。Tiger Shot的第一作用是改变对手的移动规则：High Tiger Shot逼他考虑跳、蹲、Perfect Parry、前走节奏和Drive；一旦对手为了处理火球改变位置，Sagat的5MP、2MP、5MK、6HK这些长而有价值的拳脚就更容易接住那个反应。当前Game Plan也反复把火球之后的收益接到medium normal、Tiger Knee / Uppercut击倒、+42 safe jump和5MP block +2的strike/throw上。Sagat真正要学的是“空间限制 → 读反应 → 地面兑现 → 高价值下一轮”，而不是单独提高fireball数量。火球过量、被跳中一次，可能比少发一颗更亏；所以成熟Sagat会不断在继续发波、占长拳脚位置、准备Tiger Uppercut之间切换注意力。'
+    force_opponent_to:
+    - 'High Tiger Shot让对手不能按原节奏自由前走，必须跳、蹲、PP、parry或改变推进节奏。'
+    - 'Tiger Uppercut让对手不能把“看到火球就跳”当免费答案。'
+    - '进入中距离后必须尊重5MP block +2与6HK block +4的长距离接触。'
+    payoff_after_respect:
+    - '更容易用5MP / 2MP / 5MK抓到地面移动。'
+    - 'Tiger Uppercut把普通确认换成+27/+32的稳定Oki预算。'
+    - 'Tiger Knee在正确spacing/airborne状态下换更大Oki，后期可进入+42 safe jump。'
+    - '5MP +2后strike / throw / shimmy真正成立。'
+    core_tradeoff: '继续fireball塑造空间 vs 提前站normal位置准备抓移动/跳跃。命中后再比较Uppercut的稳定Oki与Tiger Knee更大但更条件化的Oki预算。'
+    successful_round:
+    - 'High Tiger Shot改变对手移动节奏'
+    - '发波后继续看跳，Tiger Uppercut保证威胁可信'
+    - '对手改变移动后用5MP / 2MP / 5MK抓contact'
+    - '按位置选Uppercut或Tiger Knee击倒'
+    - '用+2打投、DR Oki或safe jump继续'
+    - '对手改变答案后重新决定发波还是占normal位置'
+    common_misplays:
+    - '把zoner理解成一直发波，发波以后不继续看跳。'
+    - '对手已经进入5MP/5MK工作区还机械High Tiger Shot。'
+    - '把Tiger Knee +36…49范围压成一个固定数字。'
+    - '看到H Tiger Knee +42就当所有命中都能safe jump。'
+    unique_decision: 'Sagat真正新增的是“projectile先改变movement budget，再用长normal兑现”。注意力要在继续发波、占地面按钮位置和准备Uppercut反空之间动态切换。'
+    transfer_in:
+    - 'projectile / anti-air框架。'
+    - 'strike / throw / shimmy。'
+    - 'punish / DI / corner / SA与knockdown -> Oki。'
+    new_skill:
+    - '用不同Tiger Shot节奏塑造移动，而不是只做chip。'
+    - 'fireball后持续保留反空注意力。'
+    - '长normal与projectile之间的空间接力。'
+    - 'Tiger Knee不同spacing / hit state对应的Oki预算。'
+    - '+42 safe jump只在正确airborne-hit条件使用。'
+    unlearn:
+    - 'zoning等于尽量多发fireball。'
+    - '所有标准角色都应该以2MK DRC作为同一种主低段转换。'
+    - 'Tiger Knee击倒数字可以脱离距离/命中状态背成固定值。'
+  glossary:
+  - {term: '236MP/HP｜High Tiger Shot', meaning: '高位Tiger Shot。重点不是弹幕数量，而是逼对手改变前走、跳跃、蹲与parry节奏。'}
+  - {term: '236LP｜Low Tiger Shot', meaning: '低位火球，用来改变对手站位/移动选择；被防-7，不能当近距离自动pressure。'}
+  - {term: '623P｜Tiger Uppercut', meaning: '主要反空与稳定ender。L版常见+32，M/H常见+27；强度决定伤害/后续。'}
+  - {term: '236K｜Tiger Knee Crush', meaning: '前进膝击与高价值ender。击倒优势高度依赖spacing和命中状态，H版特定空中命中才进入+42 safe-jump family。'}
+  - {term: '214K｜Tiger Nexus', meaning: '可派生Mighty / Greedy / Nova。每个follow-up风险/后续不同，不是统一安全字符串。'}
+  tools:
+  - {input: '236MP / 236HP', name: 'High Tiger Shot', use: 'S0空间塑形。M版16F / block +3；H版12F / block -1，用不同节奏逼出移动。'}
+  - {input: '623P', name: 'Tiger Uppercut', use: '必须的反空/稳定ender；没有反空，fireball控制就不可信。'}
+  - {input: '5MP', name: '站中拳', use: '6F / Hit +6 / Block +2；火球逼出地面移动后最重要的长medium接触之一。'}
+  - {input: '2MP', name: '蹲中拳', use: '7F / Hit +4 / Block -1 / C；稳定确认和CDR入口。'}
+  - {input: '5MK', name: '站中脚', use: '11F长poke；Year4 target combo接6HK后可进入+38 Oki family。'}
+  - {input: '6HK', name: 'Step High Kick', use: '16F / Hit +7 / Block +4；强respect/PC工具，但仍要按距离和对手姿势判断。'}
+  - {input: '236K', name: 'Tiger Knee Crush', use: '确认后的大Oki/位置工具；不同强度和命中状态的帧预算不同。'}
+  - {input: '214K', name: 'Tiger Nexus', use: '路线与压力分支；Mighty / Greedy / Nova各自独立判断。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Unique、Tiger Shot / Uppercut / Knee / Nexus派生由关键工具与Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '5', active: '5-7', recovery: '11', hit: '+4', block: '-3', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '7', active: '7-8', recovery: '15', hit: '0', block: '-4', cancel: 'C', damage: '400', note: '挥空额外+2F recovery。'}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '6', active: '6-9', recovery: '15', hit: '+6', block: '+2', cancel: '-', damage: '600', note: ''}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '11', active: '11-14', recovery: '19', hit: '+3', block: '-3', cancel: '-', damage: '700', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '15', active: '15-18', recovery: '22', hit: '0', block: '-5', cancel: '-', damage: '800', note: '挥空额外+3F recovery。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '10', active: '10-15', recovery: '21', hit: '+1', block: '-5', cancel: 'C', damage: '900', note: '挥空额外+4F recovery；强制站立。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '10', hit: '+5', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '12', hit: '+1', block: '-3', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '7', active: '7-9', recovery: '16', hit: '+4', block: '-1', cancel: 'C', damage: '600', note: '被防+1F recovery；挥空额外+3F recovery。'}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '9', active: '9-11', recovery: '18', hit: '+5', block: '-2', cancel: '-', damage: '600', note: '不是可取消2MK。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '11', active: '11-14', recovery: '21', hit: '+1', block: '-5', cancel: 'C', damage: '800', note: ''}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '11', active: '11-13', recovery: '26', hit: 'KD', block: '-12', cancel: '-', damage: '900', note: 'PC延长倒地并hard knockdown。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '8', active: '8-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '8', active: '8-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '10', active: '10-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中命中slam knockdown。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '空中命中launch。'}
+  signature_mechanic:
+    name: 'Projectile-to-contact space conversion'
+    rule: 'Tiger Shot先改变对手移动；真正收益由长normal、Uppercut/Knee击倒与后续Oki兑现。fireball数量本身不是目标。'
+  key_numbers:
+  - {label: '5MP', value: '6F / Hit +6 / Block +2', decision: 'S0核心respect：strike / throw / shimmy。'}
+  - {label: '6HK Step High Kick', value: '16F / Hit +7 / Block +4', decision: '强空间/PC工具；后续层加入。'}
+  - {label: 'M High Tiger Shot', value: '16F / Hit +3 / Block +3', decision: '较慢但正帧的空间塑形火球。'}
+  - {label: 'H High Tiger Shot', value: '12F / Hit -1 / Block -1', decision: '更快节奏；用来改变对手对火球时机的预期。'}
+  - {label: 'L Tiger Uppercut', value: 'KD +32', decision: '可直接DR进入下一轮。'}
+  - {label: 'H Tiger Uppercut', value: 'KD +27 -> dash +4', decision: '稳定end-state和第一套下一Turn。'}
+  - {label: 'H Tiger Knee', value: 'KD +41…47; airborne +42 family', decision: 'spacing/hit-state conditioned；+42 safe jump只属于对应空中命中。'}
+  constraints:
+  - 'Tiger Knee帧优势随spacing / airborne hit变化，禁止固定化。'
+  - 'High Tiger Shot后必须继续看跳；fireball不是注意力结束点。'
+  - '2MK不可取消，不能套用Ryu/Ken/Luke的2MK DRC骨架。'
+  - 'H Tiger Knee +42 safe jump必须标明airborne-hit condition。'
+  - 'Tiger Nexus follow-up是独立分支，不是一条万能安全字符串。'

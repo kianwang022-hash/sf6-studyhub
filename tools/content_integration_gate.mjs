@@ -32,7 +32,8 @@ const chars = [
   { slug:'ken', group:'base', normals:18, learn:['S0｜最小可玩','Quick Dash Tatsu','2MP > 5LK'], ref:['+25','Forward Step Kick'], practical:['Quick Dash','SA3'], candidate:true },
   { slug:'akuma', group:'year1', normals:18, learn:['S0｜最小可玩','+30','Demon Raid'], ref:['+37 family','Demon Raid','Shun Goku Satsu'], practical:['Demon Raid','SA3'], candidate:true },
   { slug:'luke', group:'base', normals:18, learn:['S0｜最小可玩','L Flash Knuckle','Perfect Flash Knuckle'], ref:['+36','+64','Perfect Flash Knuckle'], practical:['DDT','SA3'], candidate:true },
-  { slug:'terry', group:'year2', normals:18, learn:['S0｜最小可玩','Round Wave','OD Quick Burn'], ref:['+33','Round Wave','Triple Geyser'], practical:['OD Quick Burn','SA2'], candidate:true }
+  { slug:'terry', group:'year2', normals:18, learn:['S0｜最小可玩','Round Wave','OD Quick Burn'], ref:['+33','Round Wave','Triple Geyser'], practical:['OD Quick Burn','SA2'], candidate:true },
+  { slug:'sagat', group:'year3', normals:18, learn:['S0｜最小可玩','High Tiger Shot','+42 safe jump'], ref:['+32','+42','Tiger Knee Crush'], practical:['High Tiger Shot','SA2'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -88,9 +89,15 @@ for (const c of chars) {
   if (c.slug === 'cammy') {
     assert(/高度|距离|落点/.test(practicalText), 'cammy: Cannon Strike conditioning language missing');
   }
+  if (c.slug === 'sagat') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === '-', 'sagat: 2MK must remain non-cancelable');
+    assert(/airborne|空中命中|airborne_hit/i.test(practicalText), 'sagat: +42 safe jump lost airborne-hit condition');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'sagat: inherited 2MK DRC route leaked');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 4 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 5 content candidates | Learn + Role + Practical + Reference + resolved source registries');
