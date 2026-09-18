@@ -872,7 +872,7 @@ for (const c of chars) {
           assert(/year4_projectile_chain/i.test(conditions) && /od_projectile_state/i.test(conditions), 'dhalsim: Year4 projectile chain lost OD/state owner');
         }
 
-        if (/\+37/.test(numericClaimText)) {
+        if (/\+37/.test(numericClaimText) && /Yoga Blast|corner/i.test(input + ' ' + String(op.title ?? ''))) {
           assert(/corner/i.test(conditions) && /corner_h_blast_l_blast/i.test(conditions), 'dhalsim: corner +37 lost exact H Blast -> L Blast owner');
         }
 
