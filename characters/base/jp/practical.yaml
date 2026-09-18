@@ -1,0 +1,410 @@
+schema_version: '1.0'
+character: jp
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT, READ]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 = stable Stribog knockdown + Triglav/Torbalan remote ordering + 5HK +2. First earned Departure begins S1; full portal state and current Amnesia S2; OD/high-budget portal setplay S3; Lovushka S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Stribog / Triglav / Torbalan remote control'}
+  S1: {label: 基本功成型, short: 'First earned Departure / exact +42'}
+  S2: {label: 实战结构化, short: 'Full portal state / current Amnesia'}
+  S3: {label: 选择成熟, short: 'OD Torbalan / corner portal / Embrace'}
+  S4: {label: 高分上探, short: 'Lovushka / max portal / matchup ordering'}
+shared_packages:
+  STRIBOG38:
+    label: 'L Stribog +38 remote reset'
+    sequence: 'confirmed L Stribog hit -> +38'
+    next: 'Triglav / Torbalan / spacing / wait'
+    verification: conditioned
+    conditions: [l_stribog_end_state]
+    sources: [SRC05]
+  STRIBOG42:
+    label: 'M Stribog grounded +42'
+    sequence: 'confirmed grounded M Stribog hit -> +42'
+    next: 'immediate forward jump HK safe jump OR remote control'
+    verification: conditioned
+    conditions: [m_stribog_grounded_end_state]
+    sources: [SRC05]
+  TRIGLAV44:
+    label: 'Triglav +44 remote budget'
+    sequence: 'Triglav hit -> +44'
+    next: 'remote follow-up / earned Departure investment'
+    verification: conditioned
+    conditions: [triglav_hit_state]
+    sources: [SRC05]
+  PORTAL15:
+    label: 'Airborne 5HP -> Departure +15'
+    sequence: '5HP airborne hit -> Departure'
+    next: 'portal low / strike / throw / Window'
+    verification: conditioned
+    conditions: [airborne_5hp_hit, departure_state]
+    sources: [SRC05]
+  PORTAL46:
+    label: 'Triglav -> OD Departure +4..+6'
+    sequence: '5HP airborne hit -> Triglav -> OD Departure'
+    next: '2MP / throw / low / Shadow / Window'
+    verification: conditioned
+    conditions: [airborne_5hp_hit, triglav_into_od_departure, departure_state, drive_resource]
+    sources: [SRC05]
+  HK2:
+    label: '5HK Block +2'
+    sequence: '5HK blocked -> +2'
+    next: '2LP / throw-read / walk-back 2MP'
+    verification: verified
+    sources: [SRC03, SRC05]
+  THROW23:
+    label: 'Corner forward throw +23 -> dash +1'
+    sequence: 'corner forward throw -> +23 -> forward dash 22F'
+    next: '5HK / 2LP / throw-read'
+    verification: conditioned
+    conditions: [corner, forward_throw_end_state]
+    sources: [SRC05]
+  AMNESIA_CURRENT:
+    label: 'Current Year4 Amnesia aftermath'
+    sequence: 'Amnesia / OD Amnesia succeeds'
+    next: 'current reset / punish / reposition only'
+    verification: conditioned
+    conditions: [current_year4_amnesia_aftermath]
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜S0稳定L Stribog'
+  stage: S0
+  subtitle: '先有一个可靠remote knockdown owner'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '2LP > 5LP > L Stribog'
+    value: {kd: '+38'}
+    next_loop_package: STRIBOG38
+    why: '最短稳定confirm，把近身contact重新拉回JP擅长的远程状态。'
+    verification: conditioned
+    conditions: [confirmed_hit, l_stribog_end_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '2LP block -> 5LP check / stop'
+    value: {risk: 'L Stribog Block -10'}
+    next_loop: 'spacing / 5HK / block'
+    why: 'Stribog必须hit-confirm，不能把unsafe ender当pressure。'
+    verification: verified
+    sources: [SRC03]
+- id: medium
+  title: '5MK｜S0稳定M Stribog +42'
+  stage: S0
+  subtitle: 'exact +42 owner从第一天分清'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '5MK > M Stribog'
+    value: {kd: '+42'}
+    next_loop_package: STRIBOG42
+    why: '中距离confirm同时教会JP最重要的exact-state纪律。'
+    verification: conditioned
+    conditions: [confirmed_hit, m_stribog_grounded_end_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '5MK block -> do not autopilot M Stribog'
+    value: {risk: 'M Stribog Block -8'}
+    next_loop: 'spacing / remote read'
+    why: '被防时不提交unsafe ender。'
+    verification: verified
+    sources: [SRC03]
+- id: triglav
+  title: 'Triglav｜S0远处也让对手做选择'
+  stage: S0
+  subtitle: '不是随机放招'
+  rows:
+  - result: READ
+    stage: S0
+    choice: Ground spike
+    input: 'opponent holds ground / walks predictably -> Triglav'
+    value: {kd: '+44 on hit family'}
+    next_loop_package: TRIGLAV44
+    why: 'Triglav的职责是打静止/地面节奏，让remote control拥有明确行为目标。'
+    verification: conditioned
+    conditions: [triglav_hit_state_if_hit, opponent_ground_behavior]
+    sources: [SRC03, SRC05]
+- id: torbalan
+  title: 'Torbalan｜S0第一条远程projectile branch'
+  stage: S0
+  subtitle: '先从5HP contact进入'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Remote branch
+    input: '5HP hit -> L Torbalan'
+    value: {kd: '+42 or more when grounded/spacing state matches'}
+    next_loop: 'safe jump only if exact grounded +42; otherwise remote control'
+    why: '让Torbalan成为contact后的明确分支，而不是和Triglav随机轮转。'
+    verification: conditioned
+    conditions: [confirmed_hit, l_torbalan_grounded_spacing_check]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Spacing pressure
+    input: '5HP block -> L Torbalan only when spacing supports the branch'
+    value: {block: 'L Torbalan -6'}
+    next_loop: 'remote reset / Drive branch / stop'
+    why: '保留spacing truth，避免把projectile当无条件blockstring。'
+    verification: conditioned
+    conditions: [spacing_check]
+    sources: [SRC03, SRC05]
+- id: anti_air
+  title: 'Anti-air｜S0先用2HP'
+  stage: S0
+  subtitle: '把跳压回remote game'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Anti-air
+    input: 'opponent jump -> 2HP'
+    value: {purpose: 'anti-air / route bridge'}
+    next_loop: 'H Stribog / Triglav route when state is verified; otherwise reset'
+    why: '先学稳定反空，不要求portal conversion。'
+    verification: conditioned
+    conditions: [anti_air_hit]
+    sources: [SRC03, SRC05]
+- id: close_pressure
+  title: '5HK｜S0近身也有+2 owner'
+  stage: S0
+  subtitle: 'JP不是一被贴就只能逃'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: Check
+    input: '5HK block +2 -> 2LP'
+    value: {frame: '+2'}
+    next_loop_package: HK2
+    why: '建立一个不依赖portal的稳定近身回合。'
+    verification: verified
+    sources: [SRC03, SRC05]
+- id: first_portal
+  title: 'Departure｜S1第一次earned portal'
+  stage: S1
+  subtitle: '先赚空间，再投资未来节点'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Place portal
+    input: '5HP airborne hit -> Departure'
+    value: {frame: 'about +15 portal budget'}
+    next_loop_package: PORTAL15
+    why: '第一条portal只从明确airborne hit进入，避免neutral机械放机关。'
+    verification: conditioned
+    conditions: [airborne_5hp_hit, departure_state]
+    sources: [SRC05]
+  - result: READ
+    stage: S1
+    choice: Do not invest
+    input: 'space not earned -> skip Departure and continue Stribog / Triglav / Torbalan control'
+    value: {portal: 'not placed'}
+    next_loop: 'remote control'
+    why: '不放portal本身也是成熟选择。'
+    verification: conditioned
+    conditions: [insufficient_portal_setup_time]
+    sources: [SRC05]
+- id: safejump
+  title: '+42｜S1把safe jump owner钉死'
+  stage: S1
+  subtitle: '只认grounded exact state'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: M Stribog safe jump
+    input: 'grounded M Stribog hit +42 -> immediate forward jump HK'
+    value: {kd: '+42', safe_jump: true}
+    next_loop: 'jump HK block/hit -> pressure / confirm'
+    why: '最清楚的+42 owner；禁止把任意远程knockdown泛化。'
+    verification: conditioned
+    conditions: [m_stribog_grounded_end_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Active meaty
+    input: 'exact +42 -> 2MK whiff -> 5HK active meaty'
+    value: {frame: 'about Hit +10 / Block +5'}
+    next_loop: '2LP / throw / portal investment'
+    why: '同一个+42也可换active-frame pressure。'
+    verification: conditioned
+    conditions: [exact_plus42_predecessor_state, active_frame_timing]
+    sources: [SRC05]
+- id: corner_throw
+  title: 'Corner throw｜S1 current +23 -> dash +1'
+  stage: S1
+  subtitle: 'corner-only'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Corner chase
+    input: 'corner forward throw +23 -> forward dash 22F'
+    value: {frame: '+1'}
+    next_loop_package: THROW23
+    why: '当前版本corner throw spacing独立记录，不套旧setplay。'
+    verification: conditioned
+    conditions: [corner, forward_throw_end_state]
+    sources: [SRC05]
+- id: portal_tree
+  title: 'Departure active｜S2打开双位置状态机'
+  stage: S2
+  subtitle: 'low / strike / throw / Window按行为选'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Shadow strike
+    input: 'earned Departure active -> Departure: Shadow / portal strike'
+    value: {portal: 'active'}
+    next_loop: 'opponent blocks/moves -> current-position follow-up'
+    why: '先用portal远程attack维持双位置压力。'
+    verification: conditioned
+    conditions: [departure_state, portal_active]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S2
+    choice: Low
+    input: 'earned Departure active -> portal-enabled 2LK / 2MK branch'
+    value: {portal: 'active'}
+    next_loop: 'hit confirm / throw-read / remote reset'
+    why: '对手只看portal high/teleport时加入low。'
+    verification: conditioned
+    conditions: [departure_state, portal_active]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S2
+    choice: Throw
+    input: 'earned Departure active -> walk/teleport positioning -> throw read'
+    value: {portal: 'active'}
+    next_loop: 'tech/jump response -> strike/remote punish'
+    why: '对手被remote threats钉住以后才加入throw。'
+    verification: conditioned
+    conditions: [departure_state, portal_active, opponent_respect]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Window
+    input: 'earned Departure active -> Departure: Window'
+    value: {portal: 'teleport / side change'}
+    next_loop: 're-evaluate spacing / strike / throw / remote threat'
+    why: 'Window是位置分支，不是portal一出现就必用。'
+    verification: conditioned
+    conditions: [departure_state, portal_active]
+    sources: [SRC03, SRC05]
+- id: portal_hybrid
+  title: 'Triglav -> OD Departure｜S2 hybrid state'
+  stage: S2
+  subtitle: 'remote hit转近身+portal'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Hybrid pressure
+    input: '5HP airborne hit -> Triglav -> OD Departure'
+    value: {drive: 2, frame: 'about +4..+6'}
+    next_loop_package: PORTAL46
+    why: '把远程hit和portal状态叠在一起，只有基础Departure稳定后才值得学。'
+    verification: conditioned
+    conditions: [airborne_5hp_hit, triglav_into_od_departure, departure_state, drive_resource]
+    sources: [SRC05]
+- id: amnesia
+  title: 'Amnesia｜S2只学current aftermath'
+  stage: S2
+  subtitle: '旧auto follow-up作废'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Current reset
+    input: 'Amnesia / OD Amnesia succeeds -> use current Year4 aftermath'
+    value: {defense: 'successful counter'}
+    next_loop_package: AMNESIA_CURRENT
+    why: 'Year4增加JP recovery，不能继承旧throw-loop路线。'
+    verification: conditioned
+    conditions: [current_year4_amnesia_aftermath]
+    sources: [SRC05]
+- id: drive
+  title: 'Drive｜S2保留一条CDR'
+  stage: S2
+  subtitle: '最后回remote owner'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Remote conversion
+    input: '2MP > CDR > 2HP > H Stribog > M Torbalan > H Triglav'
+    value: {drive: 3}
+    next_loop: 'remote reset / Departure if space earned'
+    why: 'Drive route服务于remote state，不单独堆combo。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, remote_route_spacing]
+    sources: [SRC05]
+- id: od_torbalan
+  title: 'OD Torbalan｜S3高资源+25'
+  stage: S3
+  subtitle: '只有OD state'
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: High-budget pressure
+    input: 'OD Torbalan block'
+    value: {drive: 2, frame: '+25'}
+    next_loop: 'Departure / strike / throw / remote setplay by spacing'
+    why: '极大plus属于OD资源状态，不代表普通Torbalan安全。'
+    verification: conditioned
+    conditions: [od_torbalan_state, drive_resource, spacing_check]
+    sources: [SRC03, SRC05]
+- id: embrace
+  title: 'Embrace｜S3 conditioned command grab'
+  stage: S3
+  subtitle: '只在respect/remote freeze后'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Command grab
+    input: 'opponent frozen by remote/portal threats -> Embrace'
+    value: {damage: 1800, kd: '+18'}
+    next_loop: 'remote reset / portal investment by screen position'
+    why: 'Embrace是respect cash-in，不是neutral默认抓。'
+    verification: conditioned
+    conditions: [opponent_respect, embrace_range, remote_threat_active_or_recent]
+    sources: [SRC03, SRC05]
+- id: super
+  title: 'Super｜S4才进入Lovushka'
+  stage: S4
+  subtitle: '多层setplay不是入门门槛'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: Lovushka
+    input: 'confirmed route -> SA2 Lovushka'
+    value: {sa: 2, state: 'persistent multi-layer setplay'}
+    next_loop: 'portal/remote/normal sequence by exact super route'
+    why: 'SA2是JP状态机的高级版，只在remote/portal基础稳定后加入。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource, lovushka_route_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: 'confirmed route -> SA3 Interdiction'
+    value: {sa: 3, kd: '+23'}
+    next_loop: 'H Triglav meaty family by exact end state'
+    why: '高资源cashout仍需回exact-state setplay。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource, sa3_end_state]
+    sources: [SRC03, SRC05]
+backend_only:
+- {label: 'raw neutral Departure', reason: 'portal must be earned through space/setup'}
+- {label: 'full portal tree in S0', reason: 'remote ordering must stabilize first'}
+- {label: 'generic +42 safe jump', reason: 'M Stribog / grounded Torbalan exact owner required'}
+- {label: 'old OD Amnesia auto follow-up', reason: 'Year4 recovery changed'}
+- {label: 'ordinary Torbalan +25', reason: 'only OD Torbalan has this resource state'}
+- {label: 'Lovushka before S4', reason: 'advanced persistent setplay'}
