@@ -1,0 +1,120 @@
+schema_version: '1.0'
+character: jp
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'JP先用Stribog击倒、Triglav地刺和Torbalan远程威胁让对手持续应答；等空间真的赚到后，再放Departure把“现在的远程优势”投资成未来的第二攻击节点。'
+    preferred_range: '中远距离用5MK/2MP确认到Stribog，再用Triglav/Torbalan限制走地；近身用5HK +2稳住，Departure只在已有空间/击倒后投资。'
+    win_pattern: 'stable Stribog knockdown -> Triglav/Torbalan keep opponent answering -> earn space -> Departure investment -> portal low/strike/throw/Window -> portal expires/reset -> return to remote control -> corner/SA cashout。'
+    lose_pattern: '开局机械放Departure、把JP玩成随机轮远程招、所有+42混成一个safe jump、portal只会teleport、沿用旧OD Amnesia自动follow-up、太早进入Lovushka。'
+  character_model:
+    essence_short: '先用Stribog/Triglav/Torbalan控制现在的屏幕；空间赚到后再放Departure，让未来多一个portal节点。'
+    essence_detail: 'JP不是“远程招很多所以一直后退轮技能”。他的第一层其实很稳定：light、5MK或2MP确认到Stribog，拿+38/+42；击倒后用Triglav地刺和Torbalan让对手在远处仍然必须做选择。只有当这些即时威胁已经让JP赚到时间和空间，Departure才值得放——它不是免费teleport，而是一次未来空间投资。portal建立后，JP需要同时看“自己现在的位置”和“portal未来的位置”，再决定Shadow远程攻击、Window换边、portal-state low/strike、throw或继续等待。当前Year4还要求重新理解OD Amnesia aftermath，不能照旧资料自动接throw loop。成熟JP的循环因此是：先控制现在的屏幕，赚到空间后投资未来节点，portal结束后再回到普通远程控制，而不是始终维持一个机关。'
+    force_opponent_to:
+    - '远处也必须应对Triglav / Torbalan / Stribog，不能安心重置。'
+    - 'M Stribog或grounded L Torbalan +42后处理safe jump或active meaty。'
+    - '5HK Block +2后不能把近身回合当成JP已经失去。'
+    - 'Departure建立后同时考虑JP本体和portal节点。'
+    - '角落portal/throw状态下不能只守一个攻击轴。'
+    create_respect_with:
+    - '2LP > 5LP > L Stribog稳定confirm。'
+    - '5MK > M Stribog。'
+    - '2MP > 5LK > L Stribog。'
+    - 'Triglav远程地刺。'
+    - '5HP -> L Torbalan remote branch。'
+    - '5HK Block +2近身pressure。'
+    payoff_after_respect:
+    - 'M Stribog / grounded L Torbalan +42进入safe jump或meaty。'
+    - '已有空间时放Departure建立未来portal node。'
+    - 'airborne 5HP -> Departure可进入约+15 portal pressure。'
+    - 'Triglav -> OD Departure可进入+4..+6 hybrid state。'
+    - 'portal state里low / strike / throw / Window换边让防守无法只看一条线。'
+    - '角落与SA2把remote-state压力延长。'
+    core_tradeoff: '继续用Stribog/Triglav/Torbalan拿即时远程收益，还是花时间放Departure换未来更强的双位置状态；portal只有在空间已经赚到时才值得投资。'
+    successful_round:
+    - 'light / 5MK / 2MP确认到Stribog'
+    - '用Triglav / Torbalan让对手继续在远处应答'
+    - '观察对手如何前冲、跳、Parry或等待'
+    - '有空间时才放Departure'
+    - 'portal active后按行为选Shadow / low / strike / throw / Window'
+    - 'portal结束回普通remote control；进角或资源足够再升级setplay'
+    common_misplays:
+    - '开局就放Departure，被对手穿过设置时间。'
+    - '远程招随机轮转，没有Stribog knockdown owner。'
+    - '把M Stribog / L Torbalan的+42看成无条件同一状态。'
+    - 'portal一放就固定Window/teleport。'
+    - '继续使用旧OD Amnesia自动follow-up记忆。'
+    - 'S0就学SA2 Lovushka整棵树。'
+    unique_decision: 'JP新增的是remote-state investment：即时remote工具控制“现在”，Departure给“未来”增加一个portal节点；你要决定什么时候继续即时压制，什么时候投资未来空间。'
+    transfer_in:
+    - 'projectile control / anti-air。'
+    - 'knockdown -> Oki / reset。'
+    - 'strike / throw / shimmy。'
+    - 'exact-state setplay纪律。'
+    new_skill:
+    - 'Stribog / Triglav / Torbalan的remote threat ordering。'
+    - 'immediate control vs Departure investment。'
+    - 'portal active时的双位置思考。'
+    - 'portal low/strike/throw/Window分支。'
+    - 'current Amnesia aftermath。'
+    - 'Lovushka作为后置多层setplay。'
+    unlearn:
+    - 'zoner就是一直后退放招。'
+    - 'Departure越早放越好。'
+    - '所有+42可以互换。'
+    - 'portal只等于teleport。'
+    - '旧Amnesia route仍然有效。'
+  glossary:
+  - {term: '236P｜Stribog', meaning: '稳定knockdown / space-reset工具。L常见+38，M grounded常见+42；被防很危险，必须确认或保留spacing truth。'}
+  - {term: '22P｜Triglav', meaning: '远程地刺；普通hit常见+44，OD更大budget。用于让远处对手仍然必须应答。'}
+  - {term: '236K｜Torbalan', meaning: '远程projectile/phantom威胁；grounded L hit可形成+42以上，但spacing/state必须保留。'}
+  - {term: '214P｜Departure', meaning: '长启动portal投资。不是neutral免费teleport；S1以后从earned space进入。'}
+  - {term: 'Departure: Window', meaning: 'portal teleport/换边选项；只有portal active时存在。'}
+  - {term: '22K｜Amnesia', meaning: '防守反制special；Year4 aftermath已改变，旧自动follow-up不可沿用。'}
+  tools:
+  - {input: '2LP', name: '蹲轻拳', use: '4F / Hit +4 / Block -1 / C；S0 light confirm起点。'}
+  - {input: '5MK', name: '站中脚', use: '8F / Hit +3 / Block -3 / C；S0 M Stribog confirm owner。'}
+  - {input: '2MP', name: '蹲中拳', use: '7F / Hit +6 / Block -2 / C；稳定route桥。'}
+  - {input: '5HK', name: '站重脚', use: '12F / Hit +7 / Block +2；近身稳定pressure owner。'}
+  - {input: '236LP', name: 'L Stribog', use: '16F / Block -10；confirmed ender，常见+38。'}
+  - {input: '236MP', name: 'M Stribog', use: '20F / Block -8；grounded hit常见+42，S0 exact safe-jump owner。'}
+  - {input: '22P', name: 'Triglav', use: '远程地刺；普通hit约+44。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；unique normals、Departure-state cancel、remote specials、Amnesia、Embrace与SA由工具/Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '6', active: '6-8', recovery: '10', hit: '+4', block: '-2', cancel: 'C', damage: '300', note: 'chain-cancelable。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '5', active: '5-7', recovery: '11', hit: '+3', block: '-2', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '12', active: '12-14', recovery: '21', hit: '+1', block: '-6', cancel: 'Departure Shadow only', damage: '700', note: 'portal state cancel property。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '8', active: '8-10', recovery: '19', hit: '+3', block: '-3', cancel: 'C', damage: '600', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '12', active: '12-13', recovery: '22', hit: '+3', block: '-3', cancel: 'C', damage: '800', note: 'airborne hit launch / portal bridge。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '12', active: '12-15', recovery: '17', hit: '+7', block: '+2', cancel: 'Departure Shadow only', damage: '800', note: 'close plus owner。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '11', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: 'chain-cancelable。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '6', active: '6-7', recovery: '10', hit: '+2', block: '-2', cancel: 'Departure Shadow only', damage: '200', note: 'ordinary state no special cancel。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '7', active: '7-10', recovery: '14', hit: '+6', block: '-2', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '9', active: '9-11', recovery: '17', hit: '+3', block: '-3', cancel: 'Departure Shadow only', damage: '700', note: 'ordinary state no special cancel。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '9', active: '9-14', recovery: '20', hit: '+1', block: '-6', cancel: 'C', damage: '800', note: 'forces stand / anti-air route。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '10', active: '10-12', recovery: '21', hit: 'KD', block: '-6', cancel: '-', damage: '900', note: ''}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '5', active: '5-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '12', active: '12-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: ''}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '600', note: 'airborne hit launch。'}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '9', active: '9-13', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'CH/PC slam。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '11', active: '11-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Immediate remote control -> earned Departure investment -> dual-position portal state'
+    rule: '先用Stribog/Triglav/Torbalan控制当前屏幕；空间赚到后才放Departure，把未来多一个攻击/teleport节点；portal结束再回普通remote control。'
+  key_numbers:
+  - {label: 'L Stribog', value: '+38', decision: 'S0 stable knockdown / remote reset。'}
+  - {label: 'M Stribog grounded', value: '+42', decision: 'S0 exact safe-jump owner；不能泛化。'}
+  - {label: 'Triglav', value: '+44', decision: '远程hit后有足够budget继续control或投资Departure。'}
+  - {label: '5HK', value: 'Block +2', decision: '近身JP仍有稳定pressure owner。'}
+  - {label: 'corner forward throw', value: '+23 -> dash +1', decision: 'S1 corner-only state。'}
+  constraints:
+  - 'S0不展示Departure/Amnesia/SA2完整树。'
+  - 'Stribog learner route必须confirmed；L/M被防-10/-8。'
+  - 'M Stribog +42 safe jump必须绑定grounded exact state。'
+  - 'L Torbalan +42必须绑定grounded/spacing。'
+  - 'Departure所有分支必须来自earned active portal state。'
+  - 'OD Amnesia必须使用current aftermath，禁止旧auto follow-up。'

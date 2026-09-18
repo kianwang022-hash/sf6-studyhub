@@ -50,7 +50,8 @@ const chars = [
   { slug:'alex', group:'year3', normals:18, learn:['S0｜最小可玩','Prowler','4MK'], ref:['+42','Flying Cross Chop','Power Bomb'], practical:['Power Bomb','Prowler','Flying Cross Chop'], candidate:true },
   { slug:'chunli', group:'base', normals:18, learn:['S0｜最小可玩','Serenity Stream','Up exit'], ref:['Lotus Fist','+46','charge'], practical:['Serenity Stream','Spinning Bird Kick','safe-jump'], candidate:true },
   { slug:'aki', group:'year1', normals:18, learn:['S0｜最小可玩','H Serpent Lash','poison'], ref:['+69','Orchid Spring','Drive Parry'], practical:['H Serpent Lash','opponent poisoned','Orchid Spring'], candidate:true },
-  { slug:'ed', group:'year1', normals:18, learn:['S0｜最小可玩','M Psycho Blitz','charged Flicker'], ref:['back throw','Psycho Knuckle','+42'], practical:['M Psycho Blitz','charged L/M Psycho Flicker','Psycho Knuckle'], candidate:true }
+  { slug:'ed', group:'year1', normals:18, learn:['S0｜最小可玩','M Psycho Blitz','charged Flicker'], ref:['back throw','Psycho Knuckle','+42'], practical:['M Psycho Blitz','charged L/M Psycho Flicker','Psycho Knuckle'], candidate:true },
+  { slug:'jp', group:'base', normals:18, learn:['S0｜最小可玩','Departure','M Stribog'], ref:['+42','OD Amnesia','Lovushka'], practical:['Departure','M Stribog','OD Torbalan'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -611,9 +612,82 @@ for (const c of chars) {
     assert((practical.opportunities ?? []).some((op) => op.id === 'kill_switch' && op.stage === 'S2'), 'ed: S2 Kill Switch owner missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'knuckle' && op.stage === 'S3'), 'ed: S3 Psycho Knuckle owner missing');
   }
+  if (c.slug === 'jp') {
+    const row5hk = role?.normal_frame_table?.rows?.find((r) => r?.input === '5HK');
+    assert(row5hk?.block === '+2', 'jp: 5HK must remain Block +2');
+    assert(/Immediate remote control.*earned Departure investment.*dual-position portal state/i.test(role?.signature_mechanic?.name ?? ''), 'jp: remote-to-portal signature owner missing');
+
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+
+        if (stage === 'S0') {
+          assert(!/Departure|Amnesia|OD Torbalan|Lovushka|SA2/i.test(input), 'jp: portal/defense/high-resource layer leaked into S0');
+        }
+
+        if (String(row.result ?? '') === 'HIT' && /(?:2LP|5LP|5MK|2MP|5LK)[^\n]*>[^\n]*(?:L|M) Stribog/i.test(input)) {
+          assert(/confirmed_hit/i.test(conditions), 'jp: unsafe Stribog route lost confirmed-hit truth');
+        }
+
+        if (/grounded M Stribog hit \+42/i.test(input) && /safe_jump|safe jump/i.test(rowText)) {
+          assert(/m_stribog_grounded_end_state/i.test(conditions), 'jp: M Stribog +42 safe jump lost grounded exact-state truth');
+        }
+
+        if (/L Torbalan/i.test(input) && /\+42/.test(rowText)) {
+          assert(/l_torbalan_grounded_spacing_check|grounded.*spacing/i.test(conditions), 'jp: L Torbalan +42 lost grounded/spacing truth');
+        }
+
+        const placesDeparture = /-> Departure(?:\s|$)/i.test(input) && !/skip Departure/i.test(input);
+        if (placesDeparture) {
+          assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'jp: Departure appears before S1');
+          assert(/departure_state/i.test(conditions), 'jp: Departure route missing earned portal-state owner');
+        }
+
+        if (/Departure active|Departure: Shadow|Departure: Window|portal-enabled/i.test(input)) {
+          assert(stage === 'S2' || stage === 'S3' || stage === 'S4', 'jp: full portal tree must remain S2+');
+          assert(/departure_state/i.test(conditions) && /portal_active/i.test(conditions), 'jp: portal branch missing active Departure state');
+        }
+
+        if (/\+15/.test(rowText) && /Departure/i.test(input)) {
+          assert(/airborne_5hp_hit/i.test(conditions) && /departure_state/i.test(conditions), 'jp: Departure +15 lost airborne 5HP owner');
+        }
+
+        if (/\+4\.\.\+6|\+4\.\.6|\+4.*\+6/.test(rowText) && /OD Departure/i.test(input)) {
+          assert(/airborne_5hp_hit/i.test(conditions) && /triglav_into_od_departure/i.test(conditions) && /drive_resource/i.test(conditions), 'jp: OD Departure +4..+6 lost exact route/Drive truth');
+        }
+
+        if (/Amnesia/i.test(input)) {
+          assert(stage === 'S2' || stage === 'S3' || stage === 'S4', 'jp: Amnesia aftermath must remain S2+');
+          assert(/current_year4_amnesia_aftermath/i.test(conditions), 'jp: Amnesia route lost current Year4 aftermath');
+        }
+
+        if (/corner forward throw/i.test(input) && /\+23/.test(rowText)) {
+          assert(/corner/i.test(conditions) && /forward_throw_end_state/i.test(conditions), 'jp: corner throw +23 lost corner owner');
+        }
+
+        if (/OD Torbalan/i.test(input)) {
+          assert(stage === 'S3' || stage === 'S4', 'jp: OD Torbalan +25 must remain S3+');
+          assert(/od_torbalan_state/i.test(conditions) && /drive_resource/i.test(conditions), 'jp: OD Torbalan lost resource-state truth');
+        }
+
+        if (/Lovushka|SA2/i.test(input)) {
+          assert(stage === 'S4', 'jp: Lovushka must remain S4');
+        }
+      }
+    }
+
+    assert((practical.opportunities ?? []).some((op) => op.id === 'triglav' && op.stage === 'S0'), 'jp: S0 Triglav remote-control owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'first_portal' && op.stage === 'S1'), 'jp: S1 first earned Departure owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'portal_tree' && op.stage === 'S2'), 'jp: S2 portal tree missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'od_torbalan' && op.stage === 'S3'), 'jp: S3 OD Torbalan owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'super' && op.stage === 'S4'), 'jp: S4 Lovushka owner missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 22 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 23 content candidates | Learn + Role + Practical + Reference + resolved source registries');

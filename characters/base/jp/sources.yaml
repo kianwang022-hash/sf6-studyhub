@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: jp
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — JP', url: 'https://www.streetfighter.com/6/en-us/character/jp/frame', game_version: current, covers: [frames, damage, cancel_properties, commands]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — JP Frame Data', url: 'https://sf6-lab.net/en/fighters/jp/frame', freshness: 'official-reference data current; checked 2026-09-19', covers: [frames, normals, unique_attacks, stribog, triglav, departure, torbalan, amnesia, embrace]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — JP Move List', url: 'https://sf6-lab.net/en/fighters/jp/moves', freshness: 'checked 2026-09-19', covers: [commands, departure_variants, projectiles, supers]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — JP Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/jp/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, departure_setplay, torbalan, triglav, amnesia, sa2, training_order, current_game_plan]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official-reference / Year4 maintained data overrides older JP setplay assumptions; portal state, spacing, corner, airborne hit and active-frame timing are part of the fact'
+  route_publish_rule: 'verified / conditioned / provisional required; +42 safe jump, Departure pressure and Amnesia aftermath must keep exact-state qualifiers'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Year4 route/setplay guide explicitly publishes training order and portal/setplay state transitions'
+  learner_projection_rule: 'S0 teaches stable Stribog knockdown plus basic remote Triglav/Torbalan control; first Departure setup begins S1; portal-state trees and Amnesia adaptation begin later'
