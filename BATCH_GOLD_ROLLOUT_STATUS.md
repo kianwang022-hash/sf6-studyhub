@@ -40,7 +40,7 @@ Judgment states:
 | year2 | Terry | `GOLD_PAGE_READY` |
 | year2 | Mai | `GOLD_PAGE_READY` |
 | year2 | Elena | `CONTENT_READY` |
-| year3 | Sagat | `CONTENT_READY` |
+| year3 | Sagat | `GOLD_PAGE_READY` |
 | year3 | C. Viper | `CONTENT_READY` |
 | year3 | Alex | `CONTENT_READY` |
 | year3 | Ingrid | `CONTENT_READY` |
@@ -48,15 +48,16 @@ Judgment states:
 
 ## Current Gold lane
 
-Nine characters now render through the canonical Astro runtime:
+Ten characters now render through the canonical Astro runtime:
 
-Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Ken — ordinary shoto contact -> choose end-state -> Quick Dash Tatsu carry / +25 dash +6 / corner setplay; H Dragonlash +1 remains tied to 28F startup.
 - Akuma — stable shoto +30 / +37 first; 9000-health risk budget stays visible and Demon Raid / charged fireball remain later option-density layers.
 - Luke — stable L Flash +36 first; Perfect Flash is an execution-investment layer and +64 remains a later high-value state.
 - Terry — special-role relay stays explicit: Burning Knuckle buys carry/Oki, Rising Tackle buys damage, Round Wave buys earned plus pressure, Quick Burn is a later extension.
+- Sagat — Tiger Shot shapes movement; long normals/Uppercut cash it out. 2MK remains non-cancelable and +42 safe jump stays airborne-hit-only.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
 - Mai — ordinary projectile/ground skeleton first; resource/state upgrades are explained before Stock / Boosted shorthand.
 - Zangief — S0 contains the strike -> respect -> `360P` feedback loop; SPD aftermath remains re-approach/read rather than fake guaranteed close Oki.
@@ -109,7 +110,7 @@ Visual artifact: **`sf6-visual-qa`** from run `35171931415`.
 - `receipts/cammy_GOLD_PAGE_READY.md`
 - `receipts/ken_GOLD_PAGE_READY.md`
 
-Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, and Terry are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
+Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, Terry, and Sagat are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
 
 ## Public deployment state
 
