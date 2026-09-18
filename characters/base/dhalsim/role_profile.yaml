@@ -1,0 +1,119 @@
+schema_version: '1.0'
+character: dhalsim
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Dhalsim先用长肢与Yoga Fire/Arch的几何逼对手从可预测路线接近；一旦anti-air或击倒成功，就用earned Teleport/Float把远距离控制兑现成近身回合，而不是永远后退。'
+    preferred_range: '远中距离用5MP/2MK/Yoga Fire塑造前走与跳跃路线；近身用4MK/4MP等cancelable短招；只有覆盖住Teleport时才主动把远距结果换成贴身turn。'
+    win_pattern: 'range geometry -> opponent commits to jump/walk/DI -> lane anti-air or close confirm -> Yoga Flame/Blast knockdown -> earned forward Teleport / Float close turn -> strike/throw -> opponent escapes -> rebuild geometry。'
+    lose_pattern: '一直后退不现金化、把长手当安全poke、只看固定frame不看late contact、raw Teleport求进场、S0背完整Float/Comet树、把+37/+45/+51跨route使用。'
+  character_model:
+    essence_short: '先用长肢与火球塑造接近路线；拿到击倒后，再用覆盖住的Teleport/Float把远程优势换成近身回合。'
+    essence_detail: 'Dhalsim不是“站最远处一直按长手”的角色。长肢、Yoga Fire和Yoga Arch的第一任务，是让对手的前走、跳跃、Drive Impact和等待变得可预测；但current Year4指南明确指出，只靠一次又一次把对手挡回去很难赢，最终必须主动进攻。真正的循环是“远距离几何 -> 可预测接近 -> anti-air/击倒 -> 近身转换”。例如M Yoga Blast命中+42后立刻forward P Yoga Teleport，可以直接变成point-blank +3；一个远端conversion因此能瞬间变成strike/throw的贴身turn。同时，Dhalsim的长肢Normal拥有很长active window，2LK/2MK/2HK等实际命中/被防优势会随接触时机和距离变化，不能把一张固定frame表当完整neutral。成熟Dhalsim会在“继续保持几何优势”与“已经赚到knockdown，现在进场现金化”之间切换。'
+    force_opponent_to:
+    - '在长肢和Yoga Fire覆盖下选择前走、跳、DI、Parry或等待。'
+    - '跳跃必须穿过4MP近角度与5HK远角度anti-air lane。'
+    - 'M Yoga Blast等击倒后必须处理forward Teleport带来的贴身turn。'
+    - 'Yoga Arch滞留时不能只按普通地面节奏接近。'
+    - 'corner +37/+45/+51等状态下必须处理真正setplay。'
+    create_respect_with:
+    - '5MP / 2MK长距离地面接触。'
+    - 'Yoga Fire逼迫跳跃/等待。'
+    - '4MP Yoga Uppercut近角度anti-air。'
+    - '5HK远角度anti-air。'
+    - '4MK > M Yoga Flame稳定close confirm。'
+    - 'M Yoga Blast +42 -> immediate forward P Teleport +3身份路线。'
+    payoff_after_respect:
+    - '对手犹豫接近后，Yoga Fire/Arch继续塑造路线。'
+    - 'anti-air或knockdown后forward Teleport把远程优势换成point-blank offense。'
+    - 'Float把空中停留与落点加入第二个几何维度。'
+    - 'forward throw +31与corner +37继续维持close turn。'
+    - '对手逃出去后重新进入Dhalsim擅长的远距预测。'
+    core_tradeoff: '继续保持远距离几何控制，还是在已赚到knockdown后主动Teleport/Float进去现金化；过早进场会放弃长手优势，永远不进场又让对手无限重试接近。'
+    successful_round:
+    - '长肢 / Yoga Fire / Yoga Arch塑造接近路线'
+    - '识别jump/DI/forward walk并anti-air/counter'
+    - '4MK > M Flame拿稳定+33，或Drive route拿M Blast +42'
+    - '值得时forward Teleport把knockdown转成point-blank turn'
+    - '近身用4MK / throw / delayed strike / later Float再赢一轮'
+    - '对手逃开后重建几何'
+    common_misplays:
+    - '把长手角色理解成永远后退。'
+    - '固定frame table当成每个距离的实战frame。'
+    - '因为长肢很远就当成安全poke。'
+    - 'raw forward Teleport并误以为自带+3。'
+    - 'S0同时学Float、Teleport cross-up、Comet、Arch全树。'
+    - '把+37/+45/+51跨route泛化。'
+    unique_decision: 'Dhalsim新增的是geometry-to-proximity conversion：远程工具先塑造路径与时机；拿到特定knockdown后，再决定是否用Teleport/Float把远距控制转换成近距frame advantage。'
+    transfer_in:
+    - 'projectile control。'
+    - 'anti-air discipline。'
+    - 'strike / throw。'
+    - 'knockdown -> Oki。'
+    - 'position value。'
+    new_skill:
+    - 'long-limb spacing / active-contact timing。'
+    - 'multi-trajectory projectile geometry。'
+    - 'anti-air by approach lane。'
+    - 'knockdown-covered Teleport conversion。'
+    - 'Float / Drill / Comet高度与落点管理。'
+    - 'far-control vs close-cashout状态切换。'
+    unlearn:
+    - 'neutral都发生在普通footsie距离。'
+    - '长距离按钮等于安全按钮。'
+    - 'frame table一行就是所有距离的实战frame。'
+    - 'zoner击倒后应该继续后退。'
+    - 'Teleport本身给+3。'
+  glossary:
+  - {term: '236P｜Yoga Fire', meaning: '直线projectile，负责逼jump/walk/等待；charged/OD版本可产生更大knockdown。'}
+  - {term: '236K｜Yoga Arch', meaning: '弧线延迟projectile；远离point-blank时常在Dhalsim恢复后才命中，因此有效pressure来自travel timing。'}
+  - {term: '63214P｜Yoga Flame', meaning: 'close confirm / knockdown owner；M +33、H +45、OD +51是不同state。'}
+  - {term: '63214K｜Yoga Blast', meaning: 'anti-air / route ender；M/H +42，L +39。'}
+  - {term: '6+PPP｜P Yoga Teleport (Forward)', meaning: '移动工具；raw Teleport不自带+3，+3来自M Blast +42覆盖的immediate Teleport route。'}
+  - {term: '2KK / 3KK｜Yoga Float', meaning: 'levitation / air-geometry layer；S1以后才进入主线。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '14F / baseline Hit 0 / Block -5；长距离ground probe，不等于安全poke。'}
+  - {input: '2MK', name: '蹲中脚', use: '10F / long active window；baseline -3/-10，但late contact会改变实战优势。'}
+  - {input: '4MP', name: 'Yoga Uppercut', use: '8F / Hit +2 / Block -3 / C；近/陡角度anti-air。'}
+  - {input: '5HK', name: '站重脚', use: '17F / Hit +3 / Block -6 / C；更远jump lane anti-air。'}
+  - {input: '4MK', name: 'Divine Kick', use: '7F / Hit +3 / Block 0 / C；S0 close confirm -> M Yoga Flame。'}
+  - {input: '63214MK', name: 'M Yoga Blast', use: '15F / Block -3 / KD +42；identity route覆盖forward Teleport。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal。表内为official-reference baseline；长active limb实际advantage可随late contact/spacing变化，详细范围由Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '4', active: '4-6', recovery: '8', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: 'chain-cancelable；Aug 2026上方hitbox扩大。'}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '9', active: '9-12', recovery: '11', hit: '+2', block: '-6', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '14', active: '14-16', recovery: '19', hit: '0', block: '-5', cancel: '-', damage: '700', note: '长距离probe。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '12', active: '12-14', recovery: '18', hit: '-2', block: '-6', cancel: '-', damage: '600', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '16', active: '16-19', recovery: '27', hit: '-6', block: '-11', cancel: '-', damage: '1000', note: 'PC launch；高commitment。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '17', active: '17-19', recovery: '20', hit: '+3', block: '-6', cancel: 'C', damage: '800', note: 'airborne hit launch；PC +24。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '5', active: '5-7', recovery: '9', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: 'chain-cancelable。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '4', active: '4-10', recovery: '16', hit: '-5', block: '-10', cancel: '-', damage: '200', note: 'long active；late contact practical advantage更高。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '12', active: '12-14', recovery: '16', hit: '0', block: '-4', cancel: 'C', damage: '600', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '10', active: '10-22', recovery: '14', hit: '-3', block: '-10', cancel: '-', damage: '500', note: 'extreme active；late contact可显著改善frame。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '19', active: '19-22', recovery: '20', hit: '+3', block: '-8', cancel: '-', damage: '800', note: 'whiff额外+4F recovery。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '12', active: '12-27', recovery: '20', hit: 'KD', block: '-16', cancel: '-', damage: '900', note: 'extreme active；late contact knockdown/block state spacing-dependent。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-7', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '6', active: '6-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: 'C', damage: '700', note: 'airborne launch / Yoga Mummy cancel。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '11', active: '11-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '13', active: '13-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'airborne slam。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-19', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  signature_mechanic:
+    name: 'Range geometry -> earned knockdown -> covered Teleport proximity conversion'
+    rule: '先用长肢/projectile塑造接近；拿到明确knockdown后才forward Teleport/Float进去，把远距结果换成近距frame advantage。'
+  key_numbers:
+  - {label: 'M Yoga Flame', value: 'KD +33', decision: 'S0 basic close ender。'}
+  - {label: 'M Yoga Blast', value: 'KD +42', decision: 'S0 identity route覆盖immediate forward Teleport。'}
+  - {label: 'M Blast -> forward P Teleport', value: 'point-blank +3', decision: 'earned close turn；raw Teleport不拥有这个+3。'}
+  - {label: 'forward throw', value: '+31', decision: 'S1 ordinary close-pressure owner。'}
+  - {label: 'corner H Blast -> L Blast', value: '+37', decision: 'S2/S3 exact corner setplay owner。'}
+  constraints:
+  - 'long-limb practical frames必须允许spacing/late-contact qualifier。'
+  - 'raw Teleport不得继承+3。'
+  - 'S0只允许一条earned forward Teleport identity route。'
+  - 'Float/Comet/Drill高度与spacing不能被压成单一固定frame。'
+  - '+37/+45/+51必须保留各自route/state owner。'
+  - 'Yoga Arch有效plus必须标delayed projectile travel。'
