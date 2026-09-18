@@ -167,8 +167,9 @@ opportunities:
     input: '2MK > CDR > 5MK > 5HP > M Eagle Spike'
     value: {drive: 3, carry: high}
     next_loop_package: EAGLE_RUN
-    why: 'S2把低段contact转换成位置和Run Oki。'
-    verification: verified
+    why: 'S2把低段contact转换成位置和Run Oki；实际Run距离仍由Eagle Spike命中spacing决定。'
+    verification: conditioned
+    conditions: [eagle_spike_spacing]
     sources: [SRC05]
 - id: cyclone
   title: 'Arabian Cyclone｜S2打开第一层移动分支'
