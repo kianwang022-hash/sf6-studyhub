@@ -1,0 +1,430 @@
+schema_version: '1.0'
+character: chunli
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT, READ]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 teaches stable SBK Oki plus exactly one earned Serenity Stream→Forward Strike→M SBK route and Up exit. Full stance overhead/low/continue tree starts S2; +45/+46 starts S3.'
+stages:
+  S0: {label: 最小可玩, short: 'Stable SBK / +15 Oki / one stance route'}
+  S1: {label: 基本功成型, short: '5MP +1 / Kikoken / CDR / stance exit'}
+  S2: {label: 实战结构化, short: 'Full stance continue-vs-exit tree'}
+  S3: {label: 选择成熟, short: 'OD choice / corner +35 / safe-jump states'}
+  S4: {label: 高分上探, short: 'SA2 air / lethal / matchup stance'}
+shared_packages:
+  SBK34:
+    label: 'M SBK +34 -> dash +15'
+    sequence: 'confirmed M Spinning Bird Kick hit -> forward dash'
+    next: '5MP / throw / walk-back shimmy'
+    verification: conditioned
+    conditions: [m_sbk_grounded_end_state]
+    sources: [SRC05]
+  SBK33:
+    label: 'Grounded H/L SBK +33 -> dash +14 family'
+    sequence: 'declared grounded Spinning Bird Kick hit -> forward dash'
+    next: '5MP / throw / shimmy'
+    verification: conditioned
+    conditions: [grounded_sbk_end_state]
+    sources: [SRC05]
+  STANCE_ROUTE:
+    label: 'Confirmed contact -> Serenity Stream -> Forward Strike -> M SBK'
+    sequence: 'confirmed cancelable normal -> Serenity Stream -> Forward Strike -> M Spinning Bird Kick'
+    next: 'SBK34 Oki'
+    verification: conditioned
+    conditions: [earned_stance_entry, stance_forward_strike_route]
+    sources: [SRC05]
+  MP1:
+    label: '5MP Block +1'
+    sequence: '5MP blocked -> +1'
+    next: '5LP frame trap / throw-read / walk-back'
+    verification: verified
+    sources: [SRC03, SRC05]
+  TENSHO37:
+    label: 'Grounded H Tensho +37'
+    sequence: 'H Tensho Kicks grounded hit -> +37'
+    next: 'dash +18 or PDR pressure'
+    verification: conditioned
+    conditions: [h_tensho_grounded_hit]
+    sources: [SRC05]
+  CORNER35:
+    label: 'Corner airborne H Tensho +35'
+    sequence: 'corner H Tensho Kicks airborne hit -> +35'
+    next: 'stance Lotus overhead / 2LK low / throw'
+    verification: conditioned
+    conditions: [corner, h_tensho_airborne_hit]
+    sources: [SRC05]
+  SAFE46:
+    label: 'Exact +46 -> 5F safe jump'
+    sequence: 'declared aerial route -> exact +46 -> immediate forward jump j.HK'
+    next: '5F safe-jump pressure'
+    verification: conditioned
+    conditions: [exact_safe46_state]
+    sources: [SRC05]
+  SAFE45:
+    label: 'Exact +45 -> 6F safe-jump family'
+    sequence: 'declared aerial route -> exact +45 -> forward jump'
+    next: '6F safe-jump family; verify 5F invincible reversal interaction'
+    verification: conditioned
+    conditions: [exact_safe45_state, reversal_interaction]
+    sources: [SRC05]
+opportunities:
+- id: medium
+  title: '5MP｜S0稳定SBK击倒'
+  stage: S0
+  subtitle: '先会完整普通回合'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '5MP > 2MP > M Spinning Bird Kick'
+    value: {drive: 0, kd: '+34'}
+    next_loop_package: SBK34
+    why: '当前Training Order第一条；先用最稳route拿到+15下一轮。'
+    verification: conditioned
+    conditions: [confirmed_hit, m_sbk_grounded_end_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Pressure
+    input: '5MP block -> 5LP'
+    value: {frame: '+1'}
+    next_loop_package: MP1
+    why: 'Chun-Li基础pressure不依赖stance。'
+    verification: verified
+    sources: [SRC03, SRC05]
+- id: low
+  title: 'Low｜S0低段确认'
+  stage: S0
+  subtitle: 'SBK只在hit-confirm后提交'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable low
+    input: '2LK > 2LP > L Spinning Bird Kick'
+    value: {drive: 0, kd: '+33'}
+    next_loop_package: SBK33
+    why: '最低复杂度低段confirm；同时建立SBK不能raw block提交的纪律。'
+    verification: conditioned
+    conditions: [confirmed_hit, grounded_sbk_end_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '2LK block -> 2LP check / stop'
+    value: {drive: 0}
+    next_loop: '回5MP / spacing / throw-read'
+    why: 'SBK被防非常危险，没确认就不提交。'
+    verification: verified
+    sources: [SRC03]
+- id: oki
+  title: 'M SBK｜S0先把+15下一轮跑通'
+  stage: S0
+  subtitle: 'strike / throw / shimmy'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Strike
+    input: 'M Spinning Bird Kick hit +34 -> forward dash +15 -> 5MP'
+    value: {frame: '+15 after dash'}
+    next_loop: 'block -> MP1; hit -> confirm again'
+    why: '先用最稳定meaty/contact持续回合。'
+    verification: conditioned
+    conditions: [m_sbk_grounded_end_state]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Throw
+    input: 'M Spinning Bird Kick hit +34 -> forward dash +15 -> throw'
+    value: {frame: '+15 after dash'}
+    next_loop: 'opponent tech/jump -> shimmy/anti-air next time'
+    why: '基础strike/throw反馈，不需要stance才能成立。'
+    verification: conditioned
+    conditions: [m_sbk_grounded_end_state, opponent_blocking]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Shimmy
+    input: 'M Spinning Bird Kick hit +34 -> forward dash +15 -> walk back'
+    value: {frame: '+15 after dash'}
+    next_loop: 'whiffed throw -> 2MP punish / reset'
+    why: '对手开始tech以后再用。'
+    verification: conditioned
+    conditions: [m_sbk_grounded_end_state, opponent_throw_tech]
+    sources: [SRC05]
+- id: anti_air
+  title: 'Anti-air｜S0先用H Tensho'
+  stage: S0
+  subtitle: '先把跳压回地面'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Anti-air
+    input: 'opponent jump -> H Tensho Kicks'
+    value: {kd: 'state depends on grounded/airborne contact'}
+    next_loop: '确认hit state后再选Oki'
+    why: '先有稳定anti-air；grounded与airborne后续不能混。'
+    verification: conditioned
+    conditions: [anti_air_state_check]
+    sources: [SRC03, SRC05]
+- id: stance_route
+  title: 'Serenity Stream｜S0只学一条route价值'
+  stage: S0
+  subtitle: '不是先学完整mix'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable stance route
+    input: '2HP hit > Serenity Stream > Forward Strike > M Spinning Bird Kick'
+    value: {drive: 0, kd: '+34'}
+    next_loop_package: SBK34
+    why: '证明stance能把confirmed contact重新路由到SBK，而不是让你在neutral裸进stance。'
+    verification: conditioned
+    conditions: [confirmed_hit, earned_stance_entry, stance_forward_strike_route, m_sbk_grounded_end_state]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Exit
+    input: 'Serenity Stream entered but no branch is worth committing -> Up exit'
+    value: {commitment: 'exit'}
+    next_loop: 'return to neutral / block / reposition'
+    why: 'Year4 minimum identity包含“不继续”的选择。'
+    verification: conditioned
+    conditions: [serenity_stream_active]
+    sources: [SRC02, SRC03]
+- id: kikoken
+  title: 'Kikoken｜S1把地面控制接回pressure'
+  stage: S1
+  subtitle: 'projectile不是另一个小游戏'
+  rows:
+  - result: READ
+    stage: S1
+    choice: Walk pressure
+    input: 'L Kikoken spacing -> walk forward'
+    value: {spacing: 'projectile-covered'}
+    next_loop: 'throw / 5MP / walk-back 2MP'
+    why: '用飞道把对手留在地面，再回基础strike/throw。'
+    verification: conditioned
+    conditions: [kikoken_spacing]
+    sources: [SRC05]
+  - result: READ
+    stage: S1
+    choice: Drive layer
+    input: 'L Kikoken -> Parry Drive Rush'
+    value: {drive: 1}
+    next_loop: '2LK / throw / Yokusen / Water Lotus Fist'
+    why: 'S1只把projectile与已有低段/投/overhead连接，不提前堆stance。'
+    verification: conditioned
+    conditions: [kikoken_spacing, drive_resource]
+    sources: [SRC05]
+- id: drive
+  title: '2MK CDR｜S1正式把Drive接入stance route'
+  stage: S1
+  subtitle: '低段opening -> stable stance conversion'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Stable route
+    input: '2MK > CDR > 5MP > Hakkei > Serenity Stream > Forward Strike > M Spinning Bird Kick'
+    value: {drive: 3, kd: '+34'}
+    next_loop_package: SBK34
+    why: '把通用2MK DRC转换成Chun-Li特有的stance-to-SBK route。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, earned_stance_entry, stance_forward_strike_route]
+    sources: [SRC05]
+- id: tensho_oki
+  title: 'H Tensho｜S1开始区分grounded state'
+  stage: S1
+  subtitle: 'grounded +37 ≠ corner airborne +35'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Grounded Oki
+    input: 'H Tensho Kicks grounded hit +37 -> forward dash'
+    value: {kd: '+37 -> dash +18'}
+    next_loop_package: TENSHO37
+    why: '先学grounded版本；airborne/corner分支后置。'
+    verification: conditioned
+    conditions: [h_tensho_grounded_hit]
+    sources: [SRC05]
+- id: stance_tree
+  title: 'Serenity Stream｜S2才打开continue-vs-exit树'
+  stage: S2
+  subtitle: 'overhead / low / pressure / exit按防守行为选'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Plus overhead
+    input: 'earned Serenity Stream entry -> Lotus Fist'
+    value: {frame: 'Block +1 CURRENT'}
+    next_loop: '5LP / throw-read / continue pressure'
+    why: '对手固定蹲防后，用current +1 stance overhead继续回合。'
+    verification: conditioned
+    conditions: [earned_stance_entry, stance_lotus_fist]
+    sources: [SRC02, SRC03, SRC05]
+  - result: READ
+    stage: S2
+    choice: Low route
+    input: 'earned Serenity Stream entry -> Forward Strike'
+    value: {frame: 'Block -5'}
+    next_loop: 'on hit -> confirmed route; on block -> respect turn end'
+    why: '打只站防的对手；不能把负帧低段当永续pressure。'
+    verification: conditioned
+    conditions: [earned_stance_entry, stance_forward_strike]
+    sources: [SRC03]
+  - result: READ
+    stage: S2
+    choice: Frame-trap route
+    input: 'Hakkei or 2HP -> Serenity Stream -> Orchid Palm'
+    value: {gap: '2F / 1F family'}
+    next_loop: 'CDR damage / H Kikoken / reset'
+    why: '对手4F mash时用明确cancel timing的pressure route。'
+    verification: conditioned
+    conditions: [earned_stance_entry, orchid_cancel_timing]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Exit
+    input: 'earned Serenity Stream entry -> Up exit'
+    value: {commitment: 'exit'}
+    next_loop: 'block / walk / neutral'
+    why: '对手等stance分支时，不继续本身就是成熟选择。'
+    verification: conditioned
+    conditions: [serenity_stream_active]
+    sources: [SRC02, SRC03]
+- id: corner_meaty
+  title: 'Corner M SBK｜S2 exact meaty'
+  stage: S2
+  subtitle: '角落才有这套预算'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Active meaty
+    input: 'corner M Spinning Bird Kick +34 -> 2MP whiff -> Hakkei'
+    value: {frame: 'Hakkei Hit +10 / Block +4 family'}
+    next_loop: 'stance / strike / throw by response'
+    why: '把稳定SBK ender升级成角落active-frame pressure。'
+    verification: conditioned
+    conditions: [corner, m_sbk_grounded_end_state, exact_meaty_timing]
+    sources: [SRC05]
+- id: drive_value
+  title: 'OD SBK｜S3比较Oki与damage'
+  stage: S3
+  subtitle: '同一个opening不只看伤害'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Oki/carry
+    input: '5MP > 2MP > OD Spinning Bird Kick > L Spinning Bird Kick'
+    value: {drive: 2, purpose: 'carry/oki'}
+    next_loop: 'declared knockdown Oki'
+    why: '花Drive换位置与下一轮。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: Damage
+    input: '5MP > 2MP > OD Spinning Bird Kick > H Tensho Kicks'
+    value: {drive: 2, purpose: 'damage'}
+    next_loop: 'state-specific Tensho Oki'
+    why: '同样资源在回合价值需要伤害时改选cashout。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource]
+    sources: [SRC05]
+- id: corner35
+  title: 'Corner H Tensho｜S3高低投setplay'
+  stage: S3
+  subtitle: '只绑定airborne +35'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Overhead
+    input: 'corner H Tensho Kicks airborne hit +35 -> Serenity Stream -> Lotus Fist'
+    value: {kd: '+35'}
+    next_loop: 'overhead meaty -> current +1 pressure if blocked'
+    why: 'exact corner airborne state才有这套stance meaty。'
+    verification: conditioned
+    conditions: [corner, h_tensho_airborne_hit, earned_stance_entry]
+    sources: [SRC05]
+  - result: READ
+    stage: S3
+    choice: Low
+    input: 'corner H Tensho Kicks airborne hit +35 -> Serenity Stream -> immediate 2LK'
+    value: {kd: '+35'}
+    next_loop: 'low confirm / pressure'
+    why: '与overhead成对，只存在于声明state。'
+    verification: conditioned
+    conditions: [corner, h_tensho_airborne_hit]
+    sources: [SRC05]
+  - result: READ
+    stage: S3
+    choice: Throw
+    input: 'corner H Tensho Kicks airborne hit +35 -> Serenity Stream -> throw'
+    value: {kd: '+35'}
+    next_loop: 'corner throw state'
+    why: '对手站着等高低以后加入throw。'
+    verification: conditioned
+    conditions: [corner, h_tensho_airborne_hit, opponent_respect]
+    sources: [SRC05]
+- id: safejump
+  title: 'Safe Jump｜S3才记+46/+45 exact state'
+  stage: S3
+  subtitle: '绝不泛化成“Chun-Li +46”'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: +46
+    input: 'exact aerial route end +46 -> immediate forward jump > j.HK'
+    value: {kd: '+46', safe_jump: '5F'}
+    next_loop_package: SAFE46
+    why: '只在明确+46 route state使用。'
+    verification: conditioned
+    conditions: [exact_safe46_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: +45
+    input: 'exact aerial route end +45 -> forward jump'
+    value: {kd: '+45', safe_jump: '6F family'}
+    next_loop_package: SAFE45
+    why: '5F invincible reversal interaction必须保留，训练场复核。'
+    verification: conditioned
+    conditions: [exact_safe45_state, reversal_interaction, training_mode_check]
+    sources: [SRC05]
+- id: super
+  title: 'Super｜S4才打开SA2 air route'
+  stage: S4
+  subtitle: '不让air combo成为入门门槛'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA2 air
+    input: 'confirmed route -> SA2 -> forward jump > j.MP > Yoso Kick x2 > Soaring Eagle Punches'
+    value: {sa: 2}
+    next_loop: 'aerial end-state / corner route by screen position'
+    why: 'SA2 jump-cancel air route属于后置execution与damage层。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource, sa2_jump_cancel_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: 'Hakkei > L Hazanshu > SA3'
+    value: {sa: 3}
+    next_loop: 'round-state / lethal'
+    why: '稳定cashout；不改变stance/charge主线。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource]
+    sources: [SRC05]
+backend_only:
+- {label: 'raw neutral Serenity Stream tree', reason: 'violates earned-entry learner model'}
+- {label: 'all SBK is charge-free', reason: 'false generalization from stance route'}
+- {label: 'generic Lotus +1', reason: 'stance Lotus Fist only; 3HP remains -3'}
+- {label: 'generic +45/+46 safe jump', reason: 'exact route state required'}
+- {label: 'grounded/airborne Tensho merged value', reason: 'state leakage'}

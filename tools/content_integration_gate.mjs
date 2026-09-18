@@ -47,7 +47,8 @@ const chars = [
   { slug:'marisa', group:'base', normals:18, learn:['S0｜最小可玩','Enfold','+42'], ref:['charged 5HP','Phalanx','Enfold'], practical:['Enfold','fully charged'], candidate:true },
   { slug:'lily', group:'base', normals:18, learn:['S0｜最小可玩','Windclad','Mexican Typhoon'], ref:['Normal vs Windclad Spire','Mexican Typhoon','+52'], practical:['Mexican Typhoon','Windclad H Condor Spire'], candidate:true },
   { slug:'manon', group:'base', normals:18, learn:['S0｜最小可玩','Medal','H Rond-point'], ref:['Medal Level','Manège Doré','Throw Aftermath'], practical:['Manège Doré','Medal Level'], candidate:true },
-  { slug:'alex', group:'year3', normals:18, learn:['S0｜最小可玩','Prowler','4MK'], ref:['+42','Flying Cross Chop','Power Bomb'], practical:['Power Bomb','Prowler','Flying Cross Chop'], candidate:true }
+  { slug:'alex', group:'year3', normals:18, learn:['S0｜最小可玩','Prowler','4MK'], ref:['+42','Flying Cross Chop','Power Bomb'], practical:['Power Bomb','Prowler','Flying Cross Chop'], candidate:true },
+  { slug:'chunli', group:'base', normals:18, learn:['S0｜最小可玩','Serenity Stream','Up exit'], ref:['Lotus Fist','+46','charge'], practical:['Serenity Stream','Spinning Bird Kick','safe-jump'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -468,9 +469,54 @@ for (const c of chars) {
     assert((practical.opportunities ?? []).some((op) => op.id === 'prowler_entry' && op.stage === 'S0'), 'alex: S0 earned Prowler entry missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'prowler_tree' && op.stage === 'S2'), 'alex: S2 full Prowler tree missing');
   }
+  if (c.slug === 'chunli') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === 'C', 'chunli: 2MK must remain cancelable');
+    assert(/Temporary Serenity Stream routing.*charge bypass/i.test(role?.signature_mechanic?.name ?? ''), 'chunli: temporary-stance charge-bypass signature owner missing');
+    const roleText = JSON.stringify(role);
+    assert(/stance Lotus Fist[\s\S]{0,160}Block \+1|Lotus Fist.*Block \+1/i.test(roleText), 'chunli: current stance Lotus Fist +1 truth missing');
+    assert(/Water Lotus Fist[\s\S]{0,120}-3/i.test(roleText) || /3HP Water Lotus Fist -3/i.test(roleText), 'chunli: 3HP Water Lotus Fist -3 boundary missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+
+        if (stage === 'S0' && /Serenity Stream/i.test(input)) {
+          const allowedS0Stance = /Forward Strike.*M Spinning Bird Kick/i.test(input) || /Up exit/i.test(input);
+          assert(allowedS0Stance, 'chunli: full Serenity Stream branch tree leaked into S0');
+        }
+        if (/Lotus Fist|Orchid Palm|Snake Strike|Senpu Kick|Tenku Kick/i.test(input) && /Serenity Stream|stance/i.test(input + ' ' + String(op.title ?? ''))) {
+          if (!/Forward Strike/i.test(input)) assert(stage === 'S2' || stage === 'S3' || stage === 'S4', 'chunli: full stance branch must remain S2+');
+        }
+        if (/Lotus Fist/i.test(input)) {
+          assert(/earned_stance_entry/i.test(conditions), 'chunli: stance Lotus Fist row missing earned stance entry');
+        }
+        const sbkRoute = /Spinning Bird Kick/i.test(input);
+        if (sbkRoute && !/Spinning Bird Kick hit/i.test(input)) {
+          assert(/confirmed_hit|earned_stance_entry|m_sbk_grounded_end_state|grounded_sbk_end_state/i.test(conditions), 'chunli: SBK route lost hit-confirm/earned-entry/end-state truth');
+        }
+        const uses46 = /\+46/.test(rowText);
+        if (uses46) assert(/exact_safe46_state/i.test(conditions), 'chunli: +46 safe jump lost exact-state truth');
+        const uses45 = /\+45/.test(rowText);
+        if (uses45) assert(/exact_safe45_state/i.test(conditions) && /reversal_interaction/i.test(conditions), 'chunli: +45 safe jump lost exact-state/reversal truth');
+        const uses37 = /\+37/.test(rowText) && /Tensho/i.test(input + ' ' + String(op.title ?? ''));
+        if (uses37) assert(/h_tensho_grounded_hit/i.test(conditions), 'chunli: H Tensho +37 lost grounded-hit truth');
+        const uses35 = /\+35/.test(rowText) && /Tensho/i.test(input + ' ' + String(op.title ?? ''));
+        if (uses35) assert(/corner/i.test(conditions) && /h_tensho_airborne_hit/i.test(conditions), 'chunli: H Tensho +35 lost corner/airborne truth');
+        if (/Water Lotus Fist/i.test(input) && /\+1/.test(rowText)) {
+          assert(false, 'chunli: stance Lotus +1 leaked onto 3HP Water Lotus Fist');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'stance_route' && op.stage === 'S0'), 'chunli: S0 single stance-route opportunity missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'stance_tree' && op.stage === 'S2'), 'chunli: S2 full stance tree missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'safejump' && op.stage === 'S3'), 'chunli: S3 exact safe-jump opportunity missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 19 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 20 content candidates | Learn + Role + Practical + Reference + resolved source registries');
