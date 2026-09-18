@@ -51,7 +51,8 @@ const chars = [
   { slug:'chunli', group:'base', normals:18, learn:['S0｜最小可玩','Serenity Stream','Up exit'], ref:['Lotus Fist','+46','charge'], practical:['Serenity Stream','Spinning Bird Kick','safe-jump'], candidate:true },
   { slug:'aki', group:'year1', normals:18, learn:['S0｜最小可玩','H Serpent Lash','poison'], ref:['+69','Orchid Spring','Drive Parry'], practical:['H Serpent Lash','opponent poisoned','Orchid Spring'], candidate:true },
   { slug:'ed', group:'year1', normals:18, learn:['S0｜最小可玩','M Psycho Blitz','charged Flicker'], ref:['back throw','Psycho Knuckle','+42'], practical:['M Psycho Blitz','charged L/M Psycho Flicker','Psycho Knuckle'], candidate:true },
-  { slug:'jp', group:'base', normals:18, learn:['S0｜最小可玩','Departure','M Stribog'], ref:['+42','OD Amnesia','Lovushka'], practical:['Departure','M Stribog','OD Torbalan'], candidate:true }
+  { slug:'jp', group:'base', normals:18, learn:['S0｜最小可玩','Departure','M Stribog'], ref:['+42','OD Amnesia','Lovushka'], practical:['Departure','M Stribog','OD Torbalan'], candidate:true },
+  { slug:'ingrid', group:'year3', normals:18, learn:['S0｜最小可玩','Sun Shot Stock','Sun Flare Lv2'], ref:['OD Lv3','+44','Sun Veil'], practical:['stock_level_1','OD Sun Flare Lv3','Sun Veil'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -685,9 +686,79 @@ for (const c of chars) {
     assert((practical.opportunities ?? []).some((op) => op.id === 'od_torbalan' && op.stage === 'S3'), 'jp: S3 OD Torbalan owner missing');
     assert((practical.opportunities ?? []).some((op) => op.id === 'super' && op.stage === 'S4'), 'jp: S4 Lovushka owner missing');
   }
+  if (c.slug === 'ingrid') {
+    assert(/Sun Shot Stock/i.test(role?.resource?.name ?? ''), 'ingrid: Sun Shot Stock resource owner missing');
+    assert(/Zero-stock base loop.*safe stock investment.*future Sun Flare plus-turn amplification/i.test(role?.signature_mechanic?.name ?? ''), 'ingrid: future-turn amplification signature owner missing');
+
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const value = row?.value ?? {};
+        const rowText = JSON.stringify(row);
+        const stockGain = Number(value?.stock_gain ?? 0);
+        const stockSpend = Number(value?.stock_spend ?? 0);
+
+        if (stage === 'S0') {
+          assert(stockSpend === 0, 'ingrid: S0 must not spend stock');
+          assert(!/Sun Flare Lv[23]|OD Sun Flare|SA2|Order of the Sun/i.test(input), 'ingrid: stock-spend/super layer leaked into S0');
+        }
+
+        if (stockGain > 0) {
+          assert(/safe_resource_window/i.test(conditions), 'ingrid: stock build missing safe resource window');
+          if (stage === 'S0') assert(stockGain === 1, 'ingrid: S0 may build only one stock');
+        }
+
+        if (stockSpend === 1 || /Sun Flare Lv2/i.test(input)) {
+          assert(/stock_level_1/i.test(conditions), 'ingrid: Lv2 / one-stock spend lost stock_level_1');
+          assert(stage === 'S1' || stage === 'S2' || stage === 'S3' || stage === 'S4', 'ingrid: one-stock spend appears before S1');
+        }
+
+        if (stockSpend >= 2 || /Sun Flare Lv3/i.test(input)) {
+          assert(/stock_level_2/i.test(conditions), 'ingrid: Lv3 / two-stock spend lost stock_level_2');
+          assert(stage === 'S2' || stage === 'S3' || stage === 'S4', 'ingrid: two-stock layer must remain S2+');
+        }
+
+        if (/OD Sun Flare Lv3/i.test(input)) {
+          assert(/stock_level_2/i.test(conditions) && /drive_resource/i.test(conditions) && /od_sun_flare_lv3/i.test(conditions), 'ingrid: OD Lv3 lost stock/Drive/exact-state truth');
+        }
+
+        if (/\+9\.\.\+13|\+87/.test(rowText)) {
+          assert(/stock_level_2/i.test(conditions) && /od_sun_flare_lv3/i.test(conditions), 'ingrid: OD Lv3 big frame budget lost two-stock owner');
+        }
+
+        if (/about \+38|\+38/.test(rowText) && /M Sun Rise/i.test(input)) {
+          assert(/selected_m_sun_rise_route/i.test(conditions) && /hit_height_verified/i.test(conditions), 'ingrid: M Sun Rise +38 lost route/height owner');
+        }
+
+        if (/4MK > HP/i.test(input) && /\+44/.test(rowText)) {
+          assert(/tc_4mk_hp_plus44/i.test(conditions), 'ingrid: +44 target-combo setup lost exact owner');
+        }
+
+        if (/2HK Punish Counter/i.test(input) && /\+45/.test(rowText)) {
+          assert(/two_hk_punish_counter/i.test(conditions), 'ingrid: +45 sweep PC setup lost punish-counter owner');
+        }
+
+        if (/M Sun Shot active meaty/i.test(input) && /Block \+6|block.*\+6/i.test(rowText)) {
+          assert(/corner/i.test(conditions) && /forward_throw_end_state/i.test(conditions) && /m_sun_shot_active_meaty/i.test(conditions), 'ingrid: corner Sun Shot +6 lost exact setup');
+        }
+
+        if (/SA2|Order of the Sun/i.test(input)) {
+          assert(stage === 'S4', 'ingrid: SA2 must remain S4');
+        }
+      }
+    }
+
+    assert((practical.opportunities ?? []).some((op) => op.id === 'resource' && op.stage === 'S0'), 'ingrid: S0 one-stock build owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'first_spend' && op.stage === 'S1'), 'ingrid: S1 first stock-spend owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'two_stock' && op.stage === 'S2'), 'ingrid: S2 two-stock owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'exact_setplay' && op.stage === 'S3'), 'ingrid: S3 exact-setplay owner missing');
+    assert((practical.opportunities ?? []).some((op) => op.id === 'super' && op.stage === 'S4'), 'ingrid: S4 super owner missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 23 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 24 content candidates | Learn + Role + Practical + Reference + resolved source registries');

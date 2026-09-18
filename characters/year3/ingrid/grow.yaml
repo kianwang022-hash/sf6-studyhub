@@ -1,0 +1,116 @@
+schema_version: '1.1'
+character: ingrid
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先稳定zero-stock Sun Rise回合，再学安全拿1 stock；第一次花1 stock后才进入2-stock与高资源层。'
+  score_rule: 'Rank/MR是Reality evidence，不替代stock_level、Sun Rise route/height、corner、active-frame与resource-window条件。'
+  current_ui: 'S0 zero-stock + one safe stock build；S1 first Lv2 spend；S2 hold-vs-spend / 2 stock；S3 exact setplay / Veil；S4 SA2。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '跑通三条M Sun Rise confirm、一个声明Oki owner、Sun Shot/2HP，以及一次安全拿1 stock。'
+    add_now:
+      - '2LK > 5LP > 5LK > M Sun Rise。'
+      - '5MP > 5MK > M Sun Rise。'
+      - '2MP > 5LK > M Sun Rise。'
+      - 'selected M Sun Rise Oki。'
+      - 'Sun Shot neutral control。'
+      - '2HP anti-air。'
+      - 'safe window -> hold L Sun Flare about47F -> 1 stock。'
+    gate:
+      lab: 'Sun Rise只在confirm后提交；能区分“拿stock”和“花stock”。'
+      match: '不会机械攒2 stock；当前pressure值钱时会跳过resource action。'
+    defer: ['Lv2 spend', '2-stock', 'OD Lv3', 'exact +44/+45 setplay', 'Sun Veil deep Oki', 'SA2']
+    hub_focus: [low, medium, rise_oki, projectile, anti_air, resource]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '第一次把1 stock换成Sun Flare Lv2 plus turn，并形成资源消费反馈。'
+    add_now:
+      - 'stock_level_1 -> Sun Flare Lv2。'
+      - 'Lv2 Block +4+ -> strike / throw / shimmy。'
+      - 'Lv2 hit +68+ family。'
+      - 'stock spend后回zero-stock loop。'
+      - 'DR cr.HP / DR st.HK ordinary plus pressure。'
+    gate:
+      match: '能解释为什么当前opening值得花1 stock；不会为了“有资源”机械消费。'
+    defer: ['2-stock / OD Lv3', 'H Sun Shot air conversion', 'exact setplay']
+    hub_focus: [first_spend]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '正式学习hold vs spend、第二层stock、OD Lv3和Year4 H Sun Shot conversion。'
+    add_now:
+      - 'stock_level_1 hold vs spend。'
+      - 'very safe window -> build second stock。'
+      - 'stock_level_2 Sun Flare Lv3。'
+      - 'stock_level_2 OD Lv3 +9..+13 / +87+。'
+      - 'H Sun Shot airborne hit -> DR route。'
+      - '一条CDR route。'
+    gate:
+      match: '能根据位置、资源、当前pressure解释保留/花费/继续建stock。'
+    defer: ['+44/+45 exact setplay', 'corner projectile meaty', 'SA2']
+    hub_focus: [stock_choice, two_stock, h_sun_shot, drive]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'exact +44/+45、corner active-meaty、Sun Veil状态与更深Sun Rise setup进入。'
+    add_now:
+      - '4MK>HP +44 -> double dash +4。'
+      - '2HK PC +45 -> double dash +5。'
+      - 'corner forward throw +21 -> dash +1。'
+      - 'corner M Sun Shot active meaty。'
+      - 'Sun Veil +23 / OD +52 aftermath。'
+      - 'selected Sun Rise active-frame setplay。'
+    gate:
+      behavior: '所有大帧数都保留exact owner；防守/资源state不混。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['SA2 high-stock route', 'max two-stock cashout']
+    hub_focus: [exact_setplay, corner, sun_veil]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA2、SA3 lethal、max stock cashout、matchup projectile cadence与height lab进入。'
+    add_now:
+      - 'SA2 Order of the Sun。'
+      - 'SA3 lethal。'
+      - 'max 2-stock route。'
+      - 'matchup Sun Shot cadence。'
+      - 'character-specific Sun Rise height / active-frame lab。'
+    gate:
+      behavior: '高级stock/super route不让zero-stock loop与safe-window纪律退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, two_stock, exact_setplay]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'M Sun Rise confirm稳定', node: low, upgrade_evidence: 'block时停，不提交-23 ender。'}
+    - {id: EX02, stage: S0, label: '1-stock build稳定', node: resource, upgrade_evidence: '只有safe window才做约47F资源动作。'}
+    - {id: EX03, stage: S2, label: 'OD Lv3 stock/resource输入稳定', node: two_stock, upgrade_evidence: 'stock_level_2与Drive条件不串。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'Sun Shot服务ground contact', node: projectile, upgrade_evidence: 'projectile后有walk/normal/anti-air计划。'}
+    - {id: NE02, stage: S0, label: '不机械farm stock', node: resource, upgrade_evidence: 'pressure值钱时会跳过resource。'}
+    - {id: NE03, stage: S2, label: 'H Sun Shot airborne conversion', node: h_sun_shot, upgrade_evidence: '只在airborne hit进入DR。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'Sun Rise aftermath不泛化', node: rise_oki, upgrade_evidence: '能说出当前是selected route owner。'}
+    - {id: CO02, stage: S1, label: '1-stock spend有理由', node: first_spend, upgrade_evidence: '能说出stock买到了plus turn。'}
+    - {id: CO03, stage: S3, label: '+44/+45/+21 exact owner分清', node: exact_setplay, upgrade_evidence: '数字不跨route。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'zero-stock Sun Rise Oki闭环', node: rise_oki, upgrade_evidence: 'strike/throw/shimmy能回confirm。'}
+    - {id: OF02, stage: S1, label: 'Lv2 plus-turn feedback', node: first_spend, upgrade_evidence: '花stock后能把+4变成下一轮。'}
+    - {id: OF03, stage: S3, label: 'corner active-meaty loop', node: corner, upgrade_evidence: '只在exact corner state运行。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: 'jump→2HP', node: anti_air, upgrade_evidence: '不依赖high-stock工具处理跳。'}
+    - {id: DA02, stage: S2, label: '对手压resource window会停farm', node: stock_choice, upgrade_evidence: '转normal/projectile反制。'}
+    - {id: DA03, stage: S4, label: 'matchup stock/projectile cadence调整', node: super, upgrade_evidence: '资源节奏按对手变化。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'zero-stock Sun Rise loop + one safe stock investment先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'first Lv2 spend / plus feedback多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'hold-vs-spend / 2-stock / Drive结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；stock/exact-state不泄漏。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA2 / max stock围绕真实高分瓶颈。'}

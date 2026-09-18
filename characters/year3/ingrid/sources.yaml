@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: ingrid
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Ingrid', url: 'https://www.streetfighter.com/6/en-us/character/ingrid/frame', game_version: current, covers: [frames, damage, cancel_properties, commands]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Ingrid Frame Data', url: 'https://sf6-lab.net/en/fighters/ingrid/frame', freshness: 'official-reference data through 2026-08-27; checked 2026-09-19', covers: [frames, normals, sun_shot_stock, sun_flare, sun_rise, sun_veil, vanishing_sun, supers]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Ingrid Move List', url: 'https://sf6-lab.net/en/fighters/ingrid/moves', freshness: 'checked 2026-09-19', covers: [commands, stock_levels, specials, supers]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Ingrid Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/ingrid/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, stock_progression, sun_flare_levels, active_meaty, sa2, current_game_plan]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official-reference / Year4 maintained data overrides older assumptions; Sun Rise aftermath, spacing, airborne hit, stock level, active-frame timing and corner state remain part of the fact'
+  route_publish_rule: 'verified / conditioned / provisional required; Sun Rise advantage must be tied to the declared route/hit height, and Sun Flare plus values must carry stock level'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Year4 frame and combo/setplay material explicitly closes stock progression and current game plan'
+  learner_projection_rule: 'S0 teaches zero-stock stable Sun Rise loop plus one safe one-stock build; first deliberate Lv2 Sun Flare spend S1; 2-stock/OD Lv3 and SA2 later'
