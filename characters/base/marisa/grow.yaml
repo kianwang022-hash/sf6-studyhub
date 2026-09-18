@@ -1,0 +1,112 @@
+schema_version: '1.1'
+character: marisa
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让高伤strike与+31/+36 Oki成立，再加入Enfold，随后+42、charged/Scutum与最大现金化。'
+  score_rule: 'Rank/MR是Reality evidence，不替代respect、charge timing、armor risk与Oki条件判断。'
+  current_ui: 'Enfold不进S0；+42 S2；charged/Scutum S3。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通light→+31、5MP→Gladius damage、5MP→+36 Oki与cr.MP基础route。'
+    add_now:
+      - 'light→L Dimachaerus +31。'
+      - '5MP target→M Gladius。'
+      - '5MP target→M Dimachaerus +36。'
+      - 'cr.MP→M Gladius。'
+      - '认识normal vs charged attack，但不要求charged主线。'
+    gate:
+      lab: '四条基础route稳定。'
+      match: '不靠Enfold也能用strike/Oki打完整回合。'
+    defer: ['Enfold主线', '+42', 'charged plus pressure', 'Scutum', 'max punish']
+    hub_focus: [light, medium]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '+31/+36 meaty先建立respect，再第一次加入Enfold与shimmy反馈。'
+    add_now:
+      - '+31→6HK active meaty。'
+      - '+36→DR 6HK strike/throw。'
+      - '对手开始block后加入Enfold。'
+      - 'forward throw +23→dash +1。'
+      - 'H Quadriga block +1。'
+    gate:
+      match: 'Enfold只在respect/read下出现；被jump/backwalk后会转strike/shimmy。'
+    defer: ['+42', 'charged corner mix', 'Scutum']
+    hub_focus: [respect, medium]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: 'cr.MP CDR、Phalanx +42与damage/Oki选择进入。'
+    add_now:
+      - 'cr.MP CDR damage route。'
+      - 'cr.MP/5MP Phalanx +42 route。'
+      - '+42 safe jump。'
+      - 'DR overhead。'
+      - '明确damage vs +31/+36 vs +42选择。'
+    gate:
+      match: '能解释为什么这次选damage或Oki，不只追最大数字。'
+    defer: ['charged 4HP vs Enfold', 'Scutum', 'max route']
+    hub_focus: [drive, safe_jump, respect]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'charged heavy/Gladius、corner charged 4HP vs Enfold与Scutum进入，但charge commitment有理由。'
+    add_now:
+      - 'charged 5HP +5。'
+      - 'corner charged 4HP +4 vs Enfold。'
+      - 'charged Gladius +4。'
+      - 'Scutum reversal-bait / delayed Enfold。'
+      - 'active-frame Quadriga。'
+    gate:
+      behavior: '不会因为plus/armor就机械蓄满；被whiff/punish后会调整。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['max punish / Burnout full tree']
+    hub_focus: [charged, scutum, respect]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: '最大punish、OD Quadriga、Burnout与SA进入，基础respect反馈不退化。'
+    add_now:
+      - 'max reversal punish。'
+      - 'OD Quadriga corner route。'
+      - 'Burnout Quadriga pressure。'
+      - 'SA cashout。'
+      - 'matchup-specific armor/Enfold frequency。'
+    gate:
+      behavior: '高资源优化不让strike-first原则退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, charged, scutum]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '+31/+36基础route稳定', node: medium, upgrade_evidence: 'light和5MP starter不掉。'}
+    - {id: EX02, stage: S2, label: '+42 Phalanx route稳定', node: safe_jump, upgrade_evidence: 'exact ender才能safe jump。'}
+    - {id: EX03, stage: S3, label: 'charged release timing稳定', node: charged, upgrade_evidence: 'full charge和normal release不混。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'armor不是autopilot', node: medium, upgrade_evidence: '会根据startup/range选择Gladius。'}
+    - {id: NE02, stage: S1, label: 'respect先于Enfold', node: respect, upgrade_evidence: 'command grab不会第一拍乱猜。'}
+    - {id: NE03, stage: S3, label: 'charged频率按对手反应调', node: charged, upgrade_evidence: '被interrupt/whiff punish会降频。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'damage vs Oki能分流', node: medium, upgrade_evidence: 'M Gladius / M Dimachaerus选择有理由。'}
+    - {id: CO02, stage: S1, label: 'Enfold按respect选', node: respect, upgrade_evidence: '被jump/backwalk后会调整。'}
+    - {id: CO03, stage: S3, label: 'charged plus带full-charge truth', node: charged, upgrade_evidence: '不会把normal帧差写成charged。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: '+31/+36 strike闭环', node: medium, upgrade_evidence: 'Oki后能回下一Turn。'}
+    - {id: OF02, stage: S1, label: 'strike/Enfold/shimmy闭环', node: respect, upgrade_evidence: '三者按防守反馈互相增强。'}
+    - {id: OF03, stage: S3, label: 'charged/Scutum回核心Loop', node: scutum, upgrade_evidence: '高阶read结束仍回respect。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: 'Enfold被jump会调整', node: respect, upgrade_evidence: '转anti-air/strike/shimmy。'}
+    - {id: DA02, stage: S3, label: 'armor被投/interrupt会调整', node: charged, upgrade_evidence: '不会机械charge。'}
+    - {id: DA03, stage: S4, label: 'matchup respect频率调整', node: super, upgrade_evidence: 'command grab/armor按对手变化。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: '高伤strike/+31/+36先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: 'respect→Enfold反馈循环多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'CDR/+42/damage-vs-Oki结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；charged/Scutum不破坏基础。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'max punish/Burnout/SA围绕真实高分瓶颈。'}

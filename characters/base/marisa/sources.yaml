@@ -1,0 +1,16 @@
+schema_version: '1.1'
+character: marisa
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Marisa', url: 'https://www.streetfighter.com/6/en-us/character/marisa/frame', game_version: current, covers: [frames, damage, armor, cancel_properties]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Marisa Frame Data', url: 'https://sf6-lab.net/en/fighters/marisa/frame', freshness: 'official-reference data through 2026-08-27; checked 2026-09-19', covers: [frames, charged_normals, gladius, phalanx, quadriga, scutum, enfold]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Marisa Move List', url: 'https://sf6-lab.net/en/fighters/marisa/moves', freshness: 'checked 2026-09-19', covers: [normals, unique_attacks, specials, supers, commands]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Marisa Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/marisa/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, training_priorities, dimachaerus, phalanx, quadriga, enfold, safe_jump]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC00]
+  numeric_conflict_rule: 'current official-reference frame data overrides secondary/local; charged timing, active-frame timing, corner spacing and safe-jump states remain conditioned'
+  route_publish_rule: 'verified / conditioned / provisional required; charged attacks keep charge-time truth and Enfold enters only after respect/setup is established'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Year4 Training Priorities, route and setplay evidence directly close the model'
+  learner_projection_rule: 'stable st.MP/Dimachaerus/Gladius first; +31/+36 Oki next; Enfold after strike respect; +42/charged/Scutum later'

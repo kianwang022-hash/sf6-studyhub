@@ -1,0 +1,230 @@
+schema_version: '1.0'
+character: marisa
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 creates respect with stable strike/Oki. Enfold starts S1, +42 S2, charged/Scutum S3.'
+stages:
+  S0: {label: 最小可玩, short: 'High Damage / +31 / +36'}
+  S1: {label: 基本功成型, short: 'Respect -> Enfold'}
+  S2: {label: 实战结构化, short: 'CDR / +42 Safe Jump'}
+  S3: {label: 选择成熟, short: 'Charged / Scutum / Corner'}
+  S4: {label: 高分上探, short: 'Max Punish / Burnout / SA'}
+shared_packages:
+  DIM31:
+    label: 'L Dimachaerus +31'
+    sequence: 'L Dimachaerus > 6P follow-up -> +31'
+    next: '5LP/2LP frame-kill -> 6HK meaty'
+    verification: conditioned
+    conditions: [active_timing]
+    sources: [SRC05]
+  DIM36:
+    label: 'M Dimachaerus +36'
+    sequence: 'M Dimachaerus > 6P follow-up -> +36'
+    next: 'Drive Rush > 6HK meaty -> strike / throw'
+    verification: conditioned
+    conditions: [active_timing]
+    sources: [SRC05]
+  PHALANX42:
+    label: 'Phalanx +42'
+    sequence: 'Phalanx ender -> +42'
+    next: 'immediate forward jump HP/HK safe jump'
+    verification: conditioned
+    conditions: [phalanx_ender]
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜S0先用+31跑简单Oki'
+  stage: S0
+  subtitle: 'command grab完全后置'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: +31
+    input: '2LK or 2LP > 2LP > L Dimachaerus > 6P'
+    value: {drive: 0, kd: '+31'}
+    next_loop_package: DIM31
+    why: '最低负担的Marisa完整回合：confirm -> meaty strike -> read。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: 'light block -> stop / walk / read'
+    value: {drive: 0}
+    next_loop: '回5MP / 2MP spacing'
+    why: '不确认就不提交不安全Dimachaerus。'
+- id: medium
+  title: '5MP｜S0 damage vs Oki二选'
+  stage: S0
+  subtitle: '先学为什么换ender'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Damage
+    input: '5MP > MP > M Gladius'
+    value: {damage: 'stable high'}
+    next_loop: 'position reset / read'
+    why: '第一条爽快高伤route，但不代表永远优先。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S0
+    choice: Oki
+    input: '5MP > MP > M Dimachaerus > 6P'
+    value: {kd: '+36'}
+    next_loop_package: DIM36
+    why: '少一点直接damage换更清楚下一Turn。'
+    verification: verified
+    sources: [SRC05]
+- id: respect
+  title: 'Respect｜S1才第一次加入Enfold'
+  stage: S1
+  subtitle: '先让对手愿意站防'
+  rows:
+  - result: BLOCK
+    stage: S1
+    choice: Strike first
+    input: 'L Dimachaerus +31 -> 2LP whiff -> 6HK active meaty'
+    value: {frame: 'approx Hit +7 / Block +1'}
+    next_loop: 'strike / block-read / later Enfold'
+    why: '先用真实meaty建立“必须防”的respect。'
+    verification: conditioned
+    conditions: [active_timing]
+    sources: [SRC05]
+  - result: READ
+    stage: S1
+    choice: Enfold
+    input: 'L Dimachaerus +31 -> 5LP whiff -> immediate Enfold'
+    value: {damage: 2500, kd: '+18'}
+    next_loop: 'opponent jump/backwalk -> strike/shimmy next time'
+    why: '只有对手开始站防以后，command grab才值得。'
+    verification: conditioned
+    conditions: [opponent_respect, setup_timing]
+    sources: [SRC05]
+- id: drive
+  title: '2MP CDR｜S2高伤与safe-jump分流'
+  stage: S2
+  subtitle: '同一个starter按结果选'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Damage
+    input: '2MP > CDR > 5MK > 4HP > H Dimachaerus > 6P > H Gladius'
+    value: {drive: 3}
+    next_loop: 'position / reset'
+    why: '需要当前damage时现金化。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Safe Jump
+    input: '2MP > CDR > 5MK > 4HP > H Dimachaerus > 6P > DR > 2HP > H Phalanx'
+    value: {drive: '3+DR', kd: '+42'}
+    next_loop_package: PHALANX42
+    why: '需要稳定下一轮时，把资源换成+42。'
+    verification: conditioned
+    conditions: [phalanx_ender]
+    sources: [SRC05]
+- id: safe_jump
+  title: 'Phalanx｜+42只属于明确ender'
+  stage: S2
+  subtitle: '不泛化'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Safe Jump
+    input: 'Phalanx ender -> +42 -> immediate forward jump HP/HK'
+    value: {kd: '+42'}
+    next_loop_package: PHALANX42
+    why: 'safe jump是S2稳定层，不是所有Marisa击倒的默认。'
+    verification: conditioned
+    conditions: [phalanx_ender]
+    sources: [SRC05]
+  - result: READ
+    stage: S2
+    choice: Enfold after respect
+    input: 'Phalanx +42 -> immediate Enfold'
+    value: {damage: 2500}
+    next_loop: 'jump/backwalk read -> strike/shimmy'
+    why: '即使+42预算很大，Enfold仍然是read，不是guaranteed。'
+    verification: conditioned
+    conditions: [phalanx_ender, opponent_respect]
+    sources: [SRC05]
+- id: charged
+  title: 'Charged｜S3才把hold timing加入主线'
+  stage: S3
+  subtitle: 'plus不是免费'
+  rows:
+  - result: BLOCK
+    stage: S3
+    choice: Charged 5HP
+    input: 'fully charged 5HP block'
+    value: {frame: '+5', damage: 1200}
+    next_loop: 'strike / Enfold / shimmy'
+    why: '花23F startup换高伤和+5；只有有时间/读法才值得。'
+    verification: conditioned
+    conditions: [full_charge]
+    sources: [SRC03]
+  - result: BLOCK
+    stage: S3
+    choice: Charged 4HP
+    input: 'corner fully charged 4HP block'
+    value: {frame: '+4'}
+    next_loop: 'strike / Enfold'
+    why: '角落高价值二层；actual charge time必须成立。'
+    verification: conditioned
+    conditions: [corner, full_charge]
+    sources: [SRC03, SRC05]
+  - result: BLOCK
+    stage: S3
+    choice: Charged Gladius
+    input: 'fully charged M Gladius block'
+    value: {frame: '+4', armor: true}
+    next_loop: 'strike / Enfold / spacing'
+    why: 'armor和plus都来自charge commitment，不等于无风险。'
+    verification: conditioned
+    conditions: [full_charge]
+    sources: [SRC03]
+- id: scutum
+  title: 'Scutum｜S3后置的read hub'
+  stage: S3
+  subtitle: '不抢基础strike/Enfold'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Scutum -> Enfold
+    input: 'Enfold +18 -> Drive Rush > Scutum -> delayed Enfold'
+    value: {state: 'reversal-bait / command-grab read'}
+    next_loop: 'opponent attack/reversal response -> punish or reset'
+    why: '只有对手已经围绕你的strike/Enfold做反应，Scutum才值得。'
+    verification: conditioned
+    conditions: [opponent_respect, setup_timing]
+    sources: [SRC05]
+- id: super
+  title: 'S4｜最大现金化'
+  stage: S4
+  subtitle: '不改变respect主线'
+  rows:
+  - result: PC
+    stage: S4
+    choice: Max punish
+    input: 'fully charged 5HP PC > 6HK > CDR > 5MK > 4HP > CDR > 5HP > 5MP > MP > M Gladius > SA3'
+    value: {drive: 6, sa: 3}
+    next_loop: 'Kill / reset'
+    why: '只有明确大破绽和资源时才占工作记忆。'
+    verification: conditioned
+    conditions: [full_charge, punish_counter, resources]
+    sources: [SRC05]
+backend_only:
+- {label: 'OD Quadriga corner max', reason: 'S4 resource optimization'}
+- {label: 'Burnout Quadriga full string', reason: 'match-state specific'}
+- {label: 'generic armor safety', reason: 'armor does not erase startup/whiff/punish risk'}
+- {label: 'Enfold without respect', reason: 'violates character model'}

@@ -1,0 +1,107 @@
+schema_version: '1.0'
+character: marisa
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Marisa先用高伤、armor和charged strike让对手真心想防；只有这份respect建立以后，5F Enfold command grab才变成高价值选择。'
+    preferred_range: '中近距离。st.MP / cr.MP先拿contact，Gladius/Dimachaerus负责damage与Oki；Enfold只在strike/meaty已经让对手愿意block以后加入。'
+    win_pattern: 'stable strike -> +31/+36 Oki -> meaty creates respect -> Enfold / shimmy -> opponent jumps/backwalks -> charged strike / punish grows stronger -> +42 safe jump -> repeat。'
+    lose_pattern: '第一轮就Enfold、每次都蓄满、把armor当无风险、只看最高伤害不看Oki、把2MK当DRC入口。'
+  character_model:
+    essence_short: 'Marisa不是靠command grab先逼人，而是先让strike损失高到对手愿意block，再把block行为换成Enfold收益。'
+    essence_detail: 'Current Training Priorities先教st.MP target到M Gladius，再教M Dimachaerus +36 Oki、cr.MP CDR与+42 Phalanx；角落的fully charged 4HP vs Enfold被明确放在更后面。这说明她的核心因果是先让strike足够可怕。charged st.HP block +5、charged 4HP block +4、charged Gladius block +4、Phalanx block +3和H Quadriga block +1都会逼对手更认真地站防；Dimachaerus +31/+36和Phalanx +42又把一次命中变成清楚Oki。等对手少按、少跳、愿意block时，Enfold才真正成为2500伤害的高价值答案。成熟Marisa会在normal release、charged release、armor read、Enfold与shimmy之间根据对手反馈切换，而不是为了“角色特色”机械蓄力或机械command grab。'
+    force_opponent_to:
+    - '尊重charged Gladius / charged heavy的armor与高伤。'
+    - '在+31/+36/+42击倒后先处理meaty strike。'
+    - '越愿意站防，Enfold越值钱。'
+    - '为躲Enfold跳/后退以后，strike / shimmy / anti-air重新变强。'
+    payoff_after_respect:
+    - 'Enfold 5F / 2500成为可信command grab。'
+    - 'walk-back / delay惩罚throw-tech与jump。'
+    - '+42 safe jump继续强迫对手先防。'
+    - 'corner charged 4HP vs Enfold形成真正二层。'
+    - 'Burnout时Quadriga进一步放大block pressure。'
+    core_tradeoff: '稳定strike/Oki vs command-grab高收益read；以及普通release vs 花启动时间charge换armor/plus/damage。'
+    successful_round:
+    - 'light/st.MP/cr.MP拿contact'
+    - 'Gladius/Dimachaerus拿damage或+31/+36 Oki'
+    - 'meaty strike让对手开始respect'
+    - '对手站防后加入Enfold'
+    - '对手跳/退躲grab后回charged strike/shimmy'
+    - 'corner/+42继续反馈循环'
+    common_misplays:
+    - '第一轮就靠Enfold猜，不先建立strike respect。'
+    - '看到charged版正帧就每次蓄满。'
+    - '把armor当无风险。'
+    - '把+42泛化到所有ender。'
+    - '把2MK当DRC入口。'
+    unique_decision: 'Marisa新增的是damage-backed respect：高伤/armor/charged strike先改变对手防守，command grab随后现金化这份respect。'
+    transfer_in:
+    - 'Honda/Zangief式respect概念。'
+    - 'strike / throw / shimmy。'
+    - 'punish / corner / Oki。'
+    new_skill:
+    - 'charged normal / charged Gladius timing。'
+    - 'armor read与release timing。'
+    - '+31/+36/+42 end-state selection。'
+    - 'strike -> respect -> Enfold反馈循环。'
+    - 'Scutum/Quadriga late pressure。'
+    unlearn:
+    - 'command grab有机会就应该先抓。'
+    - 'charged version永远优于normal版。'
+    - 'armor等于安全。'
+    - '最高伤害route永远优于Oki route。'
+  glossary:
+  - {term: '236P｜Gladius', meaning: 'armor strike。normal版block -5；charged版需要真实蓄按时间，block +4且伤害大幅提高。'}
+  - {term: '214P > 6P｜Dimachaerus', meaning: '核心route/Oki工具。L follow-up +31，M follow-up +36。'}
+  - {term: '623P｜Phalanx', meaning: 'armor/jump-in-like special。ender可进入+42 safe-jump family。'}
+  - {term: '214K｜Scutum', meaning: '后置armor/read hub，可派生Enfold等；S3以后学。'}
+  - {term: 'Scutum during LP+LK｜Enfold', meaning: '5F / 2500 command grab。只有respect建立后才进主线。'}
+  - {term: '236K｜Quadriga', meaning: 'spacing/burnout pressure。H版当前block +1。'}
+  tools:
+  - {input: '5MP', name: '站中拳', use: '7F / Hit +2 / Block -1；target route入口。'}
+  - {input: '2MP', name: '蹲中拳', use: '8F / Hit +3 / Block -2 / C；主要CDR starter。'}
+  - {input: '2MK', name: '蹲中脚', use: '9F / Hit +5 / Block -2 / non-cancel；不是2MK DRC。'}
+  - {input: '236P', name: 'Gladius', use: 'S0高伤/armor route；charged版后置。'}
+  - {input: '214P > 6P', name: 'Dimachaerus follow-up', use: 'S0/S1 Oki；L +31 / M +36。'}
+  - {input: '623P', name: 'Phalanx', use: 'S2 +42 safe jump。'}
+  - {input: '214K', name: 'Scutum', use: 'S3 read/command-grab hub。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；charged variants、unique attacks、specials和SA由工具/Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Standing Light Punch', startup: '6', active: '6-8', recovery: '11', hit: '0', block: '-2', cancel: '-', damage: '400', note: ''}
+    - {input: '5LK', name: 'Standing Light Kick', startup: '6', active: '6-7', recovery: '14', hit: '0', block: '-2', cancel: 'C', damage: '400', note: ''}
+    - {input: '5MP', name: 'Standing Medium Punch', startup: '7', active: '7-10', recovery: '15', hit: '+2', block: '-1', cancel: '-', damage: '700', note: '挥空额外+2F recovery。'}
+    - {input: '5MK', name: 'Standing Medium Kick', startup: '11', active: '11-14', recovery: '16', hit: '+4', block: '-2', cancel: '-', damage: '800', note: ''}
+    - {input: '5HP', name: 'Standing Heavy Punch', startup: '12', active: '12-13', recovery: '23', hit: '+3', block: '-3', cancel: '-', damage: '1000', note: '18F以上hold进入charged版。'}
+    - {input: '5HK', name: 'Standing Heavy Kick', startup: '15', active: '15-16', recovery: '25', hit: '+1', block: '-3', cancel: '-', damage: '1000', note: '14F以上hold进入charged版。'}
+    - {input: '2LP', name: 'Crouching Light Punch', startup: '4', active: '4-5', recovery: '10', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Crouching Light Kick', startup: '5', active: '5-7', recovery: '12', hit: '+2', block: '-3', cancel: '-', damage: '300', note: '可连打取消。'}
+    - {input: '2MP', name: 'Crouching Medium Punch', startup: '8', active: '8-10', recovery: '16', hit: '+3', block: '-2', cancel: 'C', damage: '700', note: ''}
+    - {input: '2MK', name: 'Crouching Medium Kick', startup: '9', active: '9-11', recovery: '18', hit: '+5', block: '-2', cancel: '-', damage: '600', note: '不可取消。'}
+    - {input: '2HP', name: 'Crouching Heavy Punch', startup: '9', active: '9-13', recovery: '23', hit: 'KD', block: '-6', cancel: '-', damage: '900', note: '17F以上hold进入charged版。'}
+    - {input: '2HK', name: 'Crouching Heavy Kick', startup: '11', active: '11-13', recovery: '26', hit: 'KD', block: '-11', cancel: '-', damage: '1000', note: '16F以上hold进入charged版。'}
+    - {input: 'j.LP', name: 'Jumping Light Punch', startup: '4', active: '4-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Jumping Light Kick', startup: '5', active: '5-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Jumping Medium Punch', startup: '7', active: '7-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Jumping Medium Kick', startup: '8', active: '8-15', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: ''}
+    - {input: 'j.HP', name: 'Jumping Heavy Punch', startup: '10', active: '10-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '20F以上hold进入charged版。'}
+    - {input: 'j.HK', name: 'Jumping Heavy Kick', startup: '10', active: '10-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: '20F以上hold进入charged版。'}
+  signature_mechanic:
+    name: 'Damage-backed respect -> Enfold conversion'
+    rule: '先用高伤/armor/charged strike与+31/+36 Oki让对手愿意block，再在S1以后加入Enfold；command grab从不作为S0默认。'
+  key_numbers:
+  - {label: 'L Dimachaerus follow-up', value: '+31', decision: 'S0基础meaty预算。'}
+  - {label: 'M Dimachaerus follow-up', value: '+36', decision: 'S0/S1 DR strike-throw预算。'}
+  - {label: 'Phalanx ender', value: '+42', decision: 'S2 safe jump。'}
+  - {label: 'charged 5HP', value: '23F / Block +5', decision: 'S3 charged respect。'}
+  - {label: 'charged 4HP', value: '20F / Block +4', decision: 'corner strike vs Enfold。'}
+  - {label: 'Enfold', value: '5F / 2500 / +18', decision: 'S1以后respect cash-in。'}
+  constraints:
+  - '2MK不可取消。'
+  - 'Enfold不进S0。'
+  - 'charged值必须有full_charge条件。'
+  - '+42必须绑定Phalanx ender。'
+  - 'armor不能被描述成无风险。'
