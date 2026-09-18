@@ -1,0 +1,109 @@
+schema_version: '1.1'
+character: yasmine
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先让normal Alon取得Bayani→简单Oki成立，再完成第一次Boosted消费，最后扩表里和SA2持续状态。'
+  score_rule: 'Rank/MR是Reality evidence，不替代Bayani状态、确认、Oki和高度条件判断。'
+  current_ui: 'S0不要求消费Bayani；SA2固定留S4。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '先跑通ground contact→normal Alon→获得Bayani→+30/+44简单Oki，不急着消费状态。'
+    add_now:
+      - '2LP→5LP/LP→M Daloy→Alon作为第一条取得Bayani路线。'
+      - '2MP→H Daloy→Alon作为+44取得路线。'
+      - '+30 dash后+11与+44双dash后+6各保留一个固定strike。'
+      - 'Lipad ng Agila负责典型反空。'
+      - '屏幕上明确认识Bayani状态已取得。'
+    gate:
+      lab: '两条normal Alon取得路线、主要反空和简单Oki稳定。'
+      match: '真人能出现“取得Bayani但暂时不花”的完整回合。'
+    defer: ['Boosted Alon主线', '2MK DRC高资源', 'Mukha表里', 'Pangil', 'SA2']
+    hub_focus: [light, medium]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '第一次完成Bayani acquire→spend循环：Boosted Alon +42、Talim +2、基础punish和throw loop。'
+    add_now:
+      - 'Bayani light→L Daloy→Boosted Alon +42 safe jump。'
+      - '理解normal Alon block约-12 vs Boosted约-1~-3。'
+      - '2MP→M Talim +2 point-blank throw。'
+      - '5F punish→normal Alon重新取得Bayani。'
+      - 'forward throw / sweep基础Oki。'
+    gate:
+      match: '会区分当前有没有Bayani，不会非法使用Boosted，也不会把normal Alon当安全pressure。'
+    defer: ['Mukha/Pangil', 'Bayani长高伤路线', 'SA2 persistent']
+    hub_focus: [boosted, punish, medium]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '2MK DRC加入；同一个opening开始比较“保Bayani继续循环”还是“现在花Bayani放大damage/Oki”。'
+    add_now:
+      - '2MK DRC Hit/Block/Whiff正确分流。'
+      - '普通Alon路线与Bayani高伤路线按局面二选。'
+      - 'DI / Drive Reversal继续把回合接回Bayani取得。'
+      - '+42 active-overhead分支只在Boosted Alon真实状态加入。'
+    gate:
+      match: '能解释为什么这次花Bayani或保留Bayani；状态消费不是自动。'
+    defer: ['Mukha复杂高度', 'Pangil角落循环', 'SA2']
+    hub_focus: [low, boosted, punish]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'Mukha表里、Pangil setup与OD Boosted再取得进入，但每个都带高度/位置/状态条件。'
+    add_now:
+      - 'Mukha→Ulan cross-up与Kulog正面按高度学。'
+      - 'OD Kulog plus状态按落点判断。'
+      - 'Pangil只在明确corner/setup里用。'
+      - 'OD Boosted Alon命中再取得Bayani，形成更成熟循环。'
+    gate:
+      behavior: 'Mukha/Pangil失败会降频；基础normal/Boosted Alon循环不退化。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['SA2持续Bayani主线', 'Linya完整树']
+    hub_focus: [mukha, pangil, boosted]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA2 persistent Bayani、+47 setplay、Linya与SA/CA cashout进入，改变的是已有循环而不是重建角色。'
+    add_now:
+      - 'SA2约25秒持续Bayani。'
+      - 'SA2 OD Boosted Alon +47 setplay。'
+      - 'Linya ng Liwanag与Burnout pressure按真实条件加入。'
+      - 'SA1/SA3/CA按已有starter现金化。'
+    gate:
+      behavior: 'install期间仍会管理Drive/位置，不因为Bayani无限就自动播放Boosted。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, boosted, mukha]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '两条normal Alon取得路线稳定', node: light, upgrade_evidence: 'light与2MP starter双侧稳定。'}
+    - {id: EX02, stage: S1, label: 'Boosted Alon +42稳定', node: boosted, upgrade_evidence: 'Bayani状态下合法执行并接safe jump。'}
+    - {id: EX03, stage: S3, label: 'Mukha Ulan/Kulog按高度稳定', node: mukha, upgrade_evidence: '不会把表里做成固定帧口诀。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: 'normal Alon来自确认', node: light, upgrade_evidence: '被防不播放-12 Alon。'}
+    - {id: NE02, stage: S1, label: 'Bayani不强迫立即消费', node: boosted, upgrade_evidence: '状态存在时仍会按局面决定。'}
+    - {id: NE03, stage: S3, label: 'Pangil/Mukha不绑架neutral', node: mukha, upgrade_evidence: '没有setup就回正常地面。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: '2MP 0F / 2MK -6分流', node: medium, upgrade_evidence: '被防时正确重读或DRC。'}
+    - {id: CO02, stage: S2, label: 'hold vs spend Bayani', node: boosted, upgrade_evidence: '能说出消费状态买到了什么。'}
+    - {id: CO03, stage: S4, label: 'SA2 persistent期间仍按价值选Boosted', node: super, upgrade_evidence: '不会因状态无限就机械播放。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'normal Alon→+30/+44 Oki闭环', node: light, upgrade_evidence: '取得Bayani后能接下一Turn。'}
+    - {id: OF02, stage: S1, label: 'Boosted +42→safe jump闭环', node: boosted, upgrade_evidence: '消费Bayani后能继续下一Turn。'}
+    - {id: OF03, stage: S3, label: '再取得Bayani循环稳定', node: pangil, upgrade_evidence: '高级route能回到普通取得状态。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S1, label: 'normal/Boosted block truth不混淆', node: boosted, upgrade_evidence: '知道何时必须收手。'}
+    - {id: DA02, stage: S3, label: 'Mukha高度/表里被针对会调整', node: mukha, upgrade_evidence: '对手开始反应后降频或换落点。'}
+    - {id: DA03, stage: S4, label: 'SA2时间窗口按资源调整', node: super, upgrade_evidence: 'install期间仍会做风险/资源选择。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'normal Alon取得Bayani→简单Oki先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '第一次acquire→spend循环、punish与+42 safe jump多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'DRC与hold/spend Bayani决策结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；Mukha/Pangil不破坏基础循环。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA2 persistent Bayani围绕真实资源/位置瓶颈。'}

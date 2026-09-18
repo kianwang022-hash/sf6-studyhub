@@ -1,0 +1,267 @@
+schema_version: '1.0'
+character: yasmine
+version_scope:
+  game_version: 'Year 4 / 2026-08-03 implementation'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 acquires Bayani but does not require spending it. S1 completes the first normal-Alon -> Boosted-Alon cycle. Mukha/Pangil enter S3; persistent SA2 Bayani enters S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Acquire Bayani / +30 / +44'}
+  S1: {label: 基本功成型, short: 'First Boosted Alon / +42'}
+  S2: {label: 实战结构化, short: '2MK DRC / Hold vs Spend'}
+  S3: {label: 选择成熟, short: 'Mukha / Pangil / Re-acquire'}
+  S4: {label: 高分上探, short: 'SA2 Persistent Bayani / SA'}
+shared_packages:
+  ALON30:
+    label: 'M Daloy -> Alon +30'
+    sequence: 'M Daloy ng Tubig > Alon -> +30 -> forward dash'
+    next: '+11 -> throw / 2MP / shimmy'
+    verification: verified
+    sources: [SRC05]
+  ALON44:
+    label: 'H Daloy -> Alon +44'
+    sequence: 'H Daloy ng Tubig > Alon -> +44 -> two forward dashes'
+    next: '+6 -> throw / 2MP / 2LK / shimmy'
+    verification: verified
+    sources: [SRC05]
+  BOOST42:
+    label: 'Boosted Alon +42'
+    sequence: 'Bayani + L Daloy ng Tubig > Boosted Alon -> +42'
+    next: 'forward jump attack safe jump / dash overhead mix'
+    verification: conditioned
+    conditions: [bayani_state]
+    sources: [SRC05]
+  TALIM37:
+    label: 'H Talim +37'
+    sequence: 'H Talim ng Hangin -> +37 -> forward dash'
+    next: '+18 -> throw / shimmy / DR 2MP'
+    verification: verified
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜S0先学取得Bayani，不急着花'
+  stage: S0
+  subtitle: 'normal Alon命中就是状态循环起点'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: 取得Bayani
+    input: '2LP > 5LP/LP > M Daloy ng Tubig > Alon'
+    value: {damage: 1360, bayani_gain: 1, kd: '+30'}
+    next_loop_package: ALON30
+    why: '第一条角色身份路线：普通命中同时拿Oki和Bayani。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 不播放normal Alon
+    input: 'light block -> stop / throw-read / walk'
+    value: {bayani_gain: 0}
+    next_loop: '回2MP / spacing'
+    why: 'normal Alon被防很危险，先建立确认纪律。'
+- id: medium
+  title: '2MP｜+44是S0第二套Bayani取得回合'
+  stage: S0
+  subtitle: '更大Oki预算，但仍然先取得状态'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: +44
+    input: '2MP > H Daloy ng Tubig > Alon'
+    value: {damage: 1480, bayani_gain: 1, kd: '+44'}
+    next_loop_package: ALON44
+    why: '双前冲后+6，把Bayani取得直接接回strike/throw。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Talim +2
+    input: '2MP > M Talim ng Hangin'
+    value: {bayani_gain: 1, frame: '+2 point-blank'}
+    next_loop: 'throw / 2LP / walk-back shimmy'
+    why: '另一条取得状态通道，换成贴脸即时选择。'
+    verification: verified
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: 0F重读
+    input: '2MP block (0) -> block / throw-read / walk'
+    value: {frame: '0'}
+    next_loop: '观察对手，不自动提交special'
+    why: '0F不是固定你的回合。'
+    verification: verified
+    sources: [SRC03]
+- id: boosted
+  title: 'Boosted Alon｜S1才第一次消费Bayani'
+  stage: S1
+  subtitle: '把“取得状态→消费状态”跑成完整循环'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: +42 Safe Jump
+    input: 'Bayani active -> 2LP > 5LP/LP > L Daloy ng Tubig > Boosted Alon'
+    value: {bayani_spend: 1, kd: '+42'}
+    next_loop_package: BOOST42
+    why: '第一次明确消费Bayani：换来更安全、更高Oki的强化回合。'
+    verification: conditioned
+    conditions: [bayani_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S1
+    choice: 安全性变化
+    input: 'Bayani active -> Boosted Alon block'
+    value: {bayani_spend: 1, frame: 'L/M/H about -1/-2/-3'}
+    next_loop: '按实际距离回防 / spacing，不把负帧当plus'
+    why: 'Bayani真正改变的是风险状态；Boosted更安全但仍不是无限续压。'
+    verification: verified
+    conditions: [bayani_state]
+    sources: [SRC03]
+- id: low
+  title: '2MK｜S2才加入DRC和hold/spend选择'
+  stage: S2
+  subtitle: 'Bayani状态会改变同一starter的路线价值'
+  rows:
+  - result: WHIFF
+    stage: S2
+    choice: 不补票
+    input: '2MK whiff -> stop'
+    value: {drive_saved: 3}
+    next_loop: '回Neutral'
+    why: 'Drive只为真实接触付费。'
+  - result: BLOCK
+    stage: S2
+    choice: 已DRC才继续
+    input: '2MK > DRC > 2MP block'
+    value: {drc_cost: 3}
+    next_loop: 'strike / throw / shimmy / stop'
+    why: '2MK本体block -6，DRC才改变回合。'
+    verification: verified
+    sources: [SRC03]
+  - result: HIT
+    stage: S2
+    choice: 继续取得
+    input: '2MK > DRC > 2MP > 2HP > H Daloy ng Tubig > Alon'
+    value: {drive: 3, bayani_gain: 1, kd: '+44'}
+    next_loop_package: ALON44
+    why: '没Bayani或想保留状态循环时，继续走普通Alon。'
+    verification: verified
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: 花Bayani放大
+    input: 'Bayani active -> 2MK > DRC > 2MP > H Daloy ng Tubig > Boosted Alon > DR 2MP > H Talim ng Hangin > 5HP > H Lipad ng Agila'
+    value: {drive: 'high', bayani_spend: 1, damage: '3135-3600 family'}
+    next_loop: '按H Lipad落点 / corner状态继续'
+    why: '只有当前opening值得时才把Bayani现金化成高伤害。'
+    verification: conditioned
+    conditions: [bayani_state]
+    sources: [SRC05]
+- id: punish
+  title: 'Punish｜稳定punish顺便回Bayani循环'
+  stage: S1
+  subtitle: '确定机会先拿状态，不追花活'
+  rows:
+  - result: PC
+    stage: S1
+    choice: 5F
+    input: '5LK (PC) > M Daloy ng Tubig > Alon'
+    value: {bayani_gain: 1, kd: '+30'}
+    next_loop_package: ALON30
+    why: '5F punish也能把回合重新接回状态循环。'
+    verification: verified
+    sources: [SRC05]
+  - result: PC
+    stage: S2
+    choice: Drive Reversal
+    input: '2MP (PC) > 2MP > H Daloy ng Tubig > Alon'
+    value: {bayani_gain: 1, kd: '+44'}
+    next_loop_package: ALON44
+    why: '稳定punish优先重新取得Bayani和Oki。'
+    verification: verified
+    sources: [SRC05]
+- id: mukha
+  title: 'Mukha｜S3才打开表里/高度层'
+  stage: S3
+  subtitle: 'Ulan/Kulog不是固定帧差'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Ulan cross-up
+    input: 'Mukha ng Langit > Ulan'
+    value: {frame: 'hit +3~+6 / block -4~-2'}
+    next_loop: 'hit -> 2LP > L Daloy > Alon | block -> respect actual height'
+    why: '只有高度/落点合格时才继续，不背固定数字。'
+    verification: conditioned
+    conditions: [height, cross_up_spacing]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S3
+    choice: Kulog front
+    input: 'Mukha ng Langit > Kulog'
+    value: {frame: 'hit +4~+10 / block -3~+4'}
+    next_loop: '合格落点 -> close choice | 负帧 -> stop'
+    why: '正面分支与Ulan共同构成表里，但高度决定实际优势。'
+    verification: conditioned
+    conditions: [height, front_spacing]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S3
+    choice: OD Kulog
+    input: 'OD Mukha ng Langit > OD Kulog'
+    value: {drive: 2, frame: 'block +1~+7'}
+    next_loop: 'strike / throw by actual landing height'
+    why: '高资源换更稳定plus，但仍然是高度条件化。'
+    verification: conditioned
+    conditions: [height]
+    sources: [SRC03]
+- id: pangil
+  title: 'Pangil｜S3只作为setup/移动工具'
+  stage: S3
+  subtitle: '50F总动作，不当neutral自动跳过'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Corner Bayani loop
+    input: 'corner 5HP > H Pangil sa Likuran > 2MP > L Daloy ng Tubig > Alon > 2HP > L Daloy ng Tubig > Boosted Alon'
+    value: {bayani_cycle: 'acquire -> spend'}
+    next_loop_package: BOOST42
+    why: '在明确corner setup里展示完整状态循环，而不是拿Pangil当万能进场。'
+    verification: conditioned
+    conditions: [corner, bayani_state_for_boosted_segment]
+    sources: [SRC05]
+- id: super
+  title: 'SA2｜S4才把状态循环改成持续Bayani'
+  stage: S4
+  subtitle: 'install不是S0身份'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: Persistent Bayani
+    input: 'confirmed route > SA2 Nakatagong Lakas'
+    value: {sa: 2, state: 'persistent Bayani about 25s'}
+    next_loop: 'Boosted Alon / Linya ng Liwanag / pressure by current resource'
+    why: '花SA把短循环改成长窗口，只有基础Bayani管理稳定后才值得学。'
+    verification: conditioned
+    conditions: [sa2_active]
+    sources: [SRC03, SRC05]
+  - result: HIT
+    stage: S4
+    choice: +47 Setplay
+    input: 'SA2 active -> OD Daloy ng Tubig > Boosted Alon'
+    value: {drive: 2, kd: '+47'}
+    next_loop: 'dash > 2LP whiff x2 -> +4 -> throw / shimmy / 2LK'
+    why: 'persistent Bayani下才有这条持续强化Oki。'
+    verification: conditioned
+    conditions: [sa2_active]
+    sources: [SRC05]
+backend_only:
+- {label: 'Mukha fixed plus-frame claims', reason: 'height/landing changes actual result'}
+- {label: 'Pangil generic neutral use', reason: '50F setup-specific movement; not S0/S1 neutral default'}
+- {label: 'SA2 Linya exact meaty tree', reason: 'late persistent-state system; keep S4'}
+- {label: 'Boosted Alon outside Bayani/SA2', reason: 'illegal state leakage'}

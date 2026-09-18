@@ -1,0 +1,106 @@
+schema_version: '1.0'
+character: yasmine
+status: CONTENT_READY
+role_profile:
+  identity:
+    one_line: 'Yasmine先用普通Alon命中拿Bayani，再用下一次Boosted Alon把状态换成更安全、更高收益的回合；核心是取得→消费→再取得的循环。'
+    preferred_range: '中近距离。2MP / 2MK / light拿接触，normal Alon建立Bayani和Oki；Bayani状态下再把opening升级为Boosted Alon。'
+    win_pattern: 'ground contact -> normal Alon -> gain Bayani -> +30/+44 Oki -> next opening Boosted Alon -> +42 safe jump/high damage -> reacquire Bayani -> repeat。'
+    lose_pattern: '把Bayani当Juri stock、没Bayani时把normal Alon当安全pressure、有Bayani就无脑消费、太早玩Mukha/Pangil/SA2。'
+  character_model:
+    essence_short: 'Bayani不是库存，而是循环状态：普通Alon拿状态，Boosted Alon花状态换安全性和更强结果，然后再把状态拿回来。'
+    essence_detail: 'Yasmine的Bayani不是Juri那种可以一直堆着等未来花的多stock资源。她更像是在做一个循环状态：普通Daloy ng Tubig接Alon命中后进入Bayani，下一次Alon就升级为Boosted Alon；普通Alon被防大约-12，而Boosted版本被防大多只剩-1到-3，命中时还能进入+42 safe jump或更高伤害。Boosted Alon通常会把Bayani消耗掉，于是Yasmine又要通过下一次Alon、Talim或其他取得方式把状态拿回来。真正的角色节奏因此是“普通回合拿状态 → 强化回合兑现状态 → 再进入普通回合重建状态”。她还有Mukha ng Langit的表里、Pangil sa Likuran和SA2长期Bayani，但这些都应该后置；S0先把+30/+44的普通Alon回合跑稳，S1再第一次完成Boosted Alon +42的完整状态循环。'
+    force_opponent_to:
+    - '尊重2MP 0F和2MK DRC带来的近身接触。'
+    - '普通Alon命中后，开始处理下一轮Bayani状态下更安全的Boosted Alon。'
+    - '在+42/+44击倒后持续处理throw / 2MP / 2LK / shimmy。'
+    - '后期必须处理Mukha表里与SA2持续Bayani带来的option密度。'
+    payoff_after_respect:
+    - 'Boosted Alon被防不再像normal Alon一样大负帧。'
+    - 'L Daloy -> Boosted Alon进入+42 safe jump。'
+    - 'H Daloy -> Alon +44双前冲后约+6，继续throw / 2MP / low / shimmy。'
+    - 'SA2开启后，约25秒持续Bayani把短循环改造成连续强化Alon压力。'
+    core_tradeoff: '普通回合取得Bayani vs 强化回合立即消费Bayani兑现更安全/更高收益的Alon；后期再加入SA2持续Bayani窗口。'
+    successful_round:
+    - 'light / 2MP / 2MK拿ground contact'
+    - 'normal Alon命中取得Bayani'
+    - '用+30/+44 Oki继续strike / throw / shimmy'
+    - '下一次opening用Boosted Alon兑现状态'
+    - '+42 safe jump或高伤害后重新取得Bayani'
+    - 'S4用SA2把短循环临时变成持续Bayani'
+    common_misplays:
+    - '把Bayani当成多层stock一样囤。'
+    - '没Bayani时把normal Alon当安全pressure。'
+    - '有Bayani就自动Boosted，不问消费状态买到了什么。'
+    - '太早用Mukha/Pangil/SA2花活。'
+    unique_decision: 'Yasmine新增的是状态循环管理：Bayani把下一次Alon从高风险版本转换成强化版本；成熟度来自反复取得、兑现、再取得，而不是一直持有。'
+    transfer_in:
+    - 'grounded contact、2MK DRC、strike / throw / shimmy。'
+    - 'anti-air / punish / DI / corner Oki。'
+    new_skill:
+    - 'Bayani取得 / 消费 / 再取得状态识别。'
+    - 'normal vs Boosted Alon风险差异。'
+    - '+30 / +42 / +44 end-state分流。'
+    - 'Mukha Ulan/Kulog高度与表里判断。'
+    - 'SA2 persistent Bayani后期install窗口。'
+    unlearn:
+    - '所有资源都等价于可累计stock。'
+    - 'normal和Boosted Alon只是同一招多伤害。'
+    - '强化状态有了就应该立即无脑消费。'
+  glossary:
+  - {term: 'Bayani Mode', meaning: 'Yasmine的强化状态。普通Alon等命中后可进入；下一次Alon变成Boosted版本并通常消费状态。'}
+  - {term: '236P｜Daloy ng Tubig → Alon', meaning: '角色主循环。normal Alon命中可取得Bayani；被防时normal Alon很危险。'}
+  - {term: 'Boosted Alon', meaning: 'Bayani状态下的强化Alon。L/M/H/OD被防大约-1/-2/-3/-1，安全性明显高于normal Alon。'}
+  - {term: '214P｜Talim ng Hangin', meaning: '另一条取得状态/伤害/Oki通道。M版命中+2贴脸；H版进入+37。'}
+  - {term: '236K｜Mukha ng Langit', meaning: '后期空中表里入口。Ulan偏cross-up，Kulog偏正面，帧差随高度变化。'}
+  - {term: 'SA2｜Nakatagong Lakas', meaning: '后期install，约25秒持续Bayani并开放额外SA2系统。'}
+  tools:
+  - {input: '2MP', name: '蹲中拳', use: '6F / Hit +4 / Block 0 / C；S0主contact。'}
+  - {input: '2MK', name: '蹲中脚', use: '8F / Hit -1 / Block -6 / C；主要低段DRC入口。'}
+  - {input: '236P > 6P', name: 'Daloy ng Tubig -> Alon', use: 'normal状态取得Bayani并进入+30/+44 Oki。'}
+  - {input: 'Bayani + Alon', name: 'Boosted Alon', use: 'S1开始兑现Bayani；更安全并可进入+42 safe jump。'}
+  - {input: '214P', name: 'Talim ng Hangin', use: 'M版+2贴脸；H版+37；不同路线承担伤害/Oki。'}
+  - {input: '623K', name: 'Lipad ng Agila', use: '反空/伤害ender；OD版6F全无敌。'}
+  - {input: '236K', name: 'Mukha ng Langit', use: 'S3才进入表里/高度mix。'}
+  normal_frame_table:
+    source_id: SRC03
+    scope: '完整18个基础Normal；Bayani/Alon、Talim、Mukha、Pangil与SA由工具和Reference承担。'
+    columns: [input, name, startup, active, recovery, hit, block, cancel, damage, note]
+    rows:
+    - {input: '5LP', name: 'Magaang na Paglaslas', startup: '5', active: '5-7', recovery: '7', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消；挥空额外+1F recovery。'}
+    - {input: '5LK', name: 'Mababang Sipa', startup: '5', active: '5-6', recovery: '12', hit: '+2', block: '-4', cancel: 'C', damage: '300', note: ''}
+    - {input: '5MP', name: 'Pabalik-balik na Paglaslas', startup: '6', active: '6-17 / 6-7,16-17', recovery: '18', hit: '+2', block: '-3', cancel: '-', damage: '600', note: '两段active。'}
+    - {input: '5MK', name: 'Tagilirang Sipa', startup: '10', active: '10-12', recovery: '19', hit: '+3', block: '-4', cancel: '-', damage: '700', note: ''}
+    - {input: '5HP', name: 'Tripleng Paglaslas', startup: '9', active: '9-28 / 9-10,15-16,27-28', recovery: '15', hit: '+2', block: '-3', cancel: 'C', damage: '800', note: '多段active。'}
+    - {input: '5HK', name: 'Tumatalon na Sipa', startup: '14', active: '14-16', recovery: '20', hit: '+1', block: '-4', cancel: '-', damage: '800', note: 'PC特殊结果。'}
+    - {input: '2LP', name: 'Mabilisang Paglaslas', startup: '4', active: '4-6', recovery: '8', hit: '+4', block: '-1', cancel: 'C', damage: '300', note: '可连打取消。'}
+    - {input: '2LK', name: 'Magaang na Sipa', startup: '5', active: '5-7', recovery: '10', hit: '+2', block: '-2', cancel: '-', damage: '200', note: '可连打取消。'}
+    - {input: '2MP', name: 'Kalmot', startup: '6', active: '6-8', recovery: '16', hit: '+4', block: '0', cancel: 'C', damage: '600', note: '挥空额外+2F；被防recovery减少2F。'}
+    - {input: '2MK', name: 'Pandurog ng Lulod', startup: '8', active: '8-10', recovery: '19', hit: '-1', block: '-6', cancel: 'C', damage: '500', note: ''}
+    - {input: '2HP', name: 'Mamimituin', startup: '8', active: '8-13', recovery: '23', hit: '+2', block: '-11', cancel: 'C', damage: '800', note: '强制站立。'}
+    - {input: '2HK', name: 'Gunting na Pabagsak', startup: '10', active: '10-12', recovery: '25', hit: 'KD', block: '-10', cancel: '-', damage: '900', note: 'PC hard knockdown。'}
+    - {input: 'j.LP', name: 'Magaang na Panghimpapawid na Paglaslas', startup: '4', active: '4-8', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: ''}
+    - {input: 'j.LK', name: 'Panghimpapawid na Sipa Gamit ang Tuhod', startup: '4', active: '4-9', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '300', note: 'Cross-up。'}
+    - {input: 'j.MP', name: 'Pabilog na Paglaslas', startup: '7', active: '7-10', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '700', note: '空中命中launch。'}
+    - {input: 'j.MK', name: 'Panghimpapawid na Sipa sa Harap', startup: '7', active: '7-12', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '500', note: 'Cross-up。'}
+    - {input: 'j.HP', name: 'Namamalong Mga Pakpak', startup: '9', active: '9-14', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: 'CH/PC slam knockdown。'}
+    - {input: 'j.HK', name: 'Panghimpapawid na Malakas na Sipa', startup: '10', active: '10-16', recovery: 'Landing 3', hit: '-', block: '-', cancel: '-', damage: '800', note: ''}
+  resource:
+    name: 'Bayani Mode'
+    gain: 'normal Alon hit、Talim hit、SA1等当前来源中的取得路径。'
+    spend: 'Boosted Alon hit/block通常消费Bayani；OD Boosted Alon命中可重新取得。'
+    changes: 'Alon升级为Boosted版本，block安全性与路线收益显著提高；SA2期间约25秒持续Bayani。'
+    rule: 'S0只学取得；S1第一次完成取得→消费；S4才进入持续Bayani install。'
+  key_numbers:
+  - {label: 'M Daloy -> Alon', value: '+30', decision: 'S0最小Bayani取得回合：dash后+11。'}
+  - {label: 'H Daloy -> Alon', value: '+44', decision: '双前冲后约+6，继续throw / 2MP / 2LK / shimmy。'}
+  - {label: 'L Daloy -> Boosted Alon', value: '+42', decision: 'S1第一次Bayani消费与safe jump。'}
+  - {label: 'H Talim', value: '+37', decision: 'dash后+18，适合throw / shimmy / DR 2MP。'}
+  - {label: 'normal Alon vs Boosted', value: 'block about -12 vs -1~-3', decision: 'Bayani真正改变的是风险状态，不只是伤害。'}
+  - {label: 'SA2 persistent', value: 'about 25 seconds', decision: 'S4才进入持续Bayani与+47 setplay。'}
+  constraints:
+  - 'Boosted Alon必须有Bayani或SA2 persistent state。'
+  - 'normal Alon被防很危险，不能当safe pressure。'
+  - 'Mukha Ulan/Kulog帧差随高度变化。'
+  - '+42 safe jump属于Boosted Alon状态。'
+  - 'SA2 persistent Bayani固定留在S4。'
