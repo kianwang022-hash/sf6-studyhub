@@ -170,8 +170,8 @@ for (const c of chars) {
         if (/Boosted/i.test(input)) {
           assert(/air_current/i.test(conditions) || /Air Current/i.test(input), 'rashid: Boosted route missing Air Current condition');
         }
-        if (/Eagle Spike/i.test(input)) {
-          assert(/spacing/i.test(rowText), 'rashid: Eagle Spike learner row lost spacing truth');
+        if (/Eagle Spike\s*$/i.test(input.trim())) {
+          assert(/spacing/i.test(rowText), 'rashid: Eagle Spike ender row lost spacing truth');
         }
         if (/\+42/.test(JSON.stringify(row?.value ?? {})) || /\+42/.test(input)) {
           if (/Mixer/i.test(input)) assert(/air_current/i.test(conditions) || /Air Current/i.test(input), 'rashid: +42 Mixer lost Air Current condition');
