@@ -1,0 +1,113 @@
+schema_version: '1.1'
+character: ed
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先学中距离contact→Blitz→Rush re-entry完整循环，再逐层加入+4 spacing、Kill Switch、projectile和charged Knuckle。'
+  score_rule: 'Rank/MR是Reality evidence，不替代spacing、Hitman exact state、corner、active-frame与charge-level条件。'
+  current_ui: 'S0长距离touch + Blitz re-entry；S1 +4 pressure；S2 carry/projectile/Drive；S3 Knuckle/exact meaty；S4 SA2/lethal。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '稳定light/5MP confirm、confirmed 5MK→L Flicker、M Blitz→DR re-entry和L Uppercut anti-air。'
+    add_now:
+      - '2LP > 5LP > M Psycho Blitz。'
+      - '5MP > 2LK > M Psycho Blitz。'
+      - 'confirmed 5MK > L Psycho Flicker。'
+      - 'M Blitz +39 -> Drive Rush +8 -> 5HP / 2MK / throw / shimmy。'
+      - 'L Psycho Uppercut anti-air。'
+    gate:
+      lab: '5MK只有确认后才交L Flicker；M Blitz后能稳定DR回到近身。'
+      match: '不会只在远处Flicker，也不会把-6 Flicker当safe pressure。'
+    defer: ['charged Flicker +4', '5HK +4', 'Kill Switch', 'Psycho Spark/Shoot', 'Psycho Knuckle', 'SA2']
+    hub_focus: [light, medium, midrange, reentry, anti_air]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '把5HK +4、charged Flicker spacing、H Blitz +9 re-entry和exact +42 safe jump加入反馈循环。'
+    add_now:
+      - '5HK Block +4 -> 5MP / throw / 5HP shimmy。'
+      - 'charged L/M Flicker Block +4 -> spacing check。'
+      - 'ordinary H Blitz +40 -> DR +9。'
+      - 'Hitman exact H Blitz +42 -> safe jump。'
+      - 'forward throw +24 / back throw current +17。'
+    gate:
+      match: 'charged Flicker后不会自动投；能说出当前位置为什么strike、walk throw或shimmy。'
+    defer: ['Kill Switch carry', 'Spark/Shoot rhythm', 'Knuckle', 'SA2']
+    hub_focus: [hk_pressure, charged_flicker, hblitz, safejump, throws]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '同一opening开始比较re-entry / carry / projectile position / raw knockdown。'
+    add_now:
+      - 'Kill Switch Break carry。'
+      - 'Kill Switch Chaser punish route。'
+      - 'Psycho Spark -> Shoot screen control。'
+      - '一条2MP CDR。'
+      - '一条DI punish。'
+      - '2HP +30与CH/PC +47 Oki。'
+    gate:
+      match: '能解释为什么当前opening要位置、re-entry还是projectile layer。'
+    defer: ['Psycho Knuckle', 'exact corner Spark meaty', 'OD Flicker high-resource', 'SA2 dream route']
+    hub_focus: [kill_switch, spark, drive, hp_oki]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'Psycho Knuckle Lv1/Lv2、exact corner +38 Spark meaty、OD Flicker与spacing refinement进入。'
+    add_now:
+      - 'Psycho Knuckle Lv1 / Lv2 charge-level区分。'
+      - 'exact corner +38 -> Psycho Spark meaty。'
+      - 'OD Flicker route。'
+      - 'charged Flicker深spacing调整。'
+      - 'corner conversion价值比较。'
+    gate:
+      behavior: 'charge tool不会取代基本confirm；exact +38/+42不跨route泛化。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['SA2 long route', 'matchup projectile cadence', 'niche Knuckle spacing']
+    hub_focus: [knuckle, corner_spark, od_flicker, charged_flicker]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA2长延伸、SA3 lethal、matchup Flicker/Shoot cadence与niche Knuckle spacing进入。'
+    add_now:
+      - 'SA2 easy与long extension。'
+      - 'SA3 lethal。'
+      - 'matchup-specific Flicker charge frequency。'
+      - 'Psycho Shoot slow/fast cadence。'
+      - 'Knuckle / corner spacing lab。'
+    gate:
+      behavior: '高级资源route不让S0的range-to-reentry循环退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, knuckle, spark]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: 'M Blitz confirm稳定', node: light, upgrade_evidence: 'hit才提交Blitz。'}
+    - {id: EX02, stage: S0, label: '5MK→L Flicker确认稳定', node: midrange, upgrade_evidence: 'block会停。'}
+    - {id: EX03, stage: S3, label: 'Knuckle Lv1/Lv2 charge区分稳定', node: knuckle, upgrade_evidence: 'charge level和screen state不串。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '长距离touch不是Flicker spam', node: midrange, upgrade_evidence: '会用5MK/5MP/whiff punish找contact。'}
+    - {id: NE02, stage: S2, label: 'Spark/Shoot重新限制移动', node: spark, upgrade_evidence: 'projectile后有walk/Flicker计划。'}
+    - {id: NE03, stage: S3, label: 'charged Flicker按spacing继续', node: charged_flicker, upgrade_evidence: '不会默认throw。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'touch→Blitz→Rush闭环', node: reentry, upgrade_evidence: '远处命中能换近身回合。'}
+    - {id: CO02, stage: S2, label: 're-entry vs carry有理由', node: kill_switch, upgrade_evidence: '同opening选择跟位置走。'}
+    - {id: CO03, stage: S3, label: '+40/+42/+38 exact owner分清', node: corner_spark, upgrade_evidence: 'setplay数字不泛化。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'M Blitz +39 DR闭环', node: reentry, upgrade_evidence: '5HP/2MK/throw/shimmy能回confirm。'}
+    - {id: OF02, stage: S1, label: '5HK/charged Flicker +4 feedback', node: hk_pressure, upgrade_evidence: '按对手和spacing选下一拍。'}
+    - {id: OF03, stage: S3, label: 'corner safe-jump/Spark loop', node: corner_spark, upgrade_evidence: '只在exact state运行。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: 'jump→L Uppercut', node: anti_air, upgrade_evidence: '能把对手压回ground range。'}
+    - {id: DA02, stage: S1, label: 'Flicker被后退/跳后调spacing', node: charged_flicker, upgrade_evidence: '转5MP/whiff punish/anti-air。'}
+    - {id: DA03, stage: S4, label: 'matchup Shoot/Flicker cadence', node: super, upgrade_evidence: '不机械循环同一range tool。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'midrange contact→Blitz→Rush re-entry先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '+4 pressure与spacing feedback多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'carry/projectile/Drive价值选择结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；charge/exact-state不泄漏。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA2 / matchup cadence围绕真实高分瓶颈。'}

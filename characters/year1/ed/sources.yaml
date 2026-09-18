@@ -1,0 +1,17 @@
+schema_version: '1.1'
+character: ed
+accessed: '2026-09-19'
+sources:
+- {id: SRC00, tier: migration_baseline, title: 'Accepted StudyHub roster / learner-shell baseline', status: contextual_only, covers: [roster_identity, frozen_runtime_contract]}
+- {id: SRC01, tier: 0, title: 'Official Street Fighter 6 Frame Data — Ed', url: 'https://www.streetfighter.com/6/en-us/character/ed/frame', game_version: current, covers: [frames, damage, cancel_properties, commands]}
+- {id: SRC02, tier: 0, title: 'CAPCOM Year 4 battle-adjustment boundary', url: 'https://www.streetfighter.com/6/buckler/en', date: '2026-08-03', covers: [version_boundary]}
+- {id: SRC03, tier: 1, title: 'SF6 Lab — Ed Frame Data', url: 'https://sf6-lab.net/en/fighters/ed/frame', freshness: 'official-reference data through 2026-08-27; checked 2026-09-19', covers: [frames, normals, unique_attacks, specials, supers]}
+- {id: SRC04, tier: 1, title: 'SF6 Lab — Ed Move List', url: 'https://sf6-lab.net/en/fighters/ed/moves', freshness: 'checked 2026-09-19', covers: [commands, psycho_knuckle, psycho_flicker, psycho_spark_shoot, kill_rush, specials, supers]}
+- {id: SRC05, tier: 1, title: 'SF6 Lab — Ed Combos & Okizeme Year 4', url: 'https://sf6-lab.net/en/fighters/ed/combo', freshness: 'updated 2026-08-31; checked 2026-09-19', game_version: 'Year 4 / 2026-08-03', covers: [routes, oki, charged_flicker_spacing, kill_rush, safe_jump, psycho_spark, sa2, current_game_plan]}
+- {id: SRC06, tier: 1, title: 'Ultimate Frame Data — Street Fighter 6 / Ed', url: 'https://ultimateframedata.com/', freshness: 'Ed August 2026 update live 2026-08-11; checked 2026-09-19', covers: [frame_crosscheck, hitboxes, august_2026_patch]}
+policy:
+  preferred_order: [SRC01, SRC02, SRC03, SRC04, SRC05, SRC06, SRC00]
+  numeric_conflict_rule: 'current official-reference / Year4 maintained data overrides older guide assumptions; spacing, corner, Hitman Combination state, active-frame timing and charged-Flicker pull distance remain part of the fact'
+  route_publish_rule: 'verified / conditioned / provisional required; +42 safe jump and charged-Flicker +4 must preserve exact route/spacing conditions'
+  tier2_rule: 'NOT_REQUIRED for Phase A because current Year4 route/Oki guide explicitly publishes the current game-plan chain and spacing corrections'
+  learner_projection_rule: 'S0 teaches ordinary midrange contact -> Blitz knockdown -> Kill Rush Oki; charged Flicker spacing and projectile/Knuckle layers arrive only after the basic re-entry loop is stable'

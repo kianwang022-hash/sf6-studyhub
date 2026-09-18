@@ -1,0 +1,479 @@
+schema_version: '1.0'
+character: ed
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT, PC, READ]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 = stable Blitz knockdown + long 5MK/Flicker confirm + Rush re-entry. Charged Flicker/5HK pressure S1; Kill Switch/Spark S2; Psycho Knuckle/exact corner setplay S3; SA2 S4.'
+stages:
+  S0: {label: 最小可玩, short: 'Midrange touch / Blitz / Rush re-entry'}
+  S1: {label: 基本功成型, short: '+4 pressure / charged Flicker spacing / safe jump'}
+  S2: {label: 实战结构化, short: 'Kill Switch / Spark-Shoot / Drive conversions'}
+  S3: {label: 选择成熟, short: 'Knuckle / exact meaty / OD Flicker / corner'}
+  S4: {label: 高分上探, short: 'SA2 extensions / lethal / matchup spacing'}
+shared_packages:
+  MBLITZ39:
+    label: 'M Blitz +39 -> DR +8'
+    sequence: 'M Psycho Blitz confirmed hit -> +39 -> Drive Rush'
+    next: '5HP / 2MK / throw / walk-back shimmy'
+    verification: conditioned
+    conditions: [m_blitz_end_state, drive_resource]
+    sources: [SRC05]
+  HBLITZ40:
+    label: 'H Blitz +40 -> DR +9'
+    sequence: 'ordinary H Psycho Blitz hit -> +40 -> Drive Rush'
+    next: '5HP / 2MK / throw / shimmy'
+    verification: conditioned
+    conditions: [h_blitz_ordinary_end_state, drive_resource]
+    sources: [SRC05]
+  HITMAN42:
+    label: 'Exact Hitman H Blitz +42 safe jump'
+    sequence: 'declared Hitman Combination route -> H Psycho Blitz -> +42'
+    next: 'immediate forward jump HP safe jump'
+    verification: conditioned
+    conditions: [hitman_h_blitz_exact_state, hit_height_verified]
+    sources: [SRC05]
+  HK4:
+    label: '5HK Block +4'
+    sequence: '5HK blocked -> +4'
+    next: '5MP frame trap / throw / 5HP shimmy'
+    verification: verified
+    sources: [SRC03, SRC05]
+  FLICKER4:
+    label: 'Charged Flicker Block +4'
+    sequence: 'charged L/M Psycho Flicker blocked -> +4'
+    next: 'judge spacing -> 5MP / walk throw / shimmy'
+    verification: conditioned
+    conditions: [charged_flicker, spacing_check]
+    sources: [SRC03, SRC05]
+  HP30:
+    label: '2HP +30 -> dash active meaty'
+    sequence: '2HP ordinary hit +30 -> forward dash -> 5HP active meaty'
+    next: 'about Hit +7 / Block 0'
+    verification: conditioned
+    conditions: [two_hp_plus30, active_frame_timing]
+    sources: [SRC05]
+  HP47:
+    label: '2HP CH/PC +47 -> dash x2 +9'
+    sequence: '2HP CH/PC -> +47 -> forward dash x2'
+    next: '5HP / 2MK / throw / shimmy'
+    verification: conditioned
+    conditions: [two_hp_counter_or_punish_counter]
+    sources: [SRC05]
+  SPARK38:
+    label: 'Corner +38 -> Psycho Spark meaty'
+    sequence: 'exact corner +38 -> 2LP whiff -> Psycho Spark'
+    next: 'about Hit +13 / Block +5'
+    verification: conditioned
+    conditions: [corner, exact_plus38_state, active_frame_timing]
+    sources: [SRC05]
+opportunities:
+- id: light
+  title: 'Light｜S0稳定M Blitz'
+  stage: S0
+  subtitle: '先有普通confirm'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '2LP > 5LP > M Psycho Blitz'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: MBLITZ39
+    why: '当前starter第一条；先把普通近身contact变成可重复re-entry。'
+    verification: conditioned
+    conditions: [confirmed_hit, m_blitz_end_state]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '2LP block -> 5LP check / stop'
+    value: {drive: 0}
+    next_loop: '回5MP / spacing'
+    why: 'M Blitz被防-12，不能不确认。'
+    verification: verified
+    sources: [SRC03]
+- id: medium
+  title: '5MP｜S0第二条稳定M Blitz'
+  stage: S0
+  subtitle: 'close contact不靠复杂机制'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable
+    input: '5MP > 2LK > M Psycho Blitz'
+    value: {drive: 0, kd: '+39'}
+    next_loop_package: MBLITZ39
+    why: '把5MP +6优势收回同一个+39 owner。'
+    verification: conditioned
+    conditions: [confirmed_hit, m_blitz_end_state]
+    sources: [SRC05]
+- id: midrange
+  title: '5MK｜S0证明Ed的长距离触角'
+  stage: S0
+  subtitle: 'confirmed hit才接Flicker'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Midrange confirm
+    input: 'confirmed 5MK hit > L Psycho Flicker'
+    value: {frame: 'L Flicker Hit +1'}
+    next_loop: 'spacing / 5MP check / reset'
+    why: '这是Ed区别普通近身角色的最小中距离能力。'
+    verification: conditioned
+    conditions: [confirmed_hit, midrange_contact]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: '5MK blocked -> do not autopilot L Psycho Flicker'
+    value: {risk: 'L Flicker Block -6'}
+    next_loop: 'spacing / block / whiff-punish hunt'
+    why: '把Flicker纪律从第一天写死。'
+    verification: verified
+    sources: [SRC03, SRC05]
+- id: reentry
+  title: 'M Blitz +39｜S0核心Rush re-entry'
+  stage: S0
+  subtitle: '远处touch变成近身回合'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Strike
+    input: 'M Psycho Blitz hit +39 -> Drive Rush +8 -> 5HP'
+    value: {drive: 1, frame: 'about +8 before action'}
+    next_loop: 'hit -> route; block -> spacing / throw-read'
+    why: '把一次confirm直接变成Ed的近身进攻。'
+    verification: conditioned
+    conditions: [m_blitz_end_state, drive_resource]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Low
+    input: 'M Psycho Blitz hit +39 -> Drive Rush +8 -> 2MK'
+    value: {drive: 1}
+    next_loop: 'hit confirm / block pressure'
+    why: '对手站防时加入low。'
+    verification: conditioned
+    conditions: [m_blitz_end_state, drive_resource]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Throw
+    input: 'M Psycho Blitz hit +39 -> Drive Rush +8 -> throw'
+    value: {drive: 1}
+    next_loop: 'tech/jump -> shimmy/anti-air next time'
+    why: 'strike建立respect后再投。'
+    verification: conditioned
+    conditions: [m_blitz_end_state, drive_resource, opponent_respect]
+    sources: [SRC05]
+- id: anti_air
+  title: 'Anti-air｜S0只学L Psycho Uppercut'
+  stage: S0
+  subtitle: '先把跳压回地面'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Anti-air
+    input: 'opponent jump -> L Psycho Uppercut'
+    value: {kd: '+38 family'}
+    next_loop: 'spacing / later exact Oki'
+    why: '不需要先学Knuckle或Flicker air conversion。'
+    verification: conditioned
+    conditions: [anti_air_hit]
+    sources: [SRC03, SRC05]
+- id: hk_pressure
+  title: '5HK｜S1稳定+4 pressure'
+  stage: S1
+  subtitle: '不依赖Flicker也能压'
+  rows:
+  - result: BLOCK
+    stage: S1
+    choice: Frame trap
+    input: '5HK block +4 -> 5MP'
+    value: {frame: '+4', gap: '4F family'}
+    next_loop: '5MP hit -> confirm; block -> throw/shimmy layer'
+    why: '先学Ed最清楚的近身plus owner。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S1
+    choice: Shimmy
+    input: '5HK block +4 -> slight walk back -> 5HP'
+    value: {frame: '+4'}
+    next_loop: 'whiffed throw -> punish / route'
+    why: '对手开始tech以后再加。'
+    verification: conditioned
+    conditions: [opponent_throw_tech]
+    sources: [SRC05]
+- id: charged_flicker
+  title: 'Charged Flicker｜S1才学+4 spacing'
+  stage: S1
+  subtitle: 'Year4不是自动point-blank throw'
+  rows:
+  - result: BLOCK
+    stage: S1
+    choice: Spacing check
+    input: 'charged L/M Psycho Flicker blocked -> inspect pull distance'
+    value: {frame: '+4'}
+    next_loop_package: FLICKER4
+    why: '当前版本的核心纠偏：+4不等于throw一定够得到。'
+    verification: conditioned
+    conditions: [charged_flicker, spacing_check]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S1
+    choice: Walk throw
+    input: 'charged Flicker block + spacing too far for immediate throw -> walk forward throw'
+    value: {frame: '+4 before movement'}
+    next_loop: 'jump/backdash response -> strike/shimmy next time'
+    why: '把spacing差异转成真实决策。'
+    verification: conditioned
+    conditions: [charged_flicker, spacing_check, throw_not_point_blank]
+    sources: [SRC05]
+- id: hblitz
+  title: 'H Blitz｜S1更强re-entry'
+  stage: S1
+  subtitle: 'ordinary +40，DR约+9'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Re-entry
+    input: 'ordinary H Psycho Blitz hit +40 -> Drive Rush +9 -> 5HP / 2MK / throw'
+    value: {drive: 1, kd: '+40'}
+    next_loop_package: HBLITZ40
+    why: '提高Oki预算，但仍是同一个range-to-reentry循环。'
+    verification: conditioned
+    conditions: [h_blitz_ordinary_end_state, drive_resource]
+    sources: [SRC05]
+- id: safejump
+  title: 'Hitman H Blitz｜S1只记exact +42 safe jump'
+  stage: S1
+  subtitle: '不是所有H Blitz'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Safe jump
+    input: '5MP > 5HP > H Psycho Blitz in declared Hitman Combination state -> +42 -> immediate forward jump HP'
+    value: {kd: '+42', safe_jump: true}
+    next_loop_package: HITMAN42
+    why: '第一条route-specific setplay，同时防止把+42泛化。'
+    verification: conditioned
+    conditions: [hitman_h_blitz_exact_state, hit_height_verified]
+    sources: [SRC05]
+- id: throws
+  title: 'Throws｜S1纠正Year4旧loop'
+  stage: S1
+  subtitle: 'forward +24 / back +17'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Forward throw
+    input: 'forward throw hit +24'
+    value: {kd: '+24'}
+    next_loop: 'corner dash +5 / DR 5MP / DR throw'
+    why: '仍有追击价值。'
+    verification: conditioned
+    conditions: [forward_throw_end_state]
+    sources: [SRC05]
+  - result: HIT
+    stage: S1
+    choice: Back throw
+    input: 'back throw hit +17'
+    value: {kd: '+17'}
+    next_loop: 'reset spacing / no old +24 throw-loop assumption'
+    why: 'Year4明确修正旧资料。'
+    verification: verified
+    sources: [SRC05]
+- id: kill_switch
+  title: 'Kill Switch｜S2才把contact换成carry'
+  stage: S2
+  subtitle: 'route价值分支，不是输入税'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Carry
+    input: '5MP > 5HP > Kill Switch Break > M Psycho Uppercut'
+    value: {purpose: 'corner carry'}
+    next_loop: 'screen-position pressure / reset'
+    why: '同一个opening需要位置时才选carry。'
+    verification: conditioned
+    conditions: [confirmed_hit, kill_switch_route_timing]
+    sources: [SRC05]
+  - result: PC
+    stage: S2
+    choice: Chaser punish
+    input: '5HK Punish Counter > 5HP > Kill Switch Chaser > H Psycho Blitz'
+    value: {purpose: 'punish + carry', kd: '+40'}
+    next_loop_package: HBLITZ40
+    why: '把PC价值换成位置，再回基础Oki。'
+    verification: conditioned
+    conditions: [punish_counter, kill_switch_route_timing, h_blitz_ordinary_end_state]
+    sources: [SRC05]
+- id: spark
+  title: 'Psycho Spark / Shoot｜S2才加入屏幕控制'
+  stage: S2
+  subtitle: 'projectile层服务于重新拿contact'
+  rows:
+  - result: READ
+    stage: S2
+    choice: Spark
+    input: 'Psycho Spark -> choose Psycho Shoot timing / strength'
+    value: {frame: 'Spark Hit +3 / Block -5'}
+    next_loop: 'walk / Flicker / long normal behind projectile'
+    why: '飞道目的是重新限制对手移动，不是另开一个zoner模式。'
+    verification: conditioned
+    conditions: [projectile_spacing]
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S2
+    choice: OD Shoot rhythm
+    input: 'OD Psycho Spark -> choose slower/faster Psycho Shoot version by screen plan'
+    value: {drive: 2, block: 'about -2'}
+    next_loop: 'walk behind slower shot / pressure with faster shot'
+    why: 'Year4速度差让projectile选择拥有不同用途。'
+    verification: conditioned
+    conditions: [drive_resource, projectile_spacing, shoot_strength_selected]
+    sources: [SRC05]
+- id: drive
+  title: 'Drive｜S2保留一条CDR与一条DI'
+  stage: S2
+  subtitle: '不堆combo数量'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: CDR
+    input: '2MP > CDR > 5HP > 2MK > 2MP > H Psycho Blitz'
+    value: {drive: 3, kd: '+40'}
+    next_loop_package: HBLITZ40
+    why: '通用Drive opening最后仍回Ed的Blitz re-entry owner。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, h_blitz_ordinary_end_state]
+    sources: [SRC05]
+  - result: PC
+    stage: S2
+    choice: DI
+    input: 'DI Punish Counter > 5HK > 5HP > H Psycho Blitz'
+    value: {kd: '+40'}
+    next_loop_package: HBLITZ40
+    why: '只保留稳定DI route。'
+    verification: conditioned
+    conditions: [di_punish_counter, spacing_verified, h_blitz_ordinary_end_state]
+    sources: [SRC05]
+- id: hp_oki
+  title: '2HP｜S2 exact active-frame Oki'
+  stage: S2
+  subtitle: '+30与CH/PC +47分开'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Ordinary
+    input: '2HP hit +30 -> forward dash -> 5HP active meaty'
+    value: {kd: '+30', frame: 'about Hit +7 / Block 0'}
+    next_loop_package: HP30
+    why: '普通2HP状态独立owner。'
+    verification: conditioned
+    conditions: [two_hp_plus30, active_frame_timing]
+    sources: [SRC05]
+  - result: PC
+    stage: S2
+    choice: Counter state
+    input: '2HP CH/PC +47 -> forward dash x2 -> +9'
+    value: {kd: '+47', frame: '+9'}
+    next_loop_package: HP47
+    why: '更大预算只属于CH/PC。'
+    verification: conditioned
+    conditions: [two_hp_counter_or_punish_counter]
+    sources: [SRC05]
+- id: knuckle
+  title: 'Psycho Knuckle｜S3才处理charge空间'
+  stage: S3
+  subtitle: 'Lv1/Lv2不能混'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Lv1
+    input: 'charge 5HP to Psycho Knuckle Lv1'
+    value: {startup: '39F', block: 'about -2; corner can differ', crumple: '+41 family'}
+    next_loop: 'route / spacing reset / Kill Rush cancel decision'
+    why: 'Lv1更快但不是稳定plus；位置条件必须保留。'
+    verification: conditioned
+    conditions: [psycho_knuckle_lv1, screen_position_check]
+    sources: [SRC03, SRC04]
+  - result: READ
+    stage: S3
+    choice: Lv2
+    input: 'fully charge Psycho Knuckle Lv2'
+    value: {startup: '69F', block: '+4', crumple: '+41 family'}
+    next_loop: 'pressure / route / projectile clash read'
+    why: '高commitment换plus与crumple，不是S0必需能力。'
+    verification: conditioned
+    conditions: [psycho_knuckle_lv2, full_charge]
+    sources: [SRC03, SRC04]
+- id: corner_spark
+  title: 'Corner Spark｜S3 exact +38 meaty'
+  stage: S3
+  subtitle: '不能泛化成Spark +5'
+  rows:
+  - result: READ
+    stage: S3
+    choice: Active meaty
+    input: 'exact corner +38 -> 2LP whiff -> Psycho Spark'
+    value: {frame: 'about Hit +13 / Block +5'}
+    next_loop_package: SPARK38
+    why: 'projectile pressure只有在精确setplay里才获得这组plus值。'
+    verification: conditioned
+    conditions: [corner, exact_plus38_state, active_frame_timing]
+    sources: [SRC05]
+- id: od_flicker
+  title: 'OD Flicker｜S3高资源路线'
+  stage: S3
+  subtitle: '用资源换extension/carry'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: Extension
+    input: '5HP > OD Psycho Flicker > H Psycho Flicker > Kill Switch Break > H Psycho Blitz'
+    value: {drive: 2, kd: '+40'}
+    next_loop_package: HBLITZ40
+    why: '在已确认opening上增加route价值，不改变基础身份。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, kill_switch_route_timing, h_blitz_ordinary_end_state]
+    sources: [SRC05]
+- id: super
+  title: 'Super｜S4才学SA2长延伸'
+  stage: S4
+  subtitle: '不把dream combo当入门门槛'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: SA2 easy
+    input: 'OD Psycho Blitz final hit > SA2 Psycho Cannon > H Psycho Uppercut > 6HP > H Psycho Uppercut'
+    value: {drive: 2, sa: 2}
+    next_loop: 'damage / corner carry by route state'
+    why: '先学可控版本；SA2当前资源回收规则与旧资料不同。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, sa_resource, sa2_route_timing]
+    sources: [SRC05]
+  - result: HIT
+    stage: S4
+    choice: SA3
+    input: '5HP > OD Psycho Flicker > L Psycho Uppercut > H Psycho Blitz > SA3 Psycho Chamber'
+    value: {drive: 2, sa: 3}
+    next_loop: 'round-state / lethal'
+    why: '只在lethal/资源值得时cashout。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, sa_resource]
+    sources: [SRC05]
+backend_only:
+- {label: 'charged Flicker in S0', reason: 'spacing layer before Blitz re-entry is stable'}
+- {label: 'raw 5MK > L Flicker on block', reason: 'uncharged Flicker is -6'}
+- {label: 'generic H Blitz +42 safe jump', reason: 'Hitman exact route required'}
+- {label: 'old back throw +24 loop', reason: 'current state +17'}
+- {label: 'Psycho Knuckle as S0 identity', reason: 'long charge commitment; not required for complete loop'}
+- {label: 'generic Psycho Spark +5', reason: 'exact corner +38 setup required'}
