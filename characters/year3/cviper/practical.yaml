@@ -1,0 +1,437 @@
+schema_version: '1.0'
+character: cviper
+version_scope:
+  game_version: 'Year 4 / 2026-08-03'
+  checked_through: '2026-09-19'
+  primary_source: SRC05
+policy:
+  primary_results: [WHIFF, BLOCK, HIT, PC, READ]
+  input_first: true
+  future_stages_collapsed: true
+  ids_hidden_in_learner_ui: true
+  default_table_columns: [result_choice, full_input, value_resource, next_loop_why]
+  identity_rule: 'S0 = ordinary +1 pressure, one confirmed H Dash/Tracer loop, one meterless route, exactly one HJC proof. Burning/Seismic S1; broader HJC S2; exact +42/+44/+45 S3; SA1 install S4.'
+stages:
+  S0: {label: 最小可玩, short: '+1 pressure / confirmed knockdown / one HJC proof'}
+  S1: {label: 基本功成型, short: 'Burning hit-block split / Seismic launcher'}
+  S2: {label: 实战结构化, short: 'Broader HJC / DR / corner meaty'}
+  S3: {label: 选择成熟, short: 'Exact +42/+44/+45 / resource setplay'}
+  S4: {label: 高分上探, short: 'SA1 install / max HJC / lethal'}
+shared_packages:
+  HTRACER25:
+    label: 'H Thunder Dash -> Tracer +25..26'
+    sequence: 'confirmed H Thunder Dash -> Tracer Combination'
+    next: 'forward dash -> +4..5 -> 5MP / throw / 2MK / shimmy'
+    verification: conditioned
+    conditions: [confirmed_hit, h_tracer_exact_state, drive_resource]
+    sources: [SRC05, SRC06]
+  MP1:
+    label: '5MP Block +1'
+    sequence: '5MP blocked -> +1'
+    next: '2LP / throw / 5HK / 2MK'
+    verification: verified
+    sources: [SRC03, SRC05]
+  HJC_BRIDGE:
+    label: 'HJC normal -> special route'
+    sequence: 'HJC-capable normal hit -> High Jump Cancel -> pre-jump special'
+    next: 'route-specific conversion / knockdown'
+    verification: conditioned
+    conditions: [hJC_capable_normal, drive_resource, not_sa1_install]
+    sources: [SRC05, SRC06]
+  LTRACER37:
+    label: 'L Dash -> Tracer +37'
+    sequence: 'confirmed L Thunder Dash -> Tracer Combination'
+    next: 'corner shimmy / active meaty / route-specific Oki'
+    verification: conditioned
+    conditions: [confirmed_hit, l_tracer_exact_state, drive_resource]
+    sources: [SRC05]
+  BURN23:
+    label: 'Burning Kick hit -> Knuckled Pursuit +23'
+    sequence: 'Burning Kick confirmed hit -> Knuckled Pursuit'
+    next: 'corner active meaty / strike-throw'
+    verification: conditioned
+    conditions: [burning_kick_hit, drive_resource]
+    sources: [SRC05, SRC06]
+  DOUBLE2:
+    label: 'Burning Kick block -> Double Burn +2'
+    sequence: 'Burning Kick blocked -> Double Burn'
+    next: 'Block +2 -> 5MP / throw / shimmy'
+    verification: conditioned
+    conditions: [burning_kick_block, drive_resource]
+    sources: [SRC05, SRC06]
+  SEISMIC_AIR:
+    label: 'Seismic launch -> air conversion'
+    sequence: 'Seismic Hammer hit -> HJC/High Jump air route'
+    next: 'Burning Kick / Thunder Dash / carry / setplay'
+    verification: conditioned
+    conditions: [seismic_hit, height_verified]
+    sources: [SRC05]
+  SAFE45:
+    label: 'Exact +45 jump-in'
+    sequence: 'declared Seismic/air route -> +45 -> forward jump'
+    next: 'jump-in / safe-jump family'
+    verification: conditioned
+    conditions: [exact_plus45_route, height_verified]
+    sources: [SRC05]
+  SAFE42:
+    label: 'Exact +42 jump-in'
+    sequence: 'declared +42 end state -> jump attack'
+    next: 'jump-in / meaty throw family'
+    verification: conditioned
+    conditions: [exact_plus42_route]
+    sources: [SRC05]
+opportunities:
+- id: pressure
+  title: '5MP｜S0先学普通+1'
+  stage: S0
+  subtitle: 'Viper不是HJC才有回合'
+  rows:
+  - result: BLOCK
+    stage: S0
+    choice: Strike
+    input: '5MP block +1 -> 2LP'
+    value: {frame: '+1'}
+    next_loop_package: MP1
+    why: '先用普通frame advantage建立respect。'
+    verification: verified
+    sources: [SRC03, SRC05]
+  - result: READ
+    stage: S0
+    choice: Throw
+    input: '5MP block +1 + opponent respects -> throw'
+    value: {frame: '+1'}
+    next_loop: 'tech/jump -> shimmy / anti-air next time'
+    why: 'HJC之前先有正常strike/throw反馈。'
+    verification: conditioned
+    conditions: [opponent_respect]
+    sources: [SRC05]
+- id: light
+  title: 'Light｜S0角色击倒'
+  stage: S0
+  subtitle: '确认后才交H Dash'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Stable knockdown
+    input: '2LP > 2LP > 5LK > H Thunder Dash > Tracer Combination'
+    value: {drive: 1, kd: '+25..26'}
+    next_loop_package: HTRACER25
+    why: '最短完整Viper回合：confirm -> knockdown -> 下一拍。'
+    verification: conditioned
+    conditions: [confirmed_hit, h_tracer_exact_state, drive_resource]
+    sources: [SRC05]
+  - result: BLOCK
+    stage: S0
+    choice: Stop
+    input: 'light string blocked -> stop before H Thunder Dash'
+    value: {drive: 0}
+    next_loop: '5MP / throw / spacing'
+    why: 'H Thunder Dash Block -24；没确认绝不提交。'
+    verification: verified
+    sources: [SRC03, SRC06]
+- id: oki
+  title: 'H Tracer｜S0 +4..5起攻'
+  stage: S0
+  subtitle: 'strike / throw / low'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Strike
+    input: 'H Thunder Dash > Tracer +25..26 -> forward dash -> 5MP'
+    value: {frame: '+4..5 after dash'}
+    next_loop: 'block -> MP1; hit -> confirm'
+    why: '先让稳定击倒变成普通pressure。'
+    verification: conditioned
+    conditions: [h_tracer_exact_state]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Throw
+    input: 'H Thunder Dash > Tracer +25..26 -> forward dash -> throw'
+    value: {frame: '+4..5 after dash'}
+    next_loop: 'tech -> shimmy; jump -> anti-air'
+    why: '对手开始block后加入throw。'
+    verification: conditioned
+    conditions: [h_tracer_exact_state, opponent_respect]
+    sources: [SRC05]
+  - result: READ
+    stage: S0
+    choice: Low
+    input: 'H Thunder Dash > Tracer +25..26 -> forward dash -> 2MK'
+    value: {frame: '+4..5 after dash'}
+    next_loop: 'hit -> HJC option later / block -> reset'
+    why: '把对手后退行为重新拉回低段。'
+    verification: conditioned
+    conditions: [h_tracer_exact_state]
+    sources: [SRC05]
+- id: meterless
+  title: '5MK｜S0 Year4 meterless route'
+  stage: S0
+  subtitle: '不是每次都花Drive'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Preserve Drive
+    input: '5MK > 5LK > M Thunder Dash'
+    value: {drive: 0, hit_state: '+1..4'}
+    next_loop: 'spacing / 5MP / next contact'
+    why: 'Year4 5MK Hit +5让Viper有低成本普通route。'
+    verification: verified
+    sources: [SRC05, SRC06]
+- id: hjc_identity
+  title: 'HJC｜S0只学一条'
+  stage: S0
+  subtitle: '证明“取消规则可以被重写”'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Identity route
+    input: '2MK hit -> High Jump Cancel -> M Thunder Dash -> Tracer Combination'
+    value: {drive: 2, kd: '+18'}
+    next_loop: 'route-specific Oki / spacing'
+    why: '2MK不是ordinary special cancel，但HJC让它能转special；一条就足够理解角色。'
+    verification: conditioned
+    conditions: [confirmed_hit, hJC_capable_normal, drive_resource, not_sa1_install, m_tracer_exact_state]
+    sources: [SRC05, SRC06]
+- id: anti_air
+  title: 'Anti-air｜S0先用5HK'
+  stage: S0
+  subtitle: '不要求air route'
+  rows:
+  - result: HIT
+    stage: S0
+    choice: Anti-air
+    input: 'opponent jump -> 5HK'
+    value: {purpose: 'airborne knockdown'}
+    next_loop: 'ground Oki / later HJC conversion'
+    why: '先把跳压回地面，不用复杂Seismic/HJC才能反空。'
+    verification: conditioned
+    conditions: [airborne_hit]
+    sources: [SRC03, SRC06]
+- id: tracer37
+  title: 'L Dash｜S1大Oki owner'
+  stage: S1
+  subtitle: '更大knockdown预算'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: +37
+    input: '5MP > 2MP > L Thunder Dash > Tracer Combination'
+    value: {drive: 1, kd: '+37'}
+    next_loop_package: LTRACER37
+    why: '从已会5MP contact升级到更大的setplay budget。'
+    verification: conditioned
+    conditions: [confirmed_hit, l_tracer_exact_state, drive_resource]
+    sources: [SRC05]
+- id: burning_split
+  title: 'Burning Kick｜S1学hit/block分流'
+  stage: S1
+  subtitle: '不是固定follow-up'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Hit branch
+    input: '5MP > 2MP > L Burning Kick hit -> Knuckled Pursuit'
+    value: {drive: 1, kd: '+23'}
+    next_loop_package: BURN23
+    why: '命中时把opening延伸成damage/Oki。'
+    verification: conditioned
+    conditions: [confirmed_hit, burning_kick_hit, drive_resource]
+    sources: [SRC05, SRC06]
+  - result: BLOCK
+    stage: S1
+    choice: Block branch
+    input: 'Burning Kick blocked -> Double Burn'
+    value: {drive: 1, frame: '+2'}
+    next_loop_package: DOUBLE2
+    why: '被防时才走pressure follow-up；和hit branch明确分开。'
+    verification: conditioned
+    conditions: [burning_kick_block, drive_resource]
+    sources: [SRC05, SRC06]
+- id: seismic
+  title: 'Seismic｜S1第一次launcher'
+  stage: S1
+  subtitle: '先学一条air route'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Air conversion
+    input: '2HP > M Seismic Hammer > High Jump > j.MP > H Burning Kick'
+    value: {kd: '+44 family'}
+    next_loop_package: SEISMIC_AIR
+    why: '第一次把ground hit转换成Viper空中route，不铺开全部变体。'
+    verification: conditioned
+    conditions: [confirmed_hit, seismic_hit, height_verified]
+    sources: [SRC05]
+- id: throw
+  title: 'Forward throw｜S1普通throw Oki'
+  stage: S1
+  subtitle: '+28'
+  rows:
+  - result: HIT
+    stage: S1
+    choice: Throw loop
+    input: 'forward throw hit +28 -> throw / walk-back shimmy'
+    value: {kd: '+28'}
+    next_loop: 'throw / shimmy / M Burning Kick setup'
+    why: '角色不靠HJC也有普通throw反馈。'
+    verification: conditioned
+    conditions: [forward_throw_end_state]
+    sources: [SRC05, SRC06]
+- id: hjc_expand
+  title: 'HJC｜S2才扩第二第三入口'
+  stage: S2
+  subtitle: '复杂度必须买到价值'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: 5MK HJC
+    input: '5MK hit -> High Jump Cancel -> M Thunder Dash -> Tracer Combination'
+    value: {drive: 2, kd: '+18'}
+    next_loop: 'spacing / corner carry by route'
+    why: 'Year4 5MK +5让第二个HJC入口更稳定。'
+    verification: conditioned
+    conditions: [confirmed_hit, hJC_capable_normal, drive_resource, not_sa1_install, m_tracer_exact_state]
+    sources: [SRC05, SRC06]
+  - result: HIT
+    stage: S2
+    choice: OD Seismic HJC
+    input: '5MP > 2MP > OD Seismic Hammer > delayed High Jump Cancel > M Seismic Hammer > High Jump > j.MP > 5HK'
+    value: {drive: 3, purpose: 'resource conversion'}
+    next_loop: 'setplay / carry'
+    why: '只有普通HJC稳定后才加高资源launcher分支。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, od_seismic_state, height_verified]
+    sources: [SRC05]
+- id: drive_mix
+  title: 'Drive Rush｜S2低/中分流'
+  stage: S2
+  subtitle: '通用Drive接回Viper route'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Overhead
+    input: 'Drive Rush > 6MP > 2MP > OD Seismic Hammer'
+    value: {drive: 3}
+    next_loop: 'HJC / air route'
+    why: 'overhead命中后接回Seismic owner。'
+    verification: conditioned
+    conditions: [drive_resource, confirmed_hit]
+    sources: [SRC05]
+  - result: HIT
+    stage: S2
+    choice: Low
+    input: 'Drive Rush > 2MK > 2HP > Seismic Hammer'
+    value: {drive: 1}
+    next_loop_package: SEISMIC_AIR
+    why: '低段opening最终仍回同一launcher结构。'
+    verification: conditioned
+    conditions: [drive_resource, confirmed_hit, seismic_hit]
+    sources: [SRC05]
+- id: corner_meaty
+  title: 'Corner H Tracer｜S2 active meaty'
+  stage: S2
+  subtitle: 'corner exact state'
+  rows:
+  - result: HIT
+    stage: S2
+    choice: Meaty
+    input: 'corner H Thunder Dash > Tracer +25..26 -> 2LK whiff -> 5MP active meaty'
+    value: {frame: 'about Hit +8 / Block +4'}
+    next_loop: '2HP combo / throw / shimmy'
+    why: '把S0击倒升级成角落active-frame pressure。'
+    verification: conditioned
+    conditions: [corner, h_tracer_exact_state, active_frame_timing]
+    sources: [SRC05]
+- id: exact_setplay
+  title: 'Exact state｜S3才学+42/+44/+45'
+  stage: S3
+  subtitle: '数字跟route绑定'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: +45
+    input: 'Seismic Hammer > delayed High Jump j.MP > immediate L Burning Kick -> +45 -> forward jump'
+    value: {kd: '+45'}
+    next_loop_package: SAFE45
+    why: 'exact air-route owner，不泛化。'
+    verification: conditioned
+    conditions: [exact_plus45_route, height_verified]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: +42
+    input: 'Seismic Hammer > High Jump j.MP > immediate M Burning Kick -> +42 -> j.HK jump-in'
+    value: {kd: '+42'}
+    next_loop_package: SAFE42
+    why: '另一个exact air-route owner。'
+    verification: conditioned
+    conditions: [exact_plus42_route, height_verified]
+    sources: [SRC05]
+  - result: HIT
+    stage: S3
+    choice: +44
+    input: 'Seismic Hammer > High Jump j.MP > H Burning Kick -> +44'
+    value: {kd: '+44'}
+    next_loop: '5LP whiff -> dash -> +9 -> active 5MP / forward High Jump mix'
+    why: '第三个state独立保留，不和+42/+45混。'
+    verification: conditioned
+    conditions: [exact_plus44_route, height_verified]
+    sources: [SRC05]
+- id: od_state
+  title: 'OD state｜S3高预算+42'
+  stage: S3
+  subtitle: 'OD Thunder Dash / OD Seismic各自有owner'
+  rows:
+  - result: HIT
+    stage: S3
+    choice: OD Thunder Dash
+    input: 'confirmed OD Thunder Dash hit'
+    value: {drive: 2, kd: '+42'}
+    next_loop: 'jump-in / exact Oki'
+    why: 'OD Dash自己就是+42；不能接Tracer。'
+    verification: conditioned
+    conditions: [confirmed_hit, od_thunder_dash_state, drive_resource]
+    sources: [SRC06]
+  - result: HIT
+    stage: S3
+    choice: OD Seismic route
+    input: '2HP > OD Seismic Hammer > 2HK'
+    value: {drive: 2, kd: '+42'}
+    next_loop_package: SAFE42
+    why: '另一条+42有不同route owner。'
+    verification: conditioned
+    conditions: [confirmed_hit, od_seismic_state, exact_plus42_route, drive_resource]
+    sources: [SRC05]
+- id: super
+  title: 'SA1｜S4才打开install经济'
+  stage: S4
+  subtitle: 'HJC免费只属于install'
+  rows:
+  - result: HIT
+    stage: S4
+    choice: Install
+    input: 'confirmed route -> SA1 Limit Decoupler'
+    value: {sa: 1, state: 'install'}
+    next_loop: 'HJC / special follow-ups without Drive cost during install'
+    why: '这是高级资源经济改变；不能反推普通HJC免费。'
+    verification: conditioned
+    conditions: [confirmed_hit, sa_resource, sa1_install_active]
+    sources: [SRC06]
+  - result: HIT
+    stage: S4
+    choice: SA3 cashout
+    input: 'confirmed Seismic route -> OD Burning Kick -> SA3'
+    value: {drive: 2, sa: 3}
+    next_loop: 'round-state / lethal'
+    why: '只在已确认opening与lethal价值值得时现金化。'
+    verification: conditioned
+    conditions: [confirmed_hit, drive_resource, sa_resource]
+    sources: [SRC05]
+backend_only:
+- {label: 'full HJC matrix in S0', reason: 'one identity route is enough'}
+- {label: 'HJC without Drive owner', reason: 'false outside SA1 install'}
+- {label: '2HK HJC', reason: 'standard-normal exception'}
+- {label: 'raw H Thunder Dash pressure', reason: 'Block -24'}
+- {label: 'Burning Kick universal follow-up', reason: 'hit/block branch split'}
+- {label: 'generic +42/+44/+45', reason: 'exact route/height owner required'}
