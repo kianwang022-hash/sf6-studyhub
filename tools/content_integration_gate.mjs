@@ -39,7 +39,8 @@ const chars = [
   { slug:'yasmine', group:'year4', normals:18, learn:['S0｜最小可玩','Bayani','Boosted Alon'], ref:['Bayani','Boosted Alon','Nakatagong Lakas'], practical:['Boosted Alon','SA2'], candidate:true },
   { slug:'rashid', group:'year1', normals:18, learn:['S0｜最小可玩','M Spinning Mixer','Air Current'], ref:['+31','+42','Ysaar'], practical:['Air Current','Ysaar'], candidate:true },
   { slug:'kimberly', group:'base', normals:18, learn:['S0｜最小可玩','Shadow Slide','Bomb'], ref:['Shuriken Bomb','+42','SA3'], practical:['Shuriken Bomb','SA3'], candidate:true },
-  { slug:'guile', group:'base', normals:18, learn:['S0｜最小可玩','Sonic Boom','charge'], ref:['OD Sonic Blade','+42','Solid Puncher'], practical:['OD Sonic Blade','Solid Puncher'], candidate:true }
+  { slug:'guile', group:'base', normals:18, learn:['S0｜最小可玩','Sonic Boom','charge'], ref:['OD Sonic Blade','+42','Solid Puncher'], practical:['OD Sonic Blade','Solid Puncher'], candidate:true },
+  { slug:'deejay', group:'base', normals:18, learn:['S0｜最小可玩','Air Slasher','Jus Cool'], ref:['OD Machine Gun Uppercut','+52','Waning Moon'], practical:['Jus Cool','Sunrise Festival'], candidate:true }
 ];
 
 for (const c of chars) {
@@ -236,9 +237,37 @@ for (const c of chars) {
     }
     assert((practical.opportunities ?? []).some((op) => op.id === 'charge' && op.stage === 'S0'), 'guile: S0 charge opportunity missing');
   }
+  if (c.slug === 'deejay') {
+    const row2mk = role?.normal_frame_table?.rows?.find((r) => r?.input === '2MK');
+    assert(row2mk?.cancel === '-', 'deejay: 2MK must remain non-cancelable');
+    assert(!/2MK\s*(?:>|xx|→)\s*(?:DRC|CDR)/i.test(practicalText), 'deejay: inherited 2MK DRC route leaked');
+    assert(/rhythm deception/i.test(role?.signature_mechanic?.name ?? ''), 'deejay: rhythm-deception owner missing');
+    assert(/fake projectile/i.test(JSON.stringify(role)), 'deejay: L Air Slasher fake truth missing');
+    for (const op of practical.opportunities ?? []) {
+      for (const row of op.rows ?? []) {
+        const stage = String(row.stage ?? '');
+        const input = String(row.input ?? '');
+        const conditions = JSON.stringify(row.conditions ?? []);
+        const rowText = JSON.stringify(row);
+        if (/Jus Cool/i.test(input) || /Jus Cool/i.test(op.title ?? '')) {
+          assert(stage === 'S2' || stage === 'S3' || stage === 'S4', 'deejay: Jus Cool must not enter S0/S1');
+        }
+        if (/Jackknife/i.test(input) && /\+42/.test(rowText)) {
+          assert(/grounded_hit/i.test(conditions), 'deejay: +42 Jackknife lost grounded-hit condition');
+        }
+        if (/OD Machine Gun Uppercut/i.test(input) || /OD MGU/i.test(op.title ?? '')) {
+          assert(stage === 'S3' || stage === 'S4', 'deejay: OD MGU +52 must remain S3+');
+        }
+        if (/Sunrise Festival|SA2/i.test(input) || /Sunrise Festival|SA2/i.test(op.title ?? '')) {
+          assert(stage === 'S4', 'deejay: Sunrise Festival must remain S4');
+        }
+      }
+    }
+    assert((practical.opportunities ?? []).some((op) => op.id === 'rhythm' && op.stage === 'S0'), 'deejay: S0 fake/real rhythm opportunity missing');
+  }
 }
 
 const roster = yaml('ROSTER.yaml');
 const count = Object.values(roster.groups).flat().length;
 assert(count === 31, `roster must remain 31, got ${count}`);
-console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 11 content candidates | Learn + Role + Practical + Reference + resolved source registries');
+console.log('CONTENT INTEGRATION GATE PASS | 31 roster | 5 current characters + 12 content candidates | Learn + Role + Practical + Reference + resolved source registries');
