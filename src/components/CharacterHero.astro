@@ -2,7 +2,8 @@
 import { ROSTER_GROUPS } from '../lib/characters';
 const { character } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const heroBase = `${base}hero/`;
+const root = base.endsWith('/') ? base : `${base}/`;
+const heroBase = `${root}hero/`;
 ---
 <section class="v6-hero" id="home-hero" data-character={character.slug}>
   <div class="hero-bg-word" aria-hidden="true">TURN</div>
