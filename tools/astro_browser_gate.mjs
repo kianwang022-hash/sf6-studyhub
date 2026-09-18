@@ -98,6 +98,14 @@ try {
   await page.screenshot({ path:`${SHOTS}/jamie-v6-dark.png`, fullPage:false });
   await page.locator('#theme-toggle').click();
 
+  await page.goto(`${BASE}/character/ken/#role`, { waitUntil:'networkidle' });
+  await page.locator('#theme-toggle').click();
+  assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', 'ken: dark theme toggle failed');
+  const kenDarkHeroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+  assert(kenDarkHeroLoaded, 'ken: dark hero art missing');
+  await page.screenshot({ path:`${SHOTS}/ken-v6-dark.png`, fullPage:false });
+  await page.locator('#theme-toggle').click();
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
