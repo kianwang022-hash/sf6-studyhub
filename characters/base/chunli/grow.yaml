@@ -1,0 +1,116 @@
+schema_version: '1.1'
+character: chunli
+evidence_states: [UNLEARNED, LAB_STABLE, MATCH_SEEN, MATCH_STABLE]
+progression_policy:
+  principle: 'Whole → Part → Whole；先跑通普通confirm与+15 Oki，再用一条Serenity Stream→Forward Strike→M SBK证明角色特异性；完整stance树后置。'
+  score_rule: 'Rank/MR是Reality evidence，不替代charge、stance entry、grounded/airborne、corner与safe-jump exact-state条件。'
+  current_ui: 'S0只学一条stance route和Up exit；S1接Kikoken/CDR；S2打开完整stance continue-vs-exit；S3 exact setplay；S4 SA2 air。'
+progression_stages:
+  - id: S0_MINIMUM_PLAYABLE
+    label: '最小可玩'
+    learner_goal: '稳定medium/low confirm、M SBK +15 Oki、Tensho anti-air，并理解一条earned stance route为何能重组charge。'
+    add_now:
+      - '5MP > 2MP > M Spinning Bird Kick。'
+      - '2LK > 2LP > L Spinning Bird Kick。'
+      - 'M SBK +34 -> dash +15 -> 5MP / throw / shimmy。'
+      - 'H Tensho Kicks anti-air。'
+      - '2HP > Serenity Stream > Forward Strike > M Spinning Bird Kick。'
+      - 'Serenity Stream -> Up exit。'
+    gate:
+      lab: '基础两条confirm、+15 Oki和stance route可独立复现；能说清普通SBK仍需charge。'
+      match: '不会为进stance牺牲已有稳定击倒，也不会raw提交SBK。'
+    defer: ['完整stance high/low tree', '2MK CDR', 'corner meaty', '+45/+46', 'SA2 air']
+    hub_focus: [medium, low, oki, anti_air, stance_route]
+  - id: S1_FUNDAMENTALS
+    label: '基本功成型'
+    learner_goal: '5MP +1、Kikoken、2MK CDR和grounded Tensho Oki连成同一个地面循环。'
+    add_now:
+      - '5MP Block +1 -> 5LP。'
+      - 'L Kikoken spacing -> walk pressure。'
+      - '2MK CDR -> 5MP -> Hakkei -> stance Forward Strike -> M SBK。'
+      - 'H Tensho grounded +37 -> dash +18 / PDR pressure。'
+      - 'stance无价值时Up exit。'
+    gate:
+      match: '能在普通稳定route和stance route间选择，不机械进stance。'
+    defer: ['stance Lotus +1 / Orchid pressure tree', 'corner +35', 'safe jump', 'OD value choice']
+    hub_focus: [kikoken, drive, tensho_oki, stance_route]
+  - id: S2_MASTER_CLIMB
+    label: '实战结构化 · 冲 Master'
+    learner_goal: '正式打开stance continue-vs-exit：overhead、low、frame trap与exit按对手反应使用。'
+    add_now:
+      - 'stance Lotus Fist current Block +1。'
+      - 'stance Forward Strike low。'
+      - 'Hakkei / 2HP -> stance Orchid Palm frame-trap route。'
+      - 'Up exit。'
+      - '5HK airborne -> stance conversion。'
+      - 'corner M SBK -> 2MP whiff -> Hakkei active meaty。'
+      - '一条DI wall-splat stable route。'
+    gate:
+      match: 'stance分支由对手stand/crouch/mash/wait行为决定，而不是随机轮招。'
+    defer: ['+45/+46', 'corner airborne Tensho +35完整高低投', 'SA2 air']
+    hub_focus: [stance_tree, corner_meaty]
+  - id: S3_MR1500_STABLE
+    label: '选择成熟 · 1500 MR稳定'
+    learner_goal: 'OD SBK的Oki-vs-damage、corner +35与+45/+46 exact safe-jump state进入。'
+    add_now:
+      - 'OD SBK -> L SBK Oki/carry。'
+      - 'OD SBK -> H Tensho damage。'
+      - 'corner H Tensho airborne +35 -> overhead/low/throw。'
+      - 'exact +46 -> 5F safe jump。'
+      - 'exact +45 -> 6F family + 5F reversal interaction。'
+      - 'corner forward throw +11 loop。'
+    gate:
+      behavior: '能说明当前opening为何买Oki、damage、corner或safe-jump；不泛化exact-state数字。'
+      reality: '1500 MR只作持续Reality milestone。'
+    defer: ['SA2高级air route', 'matchup stance feints', 'niche +45 lab']
+    hub_focus: [drive_value, corner35, safejump]
+  - id: S4_HIGH_MR
+    label: '高分上探'
+    learner_goal: 'SA2 air route、SA3/lethal、advanced Kikoken layer与matchup stance频率进入。'
+    add_now:
+      - 'SA2 -> jump-cancel air route。'
+      - 'SA3 / lethal cashout。'
+      - 'advanced Kikoken -> PDR layers。'
+      - 'matchup-specific stance feints / exits。'
+      - 'character-specific +45 reversal/hurtbox lab。'
+    gate:
+      behavior: '高级air route与stance feint不让S0/S1的confirm、charge、Oki纪律退化。'
+      reality: '高分目标由持续表现定义。'
+    hub_focus: [super, safejump, stance_tree]
+domains:
+  execution:
+    label: 操作
+    capabilities:
+    - {id: EX01, stage: S0, label: '5MP→2MP→M SBK稳定', node: medium, upgrade_evidence: 'hit confirm后charge ender稳定。'}
+    - {id: EX02, stage: S0, label: 'stance Forward Strike→M SBK稳定', node: stance_route, upgrade_evidence: 'earned entry后不掉route。'}
+    - {id: EX03, stage: S4, label: 'SA2 air route稳定', node: super, upgrade_evidence: 'jump cancel / air chain不抢基础注意力。'}
+  neutral:
+    label: 立回
+    capabilities:
+    - {id: NE01, stage: S0, label: '5MP/Kikoken前置于stance', node: medium, upgrade_evidence: '不raw stance找答案。'}
+    - {id: NE02, stage: S1, label: 'Kikoken spacing接walk pressure', node: kikoken, upgrade_evidence: 'projectile之后有地面计划。'}
+    - {id: NE03, stage: S2, label: 'stance无价值时会exit', node: stance_tree, upgrade_evidence: '不为了机制继续commit。'}
+  contact:
+    label: 接触判断
+    capabilities:
+    - {id: CO01, stage: S0, label: 'SBK只在confirm后提交', node: low, upgrade_evidence: 'block时能停。'}
+    - {id: CO02, stage: S2, label: 'stance high/low/exit按防守行为', node: stance_tree, upgrade_evidence: '能解释每个branch打什么。'}
+    - {id: CO03, stage: S3, label: 'grounded/airborne/exact state分清', node: safejump, upgrade_evidence: '+35/+37/+45/+46不串。'}
+  offense_loop:
+    label: 进攻循环
+    capabilities:
+    - {id: OF01, stage: S0, label: 'M SBK +15闭环', node: oki, upgrade_evidence: 'strike/throw/shimmy能回confirm。'}
+    - {id: OF02, stage: S1, label: '5MP +1 / Kikoken pressure闭环', node: kikoken, upgrade_evidence: '基础pressure不依赖stance。'}
+    - {id: OF03, stage: S3, label: 'corner exact-state setplay', node: corner35, upgrade_evidence: '只在声明state执行。'}
+  defense_adaptation:
+    label: 防守与适应
+    capabilities:
+    - {id: DA01, stage: S0, label: 'jump→Tensho', node: anti_air, upgrade_evidence: '能把对手压回ground game。'}
+    - {id: DA02, stage: S2, label: '对手等stance会exit/throw', node: stance_tree, upgrade_evidence: '不固定high/low。'}
+    - {id: DA03, stage: S4, label: 'matchup projectile/stance频率调整', node: super, upgrade_evidence: '高级层按对手而非模板。'}
+goal_presets:
+  FOUNDATION_LOOP: {stage: S0_MINIMUM_PLAYABLE, required: 'stable SBK→+15 Oki + one stance charge-bypass route先LAB_STABLE并尽快MATCH_SEEN。'}
+  FUNDAMENTALS: {stage: S1_FUNDAMENTALS, required: '5MP+1 / Kikoken / CDR / grounded Tensho多数MATCH_STABLE。'}
+  MASTER_CLIMB: {stage: S2_MASTER_CLIMB, required: 'stance continue-vs-exit按防守行为结构化。'}
+  MASTER_1500: {stage: S3_MR1500_STABLE, required: '五域多数MATCH_STABLE；exact-state数字不泄漏。'}
+  HIGH_MR: {stage: S4_HIGH_MR, required: 'SA2 air / matchup stance围绕真实高分瓶颈。'}
