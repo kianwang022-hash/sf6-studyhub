@@ -26,7 +26,11 @@ const chars = [
   { slug:'deejay', normals:18, learn:'L Air Slasher = fake', ref:'Charge / Rhythm Truth', practical:['[4]6LP L Air Slasher fake','H Jackknife Maximum grounded hit -> +42 -> immediate forward jump attack','Jus Cool > MK Waning Moon'] },
   { slug:'ehonda', normals:18, learn:'S0不要求Oicho', ref:'Charge / State Truth', practical:['H Sumo Smash grounded hit -> +23 -> forward dash','Sumo Smash +23 -> dash +4 -> H Oicho Throw','Sumo Spirit active -> L Hundred Hand Slap block'] },
   { slug:'blanka', normals:18, learn:'赢到角落以后，再用 Blanka-chan Bomb', ref:'Bomb Setplay', practical:['5LK > 2LP > Electric Thunder','M Vertical Rolling Attack exact hit -> +42 -> immediate forward jump HK','corner 5HP > Coward Crouch > Wild Lift > Blanka-chan Bomb'] },
-  { slug:'vega', normals:18, learn:'不要自动继续爆 Mine', ref:'Psycho Mine Truth', practical:['2LP or 2LK > 5LK > L Backfist Combo','Psycho Mine active -> L Backfist Combo hit','Psycho Mine active + back charge -> M Psycho Crusher Attack block'] }
+  { slug:'vega', normals:18, learn:'不要自动继续爆 Mine', ref:'Psycho Mine Truth', practical:['2LP or 2LK > 5LK > L Backfist Combo','Psycho Mine active -> L Backfist Combo hit','Psycho Mine active + back charge -> M Psycho Crusher Attack block'] },
+  { slug:'marisa', normals:18, learn:'只有这时，5F Enfold command grab 才进入主循环', ref:'Anti-template Truth', practical:['2LK or 2LP > 2LP > L Dimachaerus > 6P','Phalanx ender -> +42 -> immediate forward jump HP/HK','fully charged 5HP block'] },
+  { slug:'lily', normals:18, learn:'先投资 Windclad，把 Condor Spire 变成正帧进场', ref:'Normal vs Windclad Spire', practical:['safe window -> hold Condor Wind for 1 Windclad stock','Windclad H Condor Spire plus entry -> Mexican Typhoon','safe long window -> hold Condor Wind for 2 Windclad stocks'] },
+  { slug:'manon', normals:18, learn:'先用普通 Rond-point / Renversé / dash Oki 赢回合', ref:'Medal Strategy', practical:['2LP > 2LP > H Rond-point','opponent respect / point-blank read -> H Manège Doré','Medal Level 4-5 + opponent respect -> H Manège Doré'] },
+  { slug:'alex', normals:18, learn:'先用稳定 strike 和 +2 压力买到 respect', ref:'Prowler Truth', practical:['2MP > M Flash Axe hit > Prowler > Heavy Lariat','earned Prowler entry -> Air Stampede','4MK block + opponent respects -> H Power Bomb'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -145,6 +149,30 @@ try {
       assert(roleText.includes('Normal L/M Crusher') && roleText.includes('Block -20'), 'vega: normal Crusher unsafe truth missing');
       assert(roleText.includes('Mine L/M Crusher') && roleText.includes('Block +6'), 'vega: Mine Crusher rewrite truth missing');
     }
+    if (c.slug === 'marisa') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Damage-backed respect -> Enfold conversion'), 'marisa: damage-to-Enfold signature missing');
+      assert(roleText.includes('Enfold不进S0'), 'marisa: Enfold-deferred truth missing');
+      assert(roleText.includes('Phalanx ender') && roleText.includes('+42'), 'marisa: Phalanx +42 owner missing');
+    }
+    if (c.slug === 'lily') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Windclad investment -> plus entry -> Mexican Typhoon respect loop'), 'lily: Windclad respect-loop signature missing');
+      assert(roleText.includes('Normal Spire') && roleText.includes('Block -8'), 'lily: unsafe normal Spire truth missing');
+      assert(roleText.includes('Windclad L/M/H Spire') && roleText.includes('Block +1'), 'lily: Windclad plus-entry truth missing');
+    }
+    if (c.slug === 'manon') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Medal reward escalation -> opponent escape -> strike revaluation'), 'manon: Medal feedback signature missing');
+      assert(roleText.includes('S0 only notices Medal growth'), 'manon: S0 Medal bookkeeping boundary missing');
+      assert(roleText.includes('throw-after dash不是guaranteed throw'), 'manon: throw-after-dash boundary missing');
+    }
+    if (c.slug === 'alex') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Earned Prowler entry -> choice-denial high/low/throw layering'), 'alex: earned-Prowler signature missing');
+      assert(roleText.includes('2MK不可取消'), 'alex: non-cancelable 2MK truth missing');
+      assert(roleText.includes('Power Bomb +15不是guaranteed close Oki'), 'alex: Power Bomb aftermath boundary missing');
+    }
 
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
@@ -246,6 +274,31 @@ try {
       assert(!s0Text.includes('Psycho Mine active -> L Backfist Combo hit'), 'vega: S1 Mine cash-in leaked into S0');
       assert(!s0Text.includes('Psycho Mine active + back charge -> M Psycho Crusher Attack block'), 'vega: Mine Crusher pressure leaked into S0');
     }
+    if (c.slug === 'marisa') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LK or 2LP > 2LP > L Dimachaerus > 6P'), 'marisa: S0 stable +31 route missing');
+      assert(!s0Text.includes('L Dimachaerus +31 -> 5LP whiff -> immediate Enfold'), 'marisa: S1 Enfold route leaked into S0');
+      assert(!s0Text.includes('fully charged 5HP block'), 'marisa: charged layer leaked into S0');
+    }
+    if (c.slug === 'lily') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('safe window -> hold Condor Wind for 1 Windclad stock'), 'lily: S0 one-stock investment missing');
+      assert(s0Text.includes('Windclad stock active -> 2LK > 2LP > 2LP > Windclad M Condor Spire'), 'lily: S0 plus-entry route missing');
+      assert(!s0Text.includes('Windclad H Condor Spire plus entry -> Mexican Typhoon'), 'lily: S1 Typhoon route leaked into S0');
+      assert(!s0Text.includes('safe long window -> hold Condor Wind for 2 Windclad stocks'), 'lily: multi-stock build leaked into S0');
+    }
+    if (c.slug === 'manon') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP > 2LP > H Rond-point'), 'manon: S0 ordinary route missing');
+      assert(!s0Text.includes('opponent respect / point-blank read -> H Manège Doré'), 'manon: S1 command-grab choice leaked into S0');
+      assert(!s0Text.includes('Medal Level 4-5 + opponent respect -> H Manège Doré'), 'manon: high-Medal layer leaked into S0');
+    }
+    if (c.slug === 'alex') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2MP > M Flash Axe hit > Prowler > Heavy Lariat'), 'alex: S0 earned-Prowler identity route missing');
+      assert(!s0Text.includes('earned Prowler entry -> Air Stampede'), 'alex: full Prowler branch leaked into S0');
+      assert(!s0Text.includes('4MK block + opponent respects -> H Power Bomb'), 'alex: Power Bomb read leaked into S0');
+    }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
     for (const token of c.practical) assert(practicalText.includes(token), `${c.slug}: practical marker missing ${token}`);
@@ -346,6 +399,16 @@ try {
     await page.locator('#theme-toggle').click();
   }
 
+  for (const slug of ['marisa','lily','manon','alex']) {
+    await page.goto(`${BASE}/character/${slug}/#role`, { waitUntil:'networkidle' });
+    if (await page.evaluate(() => document.documentElement.dataset.theme) !== 'dark') await page.locator('#theme-toggle').click();
+    assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', `${slug}: dark theme toggle failed`);
+    const heroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(heroLoaded, `${slug}: dark hero art missing`);
+    await page.screenshot({ path:`${SHOTS}/${slug}-v6-dark.png`, fullPage:false });
+    await page.locator('#theme-toggle').click();
+  }
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -355,7 +418,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 20 accepted light+dark heroes | 学习/角色/实战/资料 | 20 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 24 accepted light+dark heroes | 学习/角色/实战/资料 | 24 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
