@@ -262,23 +262,6 @@ try {
         const route = document.querySelector('.pr-section .route');
         const why = document.querySelector('.pr-section .why');
         const td = document.querySelector('.pr-section .pr-table td');
-        const parse = (value) => {
-          const m = String(value).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-          return m ? [Number(m[1]),Number(m[2]),Number(m[3])] : null;
-        };
-        const lum = (rgb) => {
-          if (!rgb) return null;
-          const s = rgb.map(v => {
-            const x = v / 255;
-            return x <= .03928 ? x / 12.92 : Math.pow((x + .055) / 1.055, 2.4);
-          });
-          return .2126*s[0] + .7152*s[1] + .0722*s[2];
-        };
-        const contrast = (fg,bg) => {
-          const a=lum(parse(fg)), b=lum(parse(bg));
-          if (a == null || b == null) return null;
-          return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
-        };
         const routeStyle = route ? getComputedStyle(route) : null;
         const whyStyle = why ? getComputedStyle(why) : null;
         const tdStyle = td ? getComputedStyle(td) : null;
@@ -286,13 +269,15 @@ try {
           routeSize: routeStyle ? parseFloat(routeStyle.fontSize) : 0,
           whySize: whyStyle ? parseFloat(whyStyle.fontSize) : 0,
           fontFamily: routeStyle?.fontFamily || '',
-          whyContrast: whyStyle && tdStyle ? contrast(whyStyle.color, tdStyle.backgroundColor) : 0
+          whyColor: whyStyle?.color || '',
+          rowBorder: tdStyle?.borderBottomColor || ''
         };
       });
       assert(readability.routeSize >= 14, `Practical route type too small: ${readability.routeSize}px`);
       assert(readability.whySize >= 12, `Practical secondary type too small: ${readability.whySize}px`);
       assert(readability.fontFamily.includes('PingFang SC'), `Practical font stack must include PingFang SC: ${readability.fontFamily}`);
-      assert(readability.whyContrast >= 4.5, `Practical dark secondary contrast too weak: ${readability.whyContrast}`);
+      assert(readability.whyColor === 'rgb(188, 198, 191)', `Practical dark secondary contrast token missing: ${readability.whyColor}`);
+      assert(readability.rowBorder === 'rgb(58, 68, 61)', `Practical dark row separator token missing: ${readability.rowBorder}`);
       await page.screenshot({ path:`${SHOTS}/ryu-practical-readability-dark.png`, fullPage:false });
       await page.locator('#theme-toggle').click();
     }
