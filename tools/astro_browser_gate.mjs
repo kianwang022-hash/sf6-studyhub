@@ -16,7 +16,12 @@ const chars = [
   { slug:'akuma', normals:18, learn:'同一个 opening 可以买不同的 Oki 时间预算', ref:'Shun Goku Satsu', practical:['L Tatsu > 2HK','Demon Raid','charged Gou Hadoken'] },
   { slug:'luke', normals:18, learn:'不靠 Perfect，也能在真人里打出完整 Luke', ref:'Perfect Flash Knuckle', practical:['2MP > 2LP > L Flash Knuckle','OD Flash Knuckle > DDT','+64'] },
   { slug:'terry', normals:18, learn:'Burning Knuckle买位置', ref:'Round Wave', practical:['2LK > 2LP > M Burning Knuckle','2LK > 2LP > H Rising Tackle','OD Quick Burn'] },
-  { slug:'sagat', normals:18, learn:'Tiger Shot → 对手反应', ref:'H Tiger Knee airborne +42', practical:['236MP -> watch jump / walk / crouch / parry','5MP > 2LP > M Tiger Uppercut','H Tiger Knee Crush airborne hit -> +42'] }
+  { slug:'sagat', normals:18, learn:'Tiger Shot → 对手反应', ref:'H Tiger Knee airborne +42', practical:['236MP -> watch jump / walk / crouch / parry','5MP > 2LP > M Tiger Uppercut','H Tiger Knee Crush airborne hit -> +42'] },
+  { slug:'juri', normals:18, learn:'真正的角色判断是下一次 opening 这颗 stock 现在花不花', ref:'Resource Truth', practical:['5MP > 2MP > M Fuhajin','Boosted Saihasho','Feng Shui Engine'] },
+  { slug:'elena', normals:18, learn:'Healing只在最后作为伤害与恢复之间的资源选择', ref:'Lynx follow-up truth', practical:['5MP > MP > M Rhino Horn','earned Lynx Song setup','SA2'] },
+  { slug:'yasmine', normals:18, learn:'取得 → 消费 → 再取得', ref:'Bayani system truth', practical:['M Daloy ng Tubig > Alon','Boosted Alon','SA2'] },
+  { slug:'rashid', normals:18, learn:'不靠风也能打完整 Rashid', ref:'Air Current truth', practical:['M Spinning Mixer','L Eagle Spike','Air Current'] },
+  { slug:'kimberly', normals:18, learn:'普通contact → corner carry → simple Oki', ref:'Anti-template truth', practical:['Sprint > Shadow Slide','Shuriken Bomb','SA3'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -78,6 +83,32 @@ try {
       assert(roleText.includes('2MK不可取消'), 'sagat: non-cancelable 2MK constraint missing');
       assert(roleText.includes('airborne') && roleText.includes('+42'), 'sagat: airborne-only +42 truth missing');
     }
+    if (c.slug === 'juri') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Fuhajin Stock') && roleText.includes('S0先生成不消费'), 'juri: stock generation-before-spend truth missing');
+      assert(roleText.includes('M Fuhajin') && roleText.includes('Stock +1'), 'juri: M Fuhajin stock-gain truth missing');
+    }
+    if (c.slug === 'elena') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Earned Lynx Song mix hub + late SA2 Healing choice'), 'elena: earned-Lynx/late-Healing signature missing');
+      assert(roleText.includes('2MK') && roleText.includes('non-cancel'), 'elena: non-cancel 2MK truth missing');
+    }
+    if (c.slug === 'yasmine') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Bayani Mode') && roleText.includes('S0只学取得'), 'yasmine: Bayani acquire-first rule missing');
+      assert(roleText.includes('normal Alon vs Boosted') && roleText.includes('-12') && roleText.includes('-1~-3'), 'yasmine: normal-vs-Boosted risk truth missing');
+    }
+    if (c.slug === 'rashid') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Earned mobility + Air Current re-entry'), 'rashid: earned-mobility signature missing');
+      assert(roleText.includes('M Spinning Mixer') && roleText.includes('KD +31'), 'rashid: normal Mixer +31 truth missing');
+      assert(roleText.includes('Air Current Boosted') && roleText.includes('KD +42'), 'rashid: boosted Mixer +42 boundary missing');
+    }
+    if (c.slug === 'kimberly') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Shuriken Bomb Stock') && roleText.includes('S0-S1不要求Bomb'), 'kimberly: Bomb-deferred resource truth missing');
+      assert(roleText.includes('2MK') && roleText.includes('non-cancel'), 'kimberly: non-cancel 2MK truth missing');
+    }
 
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
@@ -120,6 +151,34 @@ try {
       assert(s0Text.includes('5MP > 2LP > M Tiger Uppercut'), 'sagat: S0 long-normal conversion missing');
       assert(!s0Text.includes('H Tiger Knee Crush airborne hit -> +42'), 'sagat: S3 +42 safe jump leaked into S0');
       assert(!s0Text.includes('2MP > CDR'), 'sagat: S2 cancel-drive layer leaked into S0');
+    }
+    if (c.slug === 'juri') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('5MP > 2MP > M Fuhajin'), 'juri: S0 stock-generating stable route missing');
+      assert(!s0Text.includes('Boosted Saihasho'), 'juri: stock-spend layer leaked into S0');
+      assert(!s0Text.includes('Feng Shui Engine'), 'juri: SA2 system leaked into S0');
+    }
+    if (c.slug === 'elena') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('5MP > MP > M Rhino Horn'), 'elena: S0 stable Rhino route missing');
+      assert(!s0Text.includes('earned Lynx Song setup'), 'elena: Lynx mix leaked into S0');
+      assert(!s0Text.includes('Healing'), 'elena: Healing leaked into S0');
+    }
+    if (c.slug === 'yasmine') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('M Daloy ng Tubig > Alon'), 'yasmine: S0 Bayani-acquire route missing');
+      assert(!s0Text.includes('Boosted Alon'), 'yasmine: Bayani spend leaked into S0');
+    }
+    if (c.slug === 'rashid') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('M Spinning Mixer') && s0Text.includes('L Eagle Spike'), 'rashid: S0 Mixer/Eagle skeleton missing');
+      assert(!s0Text.includes('Air Current'), 'rashid: Air Current layer leaked into S0');
+      assert(!s0Text.includes('Ysaar'), 'rashid: Ysaar leaked into S0');
+    }
+    if (c.slug === 'kimberly') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2MP > 5MP > 5HP > Sprint > Shadow Slide'), 'kimberly: S0 carry identity route missing');
+      assert(!s0Text.includes('Shuriken Bomb'), 'kimberly: Bomb layer leaked into S0');
     }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
@@ -194,6 +253,16 @@ try {
   await page.screenshot({ path:`${SHOTS}/sagat-v6-dark.png`, fullPage:false });
   await page.locator('#theme-toggle').click();
 
+  for (const slug of ['juri','elena','yasmine','rashid','kimberly']) {
+    await page.goto(`${BASE}/character/${slug}/#role`, { waitUntil:'networkidle' });
+    if (await page.evaluate(() => document.documentElement.dataset.theme) !== 'dark') await page.locator('#theme-toggle').click();
+    assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', `${slug}: dark theme toggle failed`);
+    const heroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(heroLoaded, `${slug}: dark hero art missing`);
+    await page.screenshot({ path:`${SHOTS}/${slug}-v6-dark.png`, fullPage:false });
+    await page.locator('#theme-toggle').click();
+  }
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -203,7 +272,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 10 accepted light+dark heroes | 学习/角色/实战/资料 | 10 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 15 accepted light+dark heroes | 学习/角色/实战/资料 | 15 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
