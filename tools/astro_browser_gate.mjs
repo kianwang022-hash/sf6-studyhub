@@ -559,21 +559,89 @@ try {
     await page.locator('#theme-toggle').click();
   }
 
+  const assertNoDocumentOverflow = async (label) => {
+    const overflow = await page.evaluate(() => ({ doc:document.documentElement.scrollWidth, win:window.innerWidth }));
+    assert(overflow.doc <= overflow.win + 1, `${label}: document overflow ${overflow.doc} > ${overflow.win}`);
+  };
+
+  const assertPrimaryChromeVisible = async (label) => {
+    const selectors = ['.beginner-nav','[data-top-tab="learn"]','[data-top-tab="role"]','[data-top-tab="practical"]','[data-top-tab="reference"]','#theme-toggle'];
+    const viewport = page.viewportSize();
+    for (const selector of selectors) {
+      const locator = page.locator(selector).first();
+      assert(await locator.isVisible(), `${label}: primary control hidden ${selector}`);
+      const box = await locator.boundingBox();
+      assert(box, `${label}: primary control has no box ${selector}`);
+      assert(box.x >= -1 && box.x + box.width <= viewport.width + 1, `${label}: primary control clipped horizontally ${selector} @ ${JSON.stringify(box)}`);
+      assert(box.y >= -1 && box.y + box.height <= viewport.height + 1, `${label}: primary control clipped vertically ${selector} @ ${JSON.stringify(box)}`);
+    }
+  };
+
+  const assertPracticalDevice = async (label, width, height) => {
+    await page.setViewportSize({ width, height });
+    await page.goto(`${BASE}/character/ryu/#role`, { waitUntil:'networkidle' });
+    await assertNoDocumentOverflow(`${label} role`);
+    await assertPrimaryChromeVisible(`${label} role`);
+    await page.locator('[data-top-tab="practical"]').click();
+    assert(await page.locator('#practical:visible').count() === 1, `${label}: Practical not reachable`);
+    assert(await page.locator('[data-stage]:visible').count() === 6, `${label}: stage controls not all visible`);
+    assert(await page.locator('[data-op]:visible').count() >= 5, `${label}: opportunity controls not visible`);
+    await assertNoDocumentOverflow(`${label} practical`);
+    const tableState = await page.locator('#practical:visible .table-wrap').first().evaluate((el) => ({
+      client:el.clientWidth,
+      scroll:el.scrollWidth,
+      overflow:getComputedStyle(el).overflowX
+    }));
+    assert(tableState.client > 0, `${label}: visible Practical table has zero width`);
+    if (tableState.scroll > tableState.client + 1) {
+      assert(['auto','scroll'].includes(tableState.overflow), `${label}: overflowing Practical table must scroll internally`);
+    }
+    await page.locator('.term-inline').first().click();
+    const pop = page.locator('#term-popover:visible');
+    assert(await pop.count() === 1, `${label}: terminology popover did not open`);
+    const popBox = await pop.boundingBox();
+    const viewport = page.viewportSize();
+    assert(popBox && popBox.x >= -1 && popBox.y >= -1 && popBox.x + popBox.width <= viewport.width + 1 && popBox.y + popBox.height <= viewport.height + 1, `${label}: terminology popover clipped ${JSON.stringify(popBox)}`);
+    await page.locator('[data-term-close]').click();
+  };
+
+  // Compact phone: every roster page must remain document-safe.
   await page.setViewportSize({ width:390, height:844 });
   await page.goto(`${BASE}/beginner/`, { waitUntil:'networkidle' });
-  const beginnerOverflow = await page.evaluate(() => ({ doc:document.documentElement.scrollWidth, win:window.innerWidth }));
-  assert(beginnerOverflow.doc <= beginnerOverflow.win + 1, `beginner: mobile document overflow ${beginnerOverflow.doc} > ${beginnerOverflow.win}`);
-  await page.screenshot({ path:`${SHOTS}/beginner-v1-mobile.png`, fullPage:false });
-
+  await assertNoDocumentOverflow('beginner phone');
+  await page.screenshot({ path:`${SHOTS}/beginner-phone-390.png`, fullPage:false });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
-    const overflow = await page.evaluate(() => ({ doc:document.documentElement.scrollWidth, win:window.innerWidth }));
-    assert(overflow.doc <= overflow.win + 1, `${c.slug}: mobile document overflow ${overflow.doc} > ${overflow.win}`);
-    await page.screenshot({ path:`${SHOTS}/${c.slug}-v6-mobile.png`, fullPage:false });
+    await assertNoDocumentOverflow(`${c.slug} phone`);
   }
+  await assertPracticalDevice('phone-390',390,844);
+  await page.screenshot({ path:`${SHOTS}/ryu-practical-phone-390.png`, fullPage:false });
+
+  // Large phone: representative full interaction surface.
+  await assertPracticalDevice('phone-430',430,932);
+  await page.goto(`${BASE}/beginner/`, { waitUntil:'networkidle' });
+  await assertNoDocumentOverflow('beginner phone-430');
+  await page.screenshot({ path:`${SHOTS}/beginner-phone-430.png`, fullPage:false });
+
+  // iPad portrait: all 31 role pages + shared interactive surface.
+  await page.setViewportSize({ width:768, height:1024 });
+  for (const c of chars) {
+    await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
+    await assertNoDocumentOverflow(`${c.slug} ipad-portrait`);
+  }
+  await assertPracticalDevice('ipad-portrait',768,1024);
+  await page.goto(`${BASE}/character/ryu/#role`, { waitUntil:'networkidle' });
+  await page.screenshot({ path:`${SHOTS}/ryu-role-ipad-portrait.png`, fullPage:false });
+  await page.goto(`${BASE}/beginner/`, { waitUntil:'networkidle' });
+  await assertNoDocumentOverflow('beginner ipad-portrait');
+  await page.screenshot({ path:`${SHOTS}/beginner-ipad-portrait.png`, fullPage:false });
+
+  // iPad landscape: preserve the desktop-like workbench without clipping controls.
+  await assertPracticalDevice('ipad-landscape',1024,768);
+  await page.screenshot({ path:`${SHOTS}/ryu-practical-ipad-landscape.png`, fullPage:false });
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | beginner fundamentals | contextual terminology | 31 selector | 31 accepted light+dark heroes | 学习/角色/实战/资料 | 31 Gold characters | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | phone 390/430 | iPad 768 portrait/1024 landscape | beginner fundamentals | contextual terminology | 31 selector | 31 accepted light+dark heroes | 31 Gold characters | dark/light | responsive');
 } finally {
   await browser.close();
 }
