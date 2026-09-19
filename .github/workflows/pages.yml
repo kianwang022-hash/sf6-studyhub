@@ -63,6 +63,7 @@ jobs:
           }
 
           verify "$root/" 'SF6 StudyHub'
+          verify "$root/beginner/" '第一次玩 SF6'
 
           curl -L -fsS "$root/" -o /tmp/sf6-home.html
           selector_count=$(grep -o '<option' /tmp/sf6-home.html | wc -l | tr -d ' ')
@@ -97,4 +98,4 @@ jobs:
             verify_asset "$root/hero/$slug-dark.jpg"
           done
 
-          echo 'PUBLIC_PAGES_VERIFY_PASS | home + 31 selector options + 31 character pages + 62 hero assets'
+          echo 'PUBLIC_PAGES_VERIFY_PASS | home + beginner fundamentals + 31 selector options + 31 character pages + 62 hero assets'
