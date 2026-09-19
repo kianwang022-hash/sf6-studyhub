@@ -27,7 +27,14 @@ const READY_STATE: Record<string, string> = {
   marisa: 'GOLD_PAGE_READY',
   lily: 'GOLD_PAGE_READY',
   manon: 'GOLD_PAGE_READY',
-  alex: 'GOLD_PAGE_READY'
+  alex: 'GOLD_PAGE_READY',
+  chunli: 'GOLD_PAGE_READY',
+  aki: 'GOLD_PAGE_READY',
+  ed: 'GOLD_PAGE_READY',
+  jp: 'GOLD_PAGE_READY',
+  ingrid: 'GOLD_PAGE_READY',
+  cviper: 'GOLD_PAGE_READY',
+  dhalsim: 'GOLD_PAGE_READY'
 };
 
 const HERO_DISPLAY: Record<string, { position: string; scale: number }> = {
@@ -54,7 +61,14 @@ const HERO_DISPLAY: Record<string, { position: string; scale: number }> = {
   marisa: { position: '84% 50%', scale: 1 },
   lily: { position: '88% 50%', scale: 1 },
   manon: { position: '88% 50%', scale: 1 },
-  alex: { position: '88% 50%', scale: 1 }
+  alex: { position: '88% 50%', scale: 1 },
+  chunli: { position: '88% 50%', scale: 1 },
+  aki: { position: '88% 50%', scale: 1 },
+  ed: { position: '88% 50%', scale: 1 },
+  jp: { position: '88% 50%', scale: 1 },
+  ingrid: { position: '88% 50%', scale: 1 },
+  cviper: { position: '88% 50%', scale: 1 },
+  dhalsim: { position: '88% 50%', scale: 1 }
 };
 
 const GROUP_LABELS: Record<string, string> = {
