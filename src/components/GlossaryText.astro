@@ -1,0 +1,18 @@
+---
+import { splitGlossaryText } from '../lib/sf6Glossary';
+const { text = '', className = '' } = Astro.props;
+const parts = splitGlossaryText(text);
+---
+<span class={className}>
+  {parts.map((part) => part.entry ? (
+    <button
+      type="button"
+      class="term-inline"
+      data-term-key={part.entry.key}
+      data-term-name={part.entry.term}
+      data-term-zh={part.entry.zh}
+      data-term-short={part.entry.short}
+      title={`${part.entry.term} · ${part.entry.zh}：${part.entry.short}`}
+    >{part.text}</button>
+  ) : part.text)}
+</span>
