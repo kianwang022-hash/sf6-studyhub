@@ -19,8 +19,8 @@ Judgment states:
 | base | Jamie | `GOLD_PAGE_READY` |
 | base | Chun-Li | `CONTENT_READY` |
 | base | Guile | `CONTENT_READY` |
-| base | Kimberly | `CONTENT_READY` |
-| base | Juri | `CONTENT_READY` |
+| base | Kimberly | `GOLD_PAGE_READY` |
+| base | Juri | `GOLD_PAGE_READY` |
 | base | Ken | `GOLD_PAGE_READY` |
 | base | Blanka | `CONTENT_READY` |
 | base | Dhalsim | `CONTENT_READY` |
@@ -32,25 +32,25 @@ Judgment states:
 | base | Zangief | `GOLD_PAGE_READY` |
 | base | Lily | `CONTENT_READY` |
 | base | Cammy | `GOLD_PAGE_READY` |
-| year1 | Rashid | `CONTENT_READY` |
+| year1 | Rashid | `GOLD_PAGE_READY` |
 | year1 | A.K.I. | `CONTENT_READY` |
 | year1 | Ed | `CONTENT_READY` |
 | year1 | Akuma | `GOLD_PAGE_READY` |
 | year2 | M. Bison | `CONTENT_READY` |
 | year2 | Terry | `GOLD_PAGE_READY` |
 | year2 | Mai | `GOLD_PAGE_READY` |
-| year2 | Elena | `CONTENT_READY` |
+| year2 | Elena | `GOLD_PAGE_READY` |
 | year3 | Sagat | `GOLD_PAGE_READY` |
 | year3 | C. Viper | `CONTENT_READY` |
 | year3 | Alex | `CONTENT_READY` |
 | year3 | Ingrid | `CONTENT_READY` |
-| year4 | Yasmine | `CONTENT_READY` |
+| year4 | Yasmine | `GOLD_PAGE_READY` |
 
 ## Current Gold lane
 
-Ten characters now render through the canonical Astro runtime:
+Fifteen characters now render through the canonical Astro runtime:
 
-Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Ken — ordinary shoto contact -> choose end-state -> Quick Dash Tatsu carry / +25 dash +6 / corner setplay; H Dragonlash +1 remains tied to 28F startup.
@@ -58,6 +58,11 @@ Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bis
 - Luke — stable L Flash +36 first; Perfect Flash is an execution-investment layer and +64 remains a later high-value state.
 - Terry — special-role relay stays explicit: Burning Knuckle buys carry/Oki, Rising Tackle buys damage, Round Wave buys earned plus pressure, Quick Burn is a later extension.
 - Sagat — Tiger Shot shapes movement; long normals/Uppercut cash it out. 2MK remains non-cancelable and +42 safe jump stays airborne-hit-only.
+- Juri — ordinary confirms naturally build Fuhajin Stock; S0 generates without spending, while Boosted specials and Feng Shui remain later choices.
+- Elena — stable knockdown first; Lynx Song becomes an earned mix hub later and SA2 Healing remains a late damage-vs-recovery choice.
+- Yasmine — Bayani is a cycle state: S0 acquires it, S1 first spends it through Boosted Alon, and the persistent SA2 state stays late.
+- Rashid — ordinary Mixer/Eagle Spike rounds first; Air Current and mobility are earned re-entry layers, with normal +31 kept distinct from boosted +42.
+- Kimberly — corner carry first; Sprint grows after the base loop and Shuriken Bomb remains deferred until corner fundamentals are stable.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
 - Mai — ordinary projectile/ground skeleton first; resource/state upgrades are explained before Stock / Boosted shorthand.
 - Zangief — S0 contains the strike -> respect -> `360P` feedback loop; SPD aftermath remains re-approach/read rather than fake guaranteed close Oki.
@@ -109,8 +114,17 @@ Visual artifact: **`sf6-visual-qa`** from run `35171931415`.
 - `receipts/zangief_GOLD_PAGE_READY.md`
 - `receipts/cammy_GOLD_PAGE_READY.md`
 - `receipts/ken_GOLD_PAGE_READY.md`
+- `receipts/akuma_GOLD_PAGE_READY.md`
+- `receipts/luke_GOLD_PAGE_READY.md`
+- `receipts/terry_GOLD_PAGE_READY.md`
+- `receipts/sagat_GOLD_PAGE_READY.md`
+- `receipts/juri_GOLD_PAGE_READY.md`
+- `receipts/elena_GOLD_PAGE_READY.md`
+- `receipts/yasmine_GOLD_PAGE_READY.md`
+- `receipts/rashid_GOLD_PAGE_READY.md`
+- `receipts/kimberly_GOLD_PAGE_READY.md`
 
-Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, Terry, and Sagat are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
+Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, and Kimberly are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
 
 ## Public deployment state
 
