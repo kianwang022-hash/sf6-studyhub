@@ -108,6 +108,8 @@ try {
       assert(roleVisual.miniSize >= 14, `Role decision copy too small: ${roleVisual.miniSize}px`);
       assert(roleVisual.toolSize >= 14, `Role tool explanation too small: ${roleVisual.toolSize}px`);
       if (roleVisual.mechanismCount === 1) assert(roleVisual.mechanismRatio >= .9, `single Role mechanism wastes horizontal space: ${roleVisual.mechanismRatio}`);
+      const emptyRoleCards = await page.locator('#role .role-model-grid .mini-card').evaluateAll((cards) => cards.filter((card) => !card.textContent?.replace(/\s+/g,'').match(/.{5,}/)).length);
+      assert(emptyRoleCards === 0, `Role contains empty/near-empty model cards: ${emptyRoleCards}`);
       const learnerStatus = await page.locator('.character-status-strip').innerText();
       assert(!learnerStatus.includes('GOLD_PAGE_READY') && !learnerStatus.includes('GOLD_REFERENCE'), 'engineering state leaked into learner-facing status');
       await page.screenshot({ path:`${SHOTS}/ryu-role-visual-optimized.png`, fullPage:false });
@@ -697,6 +699,8 @@ try {
   }
   await assertPracticalDevice('ipad-portrait',768,1024);
   await page.goto(`${BASE}/character/ryu/#role`, { waitUntil:'networkidle' });
+  const ipadHeader = await page.locator('.v6-topbar').evaluate((el) => ({ height:el.getBoundingClientRect().height }));
+  assert(ipadHeader.height <= 70, `iPad portrait header wastes vertical space: ${ipadHeader.height}px`);
   await page.screenshot({ path:`${SHOTS}/ryu-role-ipad-portrait.png`, fullPage:false });
   await page.goto(`${BASE}/beginner/`, { waitUntil:'networkidle' });
   await assertNoDocumentOverflow('beginner ipad-portrait');

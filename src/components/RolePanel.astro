@@ -18,10 +18,10 @@ const list = (value) => Array.isArray(value) ? value : value ? [value] : [];
     {model.essence_detail && <div class="detail">{model.essence_detail}</div>}
 
     <div class="model-grid role-model-grid">
-      <article class="mini-card"><h3>你在逼对手</h3><ul>{list(model.force_opponent_to).map((x) => <li>{x}</li>)}</ul></article>
-      <article class="mini-card"><h3>对手一旦尊重</h3><ul>{list(model.payoff_after_respect).map((x) => <li>{x}</li>)}</ul></article>
-      <article class="mini-card"><h3>核心取舍</h3><p>{model.core_tradeoff ?? identity.win_pattern}</p></article>
-      <article class="mini-card"><h3>真正新增的决策</h3><p>{model.unique_decision ?? identity.lose_pattern}</p></article>
+      {list(model.force_opponent_to).length > 0 && <article class="mini-card"><h3>你在逼对手</h3><ul>{list(model.force_opponent_to).map((x) => <li>{x}</li>)}</ul></article>}
+      {list(model.payoff_after_respect).length > 0 && <article class="mini-card"><h3>对手一旦尊重</h3><ul>{list(model.payoff_after_respect).map((x) => <li>{x}</li>)}</ul></article>}
+      {(model.core_tradeoff ?? identity.win_pattern) && <article class="mini-card"><h3>核心取舍</h3><p>{model.core_tradeoff ?? identity.win_pattern}</p></article>}
+      {(model.unique_decision ?? identity.lose_pattern) && <article class="mini-card"><h3>真正新增的决策</h3><p>{model.unique_decision ?? identity.lose_pattern}</p></article>}
     </div>
 
     {list(model.successful_round).length > 0 && <div class="role-round-strip"><h3>一局通常长这样</h3><p>{list(model.successful_round).join(' → ')}</p></div>}
