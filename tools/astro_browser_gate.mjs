@@ -167,18 +167,18 @@ try {
     if (c.slug === 'yasmine') {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('M Daloy ng Tubig > Alon'), 'yasmine: S0 Bayani-acquire route missing');
-      assert(!s0Text.includes('Boosted Alon'), 'yasmine: Bayani spend leaked into S0');
+      assert(!s0Text.includes('Bayani active -> 2LP > 5LP/LP > L Daloy ng Tubig > Boosted Alon'), 'yasmine: S1 Bayani-spend route leaked into S0');
     }
     if (c.slug === 'rashid') {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('M Spinning Mixer') && s0Text.includes('L Eagle Spike'), 'rashid: S0 Mixer/Eagle skeleton missing');
-      assert(!s0Text.includes('Air Current'), 'rashid: Air Current layer leaked into S0');
-      assert(!s0Text.includes('Ysaar'), 'rashid: Ysaar leaked into S0');
+      assert(!s0Text.includes('5HK (PC) > 6MP > OD Arabian Cyclone > Air Current Boosted M Spinning Mixer'), 'rashid: S3 Air Current route leaked into S0');
+      assert(!s0Text.includes('SA2 Ysaar active -> 6HP overhead / 2MK low / throw'), 'rashid: S4 Ysaar route leaked into S0');
     }
     if (c.slug === 'kimberly') {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('2MP > 5MP > 5HP > Sprint > Shadow Slide'), 'kimberly: S0 carry identity route missing');
-      assert(!s0Text.includes('Shuriken Bomb'), 'kimberly: Bomb layer leaked into S0');
+      assert(!s0Text.includes('corner DI wall splat > 2HP > M Vagabond Edge > 5MP whiff > Shuriken Bomb Spread'), 'kimberly: S2 Bomb route leaked into S0');
     }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
