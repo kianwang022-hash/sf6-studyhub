@@ -2,6 +2,8 @@
 import GlossaryText from './GlossaryText.astro';
 import { PRACTICAL_GLOSSARY_KEYS, glossaryEntry } from '../lib/sf6Glossary';
 const { practical } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const root = base.endsWith('/') ? base : `${base}/`;
 const stages = practical?.stages ?? {};
 const opportunities = practical?.opportunities ?? [];
 const packages = practical?.shared_packages ?? {};
@@ -78,7 +80,7 @@ const practicalTerms = PRACTICAL_GLOSSARY_KEYS.map(glossaryEntry).filter(Boolean
     <h3 id="term-popover-name"></h3>
     <b id="term-popover-zh"></b>
     <p id="term-popover-short"></p>
-    <a href="../beginner/#beginner-terms">打开完整新人术语表 →</a>
+    <a href={`${root}beginner/#beginner-terms`}>打开完整新人术语表 →</a>
   </aside>
 </section>
 
