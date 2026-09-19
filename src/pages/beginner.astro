@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { BEGINNER_GLOSSARY } from '../lib/sf6Glossary';
+const base = import.meta.env.BASE_URL;
+const root = base.endsWith('/') ? base : `${base}/`;
+const lessons = [
+  { n:'01', title:'先看懂输入', body:'方向用小键盘数字表示：5=不按方向，6=前，4=后，2=下，8=上。P/K 是拳/脚，L/M/H 是轻/中/重。例：236P = 下→下前→前 + 拳。' },
+  { n:'02', title:'先会打一整轮', body:'Neutral 里控距离 → 取得接触 → 看 Hit / Block / Whiff → 命中走稳定路线 → KD → Oki 或 Reset → 回到下一轮。新人先把这条循环跑出来。' },
+  { n:'03', title:'先分 Hit / Block / Whiff', body:'命中才继续 Confirm；被防先看自己是不是正帧；挥空就停止后续输入。很多新手问题都来自把三种状态当成同一种。' },
+  { n:'04', title:'击倒以后不是自动继续压', body:'KD 只是“对手倒地”。能不能 Oki，要看击倒时间、距离和角色路线。Meaty、Throw、Shimmy 都属于起攻答案，但没有一个是永远正确。' },
+  { n:'05', title:'Drive 只学五件事', body:'Drive Rush 用来进身/延长；DRC 从可取消普通技接 Rush；DI 是装甲攻击；Parry 是通用防御资源；Drive Reversal 用来脱压。Drive 用光会进入 Burnout。' },
+  { n:'06', title:'防守先解决最贵的错误', body:'看见跳先 Anti-air；挡住明显大招会 Punish；被压时不要把每次都当成必须抢回合。无敌 Reversal 是选择，不是默认答案。' },
+  { n:'07', title:'第一天别追最长连段', body:'先固定一个稳定 Starter → Ender。之后再按位置、Drive、Oki、Carry 或 Kill 增加分支。路线越长不等于越适合现在。' },
+  { n:'08', title:'然后再进角色 Learn', body:'全局基础只学一次。选角色后，LEARN 负责告诉你“这个角色怎么赢、比普通 SF6 多了什么、哪些旧习惯在这里要改”，再按 S0 → S4 增加复杂度。' }
+];
+---
+<BaseLayout title="新人入门 · SF6 StudyHub" context="beginner">
+  <section class="beginner-hero">
+    <div class="beginner-copy">
+      <div class="kicker">SF6 FUNDAMENTALS · FIRST ENTRY</div>
+      <h1>第一次玩 SF6，<br/><span>先学共同语言。</span></h1>
+      <p>这一层所有角色共用，只需要学一次。它不教你背 31 个角色，而是先让你看懂“一局在发生什么”，以及网站里那些 KD / Oki / Shimmy / Drive / DRC 到底是什么意思。</p>
+      <div class="beginner-actions">
+        <a class="cta primary" href="#beginner-loop">开始入门 <span>→</span></a>
+        <a class="cta secondary" href={`${root}character/ryu/#learn`}>直接去角色 Learn</a>
+      </div>
+    </div>
+    <div class="beginner-map" aria-label="SF6 新人一局地图">
+      <span>Neutral<br/><small>立回</small></span><i>→</i>
+      <span>Contact<br/><small>碰到对手</small></span><i>→</i>
+      <span>Hit / Block / Whiff<br/><small>先判断结果</small></span><i>→</i>
+      <span>KD<br/><small>击倒</small></span><i>→</i>
+      <span>Oki / Reset<br/><small>起攻或重置</small></span><i>→</i>
+      <span>Next Round<br/><small>回下一轮</small></span>
+    </div>
+  </section>
+
+  <div class="beginner-shell">
+    <section id="beginner-loop" class="beginner-section">
+      <div class="section-head"><div><h2>新人只需要先过 8 关</h2><p>顺序来自旧 StudyHub Fundamentals 的“整局地图 → 操作/帧数 → 确认 → Drive → 进攻/防守 → 起攻 → 立回 → 自检”，现在压缩成真正能开打的版本。</p></div></div>
+      <div class="beginner-lessons">
+        {lessons.map((lesson) => (
+          <article class="beginner-lesson">
+            <b>{lesson.n}</b>
+            <div><h3>{lesson.title}</h3><p>{lesson.body}</p></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="beginner-section">
+      <div class="section-head"><div><h2>输入记法 · 先把网站看懂</h2><p>网站默认使用格斗游戏常见的数字方向记法；这不是额外知识，只是把手柄方向写短。</p></div></div>
+      <div class="notation-grid">
+        <article><b>方向</b><p><code>7 8 9</code><br/><code>4 5 6</code><br/><code>1 2 3</code></p><span>以角色面向右侧为准：6=前，4=后，2=下，8=上，5=不按方向。</span></article>
+        <article><b>按钮</b><p><code>LP MP HP</code><br/><code>LK MK HK</code></p><span>L/M/H = 轻/中/重；P/K = 拳/脚。<code>5MP</code> 就是站立中拳，<code>2MK</code> 是蹲中脚。</span></article>
+        <article><b>必杀</b><p><code>236P</code><br/><code>623P</code><br/><code>214K</code></p><span>数字按顺序滑方向，最后按拳/脚。<code>236P</code> 就是常说的“波动指令”。</span></article>
+        <article><b>路线符号</b><p><code>&gt;</code>　<code>xx</code>　<code>dl.</code></p><span><code>&gt;</code> 表示下一步；<code>xx</code> 常表示取消；<code>dl.</code> 表示稍微延迟。看到不懂的缩写，不需要猜，回下面术语表。</span></article>
+      </div>
+    </section>
+
+    <section id="beginner-terms" class="beginner-section">
+      <div class="section-head"><div><h2>最常见术语 · 点进实战前先扫一遍</h2><p>不要求背英文。只需要看到词时知道它在问什么；Practical 里这些词也会直接变成可点击解释。</p></div></div>
+      <div class="beginner-glossary">
+        {BEGINNER_GLOSSARY.map((entry) => (
+          <article class="glossary-card" id={`term-${entry.key}`}>
+            <div><b>{entry.term}</b><span>{entry.zh}</span></div>
+            <p>{entry.short}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="beginner-section beginner-exit">
+      <div>
+        <span class="kicker">NEXT · CHARACTER LEARN</span>
+        <h2>基础不用重复学 31 遍。</h2>
+        <p>现在选一个角色，LEARN 只负责角色差异；S0 先让你打出完整角色循环，后面再逐层加入机制、资源和高级路线。</p>
+      </div>
+      <a class="cta primary" href={`${root}character/ryu/#learn`}>进入第一个角色 <span>→</span></a>
+    </section>
+  </div>
+</BaseLayout>
