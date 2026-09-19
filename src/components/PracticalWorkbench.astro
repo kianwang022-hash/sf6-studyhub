@@ -1,4 +1,6 @@
 ---
+import GlossaryText from './GlossaryText.astro';
+import { PRACTICAL_GLOSSARY_KEYS, glossaryEntry } from '../lib/sf6Glossary';
 const { practical } = Astro.props;
 const stages = practical?.stages ?? {};
 const opportunities = practical?.opportunities ?? [];
@@ -13,9 +15,32 @@ const rowNext = (row) => {
   }
   return row.next_loop ?? '';
 };
+const practicalTerms = PRACTICAL_GLOSSARY_KEYS.map(glossaryEntry).filter(Boolean);
 ---
 <section id="practical" class="section pr-section">
-  <div class="section-head"><div><h2>PRACTICAL · 一局里怎么用</h2><p>阶段控制复杂度；每一行必须回答“按什么、换到什么、下一步是什么”。</p></div><button id="fullscreen-toggle" class="small-btn" type="button">FULLSCREEN</button></div>
+  <div class="section-head">
+    <div><h2>PRACTICAL · 一局里怎么用</h2><p>阶段控制复杂度；每一行必须回答“按什么、换到什么、下一步是什么”。</p></div>
+    <div class="pr-head-actions">
+      <button id="terminology-toggle" class="small-btn terminology-toggle" type="button">术语说明</button>
+      <button id="fullscreen-toggle" class="small-btn" type="button">FULLSCREEN</button>
+    </div>
+  </div>
+  <div class="terminology-intro">
+    <span><b>看不懂术语？</b> 表里的绿色虚线词都可以直接点。</span>
+    <div class="terminology-quick">
+      {practicalTerms.slice(0,9).map((term) => term && (
+        <button type="button" class="term-chip" data-term-key={term.key} data-term-name={term.term} data-term-zh={term.zh} data-term-short={term.short}>{term.term}</button>
+      ))}
+    </div>
+  </div>
+  <div class="terminology-panel" id="terminology-panel" hidden>
+    {practicalTerms.map((term) => term && (
+      <article class="terminology-card">
+        <div><b>{term.term}</b><span>{term.zh}</span></div>
+        <p>{term.short}</p>
+      </article>
+    ))}
+  </div>
   <div class="pr-toolbar">
     <div class="stage-row">
       {stageKeys.map((s, i) => <button class={`stage-btn ${i===0?'active':''}`} data-stage={s} type="button"><b>{s}</b> · {stages[s]?.label ?? s}</button>)}
@@ -29,16 +54,16 @@ const rowNext = (row) => {
 
   <div class="pr-ops">
     {opportunities.map((op) => <article class="pr-op" data-op-block={op.id}>
-      <div class="pr-op-head"><h3>{op.title}</h3>{op.subtitle && <p>{op.subtitle}</p>}{op.guide?.short && <p>WHY · {op.guide.short}</p>}</div>
+      <div class="pr-op-head"><h3><GlossaryText text={op.title} /></h3>{op.subtitle && <p><GlossaryText text={op.subtitle} /></p>}{op.guide?.short && <p>WHY · <GlossaryText text={op.guide.short} /></p>}</div>
       <div class="table-wrap">
         <table class="pr-table">
           <thead><tr><th>RESULT / CHOICE</th><th>完整输入</th><th>价值 / 资源</th><th>NEXT LOOP · WHY</th></tr></thead>
           <tbody>
             {(op.rows ?? []).map((row) => <tr class="pr-row" data-row-stage={row.stage ?? op.stage ?? 'S0'}>
-              <td><span class={`result ${String(row.result ?? '').toLowerCase()}`}>{row.result}</span><span class="choice">{row.choice}</span></td>
-              <td><div class="route">{row.input}</div>{row.conditions?.length && <div class="why">条件：{row.conditions.join(' / ')}</div>}</td>
-              <td><div class="metrics">{metricPairs(row.value).map(([k,v]) => <span class="metric">{k}: {String(v)}</span>)}</div>{row.verification && <div class="why">{row.verification}</div>}</td>
-              <td><div class="next">{rowNext(row)}</div><div class="why">WHY · {row.why}</div></td>
+              <td><span class={`result ${String(row.result ?? '').toLowerCase()}`}><GlossaryText text={row.result} /></span><span class="choice"><GlossaryText text={row.choice} /></span></td>
+              <td><div class="route"><GlossaryText text={row.input} /></div>{row.conditions?.length && <div class="why">条件：<GlossaryText text={row.conditions.join(' / ')} /></div>}</td>
+              <td><div class="metrics">{metricPairs(row.value).map(([k,v]) => <span class="metric"><GlossaryText text={`${k}: ${String(v)}`} /></span>)}</div>{row.verification && <div class="why"><GlossaryText text={row.verification} /></div>}</td>
+              <td><div class="next"><GlossaryText text={rowNext(row)} /></div><div class="why">WHY · <GlossaryText text={row.why} /></div></td>
             </tr>)}
           </tbody>
         </table>
@@ -47,6 +72,14 @@ const rowNext = (row) => {
   </div>
 
   {backend.length > 0 && <details class="backend"><summary>Backend only / 仍未进入学习表的内容 ({backend.length})</summary><ul>{backend.map((x) => <li><b>{x.label}</b> — {x.reason}</li>)}</ul></details>}
+  <aside class="term-popover" id="term-popover" hidden aria-live="polite">
+    <button type="button" class="term-close" data-term-close aria-label="关闭术语解释">×</button>
+    <small>SF6 TERM</small>
+    <h3 id="term-popover-name"></h3>
+    <b id="term-popover-zh"></b>
+    <p id="term-popover-short"></p>
+    <a href="../beginner/#beginner-terms">打开完整新人术语表 →</a>
+  </aside>
 </section>
 
 <script is:inline>
@@ -56,6 +89,12 @@ const rowNext = (row) => {
     const hubBtns = [...document.querySelectorAll('[data-op]')];
     const rows = [...document.querySelectorAll('[data-row-stage]')];
     const ops = [...document.querySelectorAll('[data-op-block]')];
+    const terminologyPanel = document.getElementById('terminology-panel');
+    const terminologyToggle = document.getElementById('terminology-toggle');
+    const termPopover = document.getElementById('term-popover');
+    const termName = document.getElementById('term-popover-name');
+    const termZh = document.getElementById('term-popover-zh');
+    const termShort = document.getElementById('term-popover-short');
     let stage = 'S0';
     let opportunity = 'ALL';
 
@@ -76,6 +115,21 @@ const rowNext = (row) => {
     }
     stageBtns.forEach(b => b.addEventListener('click', () => {stage=b.dataset.stage;render()}));
     hubBtns.forEach(b => b.addEventListener('click', () => {opportunity=b.dataset.op;render()}));
+    terminologyToggle?.addEventListener('click', () => {
+      if (!terminologyPanel) return;
+      terminologyPanel.hidden = !terminologyPanel.hidden;
+      terminologyToggle.classList.toggle('active', !terminologyPanel.hidden);
+    });
+    document.addEventListener('click', (event) => {
+      const target = event.target.closest?.('[data-term-key]');
+      if (target && termPopover) {
+        if (termName) termName.textContent = target.dataset.termName || target.textContent || '';
+        if (termZh) termZh.textContent = target.dataset.termZh || '';
+        if (termShort) termShort.textContent = target.dataset.termShort || '';
+        termPopover.hidden = false;
+      }
+      if (event.target.closest?.('[data-term-close]') && termPopover) termPopover.hidden = true;
+    });
     document.getElementById('fullscreen-toggle')?.addEventListener('click', () => document.body.classList.toggle('fullscreen'));
     render();
   })();
