@@ -17,30 +17,30 @@ const list = (value) => Array.isArray(value) ? value : value ? [value] : [];
     <div class="essence">{model.essence_short ?? identity.one_line}</div>
     {model.essence_detail && <div class="detail">{model.essence_detail}</div>}
 
-    <div class="model-grid">
+    <div class="model-grid role-model-grid">
       <article class="mini-card"><h3>你在逼对手</h3><ul>{list(model.force_opponent_to).map((x) => <li>{x}</li>)}</ul></article>
       <article class="mini-card"><h3>对手一旦尊重</h3><ul>{list(model.payoff_after_respect).map((x) => <li>{x}</li>)}</ul></article>
       <article class="mini-card"><h3>核心取舍</h3><p>{model.core_tradeoff ?? identity.win_pattern}</p></article>
       <article class="mini-card"><h3>真正新增的决策</h3><p>{model.unique_decision ?? identity.lose_pattern}</p></article>
     </div>
 
-    {list(model.successful_round).length > 0 && <div class="mini-card" style="margin-top:10px"><h3>一局通常长这样</h3><p>{list(model.successful_round).join(' → ')}</p></div>}
+    {list(model.successful_round).length > 0 && <div class="role-round-strip"><h3>一局通常长这样</h3><p>{list(model.successful_round).join(' → ')}</p></div>}
 
     {glossary.length > 0 && <>
-      <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>本角色先看懂这几个词</h2></div></div>
+      <div class="role-subhead"><div><h2>本角色先看懂这几个词</h2></div></div>
       <div class="glossary">{glossary.map((g) => <div class="glossary-item"><b>{g.term}</b><span>{g.meaning}</span></div>)}</div>
     </>}
 
     {tools.length > 0 && <>
-      <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>关键工具</h2><p>输入优先；名字只是别名。</p></div></div>
-      <div class="tool-grid">{tools.map((t) => <div class="tool"><div class="input">{t.input}</div><div><b>{t.name}</b><p>{t.use}</p></div></div>)}</div>
+      <div class="role-subhead"><div><h2>关键工具</h2><p>输入优先；名字只是别名。</p></div></div>
+      <div class="tool-grid role-tool-grid">{tools.map((t) => <div class="tool"><div class="input">{t.input}</div><div><b>{t.name}</b><p>{t.use}</p></div></div>)}</div>
     </>}
 
     {(signature || resource) && <>
-      <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>角色机制</h2><p>只保留会改变选择的状态与规则。</p></div></div>
-      <div class="model-grid">
-        {signature && <article class="mini-card"><h3>{signature.name}</h3><p>{signature.rule}</p></article>}
-        {resource && <article class="mini-card">
+      <div class="role-subhead"><div><h2>角色机制</h2><p>只保留会改变选择的状态与规则。</p></div></div>
+      <div class="role-mechanic-grid">
+        {signature && <article class="mini-card role-mechanic-card"><h3>{signature.name}</h3><p>{signature.rule}</p></article>}
+        {resource && <article class="mini-card role-mechanic-card">
           <h3>{resource.name}</h3>
           {resource.gain && <p><b>怎么获得：</b>{resource.gain}</p>}
           {resource.spend && <p><b>怎么使用：</b>{resource.spend}</p>}
@@ -51,11 +51,11 @@ const list = (value) => Array.isArray(value) ? value : value ? [value] : [];
     </>}
 
     {keyNumbers.length > 0 && <>
-      <div class="section-head" style="padding-left:0;padding-right:0;margin-top:18px"><div><h2>会改变选择的数字</h2></div></div>
-      <div class="tool-grid">{keyNumbers.map((n) => <div class="tool"><div class="input">{n.value}</div><div><b>{n.label}</b><p>{n.decision}</p></div></div>)}</div>
+      <div class="role-subhead"><div><h2>会改变选择的数字</h2></div></div>
+      <div class="tool-grid role-number-grid">{keyNumbers.map((n) => <div class="tool"><div class="input">{n.value}</div><div><b>{n.label}</b><p>{n.decision}</p></div></div>)}</div>
     </>}
 
-    {constraints.length > 0 && <div class="mini-card" style="margin-top:12px"><h3>最容易误读</h3><ul>{constraints.map((x) => <li>{x}</li>)}</ul></div>}
+    {constraints.length > 0 && <div class="role-constraint-strip"><h3>最容易误读</h3><ul>{constraints.map((x) => <li>{x}</li>)}</ul></div>}
   </div>
 </section>
 
