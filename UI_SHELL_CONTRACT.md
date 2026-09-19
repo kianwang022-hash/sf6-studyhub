@@ -72,3 +72,65 @@ Rules:
 - phone layouts may reflow and stack, but must not hide primary destinations behind accidental horizontal scrolling.
 
 Responsive acceptance is a product requirement, not a best-effort CSS fallback. Browser QA must cover the device classes above.
+
+
+## Visual readability acceptance
+
+SF6 keeps its own visual language. These rules are **quality guardrails**, not a cross-project theme override.
+
+The site may remain dense, game-specific, dark/light, editorial or tactical where appropriate. It must not create visual sophistication by making important information too small, too gray, or too spatially sparse.
+
+### Typography
+
+At the default 100% UI scale:
+
+- learner-facing primary route / decision text should normally resolve to **14px or larger**;
+- learner-facing secondary explanation that affects a decision should normally resolve to **12px or larger**;
+- information below 12px is reserved for genuinely tertiary metadata, never the only carrier of a learner decision;
+- Chinese learner text should resolve through **PingFang SC** in the accepted Mac / Apple-device font stack;
+- monospace is appropriate for inputs and route notation, but Chinese fallback must remain readable rather than falling into an arbitrary CJK font.
+
+Do not shrink typography merely to preserve a screenshot composition. Reflow, internal scroll, column adjustment or controlled density reduction is preferred to illegible text.
+
+### Contrast
+
+- primary learner text must remain clearly separated from the page background in both light and dark themes;
+- muted / secondary text may be quieter, but must still be comfortably readable when it carries WHY, conditions, verification, constraints or next-loop meaning;
+- weak gray microtext must not be used as the primary hierarchy mechanism;
+- borders and row separators must remain visible enough to preserve scanning structure in dense workbench surfaces;
+- state colors such as HIT / BLOCK / WHIFF / READ must remain distinguishable in both themes.
+
+Visual hierarchy should come primarily from typography, weight, spacing, alignment, grouping and restrained color—not from pushing meaningful text toward invisibility.
+
+### Density
+
+SF6 targets **medium-high information density** on Mac and iPad where space permits.
+
+Density is accepted when:
+- related information stays spatially close;
+- the learner can scan rows and compare choices;
+- empty space improves grouping or focus.
+
+Density fails when:
+- the same amount of information is spread across oversized cards without a learning reason;
+- wide screens are underused;
+- readable type is sacrificed to fit more rows.
+
+### Automated + Human Gate
+
+Automated browser QA may enforce mechanical floors such as:
+- resolved font sizes;
+- required font-stack fallbacks;
+- accepted dark/light contrast tokens;
+- overflow and device-class behavior.
+
+Automation does **not** prove aesthetic quality.
+
+Any material visual redesign still requires human screenshot / real-use acceptance for:
+- perceived readability;
+- hierarchy;
+- density;
+- contrast;
+- whether the page feels visually calm rather than cheap or washed out.
+
+A UI change that is technically responsive but requires Kian to zoom, squint, or repeatedly point out weak gray text has failed SF6 visual acceptance.
