@@ -587,12 +587,15 @@ try {
     assert(await page.locator('[data-stage]:visible').count() === 6, `${label}: stage controls not all visible`);
     assert(await page.locator('[data-op]:visible').count() >= 5, `${label}: opportunity controls not visible`);
     await assertNoDocumentOverflow(`${label} practical`);
-    const tableState = await page.locator('.table-wrap').first().evaluate((el) => ({
+    const tableState = await page.locator('#practical:visible .table-wrap').first().evaluate((el) => ({
       client:el.clientWidth,
       scroll:el.scrollWidth,
       overflow:getComputedStyle(el).overflowX
     }));
-    assert(tableState.client > 0 && ['auto','scroll'].includes(tableState.overflow), `${label}: Practical table must scroll internally when needed`);
+    assert(tableState.client > 0, `${label}: visible Practical table has zero width`);
+    if (tableState.scroll > tableState.client + 1) {
+      assert(['auto','scroll'].includes(tableState.overflow), `${label}: overflowing Practical table must scroll internally`);
+    }
     await page.locator('.term-inline').first().click();
     const pop = page.locator('#term-popover:visible');
     assert(await pop.count() === 1, `${label}: terminology popover did not open`);
