@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
-const { title = 'SF6 StudyHub' } = Astro.props;
+const { title = 'SF6 StudyHub', context = 'character' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const root = base.endsWith('/') ? base : `${base}/`;
 ---
 <!doctype html>
 <html lang="zh-CN" data-theme="light">
@@ -12,12 +14,19 @@ const { title = 'SF6 StudyHub' } = Astro.props;
   </head>
   <body>
     <header class="v6-topbar">
-      <nav class="global-tabs" aria-label="切换阅读内容">
-        <button type="button" data-top-tab="learn"><span>◈</span>学习</button>
-        <button type="button" data-top-tab="role" class="active"><span>◉</span>角色</button>
-        <button type="button" data-top-tab="practical"><span>◎</span>实战</button>
-        <button type="button" data-top-tab="reference"><span>▦</span>资料</button>
-      </nav>
+      <div class="topbar-primary">
+        <a class={`beginner-nav ${context === 'beginner' ? 'active' : ''}`} href={`${root}beginner/`}><span>?</span>新人入门</a>
+        {context === 'beginner' ? (
+          <a class="site-home-link" href={root}><span>◉</span>进入角色站</a>
+        ) : (
+          <nav class="global-tabs" aria-label="切换阅读内容">
+            <button type="button" data-top-tab="learn"><span>◈</span>学习</button>
+            <button type="button" data-top-tab="role" class="active"><span>◉</span>角色</button>
+            <button type="button" data-top-tab="practical"><span>◎</span>实战</button>
+            <button type="button" data-top-tab="reference"><span>▦</span>资料</button>
+          </nav>
+        )}
+      </div>
       <div class="reading-tools">
         <button type="button" id="smaller" aria-label="缩小整个界面">A−</button>
         <span id="scaleLabel" class="scale-readout">100%</span>
