@@ -13,7 +13,7 @@ const { character } = Astro.props;
   <div class="v6-content-shell" data-character-page={character.slug}>
     <div class="character-status-strip">
       <div><span>当前角色</span><b>{character.nameZh} {character.nameEn}</b></div>
-      <div class={`availability ${character.isReady ? 'ready' : 'pending'}`}>{character.state}</div>
+      <div class={`availability ${character.isReady ? 'ready' : 'pending'}`}>{character.isReady ? '完整内容已就绪' : 'Gold 页面待开放'}</div>
     </div>
 
     <section class="tab-panel" data-panel="learn" hidden>
