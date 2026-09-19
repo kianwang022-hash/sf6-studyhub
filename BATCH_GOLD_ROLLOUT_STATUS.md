@@ -18,14 +18,14 @@ Judgment states:
 | base | Luke | `GOLD_PAGE_READY` |
 | base | Jamie | `GOLD_PAGE_READY` |
 | base | Chun-Li | `CONTENT_READY` |
-| base | Guile | `CONTENT_READY` |
+| base | Guile | `GOLD_PAGE_READY` |
 | base | Kimberly | `GOLD_PAGE_READY` |
 | base | Juri | `GOLD_PAGE_READY` |
 | base | Ken | `GOLD_PAGE_READY` |
-| base | Blanka | `CONTENT_READY` |
+| base | Blanka | `GOLD_PAGE_READY` |
 | base | Dhalsim | `CONTENT_READY` |
-| base | E. Honda | `CONTENT_READY` |
-| base | Dee Jay | `CONTENT_READY` |
+| base | E. Honda | `GOLD_PAGE_READY` |
+| base | Dee Jay | `GOLD_PAGE_READY` |
 | base | Manon | `CONTENT_READY` |
 | base | Marisa | `CONTENT_READY` |
 | base | JP | `CONTENT_READY` |
@@ -36,7 +36,7 @@ Judgment states:
 | year1 | A.K.I. | `CONTENT_READY` |
 | year1 | Ed | `CONTENT_READY` |
 | year1 | Akuma | `GOLD_PAGE_READY` |
-| year2 | M. Bison | `CONTENT_READY` |
+| year2 | M. Bison | `GOLD_PAGE_READY` |
 | year2 | Terry | `GOLD_PAGE_READY` |
 | year2 | Mai | `GOLD_PAGE_READY` |
 | year2 | Elena | `GOLD_PAGE_READY` |
@@ -48,9 +48,9 @@ Judgment states:
 
 ## Current Gold lane
 
-Fifteen characters now render through the canonical Astro runtime:
+Twenty characters now render through the canonical Astro runtime:
 
-Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Ken — ordinary shoto contact -> choose end-state -> Quick Dash Tatsu carry / +25 dash +6 / corner setplay; H Dragonlash +1 remains tied to 28F startup.
@@ -63,6 +63,11 @@ Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, Alex, Chun-Li, 
 - Yasmine — Bayani is a cycle state: S0 acquires it, S1 first spends it through Boosted Alon, and the persistent SA2 state stays late.
 - Rashid — ordinary Mixer/Eagle Spike rounds first; Air Current and mobility are earned re-entry layers, with normal +31 kept distinct from boosted +42.
 - Kimberly — corner carry first; Sprint grows after the base loop and Shuriken Bomb remains deferred until corner fundamentals are stable.
+- Guile — charge availability is managed behind ordinary defense/normals; Boom shapes ground and Somersault checks jump, while conditional +42 never replaces the ordinary state.
+- Dee Jay — charge remains available but rhythm deception is the identity: fake/real Air Slasher and non-charge options precede Jus Cool and SA2 layers.
+- E. Honda — charge creates Headbutt/Smash threat and strike respect; Oicho begins only after respect, while Sumo Spirit remains a later pressure upgrade.
+- Blanka — Electric Thunder/charge knockdown first; Bomb is earned corner object setplay, not an entry-level resource task.
+- M. Bison — track both own charge and opponent Psycho Mine; S0 plants Mine, later stages cash it in and explicitly distinguish unsafe normal Crusher from Mine-enhanced pressure.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
 - Mai — ordinary projectile/ground skeleton first; resource/state upgrades are explained before Stock / Boosted shorthand.
 - Zangief — S0 contains the strike -> respect -> `360P` feedback loop; SPD aftermath remains re-approach/read rather than fake guaranteed close Oki.
@@ -123,8 +128,13 @@ Visual artifact: **`sf6-visual-qa`** from run `35171931415`.
 - `receipts/yasmine_GOLD_PAGE_READY.md`
 - `receipts/rashid_GOLD_PAGE_READY.md`
 - `receipts/kimberly_GOLD_PAGE_READY.md`
+- `receipts/guile_GOLD_PAGE_READY.md`
+- `receipts/deejay_GOLD_PAGE_READY.md`
+- `receipts/ehonda_GOLD_PAGE_READY.md`
+- `receipts/blanka_GOLD_PAGE_READY.md`
+- `receipts/mbison_GOLD_PAGE_READY.md`
 
-Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, and Kimberly are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
+Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, and M. Bison are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
 
 ## Public deployment state
 
