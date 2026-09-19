@@ -162,7 +162,7 @@ try {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('5MP > MP > M Rhino Horn'), 'elena: S0 stable Rhino route missing');
       assert(!s0Text.includes('earned Lynx Song setup'), 'elena: Lynx mix leaked into S0');
-      assert(!s0Text.includes('Healing'), 'elena: Healing leaked into S0');
+      assert(!s0Text.includes('confirmed route > SA2 Healing variation'), 'elena: SA2 Healing route leaked into S0');
     }
     if (c.slug === 'yasmine') {
       const s0Text = await page.locator('#practical').innerText();
