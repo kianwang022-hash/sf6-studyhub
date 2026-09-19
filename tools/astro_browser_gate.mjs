@@ -30,7 +30,14 @@ const chars = [
   { slug:'marisa', normals:18, learn:'只有这时，5F Enfold command grab 才进入主循环', ref:'Anti-template Truth', practical:['2LK or 2LP > 2LP > L Dimachaerus > 6P','Phalanx ender -> +42 -> immediate forward jump HP/HK','fully charged 5HP block'] },
   { slug:'lily', normals:18, learn:'先投资 Windclad，把 Condor Spire 变成正帧进场', ref:'Normal vs Windclad Spire', practical:['safe window -> hold Condor Wind for 1 Windclad stock','Windclad H Condor Spire plus entry -> Mexican Typhoon','safe long window -> hold Condor Wind for 2 Windclad stocks'] },
   { slug:'manon', normals:18, learn:'先用普通 Rond-point / Renversé / dash Oki 赢回合', ref:'Medal Strategy', practical:['2LP > 2LP > H Rond-point','opponent respect / point-blank read -> H Manège Doré','Medal Level 4-5 + opponent respect -> H Manège Doré'] },
-  { slug:'alex', normals:18, learn:'先用稳定 strike 和 +2 压力买到 respect', ref:'Prowler Truth', practical:['2MP > M Flash Axe hit > Prowler > Heavy Lariat','earned Prowler entry -> Air Stampede','4MK block + opponent respects -> H Power Bomb'] }
+  { slug:'alex', normals:18, learn:'先用稳定 strike 和 +2 压力买到 respect', ref:'Prowler Truth', practical:['2MP > M Flash Axe hit > Prowler > Heavy Lariat','earned Prowler entry -> Air Stampede','4MK block + opponent respects -> H Power Bomb'] },
+  { slug:'chunli', normals:18, learn:'临时进入 Serenity Stream', ref:'Lotus Naming Boundary', practical:['2HP hit > Serenity Stream > Forward Strike > M Spinning Bird Kick','earned Serenity Stream entry -> Lotus Fist','H Tensho Kicks grounded hit +37 -> forward dash'] },
+  { slug:'aki', normals:18, learn:'毒爆最大伤害', ref:'Poison Burst Routes', practical:['2LK > 2LP > 2LP > H Serpent Lash','opponent poisoned -> M Serpent Lash poison burst','corner opponent poisoned -> M Serpent Lash burst'] },
+  { slug:'ed', normals:18, learn:'接触距离和重新进身', ref:'Exact +42 Safe Jump', practical:['2LP > 5LP > M Psycho Blitz','5MP > 5HP > H Psycho Blitz in declared Hitman Combination state -> +42','charged L/M Psycho Flicker blocked'] },
+  { slug:'jp', normals:18, learn:'对手离你很远，仍然不能安心', ref:'Departure', practical:['2LP > 5LP > L Stribog','earned Departure active -> Departure: Shadow / portal strike','grounded M Stribog hit +42 -> immediate forward jump HK'] },
+  { slug:'ingrid', normals:18, learn:'0-stock Sun Rise', ref:'One-Stock Layer', practical:['safe resource window -> hold L Sun Flare about 47F','stock_level_1 -> confirmed 2HP > Sun Flare Lv2','stock_level_2 -> Sun Flare Lv3 blocked'] },
+  { slug:'cviper', normals:18, learn:'High Jump Cancel', ref:'High Jump Cancel Truth', practical:['2MK hit -> High Jump Cancel -> M Thunder Dash -> Tracer Combination','5MP > 2MP > L Thunder Dash > Tracer Combination','5MK hit -> High Jump Cancel -> M Thunder Dash -> Tracer Combination'] },
+  { slug:'dhalsim', normals:18, learn:'只靠一直把对手赶回去很难赢', ref:'Identity Route — M Blast -> Teleport', practical:['2LP > CDR > 5LP > 4MP > M Yoga Blast hit +42 -> immediate P Yoga Teleport (Forward)','Aerial Yoga Float > j.HP > 1HP Nirvana Punch > M Yoga Flame','OD Yoga Fire -> Yoga Arch -> Yoga Comet'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -173,6 +180,48 @@ try {
       assert(roleText.includes('2MK不可取消'), 'alex: non-cancelable 2MK truth missing');
       assert(roleText.includes('Power Bomb +15不是guaranteed close Oki'), 'alex: Power Bomb aftermath boundary missing');
     }
+    if (c.slug === 'chunli') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Temporary Serenity Stream routing -> charge bypass -> continue-or-exit decision'), 'chunli: stance-routing signature missing');
+      assert(roleText.includes('stance Lotus Fist +1') && roleText.includes('3HP Water Lotus Fist -3'), 'chunli: Lotus naming/frame boundary missing');
+      assert(roleText.includes('charge-bypass只描述声明的stance follow-up route'), 'chunli: charge-bypass scope missing');
+    }
+    if (c.slug === 'aki') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Poison application -> +44 Oki -> poisoned-state conversion -> corner puddle'), 'aki: poison-state signature missing');
+      assert(roleText.includes('Poisoned Target State'), 'aki: poison resource/state owner missing');
+      assert(roleText.includes('ordinary H Lash +44') && roleText.includes('poisoned +53'), 'aki: ordinary-vs-poisoned Lash state split missing');
+    }
+    if (c.slug === 'ed') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Long-range contact -> Psycho Blitz knockdown -> Rush re-entry -> close pressure'), 'ed: Blitz re-entry signature missing');
+      assert(roleText.includes('uncharged L/M Flicker Block -6'), 'ed: uncharged Flicker unsafe truth missing');
+      assert(roleText.includes('charged Flicker +4必须保留spacing条件'), 'ed: charged Flicker spacing truth missing');
+    }
+    if (c.slug === 'jp') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Immediate remote control -> earned Departure investment -> dual-position portal state'), 'jp: earned-Departure signature missing');
+      assert(roleText.includes('M Stribog grounded') && roleText.includes('+42'), 'jp: grounded M Stribog +42 owner missing');
+      assert(roleText.includes('Departure所有分支必须来自earned active portal state'), 'jp: earned portal-state boundary missing');
+    }
+    if (c.slug === 'ingrid') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Zero-stock base loop -> safe stock investment -> future Sun Flare plus-turn amplification'), 'ingrid: stock-investment signature missing');
+      assert(roleText.includes('Sun Shot Stock'), 'ingrid: stock resource owner missing');
+      assert(roleText.includes('Sun Flare Lv1') && roleText.includes('Block -4') && roleText.includes('Sun Flare Lv2') && roleText.includes('Block +4'), 'ingrid: zero-vs-one-stock frame split missing');
+    }
+    if (c.slug === 'cviper') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Drive-owned High Jump Cancel -> pre-jump special rerouting'), 'cviper: HJC signature missing');
+      assert(roleText.includes('HJC在SA1 install外必须带Drive owner'), 'cviper: HJC Drive ownership missing');
+      assert(roleText.includes('2HK不可HJC'), 'cviper: HJC eligibility boundary missing');
+    }
+    if (c.slug === 'dhalsim') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Range geometry -> earned knockdown -> covered Teleport proximity conversion'), 'dhalsim: geometry-to-Teleport signature missing');
+      assert(roleText.includes('raw Teleport不得继承+3'), 'dhalsim: raw Teleport +3 boundary missing');
+      assert(roleText.includes('M Yoga Blast') && roleText.includes('KD +42'), 'dhalsim: Blast +42 owner missing');
+    }
 
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
@@ -299,6 +348,48 @@ try {
       assert(!s0Text.includes('earned Prowler entry -> Air Stampede'), 'alex: full Prowler branch leaked into S0');
       assert(!s0Text.includes('4MK block + opponent respects -> H Power Bomb'), 'alex: Power Bomb read leaked into S0');
     }
+    if (c.slug === 'chunli') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2HP hit > Serenity Stream > Forward Strike > M Spinning Bird Kick'), 'chunli: S0 single stance route missing');
+      assert(s0Text.includes('Serenity Stream entered but no branch is worth committing -> Up exit'), 'chunli: S0 stance exit missing');
+      assert(!s0Text.includes('earned Serenity Stream entry -> Lotus Fist'), 'chunli: full stance tree leaked into S0');
+    }
+    if (c.slug === 'aki') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LK > 2LP > 2LP > H Serpent Lash'), 'aki: S0 stable poison/+44 route missing');
+      assert(!s0Text.includes('opponent poisoned -> M Serpent Lash poison burst'), 'aki: S1 poison-burst route leaked into S0');
+      assert(!s0Text.includes('corner opponent poisoned -> M Serpent Lash burst > 5HK > Toxic Wreath > DR 5HK > Venomous Fang > Orchid Spring'), 'aki: S2 puddle route leaked into S0');
+    }
+    if (c.slug === 'ed') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP > 5LP > M Psycho Blitz'), 'ed: S0 Blitz route missing');
+      assert(s0Text.includes('M Psycho Blitz hit +39 -> Drive Rush +8 -> 5HP'), 'ed: S0 Rush re-entry missing');
+      assert(!s0Text.includes('5MP > 5HP > H Psycho Blitz in declared Hitman Combination state -> +42'), 'ed: S1 exact +42 safe jump leaked into S0');
+    }
+    if (c.slug === 'jp') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP > 5LP > L Stribog'), 'jp: S0 remote-control route missing');
+      assert(s0Text.includes('opponent holds ground / walks predictably -> Triglav'), 'jp: S0 remote-control decision missing');
+      assert(!s0Text.includes('earned Departure active -> Departure: Shadow / portal strike'), 'jp: portal tree leaked into S0');
+    }
+    if (c.slug === 'ingrid') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('safe resource window -> hold L Sun Flare about 47F'), 'ingrid: S0 one-stock investment missing');
+      assert(!s0Text.includes('stock_level_1 -> confirmed 2HP > Sun Flare Lv2'), 'ingrid: S1 first-spend route leaked into S0');
+      assert(!s0Text.includes('stock_level_2 -> Sun Flare Lv3 blocked'), 'ingrid: two-stock layer leaked into S0');
+    }
+    if (c.slug === 'cviper') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2MK hit -> High Jump Cancel -> M Thunder Dash -> Tracer Combination'), 'cviper: S0 HJC identity route missing');
+      assert(!s0Text.includes('5MP > 2MP > L Thunder Dash > Tracer Combination'), 'cviper: S1 larger-Oki route leaked into S0');
+      assert(!s0Text.includes('5MK hit -> High Jump Cancel -> M Thunder Dash -> Tracer Combination'), 'cviper: later HJC branch leaked into S0');
+    }
+    if (c.slug === 'dhalsim') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP > CDR > 5LP > 4MP > M Yoga Blast hit +42 -> immediate P Yoga Teleport (Forward)'), 'dhalsim: S0 earned Teleport identity route missing');
+      assert(!s0Text.includes('Aerial Yoga Float > j.HP > 1HP Nirvana Punch > M Yoga Flame'), 'dhalsim: S1 Float layer leaked into S0');
+      assert(!s0Text.includes('OD Yoga Fire -> Yoga Arch -> Yoga Comet'), 'dhalsim: S2 projectile-chain layer leaked into S0');
+    }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
     for (const token of c.practical) assert(practicalText.includes(token), `${c.slug}: practical marker missing ${token}`);
@@ -409,6 +500,16 @@ try {
     await page.locator('#theme-toggle').click();
   }
 
+  for (const slug of ['chunli','aki','ed','jp','ingrid','cviper','dhalsim']) {
+    await page.goto(`${BASE}/character/${slug}/#role`, { waitUntil:'networkidle' });
+    if (await page.evaluate(() => document.documentElement.dataset.theme) !== 'dark') await page.locator('#theme-toggle').click();
+    assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', `${slug}: dark theme toggle failed`);
+    const heroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(heroLoaded, `${slug}: dark hero art missing`);
+    await page.screenshot({ path:`${SHOTS}/${slug}-v6-dark.png`, fullPage:false });
+    await page.locator('#theme-toggle').click();
+  }
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -418,7 +519,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 24 accepted light+dark heroes | 学习/角色/实战/资料 | 24 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 31 accepted light+dark heroes | 学习/角色/实战/资料 | 31 Gold characters | dark/light | mobile');
 } finally {
   await browser.close();
 }

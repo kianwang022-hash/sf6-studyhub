@@ -17,40 +17,38 @@ Judgment states:
 | base | Ryu | `GOLD_REFERENCE` |
 | base | Luke | `GOLD_PAGE_READY` |
 | base | Jamie | `GOLD_PAGE_READY` |
-| base | Chun-Li | `CONTENT_READY` |
+| base | Chun-Li | `GOLD_PAGE_READY` |
 | base | Guile | `GOLD_PAGE_READY` |
 | base | Kimberly | `GOLD_PAGE_READY` |
 | base | Juri | `GOLD_PAGE_READY` |
 | base | Ken | `GOLD_PAGE_READY` |
 | base | Blanka | `GOLD_PAGE_READY` |
-| base | Dhalsim | `CONTENT_READY` |
+| base | Dhalsim | `GOLD_PAGE_READY` |
 | base | E. Honda | `GOLD_PAGE_READY` |
 | base | Dee Jay | `GOLD_PAGE_READY` |
 | base | Manon | `GOLD_PAGE_READY` |
 | base | Marisa | `GOLD_PAGE_READY` |
-| base | JP | `CONTENT_READY` |
+| base | JP | `GOLD_PAGE_READY` |
 | base | Zangief | `GOLD_PAGE_READY` |
 | base | Lily | `GOLD_PAGE_READY` |
 | base | Cammy | `GOLD_PAGE_READY` |
 | year1 | Rashid | `GOLD_PAGE_READY` |
-| year1 | A.K.I. | `CONTENT_READY` |
-| year1 | Ed | `CONTENT_READY` |
+| year1 | A.K.I. | `GOLD_PAGE_READY` |
+| year1 | Ed | `GOLD_PAGE_READY` |
 | year1 | Akuma | `GOLD_PAGE_READY` |
 | year2 | M. Bison | `GOLD_PAGE_READY` |
 | year2 | Terry | `GOLD_PAGE_READY` |
 | year2 | Mai | `GOLD_PAGE_READY` |
 | year2 | Elena | `GOLD_PAGE_READY` |
 | year3 | Sagat | `GOLD_PAGE_READY` |
-| year3 | C. Viper | `CONTENT_READY` |
+| year3 | C. Viper | `GOLD_PAGE_READY` |
 | year3 | Alex | `GOLD_PAGE_READY` |
-| year3 | Ingrid | `CONTENT_READY` |
+| year3 | Ingrid | `GOLD_PAGE_READY` |
 | year4 | Yasmine | `GOLD_PAGE_READY` |
 
 ## Current Gold lane
 
-Twenty-four characters now render through the canonical Astro runtime:
-
-Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+All 31 roster characters now render through the canonical Astro runtime:
 
 - Ryu — Gold design/function reference.
 - Ken — ordinary shoto contact -> choose end-state -> Quick Dash Tatsu carry / +25 dash +6 / corner setplay; H Dragonlash +1 remains tied to 28F startup.
@@ -72,6 +70,13 @@ Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_
 - Lily — invest one Windclad first, convert it into plus Spire entry, then add Mexican Typhoon only after respect; multi-stock building remains later.
 - Manon — ordinary Rond-point/Renversé/dash Oki first; Medal raises future reward and changes escape behavior, but command grab is never an S0 automatic follow-up.
 - Alex — ordinary strike/+2 first with one earned Prowler exit; full Prowler tree and Power Bomb reads remain later, conditioned choices.
+- Chun-Li — stable SBK/Oki first; S0 exposes exactly one earned Serenity Stream route plus Up exit, while the full stance tree and exact safe-jump states remain later.
+- A.K.I. — S0 applies poison and runs ordinary H Lash +44 Oki; poisoned-state burst, Year4 block-poison and corner puddle remain explicit later upgrades.
+- Ed — long-range contact converts through Blitz into Rush re-entry; charged Flicker and route-specific +42 remain later, spacing/exact-state layers.
+- JP — immediate remote control first; Departure is earned future-screen investment and every portal branch remains bound to an active earned portal state.
+- Ingrid — zero-stock Sun Rise loop first with one safe stock build; Lv2 plus turn and two-stock Lv3 cashout remain later resource decisions.
+- C. Viper — ordinary +1 pressure and stable knockdown remain playable before Drive-owned HJC rerouting; S0 includes exactly one HJC identity proof.
+- Dhalsim — range geometry first; S0 contains one covered M Blast +42 -> forward Teleport identity route, while Float and projectile-chain geometry remain later.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
 - Mai — ordinary projectile/ground skeleton first; resource/state upgrades are explained before Stock / Boosted shorthand.
 - Zangief — S0 contains the strike -> respect -> `360P` feedback loop; SPD aftermath remains re-approach/read rather than fake guaranteed close Oki.
@@ -141,8 +146,16 @@ Visual artifact: **`sf6-visual-qa`** from run `35171931415`.
 - `receipts/lily_GOLD_PAGE_READY.md`
 - `receipts/manon_GOLD_PAGE_READY.md`
 - `receipts/alex_GOLD_PAGE_READY.md`
+- `receipts/chunli_GOLD_PAGE_READY.md`
+- `receipts/aki_GOLD_PAGE_READY.md`
+- `receipts/ed_GOLD_PAGE_READY.md`
+- `receipts/jp_GOLD_PAGE_READY.md`
+- `receipts/ingrid_GOLD_PAGE_READY.md`
+- `receipts/cviper_GOLD_PAGE_READY.md`
+- `receipts/dhalsim_GOLD_PAGE_READY.md`
+- `receipts/ROSTER_31_GOLD_PAGE_READY.md`
 
-Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, and Alex are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
+Every non-reference roster character is formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**; Ryu remains the **`GOLD_REFERENCE`**.
 
 ## Public deployment state
 
@@ -152,8 +165,8 @@ The first Pages deployment correctly built and uploaded the Pages artifact, then
 
 After repository Pages is enabled with **Source = GitHub Actions**, the existing workflow can publish the same accepted `dist/` output. Public hosting is not part of `GOLD_PAGE_READY` semantic/render acceptance.
 
-## Next roster rule
+## Roster closure rule
 
-**Current Source Closure is complete for all 31 roster characters: 31/31.** No character remains `SOURCE_CLOSURE_PENDING`.
+**Source Closure: 31/31 complete. Gold page runtime promotion: 31/31 complete once the final roster receipt head passes Astro Gate.**
 
-The next roster-wide lane is Gold page promotion: project each accepted semantic package through the shared Astro Role/Practical runtime, run character-specific semantic projection checks plus real browser/visual QA, and promote only passing characters from `CONTENT_READY` to `GOLD_PAGE_READY`. Existing Gold pages provide the production/runtime quality bar, not a gameplay template. Character order and transfer assumptions remain owned by `CHARACTER_SKILL_TRANSFER_MAP.md`.
+After that point there is no remaining roster-migration backlog. Future work is current-version maintenance, evidence-driven learner refinement, regression QA, and optional public deployment; it must not restart a character merely because a template or shared renderer changes.
