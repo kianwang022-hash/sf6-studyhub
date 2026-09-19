@@ -21,7 +21,12 @@ const chars = [
   { slug:'elena', normals:18, learn:'Healing只在最后作为伤害与恢复之间的资源选择', ref:'Lynx follow-up truth', practical:['5MP > MP > M Rhino Horn','earned Lynx Song setup','SA2'] },
   { slug:'yasmine', normals:18, learn:'取得 → 消费 → 再取得', ref:'Bayani system truth', practical:['M Daloy ng Tubig > Alon','Boosted Alon','SA2'] },
   { slug:'rashid', normals:18, learn:'不靠风也能打完整 Rashid', ref:'Air Current truth', practical:['M Spinning Mixer','L Eagle Spike','Air Current'] },
-  { slug:'kimberly', normals:18, learn:'普通contact → corner carry → simple Oki', ref:'Anti-template truth', practical:['Sprint > Shadow Slide','Shuriken Bomb','SA3'] }
+  { slug:'kimberly', normals:18, learn:'普通contact → corner carry → simple Oki', ref:'Anti-template truth', practical:['Sprint > Shadow Slide','Shuriken Bomb','SA3'] },
+  { slug:'guile', normals:18, learn:'down-back 是后台状态', ref:'Charge truth', practical:['[4]6P -> immediately keep anti-air attention','2LK > 2LP > H Somersault Kick','OD Sonic Blade block'] },
+  { slug:'deejay', normals:18, learn:'L Air Slasher = fake', ref:'Charge / Rhythm Truth', practical:['[4]6LP L Air Slasher fake','H Jackknife Maximum grounded hit -> +42 -> immediate forward jump attack','Jus Cool > MK Waning Moon'] },
+  { slug:'ehonda', normals:18, learn:'S0不要求Oicho', ref:'Charge / State Truth', practical:['H Sumo Smash grounded hit -> +23 -> forward dash','Sumo Smash +23 -> dash +4 -> H Oicho Throw','Sumo Spirit active -> L Hundred Hand Slap block'] },
+  { slug:'blanka', normals:18, learn:'赢到角落以后，再用 Blanka-chan Bomb', ref:'Bomb Setplay', practical:['5LK > 2LP > Electric Thunder','M Vertical Rolling Attack exact hit -> +42 -> immediate forward jump HK','corner 5HP > Coward Crouch > Wild Lift > Blanka-chan Bomb'] },
+  { slug:'vega', normals:18, learn:'不要自动继续爆 Mine', ref:'Psycho Mine Truth', practical:['2LP or 2LK > 5LK > L Backfist Combo','Psycho Mine active -> L Backfist Combo hit','Psycho Mine active + back charge -> M Psycho Crusher Attack block'] }
 ];
 
 const browser = await chromium.launch({ headless:true });
@@ -109,6 +114,37 @@ try {
       assert(roleText.includes('Shuriken Bomb Stock') && roleText.includes('S0-S1不要求Bomb'), 'kimberly: Bomb-deferred resource truth missing');
       assert(roleText.includes('2MK') && roleText.includes('non-cancel'), 'kimberly: non-cancel 2MK truth missing');
     }
+    if (c.slug === 'guile') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Charge availability management'), 'guile: charge-availability signature missing');
+      assert(roleText.includes('2MK不可取消'), 'guile: non-cancelable 2MK truth missing');
+      assert(roleText.includes('+42不是通用H Somersault数字'), 'guile: non-universal +42 boundary missing');
+    }
+    if (c.slug === 'deejay') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Charge + rhythm deception'), 'deejay: charge-rhythm signature missing');
+      assert(roleText.includes('L Air Slasher是fake'), 'deejay: fake projectile truth missing');
+      assert(roleText.includes('H Jackknife +42必须grounded hit'), 'deejay: grounded-only +42 truth missing');
+    }
+    if (c.slug === 'ehonda') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Charge-enabled respect -> Oicho conversion'), 'ehonda: respect-to-Oicho signature missing');
+      assert(roleText.includes('Sumo Spirit') && roleText.includes('S0-S2不要求Spirit'), 'ehonda: late Spirit resource truth missing');
+      assert(roleText.includes('Oicho') && roleText.includes('6F'), 'ehonda: Oicho reward truth missing');
+    }
+    if (c.slug === 'blanka') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Earned corner object setplay'), 'blanka: earned-object signature missing');
+      assert(roleText.includes('Bomb不进S0/S1必修'), 'blanka: Bomb-deferred truth missing');
+      assert(roleText.includes('M/H Vertical Rolling') && roleText.includes('KD +42'), 'blanka: exact +42 vertical owner missing');
+    }
+    if (c.slug === 'vega') {
+      const roleText = await page.locator('#role').innerText();
+      assert(roleText.includes('Charge + opponent-side Psycho Mine state'), 'vega: charge+Mine signature missing');
+      assert(roleText.includes('Psycho Mine') && roleText.includes('S0只学植Mine'), 'vega: plant-first Mine rule missing');
+      assert(roleText.includes('Normal L/M Crusher') && roleText.includes('Block -20'), 'vega: normal Crusher unsafe truth missing');
+      assert(roleText.includes('Mine L/M Crusher') && roleText.includes('Block +6'), 'vega: Mine Crusher rewrite truth missing');
+    }
 
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
@@ -179,6 +215,36 @@ try {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('2MP > 5MP > 5HP > Sprint > Shadow Slide'), 'kimberly: S0 carry identity route missing');
       assert(!s0Text.includes('corner DI wall splat > 2HP > M Vagabond Edge > 5MP whiff > Shuriken Bomb Spread'), 'kimberly: S2 Bomb route leaked into S0');
+    }
+    if (c.slug === 'guile') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('hold down-back during crouch-block / 2LP / 2MP'), 'guile: S0 charge-availability owner missing');
+      assert(s0Text.includes('[4]6P -> immediately keep anti-air attention'), 'guile: S0 Boom reaction loop missing');
+      assert(!s0Text.includes('OD Sonic Blade block'), 'guile: later Blade pressure leaked into S0');
+    }
+    if (c.slug === 'deejay') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('[4]6LP L Air Slasher fake') && s0Text.includes('[4]6MP/HP Air Slasher'), 'deejay: S0 fake/real projectile split missing');
+      assert(!s0Text.includes('Jus Cool > MK Waning Moon'), 'deejay: Jus Cool branch leaked into S0');
+      assert(!s0Text.includes('SA2 Sunrise Festival activation / rhythm sequence'), 'deejay: SA2 system leaked into S0');
+    }
+    if (c.slug === 'ehonda') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('H Sumo Smash grounded hit -> +23 -> forward dash'), 'ehonda: S0 Smash Oki owner missing');
+      assert(!s0Text.includes('Sumo Smash +23 -> dash +4 -> H Oicho Throw'), 'ehonda: S1 Oicho route leaked into S0');
+      assert(!s0Text.includes('Sumo Spirit active -> L Hundred Hand Slap block'), 'ehonda: S3 Spirit layer leaked into S0');
+    }
+    if (c.slug === 'blanka') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('5LK > 2LP > Electric Thunder'), 'blanka: S0 Thunder route missing');
+      assert(!s0Text.includes('corner 5HP > Coward Crouch > Wild Lift > Blanka-chan Bomb'), 'blanka: Bomb setplay leaked into S0');
+      assert(!s0Text.includes('SA2 Lightning Beast activation'), 'blanka: Lightning Beast leaked into S0');
+    }
+    if (c.slug === 'vega') {
+      const s0Text = await page.locator('#practical').innerText();
+      assert(s0Text.includes('2LP or 2LK > 5LK > L Backfist Combo'), 'vega: S0 Mine-plant route missing');
+      assert(!s0Text.includes('Psycho Mine active -> L Backfist Combo hit'), 'vega: S1 Mine cash-in leaked into S0');
+      assert(!s0Text.includes('Psycho Mine active + back charge -> M Psycho Crusher Attack block'), 'vega: Mine Crusher pressure leaked into S0');
     }
     await page.locator('[data-stage="ALL"]').click();
     const practicalText = await page.locator('#practical').innerText();
@@ -270,6 +336,16 @@ try {
     await page.locator('#theme-toggle').click();
   }
 
+  for (const slug of ['guile','deejay','ehonda','blanka','vega']) {
+    await page.goto(`${BASE}/character/${slug}/#role`, { waitUntil:'networkidle' });
+    if (await page.evaluate(() => document.documentElement.dataset.theme) !== 'dark') await page.locator('#theme-toggle').click();
+    assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'dark', `${slug}: dark theme toggle failed`);
+    const heroLoaded = await page.locator('.hero-character-dark').evaluate((img) => img.complete && img.naturalWidth > 0);
+    assert(heroLoaded, `${slug}: dark hero art missing`);
+    await page.screenshot({ path:`${SHOTS}/${slug}-v6-dark.png`, fullPage:false });
+    await page.locator('#theme-toggle').click();
+  }
+
   await page.setViewportSize({ width:390, height:844 });
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -279,7 +355,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 15 accepted light+dark heroes | 学习/角色/实战/资料 | 15 Gold characters | pending shell | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 20 accepted light+dark heroes | 学习/角色/实战/资料 | 20 Gold characters | pending shell | dark/light | mobile');
 } finally {
   await browser.close();
 }
