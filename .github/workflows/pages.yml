@@ -63,7 +63,38 @@ jobs:
           }
 
           verify "$root/" 'SF6 StudyHub'
-          for slug in ryu jamie mai zangief cammy; do
+
+          curl -L -fsS "$root/" -o /tmp/sf6-home.html
+          selector_count=$(grep -o '<option' /tmp/sf6-home.html | wc -l | tr -d ' ')
+          echo "selector options=$selector_count"
+          if [ "$selector_count" != "31" ]; then
+            echo "VERIFY_FAIL selector expected=31 actual=$selector_count"
+            exit 1
+          fi
+
+          slugs=(
+            ryu luke jamie chunli guile kimberly juri ken blanka dhalsim
+            ehonda deejay manon marisa jp zangief lily cammy
+            rashid aki ed akuma
+            vega terry mai elena
+            sagat cviper alex ingrid
+            yasmine
+          )
+
+          verify_asset() {
+            url="$1"
+            code=$(curl -L -sS -o /dev/null -w '%{http_code}' "$url" || true)
+            echo "asset=$url http=$code"
+            if [ "$code" != "200" ]; then
+              echo "VERIFY_FAIL asset $url"
+              return 1
+            fi
+          }
+
+          for slug in "${slugs[@]}"; do
             verify "$root/character/$slug/" 'ROLE · 角色理解'
+            verify_asset "$root/hero/$slug-light.jpg"
+            verify_asset "$root/hero/$slug-dark.jpg"
           done
-          echo 'PUBLIC_PAGES_VERIFY_PASS | home + 5 character pages'
+
+          echo 'PUBLIC_PAGES_VERIFY_PASS | home + 31 selector options + 31 character pages + 62 hero assets'
