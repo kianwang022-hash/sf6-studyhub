@@ -159,11 +159,23 @@ Every non-reference roster character is formally promoted from `CONTENT_READY` t
 
 ## Public deployment state
 
-Astro static output is valid and GitHub Pages deployment workflow exists at `.github/workflows/pages.yml`.
+**PUBLIC_SITE_READY 31/31 — ACCEPTED.**
 
-The first Pages deployment correctly built and uploaded the Pages artifact, then GitHub returned `404` at the deployment step because **Pages has not yet been enabled for this repository**. This is a repository setting, not a build or page failure.
+Public URL:
 
-After repository Pages is enabled with **Source = GitHub Actions**, the existing workflow can publish the same accepted `dist/` output. Public hosting is not part of `GOLD_PAGE_READY` semantic/render acceptance.
+`https://kianwang022-hash.github.io/sf6-studyhub/`
+
+GitHub Pages is enabled and deploys from GitHub Actions. Deploy Pages run `35414179737` passed the expanded public verification on 2026-09-19:
+
+- homepage HTTP 200
+- exactly 31 character-selector options
+- all 31 canonical character pages HTTP 200 with `ROLE · 角色理解`
+- all 31 light Hero assets HTTP 200
+- all 31 dark Hero assets HTTP 200
+
+Canonical receipt: `receipts/PUBLIC_SITE_READY.md`.
+
+Public deployment is now part of the accepted website state; the historical pre-enable 404 is closed and no longer describes Current Truth.
 
 ## Roster closure rule
 
