@@ -73,7 +73,7 @@ body.fullscreen .v6-topbar,body.fullscreen .v6-hero,body.fullscreen .character-s
 }
 .pr-section .result{font-size:calc(11.5px * var(--ui-scale));letter-spacing:.02em}
 .pr-section .choice{font-size:calc(12px * var(--ui-scale));font-weight:650}
-.pr-section .route{font-size:calc(14.5px * var(--ui-scale));line-height:1.48;font-weight:780}
+.pr-section .route{font-family:"SFMono-Regular","SF Mono",Menlo,Consolas,var(--font-cn),monospace;font-size:calc(14.5px * var(--ui-scale));line-height:1.48;font-weight:780}
 .pr-section .next{font-size:calc(13.5px * var(--ui-scale));line-height:1.45;font-weight:720}
 .pr-section .why{font-size:calc(12.5px * var(--ui-scale));line-height:1.45}
 .pr-section .metric{font-size:calc(11px * var(--ui-scale));font-weight:700;padding:3px 7px}
