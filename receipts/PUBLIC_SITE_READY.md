@@ -1,6 +1,6 @@
 # SF6 StudyHub Public Website Acceptance
 
-Status: **CANDIDATE — public 31/31 Pages verification required**  
+Status: **ACCEPTED — PUBLIC_SITE_READY 31/31**  
 Checked through: **2026-09-19**
 
 ## Public URL
@@ -15,9 +15,9 @@ Checked through: **2026-09-19**
 - current GitHub Pages deployment: SUCCESS
 - public home + legacy five-character smoke test: PASS
 
-## Final public-site proof required
+## Accepted public-site proof
 
-The Pages deployment itself must now prove all of the following from the deployed public URL:
+GitHub Pages Deploy run `35414179737` passed the expanded public verification on `main@838842dbab1402c1a5b3a0ecf7e1d36935b508b5`, proving all of the following from the deployed public URL:
 
 - homepage returns HTTP 200 and contains SF6 StudyHub
 - homepage renders exactly 31 selector options in static HTML
@@ -42,4 +42,6 @@ It proves the already accepted 31-character site is actually present on GitHub P
 
 ## Final judgment
 
-Promote this receipt to **ACCEPTED — PUBLIC_SITE_READY 31/31** only after a main-branch Deploy Pages run passes the expanded public verification.
+**ACCEPTED — PUBLIC_SITE_READY 31/31**
+
+Public verification log: `PUBLIC_PAGES_VERIFY_PASS | home + 31 selector options + 31 character pages + 62 hero assets`.
