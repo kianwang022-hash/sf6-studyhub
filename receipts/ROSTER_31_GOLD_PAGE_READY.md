@@ -1,6 +1,6 @@
 # SF6 31/31 GOLD_PAGE_READY Roster Receipt
 
-Status: **CANDIDATE — final Astro Gate required**  
+Status: **ACCEPTED — GOLD_PAGE_READY 31/31**  
 Checked through: **2026-09-19**  
 Roster: **31 / 31**
 
@@ -52,7 +52,7 @@ Examples include:
 
 ## Final QA contract
 
-This roster receipt becomes accepted only if the exact final head passes one full Astro Gate proving:
+Accepted proof: GitHub Actions Astro Gate **run 35412845523 / #217 — PASS** on final roster head `11184d7c39ad931566f167e24f0fc360ac318f8f`, proving:
 
 - Content Integration Gate PASS
 - Astro build PASS
@@ -74,8 +74,6 @@ This roster receipt becomes accepted only if the exact final head passes one ful
 The Astro Gate preserves the same browser QA while caching the Playwright browser by the actually resolved Playwright version. Caching reduces repeated browser downloads; it does not remove or weaken validation.
 
 ## Roster closure judgment
-
-If the final head is green:
 
 **SOURCE CLOSURE = 31/31 COMPLETE**  
 **GOLD RUNTIME = 31/31 COMPLETE**
