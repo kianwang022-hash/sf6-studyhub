@@ -56,6 +56,16 @@ try {
   const rootHeroLoaded = await page.locator('.hero-character-light').evaluate((img) => img.complete && img.naturalWidth > 0);
   assert(rootHeroLoaded, 'Ryu hero art did not load');
   await page.screenshot({ path:`${SHOTS}/v6-home-ryu-light.png`, fullPage:false });
+  assert(await page.locator('.beginner-nav').count() === 1, 'global beginner entry missing from topbar');
+  assert(await page.locator('.hero-beginner-hint').count() === 1, 'hero beginner hint missing');
+
+  await page.goto(`${BASE}/beginner/`, { waitUntil:'networkidle' });
+  const beginnerText = await page.locator('.beginner-hero').innerText();
+  assert(beginnerText.includes('第一次玩 SF6') && beginnerText.includes('先学共同语言'), 'beginner fundamentals hero missing');
+  assert(await page.locator('.beginner-lesson').count() === 8, 'beginner fundamentals must expose 8 first-entry lessons');
+  assert(await page.locator('.glossary-card').count() >= 20, 'beginner glossary is too small');
+  assert((await page.locator('.beginner-map').innerText()).includes('Hit / Block / Whiff'), 'beginner whole-round map missing');
+  await page.screenshot({ path:`${SHOTS}/beginner-v1-light.png`, fullPage:false });
 
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
@@ -232,6 +242,19 @@ try {
     assert(await page.locator('[data-stage]').count() === 6, `${c.slug}: S0-S4 + ALL missing`);
     assert(await page.locator('[data-op]').count() >= 5, `${c.slug}: Opportunity Hub too small`);
     assert(await page.locator('[data-row-stage="S4"]:visible').count() === 0, `${c.slug}: future S4 should be folded at S0`);
+    assert(await page.locator('.term-inline').count() > 0, `${c.slug}: Practical terminology affordances missing`);
+    if (c.slug === 'ryu') {
+      assert(await page.locator('.term-inline[data-term-key="kd"]').count() > 0, 'ryu: KD should be contextual glossary text');
+      assert(await page.locator('.term-inline[data-term-key="shimmy"]').count() > 0, 'ryu: Shimmy should be contextual glossary text');
+      await page.locator('#terminology-toggle').click();
+      assert(await page.locator('#terminology-panel:visible').count() === 1, 'Practical terminology panel did not open');
+      assert(await page.locator('.terminology-card').count() >= 15, 'Practical terminology panel is too small');
+      await page.locator('.term-inline[data-term-key="kd"]').first().click();
+      assert(await page.locator('#term-popover:visible').count() === 1, 'contextual term popover did not open');
+      const termText = await page.locator('#term-popover').innerText();
+      assert(termText.includes('Knockdown') && termText.includes('击倒'), 'KD explanation is not learner-readable');
+      await page.locator('[data-term-close]').click();
+    }
     if (c.slug === 'ken') {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('j.HP > 5MP > 5HP > KK > Tatsu'), 'ken: S0 carry identity route missing');
@@ -511,6 +534,11 @@ try {
   }
 
   await page.setViewportSize({ width:390, height:844 });
+  await page.goto(`${BASE}/beginner/`, { waitUntil:'networkidle' });
+  const beginnerOverflow = await page.evaluate(() => ({ doc:document.documentElement.scrollWidth, win:window.innerWidth }));
+  assert(beginnerOverflow.doc <= beginnerOverflow.win + 1, `beginner: mobile document overflow ${beginnerOverflow.doc} > ${beginnerOverflow.win}`);
+  await page.screenshot({ path:`${SHOTS}/beginner-v1-mobile.png`, fullPage:false });
+
   for (const c of chars) {
     await page.goto(`${BASE}/character/${c.slug}/#role`, { waitUntil:'networkidle' });
     const overflow = await page.evaluate(() => ({ doc:document.documentElement.scrollWidth, win:window.innerWidth }));
@@ -519,7 +547,7 @@ try {
   }
 
   assert(errors.length === 0, `browser errors: ${errors.join(' | ')}`);
-  console.log('ASTRO V6 BROWSER GATE PASS | 31 selector | 31 accepted light+dark heroes | 学习/角色/实战/资料 | 31 Gold characters | dark/light | mobile');
+  console.log('ASTRO V6 BROWSER GATE PASS | beginner fundamentals | contextual terminology | 31 selector | 31 accepted light+dark heroes | 学习/角色/实战/资料 | 31 Gold characters | dark/light | mobile');
 } finally {
   await browser.close();
 }
