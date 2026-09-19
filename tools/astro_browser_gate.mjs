@@ -254,6 +254,32 @@ try {
       const termText = await page.locator('#term-popover').innerText();
       assert(termText.includes('Knockdown') && termText.includes('击倒'), 'KD explanation is not learner-readable');
       await page.locator('[data-term-close]').click();
+
+      if (await page.evaluate(() => document.documentElement.dataset.theme) !== 'dark') {
+        await page.locator('#theme-toggle').click();
+      }
+      const readability = await page.evaluate(() => {
+        const route = document.querySelector('.pr-section .route');
+        const why = document.querySelector('.pr-section .why');
+        const td = document.querySelector('.pr-section .pr-table td');
+        const routeStyle = route ? getComputedStyle(route) : null;
+        const whyStyle = why ? getComputedStyle(why) : null;
+        const tdStyle = td ? getComputedStyle(td) : null;
+        return {
+          routeSize: routeStyle ? parseFloat(routeStyle.fontSize) : 0,
+          whySize: whyStyle ? parseFloat(whyStyle.fontSize) : 0,
+          fontFamily: routeStyle?.fontFamily || '',
+          whyColor: whyStyle?.color || '',
+          rowBorder: tdStyle?.borderBottomColor || ''
+        };
+      });
+      assert(readability.routeSize >= 14, `Practical route type too small: ${readability.routeSize}px`);
+      assert(readability.whySize >= 12, `Practical secondary type too small: ${readability.whySize}px`);
+      assert(readability.fontFamily.includes('PingFang SC'), `Practical font stack must include PingFang SC: ${readability.fontFamily}`);
+      assert(readability.whyColor === 'rgb(188, 198, 191)', `Practical dark secondary contrast token missing: ${readability.whyColor}`);
+      assert(readability.rowBorder === 'rgb(58, 68, 61)', `Practical dark row separator token missing: ${readability.rowBorder}`);
+      await page.screenshot({ path:`${SHOTS}/ryu-practical-readability-dark.png`, fullPage:false });
+      await page.locator('#theme-toggle').click();
     }
     if (c.slug === 'ken') {
       const s0Text = await page.locator('#practical').innerText();
