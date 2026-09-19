@@ -201,8 +201,15 @@ try {
   assert(page.url().includes('/character/jamie/'), 'real 31-character selector navigation failed');
   assert(await page.locator('#heroCharacterSelect').inputValue() === 'jamie', 'selector did not land on Jamie');
 
-  await page.goto(`${BASE}/character/juri/#role`, { waitUntil:'networkidle' });
-  assert((await page.locator('[data-panel="role"]').innerText()).includes('GOLD PAGE QA PENDING'), 'CONTENT_READY roster shell must not masquerade as Gold content');
+  const goldSlugs = chars.map(c => c.slug);
+  const pendingSlug = await page.locator('#heroCharacterSelect option').evaluateAll(
+    (options, accepted) => options.map(option => option.value).find(value => !accepted.includes(value)) ?? null,
+    goldSlugs
+  );
+  if (pendingSlug) {
+    await page.goto(`${BASE}/character/${pendingSlug}/#role`, { waitUntil:'networkidle' });
+    assert((await page.locator('[data-panel="role"]').innerText()).includes('GOLD PAGE QA PENDING'), `${pendingSlug}: CONTENT_READY roster shell must not masquerade as Gold content`);
+  }
 
   await page.goto(`${BASE}/character/jamie/#role`, { waitUntil:'networkidle' });
   assert(await page.evaluate(() => document.documentElement.dataset.theme) === 'light', 'v6 default/saved test theme should start light');
