@@ -167,6 +167,6 @@ After repository Pages is enabled with **Source = GitHub Actions**, the existing
 
 ## Roster closure rule
 
-**Source Closure: 31/31 complete. Gold page runtime promotion: 31/31 complete once the final roster receipt head passes Astro Gate.**
+**Source Closure: 31/31 complete. Gold page runtime promotion: 31/31 complete. Final roster Astro Gate run `35412845523` / #217: PASS.**
 
 After that point there is no remaining roster-migration backlog. Future work is current-version maintenance, evidence-driven learner refinement, regression QA, and optional public deployment; it must not restart a character merely because a template or shared renderer changes.
