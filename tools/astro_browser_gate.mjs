@@ -52,6 +52,13 @@ try {
   assert(await page.locator('#heroCharacterSelect option').count() === 31, 'hero selector must preserve all 31 characters');
   assert((await page.locator('.v6-hero').innerText()).includes('Train smarter.'), 'accepted v6 hero copy missing');
   assert(await page.locator('.hero-keywords span').count() === 6, 'accepted role→tools→neutral→opportunity→oki→practical path missing');
+  const heroVisual = await page.locator('.v6-hero').evaluate((el) => {
+    const box = el.getBoundingClientRect();
+    const copy = el.querySelector('.hero-copy > p');
+    return { height:box.height, bodySize:copy ? parseFloat(getComputedStyle(copy).fontSize) : 0 };
+  });
+  assert(heroVisual.height <= 720, `hero still too vertically sparse: ${heroVisual.height}px`);
+  assert(heroVisual.bodySize >= 18, `hero learner copy too small: ${heroVisual.bodySize}px`);
   assert(await page.locator('[data-panel="role"]:visible').count() === 1, 'Role must be default tab');
   const rootHeroLoaded = await page.locator('.hero-character-light').evaluate((img) => img.complete && img.naturalWidth > 0);
   assert(rootHeroLoaded, 'Ryu hero art did not load');
@@ -80,6 +87,31 @@ try {
     assert(await page.locator('#role:visible').count() === 1, `${c.slug}: Role panel missing`);
     assert(await page.locator('.frame-table tbody tr').count() === c.normals, `${c.slug}: normal frame table count mismatch`);
     await page.locator('#role').screenshot({ path:`${SHOTS}/${c.slug}-role-v6-light.png` });
+    if (c.slug === 'ryu') {
+      const roleVisual = await page.evaluate(() => {
+        const essence = document.querySelector('#role .essence');
+        const miniText = document.querySelector('#role .mini-card p, #role .mini-card li');
+        const toolText = document.querySelector('#role .tool p');
+        const mech = document.querySelector('#role .role-mechanic-grid');
+        const mechCards = mech ? [...mech.querySelectorAll('.role-mechanic-card')] : [];
+        const mechBox = mech?.getBoundingClientRect();
+        const firstBox = mechCards[0]?.getBoundingClientRect();
+        return {
+          essenceSize: essence ? parseFloat(getComputedStyle(essence).fontSize) : 0,
+          miniSize: miniText ? parseFloat(getComputedStyle(miniText).fontSize) : 0,
+          toolSize: toolText ? parseFloat(getComputedStyle(toolText).fontSize) : 0,
+          mechanismCount: mechCards.length,
+          mechanismRatio: mechBox && firstBox && mechBox.width ? firstBox.width / mechBox.width : 1
+        };
+      });
+      assert(roleVisual.essenceSize >= 28, `Role essence too small: ${roleVisual.essenceSize}px`);
+      assert(roleVisual.miniSize >= 14, `Role decision copy too small: ${roleVisual.miniSize}px`);
+      assert(roleVisual.toolSize >= 14, `Role tool explanation too small: ${roleVisual.toolSize}px`);
+      if (roleVisual.mechanismCount === 1) assert(roleVisual.mechanismRatio >= .9, `single Role mechanism wastes horizontal space: ${roleVisual.mechanismRatio}`);
+      const learnerStatus = await page.locator('.character-status-strip').innerText();
+      assert(!learnerStatus.includes('GOLD_PAGE_READY') && !learnerStatus.includes('GOLD_REFERENCE'), 'engineering state leaked into learner-facing status');
+      await page.screenshot({ path:`${SHOTS}/ryu-role-visual-optimized.png`, fullPage:false });
+    }
     if (c.slug === 'ken') {
       const roleText = await page.locator('#role').innerText();
       assert(roleText.includes('28F') && roleText.includes('Block +1'), 'ken: H Dragonlash 28F/+1 projection truth missing');
@@ -236,6 +268,25 @@ try {
     await page.locator('[data-top-tab="learn"]').click();
     const learn = await page.locator('[data-panel="learn"]').innerText();
     assert(learn.includes(c.learn), `${c.slug}: latest learning content not connected`);
+    if (c.slug === 'ryu') {
+      const learnVisual = await page.evaluate(() => {
+        const rail = document.querySelector('.learning-stage-rail button b');
+        const goal = document.querySelector('.learning-goal strong');
+        const item = document.querySelector('.learning-stage-grid li');
+        const gate = document.querySelector('.learning-stage-grid p span');
+        return {
+          railSize: rail ? parseFloat(getComputedStyle(rail).fontSize) : 0,
+          goalSize: goal ? parseFloat(getComputedStyle(goal).fontSize) : 0,
+          itemSize: item ? parseFloat(getComputedStyle(item).fontSize) : 0,
+          gateSize: gate ? parseFloat(getComputedStyle(gate).fontSize) : 0
+        };
+      });
+      assert(learnVisual.railSize >= 15, `Learn stage label too small: ${learnVisual.railSize}px`);
+      assert(learnVisual.goalSize >= 19, `Learn current goal too small: ${learnVisual.goalSize}px`);
+      assert(learnVisual.itemSize >= 14, `Learn stage item too small: ${learnVisual.itemSize}px`);
+      assert(learnVisual.gateSize >= 14, `Learn gate copy too small: ${learnVisual.gateSize}px`);
+      await page.screenshot({ path:`${SHOTS}/ryu-learn-visual-optimized.png`, fullPage:false });
+    }
 
     await page.locator('[data-top-tab="practical"]').click();
     assert(await page.locator('#practical:visible').count() === 1, `${c.slug}: Practical Hub missing`);
@@ -450,6 +501,21 @@ try {
     await page.locator('[data-top-tab="reference"]').click();
     const reference = await page.locator('[data-panel="reference"]').innerText();
     assert(reference.includes(c.ref), `${c.slug}: latest Reference not connected`);
+    if (c.slug === 'ryu') {
+      const referenceVisual = await page.locator('[data-panel="reference"] .markdown-book').evaluate((el) => {
+        const p = el.querySelector('p');
+        const h2 = el.querySelector('h2');
+        return {
+          bodySize:p ? parseFloat(getComputedStyle(p).fontSize) : 0,
+          h2Size:h2 ? parseFloat(getComputedStyle(h2).fontSize) : 0,
+          width:el.getBoundingClientRect().width
+        };
+      });
+      assert(referenceVisual.bodySize >= 17, `Reference body too small: ${referenceVisual.bodySize}px`);
+      assert(referenceVisual.h2Size >= 27, `Reference section heading too small: ${referenceVisual.h2Size}px`);
+      assert(referenceVisual.width >= 1050, `Reference underuses Mac landscape width: ${referenceVisual.width}px`);
+      await page.screenshot({ path:`${SHOTS}/ryu-reference-visual-optimized.png`, fullPage:false });
+    }
   }
 
   await page.goto(`${BASE}/character/ryu/#role`, { waitUntil:'networkidle' });
