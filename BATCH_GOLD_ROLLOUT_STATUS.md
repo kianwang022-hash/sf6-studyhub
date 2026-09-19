@@ -26,11 +26,11 @@ Judgment states:
 | base | Dhalsim | `CONTENT_READY` |
 | base | E. Honda | `GOLD_PAGE_READY` |
 | base | Dee Jay | `GOLD_PAGE_READY` |
-| base | Manon | `CONTENT_READY` |
-| base | Marisa | `CONTENT_READY` |
+| base | Manon | `GOLD_PAGE_READY` |
+| base | Marisa | `GOLD_PAGE_READY` |
 | base | JP | `CONTENT_READY` |
 | base | Zangief | `GOLD_PAGE_READY` |
-| base | Lily | `CONTENT_READY` |
+| base | Lily | `GOLD_PAGE_READY` |
 | base | Cammy | `GOLD_PAGE_READY` |
 | year1 | Rashid | `GOLD_PAGE_READY` |
 | year1 | A.K.I. | `CONTENT_READY` |
@@ -42,15 +42,15 @@ Judgment states:
 | year2 | Elena | `GOLD_PAGE_READY` |
 | year3 | Sagat | `GOLD_PAGE_READY` |
 | year3 | C. Viper | `CONTENT_READY` |
-| year3 | Alex | `CONTENT_READY` |
+| year3 | Alex | `GOLD_PAGE_READY` |
 | year3 | Ingrid | `CONTENT_READY` |
 | year4 | Yasmine | `GOLD_PAGE_READY` |
 
 ## Current Gold lane
 
-Twenty characters now render through the canonical Astro runtime:
+Twenty-four characters now render through the canonical Astro runtime:
 
-Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
+Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsim are separately **CONTENT_READY** at the semantic layer and are intentionally not yet promoted into the Astro Gold runtime.
 
 - Ryu — Gold design/function reference.
 - Ken — ordinary shoto contact -> choose end-state -> Quick Dash Tatsu carry / +25 dash +6 / corner setplay; H Dragonlash +1 remains tied to 28F startup.
@@ -68,6 +68,10 @@ Marisa, Lily, Manon, Alex, Chun-Li, A.K.I., Ed, JP, Ingrid, C. Viper, and Dhalsi
 - E. Honda — charge creates Headbutt/Smash threat and strike respect; Oicho begins only after respect, while Sumo Spirit remains a later pressure upgrade.
 - Blanka — Electric Thunder/charge knockdown first; Bomb is earned corner object setplay, not an entry-level resource task.
 - M. Bison — track both own charge and opponent Psycho Mine; S0 plants Mine, later stages cash it in and explicitly distinguish unsafe normal Crusher from Mine-enhanced pressure.
+- Marisa — high-damage strike respect first; Enfold only enters after respect, while charged attacks and Phalanx +42 remain exact later layers.
+- Lily — invest one Windclad first, convert it into plus Spire entry, then add Mexican Typhoon only after respect; multi-stock building remains later.
+- Manon — ordinary Rond-point/Renversé/dash Oki first; Medal raises future reward and changes escape behavior, but command grab is never an S0 automatic follow-up.
+- Alex — ordinary strike/+2 first with one earned Prowler exit; full Prowler tree and Power Bomb reads remain later, conditioned choices.
 - Jamie — Drink-investment character model; S0 already contains `继续压 vs 22P 喝酒投资未来`.
 - Mai — ordinary projectile/ground skeleton first; resource/state upgrades are explained before Stock / Boosted shorthand.
 - Zangief — S0 contains the strike -> respect -> `360P` feedback loop; SPD aftermath remains re-approach/read rather than fake guaranteed close Oki.
@@ -133,8 +137,12 @@ Visual artifact: **`sf6-visual-qa`** from run `35171931415`.
 - `receipts/ehonda_GOLD_PAGE_READY.md`
 - `receipts/blanka_GOLD_PAGE_READY.md`
 - `receipts/mbison_GOLD_PAGE_READY.md`
+- `receipts/marisa_GOLD_PAGE_READY.md`
+- `receipts/lily_GOLD_PAGE_READY.md`
+- `receipts/manon_GOLD_PAGE_READY.md`
+- `receipts/alex_GOLD_PAGE_READY.md`
 
-Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, and M. Bison are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
+Jamie, Mai, Zangief, Cammy, Ken, Akuma, Luke, Terry, Sagat, Juri, Elena, Yasmine, Rashid, Kimberly, Guile, Dee Jay, E. Honda, Blanka, M. Bison, Marisa, Lily, Manon, and Alex are formally promoted from `CONTENT_READY` to **`GOLD_PAGE_READY`**.
 
 ## Public deployment state
 
