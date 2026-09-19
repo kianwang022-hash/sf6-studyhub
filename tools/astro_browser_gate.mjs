@@ -17,7 +17,7 @@ const chars = [
   { slug:'luke', normals:18, learn:'不靠 Perfect，也能在真人里打出完整 Luke', ref:'Perfect Flash Knuckle', practical:['2MP > 2LP > L Flash Knuckle','OD Flash Knuckle > DDT','+64'] },
   { slug:'terry', normals:18, learn:'Burning Knuckle买位置', ref:'Round Wave', practical:['2LK > 2LP > M Burning Knuckle','2LK > 2LP > H Rising Tackle','OD Quick Burn'] },
   { slug:'sagat', normals:18, learn:'Tiger Shot → 对手反应', ref:'H Tiger Knee airborne +42', practical:['236MP -> watch jump / walk / crouch / parry','5MP > 2LP > M Tiger Uppercut','H Tiger Knee Crush airborne hit -> +42'] },
-  { slug:'juri', normals:18, learn:'真正的角色判断是下一次 opening 这颗 stock 现在花不花', ref:'Resource Truth', practical:['5MP > 2MP > M Fuhajin','Boosted Saihasho','Feng Shui Engine'] },
+  { slug:'juri', normals:18, learn:'真正的角色判断是下一次 opening 这颗 stock 现在花不花', ref:'Resource Truth', practical:['5MP > 2MP > M Fuhajin','5MP > 2MP > Go Ohsatsu','Feng Shui Engine'] },
   { slug:'elena', normals:18, learn:'Healing只在最后作为伤害与恢复之间的资源选择', ref:'Lynx follow-up truth', practical:['5MP > MP > M Rhino Horn','earned Lynx Song setup','SA2'] },
   { slug:'yasmine', normals:18, learn:'取得 → 消费 → 再取得', ref:'Bayani system truth', practical:['M Daloy ng Tubig > Alon','Boosted Alon','SA2'] },
   { slug:'rashid', normals:18, learn:'不靠风也能打完整 Rashid', ref:'Air Current truth', practical:['M Spinning Mixer','L Eagle Spike','Air Current'] },
@@ -155,7 +155,7 @@ try {
     if (c.slug === 'juri') {
       const s0Text = await page.locator('#practical').innerText();
       assert(s0Text.includes('5MP > 2MP > M Fuhajin'), 'juri: S0 stock-generating stable route missing');
-      assert(!s0Text.includes('Boosted Saihasho'), 'juri: stock-spend layer leaked into S0');
+      assert(!s0Text.includes('5MP > 2MP > Go Ohsatsu'), 'juri: stock-spend layer leaked into S0');
       assert(!s0Text.includes('Feng Shui Engine'), 'juri: SA2 system leaked into S0');
     }
     if (c.slug === 'elena') {
